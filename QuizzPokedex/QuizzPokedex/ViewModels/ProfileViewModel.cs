@@ -57,9 +57,9 @@ namespace QuizzPokedex.ViewModels
                 Profile.BirthDate != string.Empty )
             {
                 if (ModeUpdate)
-                    await _ProfileService.UpdateProfileAsync(Profile);
+                    await _ProfileService.UpdateAsync(Profile);
                 else
-                    await _ProfileService.CreateProfileAsync(Profile);
+                    await _ProfileService.CreateAsync(Profile);
 
                 //nouvel enregistrement crée on informe par abonnement de rafraichir
                 var refresh = new MessageRefresh(this, true);

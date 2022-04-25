@@ -8,13 +8,13 @@ namespace QuizzPokedex.Interfaces
 {
     public interface IPokemonService
     {
-        void PopulatePokemon();
-        Task<List<Pokemon>> GetPokemonsAsync();
-        Task<Pokemon> GetPokemonByNameAsync(string libelle);
-        Task<int> CreatePokemonAsync(Pokemon pokemon);
-        Task<int> DeletePokemonAsync(Pokemon pokemon);
-        Task<int> UpdatePokemonAsync(Pokemon pokemon);
-        Task<int> GetNumberPokemonAsync();
+        void Populate();
+        Task<List<Pokemon>> GetAllAsync();
+        Task<Pokemon> GetByNameAsync(string libelle);
+        Task<int> CreateAsync(Pokemon pokemon);
+        Task<int> DeleteAsync(Pokemon pokemon);
+        Task<int> UpdateAsync(Pokemon pokemon);
+        Task<int> GetNumberAsync();
         Task<byte[]> DownloadImageAsync(string UrlImg);
     }
 }

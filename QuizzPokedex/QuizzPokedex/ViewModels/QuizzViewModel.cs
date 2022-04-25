@@ -53,13 +53,13 @@ namespace QuizzPokedex.ViewModels
             if (Quizz.Id != 0)
             {
                 if (ModeUpdate)
-                    await _quizzService.UpdateQuizzAsync(Quizz);
+                    await _quizzService.UpdateAsync(Quizz);
                 else
                 {
                     //on va chercher le number le plus haut et on ajoute 1
                     //var number = await _quizzService.FindNumberEtapeAsync(Quizz.IdRecette);
                     //Quizz.Number = number + 1;
-                    await _quizzService.CreateQuizzAsync(Quizz);
+                    await _quizzService.CreateAsync(Quizz);
                 }
 
                 //nouvel enregistrement crée on informe par abonnement de rafraichir

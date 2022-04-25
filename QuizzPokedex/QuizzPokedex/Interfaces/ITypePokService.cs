@@ -8,12 +8,13 @@ namespace QuizzPokedex.Interfaces
 {
     public interface ITypePokService
     {
-        void PopulateTypePok();
-        Task<List<TypePok>> GetTypePoksAsync();
-        Task<TypePok> GetTypePokByNameAsync(string libelle);
-        Task<int> CreateTypePokAsync(TypePok typePok);
-        Task<int> DeleteTypePokAsync(TypePok typePok);
-        Task<int> UpdateTypePokAsync(TypePok typePok);
-        Task<int> GetNumberTypePokAsync();
+        void Populate();
+        Task<List<TypePok>> GetAllAsync();
+        Task<TypePok> GetByNameAsync(string libelle);
+        Task<int> CreateAsync(TypePok typePok);
+        Task<int> DeleteAsync(TypePok typePok);
+        Task<int> UpdateAsync(TypePok typePok);
+        Task<int> GetNumberAsync();
+        Task<byte[]> DownloadImageAsync(string UrlImg);
     }
 }

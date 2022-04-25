@@ -1,16 +1,9 @@
-﻿using Android.Content.Res;
-using MvvmCross.Commands;
+﻿using MvvmCross.Commands;
 using MvvmCross.Navigation;
 using MvvmCross.Plugin.Messenger;
 using MvvmCross.ViewModels;
-using Newtonsoft.Json;
 using QuizzPokedex.Interfaces;
 using QuizzPokedex.Models;
-using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace QuizzPokedex.ViewModels
@@ -40,7 +33,7 @@ namespace QuizzPokedex.ViewModels
 
         private async Task LoadPokemonAsync()
         {
-            var resultPokemon = await _pokemonService.GetPokemonsAsync();
+            var resultPokemon = await _pokemonService.GetAllAsync();
             Pokemons = new MvxObservableCollection<Pokemon>(resultPokemon);
         }
 
@@ -76,7 +69,7 @@ namespace QuizzPokedex.ViewModels
         {
             //Peut etre mettre une boite de dialogue de confirmation avant delete (leçon sur les dialogBox)
 
-            await _pokemonService.DeletePokemonAsync(Pokemon).ContinueWith(
+            await _pokemonService.DeleteAsync(Pokemon).ContinueWith(
                 async (result) =>
                     await LoadPokemonAsync()
                     );

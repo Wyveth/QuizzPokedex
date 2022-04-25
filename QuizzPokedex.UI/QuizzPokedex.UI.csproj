@@ -27,7 +27,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="AiForms.CollectionView" Version="0.3.23-pre" />
 		<PackageReference Include="Com.Airbnb.Xamarin.Forms.Lottie" Version="4.1.0" />
 		<PackageReference Include="MvvmCross.Forms" Version="8.0.2" />
 		<PackageReference Include="Sharpnado.Shadows" Version="1.2.0" />

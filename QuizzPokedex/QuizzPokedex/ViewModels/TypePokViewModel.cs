@@ -41,7 +41,7 @@ namespace QuizzPokedex.ViewModels
 
         private async Task LoadTypePokAsync()
         {
-            var result = await _typePokService.GetTypePoksAsync();
+            var result = await _typePokService.GetAllAsync();
             TypePoks = new MvxObservableCollection<TypePok>(result);
         }
 

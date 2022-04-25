@@ -31,44 +31,44 @@ namespace QuizzPokedex.Services
             _typePokService = typePokService;
         }
 
-        public async Task<List<Pokemon>> GetPokemonsAsync()
+        public async Task<List<Pokemon>> GetAllAsync()
         {
             var result = await _database.Table<Pokemon>().OrderBy(m => m.Number).ToListAsync();
 
             return result;
         }
 
-        public async Task<Pokemon> GetPokemonByNameAsync(string libelle)
+        public async Task<Pokemon> GetByNameAsync(string libelle)
         {
             var result = await _database.Table<Pokemon>().ToListAsync();
             return result.Find(m => m.Name.Equals(libelle));
         }
 
-        public async Task<int> CreatePokemonAsync(Pokemon Pokemon)
+        public async Task<int> CreateAsync(Pokemon Pokemon)
         {
             var result = await _database.InsertAsync(Pokemon);
             return result;
         }
 
-        public async Task<int> DeletePokemonAsync(Pokemon Pokemon)
+        public async Task<int> DeleteAsync(Pokemon Pokemon)
         {
             var result = await _database.DeleteAsync(Pokemon);
             return result;
         }
 
-        public async Task<int> UpdatePokemonAsync(Pokemon Pokemon)
+        public async Task<int> UpdateAsync(Pokemon Pokemon)
         {
             var result = await _database.InsertOrReplaceAsync(Pokemon);
             return result;
         }
 
-        public async Task<int> GetNumberPokemonAsync()
+        public async Task<int> GetNumberAsync()
         {
             var result = await _database.Table<Pokemon>().CountAsync();
             return result;
         }
 
-        public async void PopulatePokemon()
+        public async void Populate()
         {
             AssetManager assets = Android.App.Application.Context.Assets;
             string json;
@@ -77,11 +77,13 @@ namespace QuizzPokedex.Services
                 json = sr.ReadToEnd();
             }
 
+            Task.Delay(3000).Wait();
+
             List<PokemonJson> pokemonsJson = JsonConvert.DeserializeObject<List<PokemonJson>>(json);
             foreach (PokemonJson pokemonJson in pokemonsJson)
             {
                 Pokemon pokemon = await ConvertPokemonJsonInPokemon(pokemonJson);
-                _ = CreatePokemonAsync(pokemon);
+                _ = CreateAsync(pokemon);
 
                 Debug.Write(pokemon.Number + "" + pokemon.Name);
             }
@@ -108,7 +110,7 @@ namespace QuizzPokedex.Services
             int i = 0;
             foreach (string item in typesTab)
             {
-                TypePok type = await _typePokService.GetTypePokByNameAsync(item);
+                TypePok type = await _typePokService.GetByNameAsync(item);
                 if (i == 0)
                 {
                     pokemon.Types = type.Id.ToString();
@@ -124,7 +126,7 @@ namespace QuizzPokedex.Services
             i = 0;
             foreach (string item in weaknessTab)
             {
-                TypePok type = await _typePokService.GetTypePokByNameAsync(item);
+                TypePok type = await _typePokService.GetByNameAsync(item);
                 if (i == 0)
                 {
                     pokemon.Weakness = type.Id.ToString();
@@ -144,13 +146,13 @@ namespace QuizzPokedex.Services
 
         public async Task<Pokemon> UpdateEvolutionWithJson(PokemonJson pokemonJson)
         {
-            Pokemon pokemonUpdate = await GetPokemonByNameAsync(pokemonJson.Name);
+            Pokemon pokemonUpdate = await GetByNameAsync(pokemonJson.Name);
             string[] evolutionsTab = pokemonJson.Evolutions.Split(',');
 
             int i = 0;
             foreach (string item in evolutionsTab)
             {
-                Pokemon pokemon = await GetPokemonByNameAsync(item);
+                Pokemon pokemon = await GetByNameAsync(item);
                 if (i == 0)
                 {
                     pokemonUpdate.Evolutions = pokemon.Id.ToString();

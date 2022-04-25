@@ -17,25 +17,25 @@ namespace QuizzPokedex.Services
             _connectionService = connectionService;
         }
 
-        public async Task<List<Quizz>> GetQuizzsAsync()
+        public async Task<List<Quizz>> GetAllAsync()
         {
             var result = await _database.Table<Quizz>().ToListAsync();
             return result;
         }
 
-        public async Task<int> CreateQuizzAsync(Quizz Quizz)
+        public async Task<int> CreateAsync(Quizz Quizz)
         {
             var result = await _database.InsertAsync(Quizz);
             return result;
         }
 
-        public async Task<int> DeleteQuizzAsync(Quizz Quizz)
+        public async Task<int> DeleteAsync(Quizz Quizz)
         {
             var result = await _database.DeleteAsync(Quizz);
             return result;
         }
 
-        public async Task<int> UpdateQuizzAsync(Quizz Quizz)
+        public async Task<int> UpdateAsync(Quizz Quizz)
         {
             var result = await _database.InsertOrReplaceAsync(Quizz);
             return result;

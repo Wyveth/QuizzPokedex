@@ -8,9 +8,9 @@ namespace QuizzPokedex.Interfaces
 {
     public interface IProfileService
     {
-        Task<List<Profile>> GetProfilesAsync();
-        Task<int> CreateProfileAsync(Profile profile);
-        Task<int> DeleteProfileAsync(Profile profile);
-        Task<int> UpdateProfileAsync(Profile profile);
+        Task<List<Profile>> GetAllAsync();
+        Task<int> CreateAsync(Profile profile);
+        Task<int> DeleteAsync(Profile profile);
+        Task<int> UpdateAsync(Profile profile);
     }
 }

@@ -8,9 +8,9 @@ namespace QuizzPokedex.Interfaces
 {
     public interface IQuizzService
     {
-        Task<List<Quizz>> GetQuizzsAsync();
-        Task<int> CreateQuizzAsync(Quizz quizz);
-        Task<int> DeleteQuizzAsync(Quizz quizz);
-        Task<int> UpdateQuizzAsync(Quizz quizz);
+        Task<List<Quizz>> GetAllAsync();
+        Task<int> CreateAsync(Quizz quizz);
+        Task<int> DeleteAsync(Quizz quizz);
+        Task<int> UpdateAsync(Quizz quizz);
     }
 }
