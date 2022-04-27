@@ -10,6 +10,7 @@ namespace QuizzPokedex.Interfaces
     {
         void Populate();
         Task<List<Pokemon>> GetAllAsync();
+        Task<List<Pokemon>> GetAllNormalEvolutionAsync();
         Task<Pokemon> GetByNameAsync(string libelle);
         Task<int> CreateAsync(Pokemon pokemon);
         Task<int> DeleteAsync(Pokemon pokemon);

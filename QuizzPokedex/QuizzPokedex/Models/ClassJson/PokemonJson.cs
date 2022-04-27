@@ -14,6 +14,12 @@ namespace QuizzPokedex.Models
         //Nom du Pokémon
         public string Name { get; set; }
 
+        //Description du Pokémon Version X
+        public string DescriptionVx { get; set; }
+
+        //Description du Pokémon Version
+        public string DescriptionVy { get; set; }
+
         //Url de l'Image
         public string UrlImg { get; set; }
 
@@ -32,6 +38,9 @@ namespace QuizzPokedex.Models
         //Talent du Pokémon
         public string Talent { get; set; }
 
+        //Description du Talent
+        public string DescriptionTalent { get; set; }
+
         //Nom des Types
         public string Types { get; set; }
 
@@ -40,6 +49,9 @@ namespace QuizzPokedex.Models
 
         //Evolution/Famille du Pokémon
         public string Evolutions { get; set; }
+
+        //Type Evolution : Normal, Méga, Gigamax, Alola, Galar, Variant
+        public string TypeEvolution { get; set; }
 
         //Generation Number
         public int Generation { get; set; }

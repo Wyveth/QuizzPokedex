@@ -76,8 +76,8 @@
     <Compile Include="Setup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\PokeScrap.json" />
     <AndroidAsset Include="Assets\TypeScrap.json" />
+    <AndroidAsset Include="Assets\PokeScrap.json" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
     <None Include="Properties\AndroidManifest.xml" />

@@ -20,7 +20,7 @@ namespace QuizzPokedex.ViewModels
 
         private async Task LoadPokemonAsync()
         {
-            var result = await _PokemonService.GetAllAsync();
+            var result = await _PokemonService.GetAllNormalEvolutionAsync();
             Pokemons = new MvxObservableCollection<Pokemon>(result);
         }
 

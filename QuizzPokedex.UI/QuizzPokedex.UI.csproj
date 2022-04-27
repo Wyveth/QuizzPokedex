@@ -30,6 +30,8 @@
 		<PackageReference Include="Com.Airbnb.Xamarin.Forms.Lottie" Version="4.1.0" />
 		<PackageReference Include="MvvmCross.Forms" Version="8.0.2" />
 		<PackageReference Include="Sharpnado.Shadows" Version="1.2.0" />
+		<PackageReference Include="Xamarin.CommunityToolkit" Version="2.0.1" />
+		<PackageReference Include="Xamarin.CommunityToolkit.Markup" Version="2.0.1" />
 		<PackageReference Include="Xamarin.Forms.PancakeView" Version="2.3.0.759" />
 	</ItemGroup>
 

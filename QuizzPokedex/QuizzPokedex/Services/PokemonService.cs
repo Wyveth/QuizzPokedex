@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using QuizzPokedex.Interfaces;
 using QuizzPokedex.Models;
+using QuizzPokedex.Resources;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -34,6 +35,13 @@ namespace QuizzPokedex.Services
         public async Task<List<Pokemon>> GetAllAsync()
         {
             var result = await _database.Table<Pokemon>().OrderBy(m => m.Number).ToListAsync();
+
+            return result;
+        }
+
+        public async Task<List<Pokemon>> GetAllNormalEvolutionAsync()
+        {
+            var result = await _database.Table<Pokemon>().Where(m => m.TypeEvolution.Equals(Constantes.NormalEvolution)).OrderBy(m => m.Number).ToListAsync();
 
             return result;
         }
@@ -95,6 +103,8 @@ namespace QuizzPokedex.Services
 
             pokemon.Number = pokemonJson.Number;
             pokemon.Name = pokemonJson.Name;
+            pokemon.DescriptionVx = pokemonJson.DescriptionVx;
+            pokemon.DescriptionVy = pokemonJson.DescriptionVy;
             pokemon.UrlImg = pokemonJson.UrlImg;
             pokemon.DataImg = await DownloadImageAsync(pokemonJson.UrlImg);
             
@@ -105,6 +115,7 @@ namespace QuizzPokedex.Services
             pokemon.Category = pokemonJson.Category;
             pokemon.Weight = pokemonJson.Weight;
             pokemon.Talent = pokemonJson.Talent;
+            pokemon.DescriptionTalent = pokemonJson.DescriptionTalent;
 
             string[] typesTab = pokemonJson.Types.Split(',');
             int i = 0;
@@ -138,6 +149,7 @@ namespace QuizzPokedex.Services
                 }
             }
 
+            pokemon.TypeEvolution = pokemonJson.TypeEvolution;
             pokemon.Generation = pokemonJson.Generation;
             pokemon.NextUrl = pokemonJson.NextUrl;
 

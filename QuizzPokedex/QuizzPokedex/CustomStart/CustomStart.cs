@@ -33,8 +33,8 @@ namespace QuizzPokedex.CustomStart
         protected override Task NavigateToFirstViewModel(object hint = null)
         {
             //initialisation des tables par défaut
-            _connectionService.GetAsyncConnection().DropTableAsync<TypePok>().Wait();
-            _connectionService.GetAsyncConnection().DropTableAsync<Pokemon>().Wait();
+            //_connectionService.GetAsyncConnection().DropTableAsync<TypePok>().Wait();
+            //_connectionService.GetAsyncConnection().DropTableAsync<Pokemon>().Wait();
             //_connectionService.GetAsyncConnection().DropTableAsync<Profile>().Wait();
 
             _connectionService.GetAsyncConnection().CreateTableAsync<TypePok>().Wait();
@@ -49,10 +49,6 @@ namespace QuizzPokedex.CustomStart
         protected async void populateDb()
         {
             int nbTypePok = await _typePokService.GetNumberAsync();
-            //if (nbTypePok.Equals(0))
-            //{
-            //    _typePokService.Populate();
-            //}
 
             await Task.Run(() =>
             {
@@ -61,10 +57,6 @@ namespace QuizzPokedex.CustomStart
             });
 
             int nbPokemon = await _pokemonService.GetNumberAsync();
-            //if (nbPokemon.Equals(0))
-            //{
-            //    Task populatePokemon = new Task(() => _pokemonService.Populate());
-            //}
 
             await Task.Run(() =>
             {

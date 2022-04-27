@@ -11,13 +11,13 @@
              xmlns:cornerBorder="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
              BackgroundColor="#FFFFFF">
     <ContentPage.Content>
-        <Grid ColumnSpacing="0" RowSpacing="0">
+        <Grid ColumnSpacing="0" RowSpacing="0" Margin="20,20,20,20">
             <Grid.RowDefinitions>
                 <RowDefinition Height=".2*"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="75*"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="auto"/>
+                <RowDefinition Height="25*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
@@ -27,16 +27,40 @@
             <animation:AnimationView Grid.Row="1" Grid.Column="1"  Grid.ColumnSpan="2"  Animation="Resources.96855-pokeball-loading-animation.json" AnimationSource="EmbeddedResource"
                 RepeatMode="Infinite" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
 
-            <shadows:Shadows x:Name="BtnQuizz" Grid.Column="1"  CornerRadius="20" Grid.Row="4" Grid.RowSpan="2"  Margin="30,0,30,50" Shades="{shadows:SingleShade Color=LightGray, Offset='0,4', BlurRadius=10,Opacity=30}">
+            <shadows:Shadows x:Name="BtnQuizz" Grid.Column="1" CornerRadius="20" Grid.Row="4" Grid.RowSpan="2" Margin="30,0,30,50">
+                <shadows:Shadows.Shades>
+                    <shadows:ImmutableShades>
+                        <shadows:Shade BlurRadius="10"
+                      Opacity="0.5"
+                      Offset="-10,-10"
+                      Color="#F75E6D" />
+                        <shadows:Shade BlurRadius="10"
+                      Opacity="0.5"
+                      Offset="10,10"
+                      Color="#464C56" />
+                    </shadows:ImmutableShades>
+                </shadows:Shadows.Shades>
                 <cornerBorder:PancakeView CornerRadius="20,20,20,20" Border="{cornerBorder:BorderMarkup Color=Gray, Thickness=1}" BackgroundColor="White">
-                    <Button Text="Quizz" TextTransform="None" FontFamily="Montserrat-SemiBold"  FontSize="20" BackgroundColor="Transparent" TextColor="#0079C2"
+                    <Button Text="Quizz" TextTransform="None" FontFamily="Montserrat-SemiBold"  FontSize="20" BackgroundColor="Transparent" TextColor="#F75E6D"
                         Command="{Binding NavigationQuizzCommandAsync}"/>
                 </cornerBorder:PancakeView>
             </shadows:Shadows>
-            <shadows:Shadows x:Name="BtnPokedex" Grid.Column="2"  CornerRadius="20" Grid.Row="4" Grid.RowSpan="2"  Margin="30,0,30,50" Shades="{shadows:SingleShade Color=LightGray, Offset='0,4', BlurRadius=10,Opacity=30}">
+            <shadows:Shadows x:Name="BtnPokedex" Grid.Column="2"  CornerRadius="20" Grid.Row="4" Grid.RowSpan="2" Margin="30,0,30,50">
+                <shadows:Shadows.Shades>
+                <shadows:ImmutableShades>
+                    <shadows:Shade BlurRadius="10"
+                      Opacity="0.5"
+                      Offset="-10,-10"
+                      Color="#F75E6D" />
+                    <shadows:Shade BlurRadius="10"
+                      Opacity="0.5"
+                      Offset="10,10"
+                      Color="#464C56" />
+                </shadows:ImmutableShades>
+                </shadows:Shadows.Shades>
                 <cornerBorder:PancakeView CornerRadius="20,20,20,20" Border="{cornerBorder:BorderMarkup Color=Gray, Thickness=1}" BackgroundColor="White">
-                    <Button Text="Pokédex" TextTransform="None" FontFamily="Montserrat-SemiBold" FontSize="20" BackgroundColor="Transparent" TextColor="#0079C2"
-                        Command="{Binding NavigationPokedexCommandAsync}"/>
+                    <Button Text="Pokédex" TextTransform="None" FontFamily="Montserrat-SemiBold" FontSize="20" BackgroundColor="Transparent" TextColor="#F75E6D"
+                        Command="{Binding NavigationPokedexCommandAsync}" />
                 </cornerBorder:PancakeView>
             </shadows:Shadows>
         </Grid>

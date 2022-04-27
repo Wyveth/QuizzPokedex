@@ -8,6 +8,7 @@
                       xmlns:viewmodel="clr-namespace:QuizzPokedex.ViewModels;assembly=QuizzPokedex"
                       xmlns:views="clr-namespace:MvvmCross.Forms.Views;assembly=MvvmCross.Forms"
                       xmlns:converters="clr-namespace:QuizzPokedex.UI.Converters"
+                      xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
                       BackgroundColor="#FFFFFF">
 
     <views:MvxContentPage.Resources>
@@ -15,49 +16,62 @@
             <converters:ByteToImageSourceConverter x:Key="ByteToImageSourceConverter"/>
         </ResourceDictionary>
     </views:MvxContentPage.Resources>
-    
+
     <ContentPage.Content>
         <StackLayout>
-            <AbsoluteLayout>
-                <animation:AnimationView Animation="Resources.lf30_editor_j21rvxzk.json" AnimationSource="EmbeddedResource" HeightRequest="70" WidthRequest="70"
-                    RepeatMode="Restart" HorizontalOptions="Start" VerticalOptions="StartAndExpand"  Rotation="180" ScaleX="1.5" ScaleY="1.5" 
+            <AbsoluteLayout BackgroundColor="red" >
+                <animation:AnimationView Animation="Resources.lf30_editor_j21rvxzk.json" AnimationSource="EmbeddedResource" HeightRequest="50" WidthRequest="70"
+                    RepeatMode="Restart" HorizontalOptions="Start" VerticalOptions="StartAndExpand" Rotation="180" ScaleX="1.5" ScaleY="1.5" 
                     Command="{Binding NavigationBackCommandAsync}"/>
+                <Button Command="{Binding NavigationBackCommandAsync}" Text="Back"></Button>
             </AbsoluteLayout>
-
-            <CollectionView ItemsSource="{Binding Pokemons}" SelectionMode="Single" SelectedItem="{Binding SelectedPokemon}">
+            <CollectionView ItemsSource="{Binding Pokemons}" x:Name="test" SelectionMode="Single"  SelectedItem="{Binding SelectedPokemon}" >
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout Orientation="Vertical" Span="3" />
                 </CollectionView.ItemsLayout>
 
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Grid Margin="10,20,0,0" >
+                        <Grid Margin="10,40,0,0" >
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="3*" />
                                 <RowDefinition Height="3*" />
                             </Grid.RowDefinitions>
-                            
+
                             <Image Source="{Binding DataImg, Converter={StaticResource ByteToImageSourceConverter}}"
                                    Grid.Row="0"
                                    Aspect="AspectFit"
-                                   WidthRequest="60"
-                                   HeightRequest="60">
+                                   WidthRequest="65"
+                                   HeightRequest="65">
                             </Image>
 
                             <StackLayout Grid.Row="1">
                                 <Label Grid.Column="1"
-                                       VerticalOptions="Center" FontSize="Micro"
+                                       VerticalOptions="Center" 
+                                       FontSize="Micro"
+                                       TextColor="Black"
                                        Text="{Binding Name}"
                                        FontAttributes="Bold"
-                                   HorizontalOptions="Center">
+                                   HorizontalOptions="Center"
+                                       xct:ShadowEffect.Color="black" 
+                                       xct:ShadowEffect.OffsetX="5" 
+                                       xct:ShadowEffect.OffsetY="10" 
+                                       xct:ShadowEffect.Opacity="0.5"
+                                       xct:ShadowEffect.Radius="20">
                                 </Label>
-                                <Label Text="{Binding Number}"
+                                <Label Text="{Binding Number, StringFormat='#{0}'}"
                                        Grid.Row="1"
                                        Grid.Column="1"
                                        VerticalOptions="Start"
                                        FontSize="Micro"
+                                       TextColor="Black"
                                        FontAttributes="Italic"
-                                   HorizontalOptions="Center"/>
+                                   HorizontalOptions="Center"
+                                       xct:ShadowEffect.Color="black" 
+                                       xct:ShadowEffect.OffsetX="5" 
+                                       xct:ShadowEffect.OffsetY="10" 
+                                       xct:ShadowEffect.Opacity="0.5"
+                                       xct:ShadowEffect.Radius="20"/>
                             </StackLayout>
                         </Grid>
                     </DataTemplate>
