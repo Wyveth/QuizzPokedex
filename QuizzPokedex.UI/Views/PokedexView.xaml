@@ -1,82 +1,156 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<views:MvxContentPage x:TypeArguments="viewmodel:PokedexViewModel"
-                      xmlns="http://xamarin.com/schemas/2014/forms"
-                      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                      x:Class="QuizzPokedex.UI.Views.PokedexView"
-                      NavigationPage.HasNavigationBar="False"
-                      xmlns:animation="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
-                      xmlns:viewmodel="clr-namespace:QuizzPokedex.ViewModels;assembly=QuizzPokedex"
-                      xmlns:views="clr-namespace:MvvmCross.Forms.Views;assembly=MvvmCross.Forms"
-                      xmlns:converters="clr-namespace:QuizzPokedex.UI.Converters"
-                      xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
-                      BackgroundColor="#FFFFFF">
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<views:MvxContentPage
+    x:Class="QuizzPokedex.UI.Views.PokedexView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:QuizzPokedex.UI.Converters"
+    xmlns:cornerBorder="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+    xmlns:shadows="http://sharpnado.com"
+    xmlns:viewmodel="clr-namespace:QuizzPokedex.ViewModels;assembly=QuizzPokedex"
+    xmlns:views="clr-namespace:MvvmCross.Forms.Views;assembly=MvvmCross.Forms"
+    xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+    x:TypeArguments="viewmodel:PokedexViewModel"
+    BackgroundColor="#FFFFFF"
+    NavigationPage.HasNavigationBar="False">
 
     <views:MvxContentPage.Resources>
         <ResourceDictionary>
-            <converters:ByteToImageSourceConverter x:Key="ByteToImageSourceConverter"/>
+            <converters:ByteToImageSourceConverter x:Key="ByteToImageSourceConverter" />
         </ResourceDictionary>
     </views:MvxContentPage.Resources>
 
     <ContentPage.Content>
-        <StackLayout>
-            <AbsoluteLayout BackgroundColor="red" >
-                <animation:AnimationView Animation="Resources.lf30_editor_j21rvxzk.json" AnimationSource="EmbeddedResource" HeightRequest="50" WidthRequest="70"
-                    RepeatMode="Restart" HorizontalOptions="Start" VerticalOptions="StartAndExpand" Rotation="180" ScaleX="1.5" ScaleY="1.5" 
-                    Command="{Binding NavigationBackCommandAsync}"/>
-                <Button Command="{Binding NavigationBackCommandAsync}" Text="Back"></Button>
-            </AbsoluteLayout>
-            <CollectionView ItemsSource="{Binding Pokemons}" x:Name="test" SelectionMode="Single"  SelectedItem="{Binding SelectedPokemon}" >
-                <CollectionView.ItemsLayout>
-                    <GridItemsLayout Orientation="Vertical" Span="3" />
-                </CollectionView.ItemsLayout>
+        <AbsoluteLayout>
+            <StackLayout x:Name="PokemonList">
+                <CollectionView
+                    ItemsSource="{Binding Pokemons}"
+                    Scrolled="CollectionView_Scrolled"
+                    SelectedItem="{Binding SelectedPokemon}"
+                    SelectionMode="Single">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Vertical" Span="3" />
+                    </CollectionView.ItemsLayout>
 
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid Margin="10,40,0,0" >
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="3*" />
-                                <RowDefinition Height="3*" />
-                            </Grid.RowDefinitions>
+                    <CollectionView.Header>
+                        <StackLayout Padding="0,30" />
+                    </CollectionView.Header>
 
-                            <Image Source="{Binding DataImg, Converter={StaticResource ByteToImageSourceConverter}}"
-                                   Grid.Row="0"
-                                   Aspect="AspectFit"
-                                   WidthRequest="65"
-                                   HeightRequest="65">
-                            </Image>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="10,40,0,0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="3*" />
+                                    <RowDefinition Height="3*" />
+                                </Grid.RowDefinitions>
+                                <Image
+                                    Grid.Row="0"
+                                    Aspect="AspectFit"
+                                    HeightRequest="65"
+                                    Source="{Binding DataImg, Converter={StaticResource ByteToImageSourceConverter}}"
+                                    WidthRequest="65" />
 
-                            <StackLayout Grid.Row="1">
-                                <Label Grid.Column="1"
-                                       VerticalOptions="Center" 
-                                       FontSize="Micro"
-                                       TextColor="Black"
-                                       Text="{Binding Name}"
-                                       FontAttributes="Bold"
-                                   HorizontalOptions="Center"
-                                       xct:ShadowEffect.Color="black" 
-                                       xct:ShadowEffect.OffsetX="5" 
-                                       xct:ShadowEffect.OffsetY="10" 
-                                       xct:ShadowEffect.Opacity="0.5"
-                                       xct:ShadowEffect.Radius="20">
-                                </Label>
-                                <Label Text="{Binding Number, StringFormat='#{0}'}"
-                                       Grid.Row="1"
-                                       Grid.Column="1"
-                                       VerticalOptions="Start"
-                                       FontSize="Micro"
-                                       TextColor="Black"
-                                       FontAttributes="Italic"
-                                   HorizontalOptions="Center"
-                                       xct:ShadowEffect.Color="black" 
-                                       xct:ShadowEffect.OffsetX="5" 
-                                       xct:ShadowEffect.OffsetY="10" 
-                                       xct:ShadowEffect.Opacity="0.5"
-                                       xct:ShadowEffect.Radius="20"/>
-                            </StackLayout>
-                        </Grid>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-        </StackLayout>
+                                <StackLayout Grid.Row="1">
+                                    <Label
+                                        Grid.Column="1"
+                                        xct:ShadowEffect.Color="black"
+                                        xct:ShadowEffect.OffsetX="5"
+                                        xct:ShadowEffect.OffsetY="10"
+                                        xct:ShadowEffect.Opacity="0.5"
+                                        xct:ShadowEffect.Radius="20"
+                                        FontAttributes="Bold"
+                                        FontSize="12"
+                                        HorizontalOptions="Center"
+                                        Text="{Binding Name}"
+                                        TextColor="Black"
+                                        VerticalOptions="Center" />
+                                    <Label
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        xct:ShadowEffect.Color="black"
+                                        xct:ShadowEffect.OffsetX="5"
+                                        xct:ShadowEffect.OffsetY="10"
+                                        xct:ShadowEffect.Opacity="0.5"
+                                        xct:ShadowEffect.Radius="20"
+                                        FontAttributes="Italic"
+                                        FontSize="10"
+                                        HorizontalOptions="Center"
+                                        Text="{Binding Number, StringFormat='#{0}'}"
+                                        TextColor="Black"
+                                        VerticalOptions="Start" />
+                                </StackLayout>
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup Name="CommonStates">
+                                        <VisualState Name="Selected">
+                                            <VisualState.Setters>
+                                                <Setter Property="BackgroundColor" Value="White" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </StackLayout>
+            <StackLayout
+                AbsoluteLayout.LayoutBounds="0.5,0.01,0.5,0.07"
+                AbsoluteLayout.LayoutFlags="All"
+                HorizontalOptions="CenterAndExpand">
+                <StackLayout x:Name="menuTest">
+                    <shadows:Shadows Margin="30,0,30,50" CornerRadius="20">
+                        <shadows:Shadows.Shades>
+                            <shadows:ImmutableShades>
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.5"
+                                    Offset="5,5"
+                                    Color="#464C56" />
+                            </shadows:ImmutableShades>
+                        </shadows:Shadows.Shades>
+                        <cornerBorder:PancakeView
+                            BackgroundColor="White"
+                            Border="{cornerBorder:BorderMarkup Color=Gray,
+                                                               Thickness=2}"
+                            CornerRadius="100,100,100,100">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="35" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="40" />
+                                    <ColumnDefinition Width="40" />
+                                    <ColumnDefinition Width="33" />
+                                </Grid.ColumnDefinitions>
+
+                                <Button
+                                    x:Name="test"
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    Margin="15,5,-5,5"
+                                    BackgroundColor="white"
+                                    ImageSource="icons8filter20.png"
+                                    WidthRequest="100" />
+                                <Button
+                                    x:Name="test2"
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    Margin="5,5,5,5"
+                                    BackgroundColor="white"
+                                    ImageSource="icons8search20.png"
+                                    WidthRequest="100" />
+                                <Button
+                                    x:Name="test3"
+                                    Grid.Row="0"
+                                    Grid.Column="2"
+                                    Margin="-5,5,15,5"
+                                    BackgroundColor="white"
+                                    ImageSource="icons8unlike20.png"
+                                    WidthRequest="100" />
+                            </Grid>
+                        </cornerBorder:PancakeView>
+                    </shadows:Shadows>
+                </StackLayout>
+            </StackLayout>
+        </AbsoluteLayout>
     </ContentPage.Content>
 </views:MvxContentPage>

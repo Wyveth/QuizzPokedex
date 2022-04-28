@@ -99,7 +99,7 @@
     <AndroidResource Include="Resources\mipmap-xxxhdpi\launcher_foreground.png" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Resources\drawable\" />
+    <AndroidResource Include="Resources\drawable\icons8filter20.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\QuizzPokedex.UI\QuizzPokedex.UI.csproj">
@@ -110,6 +110,15 @@
       <Project>{0B21D389-2BDE-4C66-B6BF-B74D6BA6B87C}</Project>
       <Name>QuizzPokedex</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\icons8unlike20.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\icons8search20.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\icons8like20.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <ProjectExtensions>
