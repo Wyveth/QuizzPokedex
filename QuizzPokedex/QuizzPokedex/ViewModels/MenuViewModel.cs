@@ -20,7 +20,7 @@ namespace QuizzPokedex.ViewModels
 
         private async Task LoadPokemonAsync()
         {
-            var result = await _PokemonService.GetAllNormalEvolutionAsync();
+            var result = await _PokemonService.GetAllNormalEvolutionAsync(Name);
             Pokemons = new MvxObservableCollection<Pokemon>(result);
         }
 
@@ -52,6 +52,7 @@ namespace QuizzPokedex.ViewModels
         }
         #endregion
 
+        #region PROPERTIES
         public MvxNotifyTask LoadPokemonTask { get; private set; }
 
         private MvxObservableCollection<Pokemon> _Pokemons;
@@ -60,5 +61,8 @@ namespace QuizzPokedex.ViewModels
             get { return _Pokemons; }
             set { SetProperty(ref _Pokemons, value); }
         }
+
+        private string Name { get; set; } = "";
+        #endregion
     }
 }

@@ -33,7 +33,7 @@ namespace QuizzPokedex.ViewModels
 
         private async Task LoadPokemonAsync()
         {
-            var resultPokemon = await _pokemonService.GetAllAsync();
+            var resultPokemon = await _pokemonService.GetAllNormalEvolutionAsync(NameFilter);
             Pokemons = new MvxObservableCollection<Pokemon>(resultPokemon);
         }
 
@@ -49,12 +49,19 @@ namespace QuizzPokedex.ViewModels
         public IMvxAsyncCommand<Pokemon> UpdatePokemonCommandAsync => new MvxAsyncCommand<Pokemon>(UpdatePokemonAsync);
         public IMvxAsyncCommand<Pokemon> DeletePokemonCommandAsync => new MvxAsyncCommand<Pokemon>(DeletePokemonAsync);
         public IMvxAsyncCommand<Pokemon> DetailsPokemonCommandAsync => new MvxAsyncCommand<Pokemon>(DetailsPokemonAsync);
+        public IMvxAsyncCommand<string> FilterByNameCommandAsync => new MvxAsyncCommand<string>(FilterByNameAsync);
 
         private async Task NavigationBackAsync()
         {
             await _navigation.Close(this);
         }
 
+        private async Task FilterByNameAsync(string name)
+        {
+            NameFilter = "Dracaufeu";
+            await LoadPokemonAsync();
+
+        }
         private async Task CreatePokemonAsync()
         {
             await _navigation.Navigate<PokemonViewModel, Pokemon>(new Pokemon());
@@ -108,6 +115,17 @@ namespace QuizzPokedex.ViewModels
             {
                 _selectedPokemon = value;
                 _ = DetailsPokemonAsync(_selectedPokemon);
+            }
+        }
+
+        private string _nameFilter = "";
+
+        public string NameFilter
+        {
+            get { return _nameFilter; }
+            set
+            {
+                _nameFilter = value;
             }
         }
         #endregion
