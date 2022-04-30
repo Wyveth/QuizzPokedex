@@ -43,8 +43,8 @@ namespace QuizzPokedex.Services
         {
             var result = await _database.Table<Pokemon>().Where(m => m.TypeEvolution.Equals(Constantes.NormalEvolution)).OrderBy(m => m.Number).ToListAsync();
 
-            //if(!string.IsNullOrEmpty(name))
-            //    result = result.FindAll(m => m.Name.ToLowerInvariant().Contains(name));
+            if(!string.IsNullOrEmpty(name))
+                result = result.FindAll(m => m.Name.ToLowerInvariant().Contains(name));
 
             return result;
         }

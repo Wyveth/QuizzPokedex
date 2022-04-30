@@ -16,7 +16,6 @@ namespace QuizzPokedex.ViewModels
 
         //creation de l'abonnement ici (pour rafraichir via un abonné)
         private readonly MvxSubscriptionToken _token;
-
         public PokedexViewModel(IMvxNavigationService navigation, IPokemonService pokemonService, ITypePokService typePokService, IMvxMessenger messenger)
         {
             _navigation = navigation;
@@ -33,7 +32,7 @@ namespace QuizzPokedex.ViewModels
 
         private async Task LoadPokemonAsync()
         {
-            var resultPokemon = await _pokemonService.GetAllNormalEvolutionAsync(NameFilter);
+            var resultPokemon = await _pokemonService.GetAllNormalEvolutionAsync(SearchText);
             Pokemons = new MvxObservableCollection<Pokemon>(resultPokemon);
         }
 
@@ -49,18 +48,16 @@ namespace QuizzPokedex.ViewModels
         public IMvxAsyncCommand<Pokemon> UpdatePokemonCommandAsync => new MvxAsyncCommand<Pokemon>(UpdatePokemonAsync);
         public IMvxAsyncCommand<Pokemon> DeletePokemonCommandAsync => new MvxAsyncCommand<Pokemon>(DeletePokemonAsync);
         public IMvxAsyncCommand<Pokemon> DetailsPokemonCommandAsync => new MvxAsyncCommand<Pokemon>(DetailsPokemonAsync);
-        public IMvxAsyncCommand<string> FilterByNameCommandAsync => new MvxAsyncCommand<string>(FilterByNameAsync);
+        public IMvxAsyncCommand FilterByNameCommandAsync => new MvxAsyncCommand(FilterByNameAsync);
 
         private async Task NavigationBackAsync()
         {
             await _navigation.Close(this);
         }
 
-        private async Task FilterByNameAsync(string name)
+        private async Task FilterByNameAsync()
         {
-            NameFilter = "Dracaufeu";
             await LoadPokemonAsync();
-
         }
         private async Task CreatePokemonAsync()
         {
@@ -118,15 +115,11 @@ namespace QuizzPokedex.ViewModels
             }
         }
 
-        private string _nameFilter = "";
-
-        public string NameFilter
+        private string _searchText;
+        public string SearchText
         {
-            get { return _nameFilter; }
-            set
-            {
-                _nameFilter = value;
-            }
+            get { return _searchText; }
+            set { if (_searchText != value) { _searchText = value; RaisePropertyChanged(() => SearchText); } }
         }
         #endregion
     }

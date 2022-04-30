@@ -13,7 +13,6 @@ namespace QuizzPokedex.UI.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PokedexView : MvxContentPage<PokedexViewModel>
     {
-        public string searchTest { get; set; }
         public PokedexViewModel ViewModel { get; set; }
         public PokedexView()
         {
@@ -70,9 +69,10 @@ namespace QuizzPokedex.UI.Views
             }
         }
 
-        private void lolilol_TextChanged(object sender, TextChangedEventArgs e)
+        private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
         {
-            searchTest = e.NewTextValue;
+            ViewModel.SearchText = e.NewTextValue;
+            ViewModel.FilterByNameCommandAsync.ExecuteAsync();
         }
     }
 }

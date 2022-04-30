@@ -23,7 +23,7 @@
         <AbsoluteLayout>
             <StackLayout x:Name="PokemonList">
                 <CollectionView
-                    ItemsSource="{Binding Pokemons}"
+                    ItemsSource="{Binding Pokemons, Mode=TwoWay}"
                     Scrolled="CollectionView_Scrolled"
                     SelectedItem="{Binding SelectedPokemon}"
                     SelectionMode="Single">
@@ -181,12 +181,12 @@
                                                            Thickness=0}"
                         CornerRadius="100,100,100,100">
                         <SearchBar
-                            x:Name="lolilol"
+                            x:Name="SearchBar"
                             FontSize="14"
                             HeightRequest="30"
                             SearchCommand="{Binding FilterByNameCommandAsync}"
-                            SearchCommandParameter="{Binding searchTest}"
-                            TextChanged="lolilol_TextChanged" />
+                            Text="{Binding SearchText}"
+                            TextChanged="SearchBar_TextChanged" />
                     </cornerBorder:PancakeView>
                 </shadows:Shadows>
             </StackLayout>
@@ -194,3 +194,12 @@
         </AbsoluteLayout>
     </ContentPage.Content>
 </views:MvxContentPage>
+
+<!--<SearchBar
+                            x:Name="SearchBar"
+                            FontSize="14"
+                            HeightRequest="30"
+                            SearchCommand="{Binding FilterByNameCommandAsync}"
+                            SearchCommandParameter="{Binding Text, Source={x:Reference SearchBar}}"
+                            TextChanged="SearchBar_TextChanged"
+                            />-->
