@@ -21,9 +21,10 @@
 
     <ContentPage.Content>
         <AbsoluteLayout>
-            <StackLayout x:Name="PokemonList">
+            <StackLayout>
                 <CollectionView
-                    ItemsSource="{Binding Pokemons, Mode=TwoWay}"
+                    x:Name="PokemonList"
+                    ItemsSource="{Binding Pokemons}"
                     Scrolled="CollectionView_Scrolled"
                     SelectedItem="{Binding SelectedPokemon}"
                     SelectionMode="Single">
@@ -157,7 +158,7 @@
             </StackLayout>
             <StackLayout
                 x:Name="searchFilter"
-                AbsoluteLayout.LayoutBounds="0.5,0.02,0.7,0.07"
+                AbsoluteLayout.LayoutBounds="0.5,0.02,0.8,0.07"
                 AbsoluteLayout.LayoutFlags="All"
                 HorizontalOptions="CenterAndExpand">
                 <shadows:Shadows Margin="30,0,30,50" CornerRadius="20">
@@ -184,6 +185,7 @@
                             x:Name="SearchBar"
                             FontSize="14"
                             HeightRequest="30"
+                            Placeholder="Rechercher un pokémon..."
                             SearchCommand="{Binding FilterByNameCommandAsync}"
                             Text="{Binding SearchText}"
                             TextChanged="SearchBar_TextChanged" />

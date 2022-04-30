@@ -13,16 +13,10 @@ namespace QuizzPokedex.UI.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PokedexView : MvxContentPage<PokedexViewModel>
     {
-        public PokedexViewModel ViewModel { get; set; }
+        //public PokedexViewModel ViewModel { get; set; }
         public PokedexView()
         {
             InitializeComponent();
-
-            // creating viewmodel
-            var _viewModelLoader = Mvx.IoCProvider.Resolve<IMvxViewModelLoader>();
-            var request = new MvxViewModelInstanceRequest(typeof(PokedexViewModel));
-            request.ViewModelInstance = _viewModelLoader.LoadViewModel(request, null);
-            ViewModel = request.ViewModelInstance as PokedexViewModel;
         }
 
         private void CollectionView_Scrolled(object sender, ItemsViewScrolledEventArgs e)
@@ -71,8 +65,13 @@ namespace QuizzPokedex.UI.Views
 
         private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
         {
-            ViewModel.SearchText = e.NewTextValue;
-            ViewModel.FilterByNameCommandAsync.ExecuteAsync();
+            // creating viewmodel
+            //var _viewModelLoader = Mvx.IoCProvider.Resolve<IMvxViewModelLoader>();
+            //var request = new MvxViewModelInstanceRequest(typeof(PokedexViewModel));
+            //request.ViewModelInstance = _viewModelLoader.LoadViewModel(request, null);
+            //ViewModel = request.ViewModelInstance as PokedexViewModel;
+            //ViewModel.SearchText = e.NewTextValue;
+            //ViewModel.FilterByNameCommandAsync.ExecuteAsync();
         }
     }
 }

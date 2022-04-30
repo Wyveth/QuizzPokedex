@@ -21,7 +21,6 @@ namespace QuizzPokedex.ViewModels
             _navigation = navigation;
             _pokemonService = pokemonService;
             _typePokService = typePokService;
-            _token = messenger.Subscribe<MessageRefresh>(RefreshAsync);
         }
 
         public override async Task Initialize()
@@ -34,12 +33,6 @@ namespace QuizzPokedex.ViewModels
         {
             var resultPokemon = await _pokemonService.GetAllNormalEvolutionAsync(SearchText);
             Pokemons = new MvxObservableCollection<Pokemon>(resultPokemon);
-        }
-
-        private async void RefreshAsync(MessageRefresh msg)
-        {
-            if (msg.Refresh)
-                await LoadPokemonAsync();
         }
 
         #region COMMAND
@@ -93,7 +86,10 @@ namespace QuizzPokedex.ViewModels
         public MvxObservableCollection<Pokemon> Pokemons
         {
             get { return _pokemons; }
-            set { SetProperty(ref _pokemons, value); }
+            set { 
+                SetProperty(ref _pokemons, value);
+                RaisePropertyChanged(() => Pokemons);
+            }
         }
 
         private MvxObservableCollection<TypePok> _typesPok;
@@ -119,7 +115,13 @@ namespace QuizzPokedex.ViewModels
         public string SearchText
         {
             get { return _searchText; }
-            set { if (_searchText != value) { _searchText = value; RaisePropertyChanged(() => SearchText); } }
+            set { 
+                if (_searchText != value) { 
+                    _searchText = value; 
+                    RaisePropertyChanged(() => SearchText);
+                    FilterByNameAsync();
+                } 
+            }
         }
         #endregion
     }
