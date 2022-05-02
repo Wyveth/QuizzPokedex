@@ -65,13 +65,7 @@ namespace QuizzPokedex.UI.Views
 
         private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
         {
-            // creating viewmodel
-            //var _viewModelLoader = Mvx.IoCProvider.Resolve<IMvxViewModelLoader>();
-            //var request = new MvxViewModelInstanceRequest(typeof(PokedexViewModel));
-            //request.ViewModelInstance = _viewModelLoader.LoadViewModel(request, null);
-            //ViewModel = request.ViewModelInstance as PokedexViewModel;
-            //ViewModel.SearchText = e.NewTextValue;
-            //ViewModel.FilterByNameCommandAsync.ExecuteAsync();
+
         }
     }
 }

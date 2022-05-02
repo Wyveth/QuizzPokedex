@@ -18,6 +18,7 @@ namespace QuizzPokedex.Services
 {
     public class PokemonService : IPokemonService
     {
+        #region Properties
         private const int _downloadImageTimeoutInSeconds = 15;
 
         private readonly ISqliteConnectionService _connectionService;
@@ -25,13 +26,18 @@ namespace QuizzPokedex.Services
         private readonly HttpClient _httpClient = new HttpClient { Timeout = TimeSpan.FromSeconds(_downloadImageTimeoutInSeconds) };
 
         private SQLite.SQLiteAsyncConnection _database => _connectionService.GetAsyncConnection();
+        #endregion
 
+        #region Constructor
         public PokemonService(ISqliteConnectionService connectionService, ITypePokService typePokService)
         {
             _connectionService = connectionService;
             _typePokService = typePokService;
         }
+        #endregion
 
+        #region Public Methods
+        #region Get Data
         public async Task<List<Pokemon>> GetAllAsync()
         {
             var result = await _database.Table<Pokemon>().OrderBy(m => m.Number).ToListAsync();
@@ -39,22 +45,61 @@ namespace QuizzPokedex.Services
             return result;
         }
 
-        public async Task<List<Pokemon>> GetAllNormalEvolutionAsync(string filter)
+        public async Task<List<Pokemon>> GetAllWithoutVariantAsync(string filter)
         {
             var result = await _database.Table<Pokemon>().Where(m => m.TypeEvolution.Equals(Constantes.NormalEvolution)).OrderBy(m => m.Number).ToListAsync();
 
-            if(!string.IsNullOrEmpty(filter))
+            if (!string.IsNullOrEmpty(filter))
                 result = result.FindAll(m => m.Name.ToLowerInvariant().Contains(filter) || m.Number.ToLowerInvariant().Contains(filter));
 
             return result;
         }
 
-        public async Task<Pokemon> GetByNameAsync(string libelle)
+        public async Task<List<Pokemon>> GetFamilyWithoutVariantAsync(string family)
         {
-            var result = await _database.Table<Pokemon>().ToListAsync();
-            return result.Find(m => m.Name.Equals(libelle));
+            string[] vs = family.Split(',');
+            List<Pokemon> result = new List<Pokemon>();
+
+            foreach (var item in vs)
+            {
+                Pokemon pokemon = await GetByIdAsync(item);
+                if (pokemon != null)
+                    result.Add(pokemon);
+            }
+
+            return result;
         }
 
+        public async Task<List<Pokemon>> GetAllVariantAsync(string number, string typeEvolution)
+        {
+            var result = await _database.Table<Pokemon>().Where(m => m.Number.Equals(number) && m.TypeEvolution.Equals(typeEvolution)).OrderBy(m => m.Number).ToListAsync();
+            return result;
+        }
+
+        public async Task<Pokemon> GetByIdAsync(string identifiant)
+        {
+            int id = int.Parse(identifiant);
+            return await _database.Table<Pokemon>().Where(m => m.Id.Equals(id)).FirstAsync();
+        }
+
+        public async Task<Pokemon> GetByNameAsync(string libelle)
+        {
+            List<Pokemon> pokemons = await _database.Table<Pokemon>().ToListAsync();
+
+            Pokemon result = pokemons.Find(m => m.Name.Equals(libelle));
+
+            if (result != null)
+            {
+                return result;
+            }
+            else
+            {
+                return result = pokemons.Find(m => m.Name.Contains(libelle.Split(' ')[0]) && m.TypeEvolution.Equals(Constantes.NormalEvolution));
+            }
+        }
+        #endregion
+
+        #region CRUD
         public async Task<int> CreateAsync(Pokemon Pokemon)
         {
             var result = await _database.InsertAsync(Pokemon);
@@ -78,7 +123,10 @@ namespace QuizzPokedex.Services
             var result = await _database.Table<Pokemon>().CountAsync();
             return result;
         }
+        #endregion
+        #endregion
 
+        #region Populate Database
         public async void Populate()
         {
             AssetManager assets = Android.App.Application.Context.Assets;
@@ -88,7 +136,7 @@ namespace QuizzPokedex.Services
                 json = sr.ReadToEnd();
             }
 
-            Task.Delay(3000).Wait();
+            Task.Delay(4000).Wait();
 
             List<PokemonJson> pokemonsJson = JsonConvert.DeserializeObject<List<PokemonJson>>(json);
             foreach (PokemonJson pokemonJson in pokemonsJson)
@@ -96,7 +144,36 @@ namespace QuizzPokedex.Services
                 Pokemon pokemon = await ConvertPokemonJsonInPokemon(pokemonJson);
                 _ = CreateAsync(pokemon);
 
-                Debug.Write(pokemon.Number + "" + pokemon.Name);
+                Debug.Write("Creation:" + pokemon.Number + " - " + pokemon.Name);
+            }
+        }
+
+        public async void PopulateUpdateEvolution()
+        {
+            AssetManager assets = Android.App.Application.Context.Assets;
+            string json;
+            using (StreamReader sr = new StreamReader(assets.Open("PokeScrap.json")))
+            {
+                json = sr.ReadToEnd();
+            }
+
+            List<PokemonJson> pokemonsJson = JsonConvert.DeserializeObject<List<PokemonJson>>(json);
+            foreach (PokemonJson pokemonJson in pokemonsJson)
+            {
+                int i = int.Parse(pokemonJson.Number);
+                try
+                {
+                    Pokemon pokemon = await UpdateEvolutionWithJson(pokemonJson);
+
+                    if (pokemon != null)
+                        _ = UpdateAsync(pokemon);
+
+                    Debug.Write("Update: " + pokemonJson.Number + " - " + pokemonJson.Name);
+                }
+                catch
+                {
+                    Debug.Write("Update Error: " + pokemonJson.Number + " - " + pokemonJson.Name);
+                }
             }
         }
 
@@ -106,11 +183,12 @@ namespace QuizzPokedex.Services
 
             pokemon.Number = pokemonJson.Number;
             pokemon.Name = pokemonJson.Name;
+            pokemon.DisplayName = pokemonJson.DisplayName;
             pokemon.DescriptionVx = pokemonJson.DescriptionVx;
             pokemon.DescriptionVy = pokemonJson.DescriptionVy;
             pokemon.UrlImg = pokemonJson.UrlImg;
             pokemon.DataImg = await DownloadImageAsync(pokemonJson.UrlImg);
-            
+
             pokemon.UrlSprite = pokemonJson.UrlSprite;
             pokemon.DataSprite = await DownloadImageAsync(pokemonJson.UrlSprite);
 
@@ -162,24 +240,29 @@ namespace QuizzPokedex.Services
         public async Task<Pokemon> UpdateEvolutionWithJson(PokemonJson pokemonJson)
         {
             Pokemon pokemonUpdate = await GetByNameAsync(pokemonJson.Name);
-            string[] evolutionsTab = pokemonJson.Evolutions.Split(',');
 
-            int i = 0;
-            foreach (string item in evolutionsTab)
+            if (!string.IsNullOrEmpty(pokemonJson.Evolutions))
             {
-                Pokemon pokemon = await GetByNameAsync(item);
-                if (i == 0)
-                {
-                    pokemonUpdate.Evolutions = pokemon.Id.ToString();
-                    i++;
-                }
-                else
-                {
-                    pokemonUpdate.Evolutions += ',' + pokemon.Id.ToString();
-                }
-            }
+                string[] evolutionsTab = pokemonJson.Evolutions.Split(',');
 
-            return pokemonUpdate;
+                int i = 0;
+                foreach (string item in evolutionsTab)
+                {
+                    Pokemon pokemon = await GetByNameAsync(item);
+                    if (i == 0)
+                    {
+                        pokemonUpdate.Evolutions = pokemon.Id.ToString();
+                        i++;
+                    }
+                    else
+                    {
+                        pokemonUpdate.Evolutions += ',' + pokemon.Id.ToString();
+                    }
+                }
+                return pokemonUpdate;
+            }
+            else
+                return null;
         }
 
         public async Task<byte[]> DownloadImageAsync(string imageUrl)
@@ -205,5 +288,6 @@ namespace QuizzPokedex.Services
                 return null;
             }
         }
+        #endregion
     }
 }

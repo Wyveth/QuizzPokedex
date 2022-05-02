@@ -1,14 +1,32 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<views:MvxContentPage x:TypeArguments="viewmodel:PokemonViewModel"
-             xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="QuizzPokedex.UI.Views.PokemonView"
-             NavigationPage.HasNavigationBar="False"      
-             xmlns:viewmodel="clr-namespace:QuizzPokedex.ViewModels;assembly=QuizzPokedex"
-             xmlns:views="clr-namespace:MvvmCross.Forms.Views;assembly=MvvmCross.Forms">
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<views:MvxContentPage
+    x:Class="QuizzPokedex.UI.Views.PokemonView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:QuizzPokedex.UI.Converters"
+    xmlns:cornerBorder="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+    xmlns:shadows="http://sharpnado.com"
+    xmlns:viewmodel="clr-namespace:QuizzPokedex.ViewModels;assembly=QuizzPokedex"
+    xmlns:views="clr-namespace:MvvmCross.Forms.Views;assembly=MvvmCross.Forms"
+    xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+    x:TypeArguments="viewmodel:PokemonViewModel"
+    NavigationPage.HasNavigationBar="False">
+
+    <views:MvxContentPage.Resources>
+        <ResourceDictionary>
+            <converters:ByteToImageSourceConverter x:Key="ByteToImageSourceConverter" />
+        </ResourceDictionary>
+    </views:MvxContentPage.Resources>
     <ContentPage.Content>
-      <StackLayout>
-          <Label Text="Hello Xamarin.Forms!" />
-      </StackLayout>
-  </ContentPage.Content>
+        <AbsoluteLayout>
+            <Image
+                AbsoluteLayout.LayoutBounds="0,0,1,0.55"
+                AbsoluteLayout.LayoutFlags="HeightProportional, WidthProportional"
+                Source="{Binding FirstType.DataFondGo, Converter={StaticResource ByteToImageSourceConverter}}" />
+            <StackLayout
+                AbsoluteLayout.LayoutBounds="0,1,0,1"
+                AbsoluteLayout.LayoutFlags="All"
+                HorizontalOptions="CenterAndExpand" />
+        </AbsoluteLayout>
+    </ContentPage.Content>
 </views:MvxContentPage>

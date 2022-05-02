@@ -14,6 +14,9 @@ namespace QuizzPokedex.Models
         //Nom du Pokémon
         public string Name { get; set; }
 
+        //Nom Affiché
+        public string DisplayName { get; set; }
+
         //Description du Pokémon Version X
         public string DescriptionVx { get; set; }
 

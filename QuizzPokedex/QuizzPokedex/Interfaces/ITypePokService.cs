@@ -10,6 +10,8 @@ namespace QuizzPokedex.Interfaces
     {
         void Populate();
         Task<List<TypePok>> GetAllAsync();
+        Task<List<TypePok>> GetTypesAsync(string types);
+        Task<TypePok> GetByIdAsync(string identifiant);
         Task<TypePok> GetByNameAsync(string libelle);
         Task<int> CreateAsync(TypePok typePok);
         Task<int> DeleteAsync(TypePok typePok);

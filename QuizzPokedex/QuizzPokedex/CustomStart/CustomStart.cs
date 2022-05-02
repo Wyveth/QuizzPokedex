@@ -62,8 +62,9 @@ namespace QuizzPokedex.CustomStart
             {
                 if (nbPokemon.Equals(0))
                     _pokemonService.Populate();
+                //else 
+                    //_pokemonService.PopulateUpdateEvolution();
             });
-
         }
     }
 }

@@ -16,31 +16,57 @@ namespace QuizzPokedex.Services
 {
     public class TypePokService : ITypePokService
     {
+        #region Properties
         private const int _downloadImageTimeoutInSeconds = 15;
 
         private readonly ISqliteConnectionService _connectionService;
         private SQLite.SQLiteAsyncConnection _database => _connectionService.GetAsyncConnection();
         private readonly HttpClient _httpClient = new HttpClient { Timeout = TimeSpan.FromSeconds(_downloadImageTimeoutInSeconds) };
+        #endregion
 
+        #region Constructor
         public TypePokService(ISqliteConnectionService connectionService)
         {
             _connectionService = connectionService;
         }
+        #endregion
 
+        #region Public Methods
+        #region Get Data
         public async Task<List<TypePok>> GetAllAsync()
         {
             var result = await _database.Table<TypePok>().ToListAsync();
             return result;
         }
 
+        public async Task<List<TypePok>> GetTypesAsync(string types)
+        {
+            string[] vs = types.Split(',');
+            List<TypePok> result = new List<TypePok>();
+            foreach (var item in vs)
+            {
+                TypePok typePok = await GetByIdAsync(item);
+                if(typePok != null)
+                    result.Add(typePok);
+            }
+
+            return result;
+        }
+        public async Task<TypePok> GetByIdAsync(string identifiant)
+        {
+            int id = int.Parse(identifiant);
+            var result = await _database.Table<TypePok>().ToListAsync();
+            return result.Find(m => m.Id.Equals(id));
+        }
+
         public async Task<TypePok> GetByNameAsync(string libelle)
         {
-            //return await _database.Table<TypePok>().Where(m => m.Name.Equals(libelle)).FirstAsync();
-
             var result = await _database.Table<TypePok>().ToListAsync();
             return result.Find(m => m.Name.Equals(libelle));
         }
+        #endregion
 
+        #region CRUD
         public async Task<int> CreateAsync(TypePok typePok)
         {
             var result = await _database.InsertAsync(typePok);
@@ -64,7 +90,10 @@ namespace QuizzPokedex.Services
             var result = await _database.Table<TypePok>().CountAsync();
             return result;
         }
+        #endregion
+        #endregion
 
+        #region Populate Database
         public async void Populate()
         {
             List<TypePok> typesPok = new List<TypePok>();
@@ -125,5 +154,6 @@ namespace QuizzPokedex.Services
                 return null;
             }
         }
+        #endregion
     }
 }

@@ -61,7 +61,7 @@
                                         FontAttributes="Bold"
                                         FontSize="12"
                                         HorizontalOptions="Center"
-                                        Text="{Binding Name}"
+                                        Text="{Binding DisplayName}"
                                         TextColor="Black"
                                         VerticalOptions="Center" />
                                     <Label
@@ -123,9 +123,8 @@
                                 <RowDefinition Height="35" />
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="40" />
-                                <ColumnDefinition Width="40" />
-                                <ColumnDefinition Width="33" />
+                                <ColumnDefinition Width="55" />
+                                <ColumnDefinition Width="55" />
                             </Grid.ColumnDefinitions>
 
                             <Button
@@ -137,17 +136,9 @@
                                 ImageSource="icons8filter20.png"
                                 WidthRequest="100" />
                             <Button
-                                x:Name="test2"
-                                Grid.Row="0"
-                                Grid.Column="1"
-                                Margin="5,5,5,5"
-                                BackgroundColor="white"
-                                ImageSource="icons8search20.png"
-                                WidthRequest="100" />
-                            <Button
                                 x:Name="test3"
                                 Grid.Row="0"
-                                Grid.Column="2"
+                                Grid.Column="1"
                                 Margin="-5,5,15,5"
                                 BackgroundColor="white"
                                 ImageSource="icons8unlike20.png"
@@ -196,12 +187,3 @@
         </AbsoluteLayout>
     </ContentPage.Content>
 </views:MvxContentPage>
-
-<!--<SearchBar
-                            x:Name="SearchBar"
-                            FontSize="14"
-                            HeightRequest="30"
-                            SearchCommand="{Binding FilterByNameCommandAsync}"
-                            SearchCommandParameter="{Binding Text, Source={x:Reference SearchBar}}"
-                            TextChanged="SearchBar_TextChanged"
-                            />-->
