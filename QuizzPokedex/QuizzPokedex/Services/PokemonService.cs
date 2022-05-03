@@ -62,7 +62,8 @@ namespace QuizzPokedex.Services
 
             foreach (var item in vs)
             {
-                Pokemon pokemon = await GetByIdAsync(item);
+                //Pokemon pokemon = await GetByIdAsync(item);
+                Pokemon pokemon = await GetByNameAsync(item);
                 if (pokemon != null)
                     result.Add(pokemon);
             }
@@ -118,16 +119,34 @@ namespace QuizzPokedex.Services
             return result;
         }
 
-        public async Task<int> GetNumberAsync()
+        public async Task<int> GetNumberInDbAsync()
         {
             var result = await _database.Table<Pokemon>().CountAsync();
+            return result;
+        }
+
+        public int GetNumberPokJsonAsync()
+        {
+            AssetManager assets = Android.App.Application.Context.Assets;
+            string json;
+            using (StreamReader sr = new StreamReader(assets.Open("PokeScrap.json")))
+            {
+                json = sr.ReadToEnd();
+            }
+
+            return JsonConvert.DeserializeObject<List<PokemonJson>>(json).Count;
+        }
+
+        public async Task<int> GetNumberPokUpdateAsync()
+        {
+            var result = await _database.Table<Pokemon>().Where(m => m.Updated.Equals(false)).CountAsync();
             return result;
         }
         #endregion
         #endregion
 
         #region Populate Database
-        public async void Populate()
+        private List<PokemonJson> GetListPokeScrapJson()
         {
             AssetManager assets = Android.App.Application.Context.Assets;
             string json;
@@ -136,28 +155,35 @@ namespace QuizzPokedex.Services
                 json = sr.ReadToEnd();
             }
 
-            Task.Delay(4000).Wait();
+            return JsonConvert.DeserializeObject<List<PokemonJson>>(json);
+        }
 
-            List<PokemonJson> pokemonsJson = JsonConvert.DeserializeObject<List<PokemonJson>>(json);
+        public async void Populate(int countInsertPokemon)
+        {
+            List<PokemonJson> pokemonsJson = GetListPokeScrapJson();
+
+            Task.Delay(4000).Wait();
+            int countPokemonJson = 0;
+
             foreach (PokemonJson pokemonJson in pokemonsJson)
             {
-                Pokemon pokemon = await ConvertPokemonJsonInPokemon(pokemonJson);
-                _ = CreateAsync(pokemon);
+                countPokemonJson++;
 
-                Debug.Write("Creation:" + pokemon.Number + " - " + pokemon.Name);
+                if (countPokemonJson > countInsertPokemon)
+                {
+                    Pokemon pokemon = await ConvertPokemonJsonInPokemon(pokemonJson);
+                    _ = CreateAsync(pokemon);
+
+                    Debug.Write("Creation:" + pokemon.Number + " - " + pokemon.Name);
+                }
             }
         }
 
         public async void PopulateUpdateEvolution()
         {
-            AssetManager assets = Android.App.Application.Context.Assets;
-            string json;
-            using (StreamReader sr = new StreamReader(assets.Open("PokeScrap.json")))
-            {
-                json = sr.ReadToEnd();
-            }
+            List<PokemonJson> pokemonsJson = GetListPokeScrapJson();
+            Task.Delay(7000).Wait();
 
-            List<PokemonJson> pokemonsJson = JsonConvert.DeserializeObject<List<PokemonJson>>(json);
             foreach (PokemonJson pokemonJson in pokemonsJson)
             {
                 int i = int.Parse(pokemonJson.Number);
@@ -230,9 +256,11 @@ namespace QuizzPokedex.Services
                 }
             }
 
+            pokemon.Evolutions = pokemonJson.Evolutions;
             pokemon.TypeEvolution = pokemonJson.TypeEvolution;
             pokemon.Generation = pokemonJson.Generation;
             pokemon.NextUrl = pokemonJson.NextUrl;
+            pokemon.Updated = false;
 
             return pokemon;
         }
@@ -240,6 +268,9 @@ namespace QuizzPokedex.Services
         public async Task<Pokemon> UpdateEvolutionWithJson(PokemonJson pokemonJson)
         {
             Pokemon pokemonUpdate = await GetByNameAsync(pokemonJson.Name);
+
+            if (pokemonUpdate.Updated)
+                return null;
 
             if (!string.IsNullOrEmpty(pokemonJson.Evolutions))
             {
@@ -259,6 +290,9 @@ namespace QuizzPokedex.Services
                         pokemonUpdate.Evolutions += ',' + pokemon.Id.ToString();
                     }
                 }
+
+                pokemonUpdate.Updated = true;
+
                 return pokemonUpdate;
             }
             else

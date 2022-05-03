@@ -14,11 +14,13 @@ namespace QuizzPokedex.Models
         public int Id { get; set; }
 
         //Numéro du Pokémon
+        [Indexed]
         public string Number { get; set; }
 
         //Nom du Pokémon
         public string Name { get; set; }
 
+        [Indexed]
         //Nom Affiché
         public string DisplayName { get; set; }
 
@@ -68,5 +70,8 @@ namespace QuizzPokedex.Models
 
         //Prochain Pokémon
         public string NextUrl { get; set; }
+
+        //Update Bool
+        public bool Updated { get; set; }
     }
 }

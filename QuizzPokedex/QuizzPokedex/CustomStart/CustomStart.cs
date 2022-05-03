@@ -56,14 +56,17 @@ namespace QuizzPokedex.CustomStart
                     _typePokService.Populate();
             });
 
-            int nbPokemon = await _pokemonService.GetNumberAsync();
+            int nbPokMax = _pokemonService.GetNumberPokJsonAsync();
+            int nbPok = await _pokemonService.GetNumberInDbAsync();
+            int nbPokNotUpdated = await _pokemonService.GetNumberPokUpdateAsync();
 
             await Task.Run(() =>
             {
-                if (nbPokemon.Equals(0))
-                    _pokemonService.Populate();
-                //else 
-                    //_pokemonService.PopulateUpdateEvolution();
+                if(!nbPok.Equals(nbPokMax))
+                    _pokemonService.Populate(nbPok);
+
+                if (!nbPokNotUpdated.Equals(0))
+                    _pokemonService.PopulateUpdateEvolution();
             });
         }
     }

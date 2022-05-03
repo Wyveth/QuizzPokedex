@@ -33,7 +33,7 @@
                     </CollectionView.ItemsLayout>
 
                     <CollectionView.Header>
-                        <StackLayout Padding="0,30" />
+                        <StackLayout Padding="0,35" />
                     </CollectionView.Header>
 
                     <CollectionView.ItemTemplate>
@@ -175,7 +175,7 @@
                         <SearchBar
                             x:Name="SearchBar"
                             FontSize="14"
-                            HeightRequest="30"
+                            HeightRequest="35"
                             Placeholder="Rechercher un pokémon..."
                             SearchCommand="{Binding FilterByNameCommandAsync}"
                             Text="{Binding SearchText}"
@@ -183,7 +183,6 @@
                     </cornerBorder:PancakeView>
                 </shadows:Shadows>
             </StackLayout>
-
         </AbsoluteLayout>
     </ContentPage.Content>
 </views:MvxContentPage>

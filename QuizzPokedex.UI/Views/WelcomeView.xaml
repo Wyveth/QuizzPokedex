@@ -1,66 +1,113 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<views:MvxContentPage x:TypeArguments="viewmodel:WelcomeViewModel"
-             xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="QuizzPokedex.UI.Views.WelcomeView"
-             xmlns:views="clr-namespace:MvvmCross.Forms.Views;assembly=MvvmCross.Forms"
-             NavigationPage.HasNavigationBar="False"             
-             xmlns:shadows="http://sharpnado.com"         
-             xmlns:animation="clr-namespace:Lottie.Forms;assembly=Lottie.Forms" 
-             xmlns:viewmodel="clr-namespace:QuizzPokedex.ViewModels;assembly=QuizzPokedex"
-             xmlns:cornerBorder="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
-             BackgroundColor="#FFFFFF">
+<views:MvxContentPage
+    x:Class="QuizzPokedex.UI.Views.WelcomeView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:animation="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
+    xmlns:cornerBorder="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+    xmlns:shadows="http://sharpnado.com"
+    xmlns:viewmodel="clr-namespace:QuizzPokedex.ViewModels;assembly=QuizzPokedex"
+    xmlns:views="clr-namespace:MvvmCross.Forms.Views;assembly=MvvmCross.Forms"
+    x:TypeArguments="viewmodel:WelcomeViewModel"
+    BackgroundColor="#FFFFFF"
+    NavigationPage.HasNavigationBar="False">
     <ContentPage.Content>
-        <Grid ColumnSpacing="0" RowSpacing="0" Margin="20,20,20,20">
+        <Grid
+            Margin="20,20,20,20"
+            ColumnSpacing="0"
+            RowSpacing="0">
             <Grid.RowDefinitions>
-                <RowDefinition Height=".2*"/>
-                <RowDefinition Height="75*"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="25*"/>
+                <RowDefinition Height=".2*" />
+                <RowDefinition Height="75*" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="25*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <animation:AnimationView Grid.Row="1" Grid.Column="1"  Grid.ColumnSpan="2"  Animation="Resources.96855-pokeball-loading-animation.json" AnimationSource="EmbeddedResource"
-                RepeatMode="Infinite" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
+            <animation:AnimationView
+                Grid.Row="1"
+                Grid.Column="1"
+                Grid.ColumnSpan="2"
+                Animation="Resources.96855-pokeball-loading-animation.json"
+                AnimationSource="EmbeddedResource"
+                HorizontalOptions="FillAndExpand"
+                RepeatMode="Infinite"
+                VerticalOptions="FillAndExpand" />
 
-            <shadows:Shadows x:Name="BtnQuizz" Grid.Column="1" CornerRadius="20" Grid.Row="4" Grid.RowSpan="2" Margin="30,0,30,50">
+            <shadows:Shadows
+                x:Name="BtnQuizz"
+                Grid.Row="4"
+                Grid.RowSpan="2"
+                Grid.Column="1"
+                Margin="30,0,30,50"
+                CornerRadius="20">
                 <shadows:Shadows.Shades>
                     <shadows:ImmutableShades>
-                        <shadows:Shade BlurRadius="10"
-                      Opacity="0.5"
-                      Offset="-10,-10"
-                      Color="#F75E6D" />
-                        <shadows:Shade BlurRadius="10"
-                      Opacity="0.5"
-                      Offset="10,10"
-                      Color="#464C56" />
+                        <shadows:Shade
+                            BlurRadius="10"
+                            Opacity="0.5"
+                            Offset="-10,-10"
+                            Color="#F75E6D" />
+                        <shadows:Shade
+                            BlurRadius="10"
+                            Opacity="0.5"
+                            Offset="10,10"
+                            Color="#464C56" />
                     </shadows:ImmutableShades>
                 </shadows:Shadows.Shades>
-                <cornerBorder:PancakeView CornerRadius="20,20,20,20" Border="{cornerBorder:BorderMarkup Color=Gray, Thickness=1}" BackgroundColor="White">
-                    <Button Text="Quizz" TextTransform="None" FontFamily="Montserrat-SemiBold"  FontSize="20" BackgroundColor="Transparent" TextColor="#F75E6D"
-                        Command="{Binding NavigationQuizzCommandAsync}"/>
+                <cornerBorder:PancakeView
+                    BackgroundColor="White"
+                    Border="{cornerBorder:BorderMarkup Color=Gray,
+                                                       Thickness=1}"
+                    CornerRadius="20,20,20,20">
+                    <Button
+                        BackgroundColor="Transparent"
+                        Command="{Binding NavigationQuizzCommandAsync}"
+                        FontFamily="Montserrat-SemiBold"
+                        FontSize="20"
+                        Text="Quizz"
+                        TextColor="#F75E6D"
+                        TextTransform="None" />
                 </cornerBorder:PancakeView>
             </shadows:Shadows>
-            <shadows:Shadows x:Name="BtnPokedex" Grid.Column="2"  CornerRadius="20" Grid.Row="4" Grid.RowSpan="2" Margin="30,0,30,50">
+            <shadows:Shadows
+                x:Name="BtnPokedex"
+                Grid.Row="4"
+                Grid.RowSpan="2"
+                Grid.Column="2"
+                Margin="30,0,30,50"
+                CornerRadius="20">
                 <shadows:Shadows.Shades>
-                <shadows:ImmutableShades>
-                    <shadows:Shade BlurRadius="10"
-                      Opacity="0.5"
-                      Offset="-10,-10"
-                      Color="#F75E6D" />
-                    <shadows:Shade BlurRadius="10"
-                      Opacity="0.5"
-                      Offset="10,10"
-                      Color="#464C56" />
-                </shadows:ImmutableShades>
+                    <shadows:ImmutableShades>
+                        <shadows:Shade
+                            BlurRadius="10"
+                            Opacity="0.5"
+                            Offset="-10,-10"
+                            Color="#F75E6D" />
+                        <shadows:Shade
+                            BlurRadius="10"
+                            Opacity="0.5"
+                            Offset="10,10"
+                            Color="#464C56" />
+                    </shadows:ImmutableShades>
                 </shadows:Shadows.Shades>
-                <cornerBorder:PancakeView CornerRadius="20,20,20,20" Border="{cornerBorder:BorderMarkup Color=Gray, Thickness=1}" BackgroundColor="White">
-                    <Button Text="Pokédex" TextTransform="None" FontFamily="Montserrat-SemiBold" FontSize="20" BackgroundColor="Transparent" TextColor="#F75E6D"
-                        Command="{Binding NavigationPokedexCommandAsync}" />
+                <cornerBorder:PancakeView
+                    BackgroundColor="White"
+                    Border="{cornerBorder:BorderMarkup Color=Gray,
+                                                       Thickness=1}"
+                    CornerRadius="20,20,20,20">
+                    <Button
+                        BackgroundColor="Transparent"
+                        Command="{Binding NavigationPokedexCommandAsync}"
+                        FontFamily="Montserrat-SemiBold"
+                        FontSize="20"
+                        Text="Pokédex"
+                        TextColor="#F75E6D"
+                        TextTransform="None" />
                 </cornerBorder:PancakeView>
             </shadows:Shadows>
         </Grid>

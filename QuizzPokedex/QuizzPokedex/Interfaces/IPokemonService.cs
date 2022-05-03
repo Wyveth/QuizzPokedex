@@ -8,7 +8,7 @@ namespace QuizzPokedex.Interfaces
 {
     public interface IPokemonService
     {
-        void Populate();
+        void Populate(int countInsertPokemon);
         void PopulateUpdateEvolution();
         Task<List<Pokemon>> GetAllAsync();
         Task<List<Pokemon>> GetAllWithoutVariantAsync(string filter);
@@ -19,7 +19,9 @@ namespace QuizzPokedex.Interfaces
         Task<int> CreateAsync(Pokemon pokemon);
         Task<int> DeleteAsync(Pokemon pokemon);
         Task<int> UpdateAsync(Pokemon pokemon);
-        Task<int> GetNumberAsync();
+        int GetNumberPokJsonAsync();
+        Task<int> GetNumberInDbAsync();
+        Task<int> GetNumberPokUpdateAsync();
         Task<byte[]> DownloadImageAsync(string UrlImg);
     }
 }
