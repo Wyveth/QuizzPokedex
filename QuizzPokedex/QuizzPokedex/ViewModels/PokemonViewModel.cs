@@ -73,43 +73,36 @@ namespace QuizzPokedex.ViewModels
         {
             var resultFamilyEvolution = await _pokemonService.GetFamilyWithoutVariantAsync(Pokemon.Evolutions);
             FamilyEvolIsVisible = GetVisible(resultFamilyEvolution.Count);
-            CountFamilyEvol = GetNbSpan(resultFamilyEvolution.Count);//Check
-            HeightFamilyEvol = GetHeightSection(resultFamilyEvolution.Count);//Check
+            CountFamilyEvol = GetNbSpan(resultFamilyEvolution.Count);
+            HeightFamilyEvol = GetHeightSection(resultFamilyEvolution.Count);
             FamilyEvolution = new MvxObservableCollection<Pokemon>(resultFamilyEvolution);
 
             var resultMegaEvolution = await _pokemonService.GetAllVariantAsync(Pokemon.Number, Constantes.MegaEvolution);
-            if (resultMegaEvolution.Count != 0)
-                MegaEvolIsVisible = true;
+            MegaEvolIsVisible = GetVisible(resultMegaEvolution.Count);
             MegaEvolution = new MvxObservableCollection<Pokemon>(resultMegaEvolution);
 
             var resultGigamaxEvolution = await _pokemonService.GetAllVariantAsync(Pokemon.Number, Constantes.GigaEvolution);
-            if (resultGigamaxEvolution.Count != 0)
-                GigaEvolIsVisible = true;
+            GigaEvolIsVisible = GetVisible(resultGigamaxEvolution.Count);
             GigamaxEvolution = new MvxObservableCollection<Pokemon>(resultGigamaxEvolution);
 
             var resultAlolaVariant = await _pokemonService.GetAllVariantAsync(Pokemon.Number, Constantes.Alola);
-            if (resultAlolaVariant.Count != 0)
-                AlolalIsVisible = true;
+            AlolalIsVisible = GetVisible(resultAlolaVariant.Count);
             AlolaVariant = new MvxObservableCollection<Pokemon>(resultAlolaVariant);
 
             var resultGalarVariant = await _pokemonService.GetAllVariantAsync(Pokemon.Number, Constantes.Galar);
-            if (resultGalarVariant.Count != 0)
-                GalarIsVisible = true;
+            GalarIsVisible = GetVisible(resultGalarVariant.Count);
             GalarVariant = new MvxObservableCollection<Pokemon>(resultGalarVariant);
 
             var resultHisuiVariant = await _pokemonService.GetAllVariantAsync(Pokemon.Number, Constantes.Hisui);
-            if (resultHisuiVariant.Count != 0)
-                HisuiIsVisible = true;
+            HisuiIsVisible = GetVisible(resultHisuiVariant.Count);
             HisuiVariant = new MvxObservableCollection<Pokemon>(resultHisuiVariant);
 
             var resultVarianteSexe = await _pokemonService.GetAllVariantAsync(Pokemon.Number, Constantes.VarianteSexe);
-            if (resultVarianteSexe.Count != 0)
-                VarianteSexeIsVisible = true;
+            VarianteSexeIsVisible = GetVisible(resultVarianteSexe.Count);
             VarianteSexe = new MvxObservableCollection<Pokemon>(resultVarianteSexe);
 
             var resultVariant = await _pokemonService.GetAllVariantAsync(Pokemon.Number, Constantes.Variant);
-            if (resultVariant.Count != 0)
-                VariantIsVisible = true;
+            VariantIsVisible = GetVisible(resultVariant.Count);
             Variant = new MvxObservableCollection<Pokemon>(resultVariant);
 
             FirstType = await _typePokService.GetByIdAsync(Pokemon.Types.Split(',')[0]);
@@ -373,7 +366,7 @@ namespace QuizzPokedex.ViewModels
         #endregion
 
         #region Affichage Span List
-        private int _countFamilyEvol;
+        private int _countFamilyEvol = 3;
 
         public int CountFamilyEvol
         {
@@ -381,7 +374,7 @@ namespace QuizzPokedex.ViewModels
             set { SetProperty(ref _countFamilyEvol, value); }
         }
 
-        private int _heightFamilyEvol;
+        private int _heightFamilyEvol = 150;
 
         public int HeightFamilyEvol
         {

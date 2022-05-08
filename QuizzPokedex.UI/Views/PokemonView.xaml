@@ -334,10 +334,10 @@
                     <StackLayout Margin="20,40,20,0">
                         <CollectionView
                             x:Name="EvolutionList"
-                            HeightRequest="150"
+                            HeightRequest="{Binding HeightFamilyEvol}"
                             ItemsSource="{Binding FamilyEvolution}">
                             <CollectionView.ItemsLayout>
-                                <GridItemsLayout Orientation="Vertical" Span="3" />
+                                <GridItemsLayout Orientation="Vertical" Span="{Binding CountFamilyEvol}" />
                             </CollectionView.ItemsLayout>
 
                             <CollectionView.ItemTemplate>
