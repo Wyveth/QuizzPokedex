@@ -18,6 +18,7 @@ namespace QuizzPokedex.Models
         public string Number { get; set; }
 
         //Nom du Pokémon
+        [Indexed]
         public string Name { get; set; }
 
         [Indexed]

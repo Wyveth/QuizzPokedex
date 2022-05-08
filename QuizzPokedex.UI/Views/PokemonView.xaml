@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:converters="clr-namespace:QuizzPokedex.UI.Converters"
     xmlns:cornerBorder="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+    xmlns:ef="clr-namespace:AiForms.Effects;assembly=AiForms.Effects"
     xmlns:shadows="http://sharpnado.com"
     xmlns:viewmodel="clr-namespace:QuizzPokedex.ViewModels;assembly=QuizzPokedex"
     xmlns:views="clr-namespace:MvvmCross.Forms.Views;assembly=MvvmCross.Forms"
@@ -18,15 +19,918 @@
         </ResourceDictionary>
     </views:MvxContentPage.Resources>
     <ContentPage.Content>
-        <AbsoluteLayout>
-            <Image
-                AbsoluteLayout.LayoutBounds="0,0,1,0.55"
-                AbsoluteLayout.LayoutFlags="HeightProportional, WidthProportional"
-                Source="{Binding FirstType.DataFondGo, Converter={StaticResource ByteToImageSourceConverter}}" />
-            <StackLayout
-                AbsoluteLayout.LayoutBounds="0,1,0,1"
-                AbsoluteLayout.LayoutFlags="All"
-                HorizontalOptions="CenterAndExpand" />
-        </AbsoluteLayout>
+        <ScrollView BackgroundColor="white">
+            <StackLayout>
+                <AbsoluteLayout HeightRequest="300">
+                    <StackLayout AbsoluteLayout.LayoutBounds="0.5,0.08,0.656,0.4" AbsoluteLayout.LayoutFlags="All">
+                        <StackLayout
+                            ef:Border.Color="{Binding ImgColor}"
+                            ef:Border.Radius="150"
+                            ef:Border.Width="1"
+                            xct:CornerRadiusEffect.CornerRadius="150"
+                            xct:ShadowEffect.Color="{Binding ImgColor}"
+                            xct:ShadowEffect.OffsetX="-10"
+                            xct:ShadowEffect.OffsetY="-10"
+                            xct:ShadowEffect.Opacity="1"
+                            xct:ShadowEffect.Radius="60">
+                            <Image HeightRequest="270" Source="{Binding FirstType.DataFondGo, Converter={StaticResource ByteToImageSourceConverter}}" />
+                        </StackLayout>
+                    </StackLayout>
+                    <StackLayout
+                        AbsoluteLayout.LayoutBounds="0,0.28,1,0.93"
+                        AbsoluteLayout.LayoutFlags="All"
+                        HorizontalOptions="Center"
+                        VerticalOptions="CenterAndExpand">
+                        <Image
+                            HeightRequest="200"
+                            Source="{Binding Pokemon.DataImg, Converter={StaticResource ByteToImageSourceConverter}}"
+                            WidthRequest="200" />
+                    </StackLayout>
+                    <StackLayout AbsoluteLayout.LayoutBounds="0.5,0.02,0.4,0.05" AbsoluteLayout.LayoutFlags="All">
+                        <StackLayout
+                            Padding="10"
+                            ef:Border.Color="{Binding ImgColor}"
+                            ef:Border.Radius="150"
+                            ef:Border.Width="1"
+                            xct:CornerRadiusEffect.CornerRadius="150"
+                            xct:ShadowEffect.Color="{Binding ImgColor}"
+                            xct:ShadowEffect.OffsetX="-10"
+                            xct:ShadowEffect.OffsetY="-10"
+                            xct:ShadowEffect.Opacity="1"
+                            xct:ShadowEffect.Radius="40"
+                            BackgroundColor="white">
+                            <Label
+                                xct:ShadowEffect.Color="#464C56"
+                                xct:ShadowEffect.OffsetY="10"
+                                xct:ShadowEffect.Opacity="0.5"
+                                FontAttributes="Bold"
+                                HeightRequest="40"
+                                HorizontalTextAlignment="Center"
+                                Text="{Binding Pokemon.Number, StringFormat='#{0}'}"
+                                TextColor="black" />
+                        </StackLayout>
+                    </StackLayout>
+                    <StackLayout AbsoluteLayout.LayoutBounds="0.5,0.9,0.4,0.05" AbsoluteLayout.LayoutFlags="All">
+                        <StackLayout
+                            Padding="10"
+                            ef:Border.Color="{Binding ImgColor}"
+                            ef:Border.Radius="150"
+                            ef:Border.Width="1"
+                            xct:CornerRadiusEffect.CornerRadius="150"
+                            xct:ShadowEffect.Color="{Binding ImgColor}"
+                            xct:ShadowEffect.OffsetX="-10"
+                            xct:ShadowEffect.OffsetY="-10"
+                            xct:ShadowEffect.Opacity="1"
+                            xct:ShadowEffect.Radius="40"
+                            BackgroundColor="white">
+                            <Label
+                                xct:ShadowEffect.Color="#464C56"
+                                xct:ShadowEffect.OffsetY="10"
+                                xct:ShadowEffect.Opacity="0.5"
+                                HeightRequest="40"
+                                HorizontalTextAlignment="Center"
+                                Text="{Binding Pokemon.Name}"
+                                TextColor="black" />
+                        </StackLayout>
+                    </StackLayout>
+                </AbsoluteLayout>
+                <RelativeLayout>
+                    <StackLayout Margin="100,0,100,0">
+                        <CollectionView
+                            x:Name="PokemonList"
+                            HeightRequest="20"
+                            ItemsSource="{Binding Types}">
+                            <CollectionView.ItemsLayout>
+                                <GridItemsLayout Orientation="Vertical" Span="{Binding Types.Count}" />
+                            </CollectionView.ItemsLayout>
+
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="3*" />
+                                        </Grid.RowDefinitions>
+                                        <Image
+                                            Grid.Row="0"
+                                            Aspect="AspectFit"
+                                            HeightRequest="20"
+                                            Source="{Binding DataMiniHome, Converter={StaticResource ByteToImageSourceConverter}}"
+                                            WidthRequest="20" />
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroup Name="CommonStates">
+                                                <VisualState Name="Selected">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="BackgroundColor" Value="White" />
+                                                    </VisualState.Setters>
+                                                </VisualState>
+                                            </VisualStateGroup>
+                                        </VisualStateManager.VisualStateGroups>
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </StackLayout>
+                </RelativeLayout>
+                <RelativeLayout>
+                    <StackLayout Margin="50,10,50,10">
+                        <Label
+                            xct:ShadowEffect.Color="#464C56"
+                            xct:ShadowEffect.OffsetY="10"
+                            xct:ShadowEffect.Opacity="0.5"
+                            FontAttributes="Italic"
+                            Text="{Binding Pokemon.DescriptionVx}"
+                            TextColor="black" />
+                    </StackLayout>
+                </RelativeLayout>
+                <RelativeLayout>
+                    <StackLayout WidthRequest="155">
+                        <shadows:Shadows CornerRadius="20">
+                            <shadows:Shadows.Shades>
+                                <shadows:ImmutableShades>
+                                    <shadows:Shade
+                                        BlurRadius="10"
+                                        Opacity="0.5"
+                                        Offset="-1,-1"
+                                        Color="#464C56" />
+                                    <shadows:Shade
+                                        BlurRadius="10"
+                                        Opacity="0.5"
+                                        Offset="1,1"
+                                        Color="#464C56" />
+                                </shadows:ImmutableShades>
+                            </shadows:Shadows.Shades>
+                            <cornerBorder:PancakeView
+                                BackgroundColor="{Binding InfoColor}"
+                                Border="{cornerBorder:BorderMarkup Color=Black,
+                                                                   Thickness=0}"
+                                CornerRadius="0,100,0,100">
+                                <Label
+                                    Padding="20,4,4,4"
+                                    xct:ShadowEffect.Color="#464C56"
+                                    xct:ShadowEffect.OffsetY="10"
+                                    xct:ShadowEffect.Opacity="0.5"
+                                    Text="Données de Base"
+                                    TextColor="White" />
+                            </cornerBorder:PancakeView>
+                        </shadows:Shadows>
+                    </StackLayout>
+                    <StackLayout Margin="0,30,0,0">
+                        <Grid Margin="100,10,100,10">
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Label
+                                Grid.Row="0"
+                                xct:ShadowEffect.Color="#464C56"
+                                xct:ShadowEffect.OffsetY="10"
+                                xct:ShadowEffect.Opacity="0.5"
+                                FontAttributes="Bold"
+                                Text="Catégorie:"
+                                TextColor="black" />
+                            <Label
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                xct:ShadowEffect.Color="#464C56"
+                                xct:ShadowEffect.OffsetY="10"
+                                xct:ShadowEffect.Opacity="0.5"
+                                Text="{Binding Pokemon.Category}"
+                                TextColor="black" />
+                            <Label
+                                Grid.Row="1"
+                                xct:ShadowEffect.Color="#464C56"
+                                xct:ShadowEffect.OffsetY="10"
+                                xct:ShadowEffect.Opacity="0.5"
+                                FontAttributes="Bold"
+                                Text="Taille:"
+                                TextColor="black" />
+                            <Label
+                                Grid.Row="1"
+                                Grid.Column="1"
+                                xct:ShadowEffect.Color="#464C56"
+                                xct:ShadowEffect.OffsetY="10"
+                                xct:ShadowEffect.Opacity="0.5"
+                                Text="{Binding Pokemon.Size}"
+                                TextColor="black" />
+                            <Label
+                                Grid.Row="2"
+                                xct:ShadowEffect.Color="#464C56"
+                                xct:ShadowEffect.OffsetY="10"
+                                xct:ShadowEffect.Opacity="0.5"
+                                FontAttributes="Bold"
+                                Text="Poids:"
+                                TextColor="black" />
+                            <Label
+                                Grid.Row="2"
+                                Grid.Column="1"
+                                xct:ShadowEffect.Color="#464C56"
+                                xct:ShadowEffect.OffsetY="10"
+                                xct:ShadowEffect.Opacity="0.5"
+                                Text="{Binding Pokemon.Weight}"
+                                TextColor="black" />
+                        </Grid>
+                    </StackLayout>
+                </RelativeLayout>
+                <RelativeLayout IsVisible="{Binding TalentIsVisible}">
+                    <StackLayout WidthRequest="160">
+                        <shadows:Shadows CornerRadius="20">
+                            <shadows:Shadows.Shades>
+                                <shadows:ImmutableShades>
+                                    <shadows:Shade
+                                        BlurRadius="10"
+                                        Opacity="0.5"
+                                        Offset="-1,-1"
+                                        Color="#464C56" />
+                                    <shadows:Shade
+                                        BlurRadius="10"
+                                        Opacity="0.5"
+                                        Offset="1,1"
+                                        Color="#464C56" />
+                                </shadows:ImmutableShades>
+                            </shadows:Shadows.Shades>
+                            <cornerBorder:PancakeView
+                                BackgroundColor="{Binding InfoColor}"
+                                Border="{cornerBorder:BorderMarkup Color=Black,
+                                                                   Thickness=0}"
+                                CornerRadius="0,100,0,100">
+                                <Label
+                                    Padding="20,4,4,4"
+                                    xct:ShadowEffect.Color="#464C56"
+                                    xct:ShadowEffect.OffsetY="10"
+                                    xct:ShadowEffect.Opacity="0.5"
+                                    Text="Capacité Spéciale"
+                                    TextColor="White" />
+                            </cornerBorder:PancakeView>
+                        </shadows:Shadows>
+                    </StackLayout>
+                    <StackLayout Margin="50,40,50,10">
+                        <Label
+                            xct:ShadowEffect.Color="#464C56"
+                            xct:ShadowEffect.OffsetY="10"
+                            xct:ShadowEffect.Opacity="0.5"
+                            FontAttributes="Bold"
+                            Text="{Binding TalentOne}"
+                            TextColor="black" />
+                        <Label
+                            xct:ShadowEffect.Color="#464C56"
+                            xct:ShadowEffect.OffsetY="10"
+                            xct:ShadowEffect.Opacity="0.5"
+                            Text="{Binding TalentDescriptionOne}"
+                            TextColor="black" />
+                        <Label
+                            xct:ShadowEffect.Color="#464C56"
+                            xct:ShadowEffect.OffsetY="10"
+                            xct:ShadowEffect.Opacity="0.5"
+                            FontAttributes="Bold"
+                            IsVisible="{Binding SecondTalentIsVisible}"
+                            Text="{Binding TalentTwo}"
+                            TextColor="black" />
+                        <Label
+                            xct:ShadowEffect.Color="#464C56"
+                            xct:ShadowEffect.OffsetY="10"
+                            xct:ShadowEffect.Opacity="0.5"
+                            IsVisible="{Binding SecondTalentIsVisible}"
+                            Text="{Binding TalentDescriptionTwo}"
+                            TextColor="black" />
+                    </StackLayout>
+                </RelativeLayout>
+                <RelativeLayout IsVisible="{Binding FamilyEvolIsVisible}">
+                    <StackLayout WidthRequest="105">
+                        <shadows:Shadows CornerRadius="20">
+                            <shadows:Shadows.Shades>
+                                <shadows:ImmutableShades>
+                                    <shadows:Shade
+                                        BlurRadius="10"
+                                        Opacity="0.5"
+                                        Offset="-1,-1"
+                                        Color="#464C56" />
+                                    <shadows:Shade
+                                        BlurRadius="10"
+                                        Opacity="0.5"
+                                        Offset="1,1"
+                                        Color="#464C56" />
+                                </shadows:ImmutableShades>
+                            </shadows:Shadows.Shades>
+                            <cornerBorder:PancakeView
+                                BackgroundColor="{Binding InfoColor}"
+                                Border="{cornerBorder:BorderMarkup Color=Black,
+                                                                   Thickness=0}"
+                                CornerRadius="0,100,0,100">
+                                <Label
+                                    Padding="20,4,4,4"
+                                    xct:ShadowEffect.Color="#464C56"
+                                    xct:ShadowEffect.OffsetY="10"
+                                    xct:ShadowEffect.Opacity="0.5"
+                                    Text="Évolution"
+                                    TextColor="White" />
+                            </cornerBorder:PancakeView>
+                        </shadows:Shadows>
+                    </StackLayout>
+                    <StackLayout Margin="20,40,20,0">
+                        <CollectionView
+                            x:Name="EvolutionList"
+                            HeightRequest="150"
+                            ItemsSource="{Binding FamilyEvolution}">
+                            <CollectionView.ItemsLayout>
+                                <GridItemsLayout Orientation="Vertical" Span="3" />
+                            </CollectionView.ItemsLayout>
+
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="110" />
+                                            <RowDefinition Height="*" />
+                                        </Grid.RowDefinitions>
+                                        <Image
+                                            Grid.Row="0"
+                                            Aspect="AspectFit"
+                                            HeightRequest="100"
+                                            Source="{Binding DataImg, Converter={StaticResource ByteToImageSourceConverter}}"
+                                            WidthRequest="100" />
+                                        <Label
+                                            Grid.Row="1"
+                                            xct:ShadowEffect.Color="#464C56"
+                                            xct:ShadowEffect.OffsetY="10"
+                                            xct:ShadowEffect.Opacity="0.5"
+                                            FontAttributes="Bold"
+                                            HorizontalOptions="CenterAndExpand"
+                                            Text="{Binding Name}"
+                                            TextColor="black" />
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroup Name="CommonStates">
+                                                <VisualState Name="Selected">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="BackgroundColor" Value="White" />
+                                                    </VisualState.Setters>
+                                                </VisualState>
+                                            </VisualStateGroup>
+                                        </VisualStateManager.VisualStateGroups>
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </StackLayout>
+                </RelativeLayout>
+                <RelativeLayout IsVisible="{Binding MegaEvolIsVisible}">
+                    <StackLayout WidthRequest="145">
+                        <shadows:Shadows CornerRadius="20">
+                            <shadows:Shadows.Shades>
+                                <shadows:ImmutableShades>
+                                    <shadows:Shade
+                                        BlurRadius="10"
+                                        Opacity="0.5"
+                                        Offset="-1,-1"
+                                        Color="#464C56" />
+                                    <shadows:Shade
+                                        BlurRadius="10"
+                                        Opacity="0.5"
+                                        Offset="1,1"
+                                        Color="#464C56" />
+                                </shadows:ImmutableShades>
+                            </shadows:Shadows.Shades>
+                            <cornerBorder:PancakeView
+                                BackgroundColor="{Binding InfoColor}"
+                                Border="{cornerBorder:BorderMarkup Color=Black,
+                                                                   Thickness=0}"
+                                CornerRadius="0,100,0,100">
+                                <Label
+                                    Padding="20,4,4,4"
+                                    xct:ShadowEffect.Color="#464C56"
+                                    xct:ShadowEffect.OffsetY="10"
+                                    xct:ShadowEffect.Opacity="0.5"
+                                    Text="Méga-Évolution"
+                                    TextColor="White" />
+                            </cornerBorder:PancakeView>
+                        </shadows:Shadows>
+                    </StackLayout>
+                    <StackLayout Margin="20,30,20,0">
+                        <CollectionView
+                            x:Name="MegaEvolutionList"
+                            HeightRequest="150"
+                            ItemsSource="{Binding MegaEvolution}"
+                            VerticalScrollBarVisibility="Never">
+                            <CollectionView.ItemsLayout>
+                                <GridItemsLayout Orientation="Vertical" Span="{Binding MegaEvolution.Count}" />
+                            </CollectionView.ItemsLayout>
+
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="110" />
+                                            <RowDefinition Height="*" />
+                                        </Grid.RowDefinitions>
+                                        <Image
+                                            Grid.Row="0"
+                                            Aspect="AspectFit"
+                                            HeightRequest="150"
+                                            Source="{Binding DataImg, Converter={StaticResource ByteToImageSourceConverter}}"
+                                            WidthRequest="150" />
+                                        <Label
+                                            Grid.Row="1"
+                                            xct:ShadowEffect.Color="#464C56"
+                                            xct:ShadowEffect.OffsetY="10"
+                                            xct:ShadowEffect.Opacity="0.5"
+                                            FontAttributes="Bold"
+                                            HorizontalOptions="CenterAndExpand"
+                                            Text="{Binding Name}"
+                                            TextColor="black" />
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroup Name="CommonStates">
+                                                <VisualState Name="Selected">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="BackgroundColor" Value="White" />
+                                                    </VisualState.Setters>
+                                                </VisualState>
+                                            </VisualStateGroup>
+                                        </VisualStateManager.VisualStateGroups>
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </StackLayout>
+                </RelativeLayout>
+                <RelativeLayout IsVisible="{Binding GigaEvolIsVisible}">
+                    <StackLayout WidthRequest="145">
+                        <shadows:Shadows CornerRadius="20">
+                            <shadows:Shadows.Shades>
+                                <shadows:ImmutableShades>
+                                    <shadows:Shade
+                                        BlurRadius="10"
+                                        Opacity="0.5"
+                                        Offset="-1,-1"
+                                        Color="#464C56" />
+                                    <shadows:Shade
+                                        BlurRadius="10"
+                                        Opacity="0.5"
+                                        Offset="1,1"
+                                        Color="#464C56" />
+                                </shadows:ImmutableShades>
+                            </shadows:Shadows.Shades>
+                            <cornerBorder:PancakeView
+                                BackgroundColor="{Binding InfoColor}"
+                                Border="{cornerBorder:BorderMarkup Color=Black,
+                                                                   Thickness=0}"
+                                CornerRadius="0,100,0,100">
+                                <Label
+                                    Padding="20,4,4,4"
+                                    xct:ShadowEffect.Color="#464C56"
+                                    xct:ShadowEffect.OffsetY="10"
+                                    xct:ShadowEffect.Opacity="0.5"
+                                    Text="Forme Gigamax"
+                                    TextColor="White" />
+                            </cornerBorder:PancakeView>
+                        </shadows:Shadows>
+                    </StackLayout>
+                    <StackLayout Margin="20,30,20,0">
+                        <CollectionView
+                            x:Name="GigaEvolutionList"
+                            HeightRequest="150"
+                            ItemsSource="{Binding GigamaxEvolution}"
+                            VerticalScrollBarVisibility="Never">
+                            <CollectionView.ItemsLayout>
+                                <GridItemsLayout Orientation="Vertical" Span="{Binding GigamaxEvolution.Count}" />
+                            </CollectionView.ItemsLayout>
+
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="110" />
+                                            <RowDefinition Height="*" />
+                                        </Grid.RowDefinitions>
+                                        <Image
+                                            Grid.Row="0"
+                                            Aspect="AspectFit"
+                                            HeightRequest="150"
+                                            Source="{Binding DataImg, Converter={StaticResource ByteToImageSourceConverter}}"
+                                            WidthRequest="150" />
+                                        <Label
+                                            Grid.Row="1"
+                                            xct:ShadowEffect.Color="#464C56"
+                                            xct:ShadowEffect.OffsetY="10"
+                                            xct:ShadowEffect.Opacity="0.5"
+                                            FontAttributes="Bold"
+                                            HorizontalOptions="CenterAndExpand"
+                                            Text="{Binding Name}"
+                                            TextColor="black" />
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroup Name="CommonStates">
+                                                <VisualState Name="Selected">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="BackgroundColor" Value="White" />
+                                                    </VisualState.Setters>
+                                                </VisualState>
+                                            </VisualStateGroup>
+                                        </VisualStateManager.VisualStateGroups>
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </StackLayout>
+                </RelativeLayout>
+                <RelativeLayout IsVisible="{Binding AlolalIsVisible}">
+                    <StackLayout WidthRequest="135">
+                        <shadows:Shadows CornerRadius="20">
+                            <shadows:Shadows.Shades>
+                                <shadows:ImmutableShades>
+                                    <shadows:Shade
+                                        BlurRadius="10"
+                                        Opacity="0.5"
+                                        Offset="-1,-1"
+                                        Color="#464C56" />
+                                    <shadows:Shade
+                                        BlurRadius="10"
+                                        Opacity="0.5"
+                                        Offset="1,1"
+                                        Color="#464C56" />
+                                </shadows:ImmutableShades>
+                            </shadows:Shadows.Shades>
+                            <cornerBorder:PancakeView
+                                BackgroundColor="{Binding InfoColor}"
+                                Border="{cornerBorder:BorderMarkup Color=Black,
+                                                                   Thickness=0}"
+                                CornerRadius="0,100,0,100">
+                                <Label
+                                    Padding="20,4,4,4"
+                                    xct:ShadowEffect.Color="#464C56"
+                                    xct:ShadowEffect.OffsetY="10"
+                                    xct:ShadowEffect.Opacity="0.5"
+                                    Text="Forme d'Alola"
+                                    TextColor="White" />
+                            </cornerBorder:PancakeView>
+                        </shadows:Shadows>
+                    </StackLayout>
+                    <StackLayout Margin="20,30,20,0">
+                        <CollectionView
+                            x:Name="AlolaList"
+                            HeightRequest="150"
+                            ItemsSource="{Binding AlolaVariant}"
+                            VerticalScrollBarVisibility="Never">
+                            <CollectionView.ItemsLayout>
+                                <GridItemsLayout Orientation="Vertical" Span="{Binding AlolaVariant.Count}" />
+                            </CollectionView.ItemsLayout>
+
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="110" />
+                                            <RowDefinition Height="*" />
+                                        </Grid.RowDefinitions>
+                                        <Image
+                                            Grid.Row="0"
+                                            Aspect="AspectFit"
+                                            HeightRequest="150"
+                                            Source="{Binding DataImg, Converter={StaticResource ByteToImageSourceConverter}}"
+                                            WidthRequest="150" />
+                                        <Label
+                                            Grid.Row="1"
+                                            xct:ShadowEffect.Color="#464C56"
+                                            xct:ShadowEffect.OffsetY="10"
+                                            xct:ShadowEffect.Opacity="0.5"
+                                            FontAttributes="Bold"
+                                            HorizontalOptions="CenterAndExpand"
+                                            Text="{Binding Name}"
+                                            TextColor="black" />
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroup Name="CommonStates">
+                                                <VisualState Name="Selected">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="BackgroundColor" Value="White" />
+                                                    </VisualState.Setters>
+                                                </VisualState>
+                                            </VisualStateGroup>
+                                        </VisualStateManager.VisualStateGroups>
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </StackLayout>
+                </RelativeLayout>
+                <RelativeLayout IsVisible="{Binding GalarIsVisible}">
+                    <StackLayout WidthRequest="145">
+                        <shadows:Shadows CornerRadius="20">
+                            <shadows:Shadows.Shades>
+                                <shadows:ImmutableShades>
+                                    <shadows:Shade
+                                        BlurRadius="10"
+                                        Opacity="0.5"
+                                        Offset="-1,-1"
+                                        Color="#464C56" />
+                                    <shadows:Shade
+                                        BlurRadius="10"
+                                        Opacity="0.5"
+                                        Offset="1,1"
+                                        Color="#464C56" />
+                                </shadows:ImmutableShades>
+                            </shadows:Shadows.Shades>
+                            <cornerBorder:PancakeView
+                                BackgroundColor="{Binding InfoColor}"
+                                Border="{cornerBorder:BorderMarkup Color=Black,
+                                                                   Thickness=0}"
+                                CornerRadius="0,100,0,100">
+                                <Label
+                                    Padding="20,4,4,4"
+                                    xct:ShadowEffect.Color="#464C56"
+                                    xct:ShadowEffect.OffsetY="10"
+                                    xct:ShadowEffect.Opacity="0.5"
+                                    Text="Forme de Galar"
+                                    TextColor="White" />
+                            </cornerBorder:PancakeView>
+                        </shadows:Shadows>
+                    </StackLayout>
+                    <StackLayout Margin="20,30,20,0">
+                        <CollectionView
+                            x:Name="GalarList"
+                            HeightRequest="150"
+                            ItemsSource="{Binding GalarVariant}"
+                            VerticalScrollBarVisibility="Never">
+                            <CollectionView.ItemsLayout>
+                                <GridItemsLayout Orientation="Vertical" Span="{Binding GalarVariant.Count}" />
+                            </CollectionView.ItemsLayout>
+
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="110" />
+                                            <RowDefinition Height="*" />
+                                        </Grid.RowDefinitions>
+                                        <Image
+                                            Grid.Row="0"
+                                            Aspect="AspectFit"
+                                            HeightRequest="150"
+                                            Source="{Binding DataImg, Converter={StaticResource ByteToImageSourceConverter}}"
+                                            WidthRequest="150" />
+                                        <Label
+                                            Grid.Row="1"
+                                            xct:ShadowEffect.Color="#464C56"
+                                            xct:ShadowEffect.OffsetY="10"
+                                            xct:ShadowEffect.Opacity="0.5"
+                                            FontAttributes="Bold"
+                                            HorizontalOptions="CenterAndExpand"
+                                            Text="{Binding Name}"
+                                            TextColor="black" />
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroup Name="CommonStates">
+                                                <VisualState Name="Selected">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="BackgroundColor" Value="White" />
+                                                    </VisualState.Setters>
+                                                </VisualState>
+                                            </VisualStateGroup>
+                                        </VisualStateManager.VisualStateGroups>
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </StackLayout>
+                </RelativeLayout>
+                <RelativeLayout IsVisible="{Binding HisuiIsVisible}">
+                    <StackLayout WidthRequest="135">
+                        <shadows:Shadows CornerRadius="20">
+                            <shadows:Shadows.Shades>
+                                <shadows:ImmutableShades>
+                                    <shadows:Shade
+                                        BlurRadius="10"
+                                        Opacity="0.5"
+                                        Offset="-1,-1"
+                                        Color="#464C56" />
+                                    <shadows:Shade
+                                        BlurRadius="10"
+                                        Opacity="0.5"
+                                        Offset="1,1"
+                                        Color="#464C56" />
+                                </shadows:ImmutableShades>
+                            </shadows:Shadows.Shades>
+                            <cornerBorder:PancakeView
+                                BackgroundColor="{Binding InfoColor}"
+                                Border="{cornerBorder:BorderMarkup Color=Black,
+                                                                   Thickness=0}"
+                                CornerRadius="0,100,0,100">
+                                <Label
+                                    Padding="20,4,4,4"
+                                    xct:ShadowEffect.Color="#464C56"
+                                    xct:ShadowEffect.OffsetY="10"
+                                    xct:ShadowEffect.Opacity="0.5"
+                                    Text="Forme d'Hisui"
+                                    TextColor="White" />
+                            </cornerBorder:PancakeView>
+                        </shadows:Shadows>
+                    </StackLayout>
+                    <StackLayout Margin="20,30,20,0">
+                        <CollectionView
+                            x:Name="HisuiList"
+                            HeightRequest="150"
+                            ItemsSource="{Binding HisuiVariant}"
+                            VerticalScrollBarVisibility="Never">
+                            <CollectionView.ItemsLayout>
+                                <GridItemsLayout Orientation="Vertical" Span="{Binding HisuiVariant.Count}" />
+                            </CollectionView.ItemsLayout>
+
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="110" />
+                                            <RowDefinition Height="*" />
+                                        </Grid.RowDefinitions>
+                                        <Image
+                                            Grid.Row="0"
+                                            Aspect="AspectFit"
+                                            HeightRequest="150"
+                                            Source="{Binding DataImg, Converter={StaticResource ByteToImageSourceConverter}}"
+                                            WidthRequest="150" />
+                                        <Label
+                                            Grid.Row="1"
+                                            xct:ShadowEffect.Color="#464C56"
+                                            xct:ShadowEffect.OffsetY="10"
+                                            xct:ShadowEffect.Opacity="0.5"
+                                            FontAttributes="Bold"
+                                            HorizontalOptions="CenterAndExpand"
+                                            Text="{Binding Name}"
+                                            TextColor="black" />
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroup Name="CommonStates">
+                                                <VisualState Name="Selected">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="BackgroundColor" Value="White" />
+                                                    </VisualState.Setters>
+                                                </VisualState>
+                                            </VisualStateGroup>
+                                        </VisualStateManager.VisualStateGroups>
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </StackLayout>
+                </RelativeLayout>
+                <RelativeLayout IsVisible="{Binding VariantIsVisible}">
+                    <StackLayout WidthRequest="95">
+                        <shadows:Shadows CornerRadius="20">
+                            <shadows:Shadows.Shades>
+                                <shadows:ImmutableShades>
+                                    <shadows:Shade
+                                        BlurRadius="10"
+                                        Opacity="0.5"
+                                        Offset="-1,-1"
+                                        Color="#464C56" />
+                                    <shadows:Shade
+                                        BlurRadius="10"
+                                        Opacity="0.5"
+                                        Offset="1,1"
+                                        Color="#464C56" />
+                                </shadows:ImmutableShades>
+                            </shadows:Shadows.Shades>
+                            <cornerBorder:PancakeView
+                                BackgroundColor="{Binding InfoColor}"
+                                Border="{cornerBorder:BorderMarkup Color=Black,
+                                                                   Thickness=0}"
+                                CornerRadius="0,100,0,100">
+                                <Label
+                                    Padding="20,4,4,4"
+                                    xct:ShadowEffect.Color="#464C56"
+                                    xct:ShadowEffect.OffsetY="10"
+                                    xct:ShadowEffect.Opacity="0.5"
+                                    Text="Variant"
+                                    TextColor="White" />
+                            </cornerBorder:PancakeView>
+                        </shadows:Shadows>
+                    </StackLayout>
+                    <StackLayout Margin="20,30,20,0">
+                        <CollectionView
+                            x:Name="VariantList"
+                            HeightRequest="150"
+                            ItemsSource="{Binding Variant}"
+                            VerticalScrollBarVisibility="Never">
+                            <CollectionView.ItemsLayout>
+                                <GridItemsLayout Orientation="Vertical" Span="{Binding Variant.Count}" />
+                            </CollectionView.ItemsLayout>
+
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="110" />
+                                            <RowDefinition Height="*" />
+                                        </Grid.RowDefinitions>
+                                        <Image
+                                            Grid.Row="0"
+                                            Aspect="AspectFit"
+                                            HeightRequest="150"
+                                            Source="{Binding DataImg, Converter={StaticResource ByteToImageSourceConverter}}"
+                                            WidthRequest="150" />
+                                        <Label
+                                            Grid.Row="1"
+                                            xct:ShadowEffect.Color="#464C56"
+                                            xct:ShadowEffect.OffsetY="10"
+                                            xct:ShadowEffect.Opacity="0.5"
+                                            FontAttributes="Bold"
+                                            HorizontalOptions="CenterAndExpand"
+                                            Text="{Binding Name}"
+                                            TextColor="black" />
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroup Name="CommonStates">
+                                                <VisualState Name="Selected">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="BackgroundColor" Value="White" />
+                                                    </VisualState.Setters>
+                                                </VisualState>
+                                            </VisualStateGroup>
+                                        </VisualStateManager.VisualStateGroups>
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </StackLayout>
+                </RelativeLayout>
+                <RelativeLayout IsVisible="{Binding VarianteSexeIsVisible}">
+                    <StackLayout WidthRequest="125">
+                        <shadows:Shadows CornerRadius="20">
+                            <shadows:Shadows.Shades>
+                                <shadows:ImmutableShades>
+                                    <shadows:Shade
+                                        BlurRadius="10"
+                                        Opacity="0.5"
+                                        Offset="-1,-1"
+                                        Color="#464C56" />
+                                    <shadows:Shade
+                                        BlurRadius="10"
+                                        Opacity="0.5"
+                                        Offset="1,1"
+                                        Color="#464C56" />
+                                </shadows:ImmutableShades>
+                            </shadows:Shadows.Shades>
+                            <cornerBorder:PancakeView
+                                BackgroundColor="{Binding InfoColor}"
+                                Border="{cornerBorder:BorderMarkup Color=Black,
+                                                                   Thickness=0}"
+                                CornerRadius="0,100,0,100">
+                                <Label
+                                    Padding="20,4,4,4"
+                                    xct:ShadowEffect.Color="#464C56"
+                                    xct:ShadowEffect.OffsetY="10"
+                                    xct:ShadowEffect.Opacity="0.5"
+                                    Text="Variant Sexe"
+                                    TextColor="White" />
+                            </cornerBorder:PancakeView>
+                        </shadows:Shadows>
+                    </StackLayout>
+                    <StackLayout Margin="20,30,20,0">
+                        <CollectionView
+                            x:Name="VarianteSexeList"
+                            HeightRequest="150"
+                            ItemsSource="{Binding VarianteSexe}"
+                            VerticalScrollBarVisibility="Never">
+                            <CollectionView.ItemsLayout>
+                                <GridItemsLayout Orientation="Vertical" Span="{Binding VarianteSexe.Count}" />
+                            </CollectionView.ItemsLayout>
+
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="110" />
+                                            <RowDefinition Height="*" />
+                                        </Grid.RowDefinitions>
+                                        <Image
+                                            Grid.Row="0"
+                                            Aspect="AspectFit"
+                                            HeightRequest="150"
+                                            Source="{Binding DataImg, Converter={StaticResource ByteToImageSourceConverter}}"
+                                            WidthRequest="150" />
+                                        <Label
+                                            Grid.Row="1"
+                                            xct:ShadowEffect.Color="#464C56"
+                                            xct:ShadowEffect.OffsetY="10"
+                                            xct:ShadowEffect.Opacity="0.5"
+                                            FontAttributes="Bold"
+                                            HorizontalOptions="CenterAndExpand"
+                                            Text="{Binding Name}"
+                                            TextColor="black" />
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroup Name="CommonStates">
+                                                <VisualState Name="Selected">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="BackgroundColor" Value="White" />
+                                                    </VisualState.Setters>
+                                                </VisualState>
+                                            </VisualStateGroup>
+                                        </VisualStateManager.VisualStateGroups>
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </StackLayout>
+                </RelativeLayout>
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </views:MvxContentPage>

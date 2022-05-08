@@ -62,8 +62,7 @@ namespace QuizzPokedex.Services
 
             foreach (var item in vs)
             {
-                //Pokemon pokemon = await GetByIdAsync(item);
-                Pokemon pokemon = await GetByNameAsync(item);
+                Pokemon pokemon = await GetByIdAsync(item);
                 if (pokemon != null)
                     result.Add(pokemon);
             }
@@ -77,6 +76,12 @@ namespace QuizzPokedex.Services
             return result;
         }
 
+        public async Task<List<Pokemon>> GetPokemonsNotUpdatedAsync()
+        {
+            var result = await _database.Table<Pokemon>().Where(m => m.Updated.Equals(false)).OrderBy(m => m.Number).ToListAsync();
+            return result;
+        }
+
         public async Task<Pokemon> GetByIdAsync(string identifiant)
         {
             int id = int.Parse(identifiant);
@@ -87,7 +92,11 @@ namespace QuizzPokedex.Services
         {
             List<Pokemon> pokemons = await _database.Table<Pokemon>().ToListAsync();
 
-            Pokemon result = pokemons.Find(m => m.Name.Equals(libelle));
+            string filter = libelle;
+            if (libelle.Equals(Constantes.Type_0))
+                filter = Constantes.Type0;
+
+            Pokemon result = pokemons.Find(m => m.Name.Equals(filter));
 
             if (result != null)
             {
@@ -158,6 +167,29 @@ namespace QuizzPokedex.Services
             return JsonConvert.DeserializeObject<List<PokemonJson>>(json);
         }
 
+        public async Task<Pokemon> UpdateEvolutionWithJson(Pokemon pokemonNoUpdated)
+        {
+            List<PokemonJson> pokemonsJson = GetListPokeScrapJson();
+
+            PokemonJson pokemonJson = pokemonsJson.Find(m => m.Name.Equals(pokemonNoUpdated.Name));
+
+            int i = int.Parse(pokemonJson.Number);
+            try
+            {
+                Pokemon pokemonUpdated = await UpdateEvolutionWithJson(pokemonJson, pokemonNoUpdated);
+                if (pokemonUpdated != null)
+                    _ = UpdateAsync(pokemonUpdated);
+
+                Debug.Write("Update: " + pokemonJson.Number + " - " + pokemonJson.Name);
+                return pokemonUpdated;
+            }
+            catch
+            {
+                Debug.Write("Update Error: " + pokemonJson.Number + " - " + pokemonJson.Name);
+                return null;
+            }
+        }
+
         public async void Populate(int countInsertPokemon)
         {
             List<PokemonJson> pokemonsJson = GetListPokeScrapJson();
@@ -178,21 +210,23 @@ namespace QuizzPokedex.Services
                 }
             }
         }
-
+        
         public async void PopulateUpdateEvolution()
         {
             List<PokemonJson> pokemonsJson = GetListPokeScrapJson();
+            List<Pokemon> pokemonsNoUpdated = await GetPokemonsNotUpdatedAsync();
             Task.Delay(7000).Wait();
 
-            foreach (PokemonJson pokemonJson in pokemonsJson)
+            foreach(Pokemon pokemonNoUpdated in pokemonsNoUpdated)
             {
+                PokemonJson pokemonJson = pokemonsJson.Find(m => m.Name.Equals(pokemonNoUpdated.Name));
+
                 int i = int.Parse(pokemonJson.Number);
                 try
                 {
-                    Pokemon pokemon = await UpdateEvolutionWithJson(pokemonJson);
-
-                    if (pokemon != null)
-                        _ = UpdateAsync(pokemon);
+                    Pokemon pokemonUpdated = await UpdateEvolutionWithJson(pokemonJson, pokemonNoUpdated);
+                    if (pokemonUpdated != null)
+                        _ = UpdateAsync(pokemonUpdated);
 
                     Debug.Write("Update: " + pokemonJson.Number + " - " + pokemonJson.Name);
                 }
@@ -265,13 +299,8 @@ namespace QuizzPokedex.Services
             return pokemon;
         }
 
-        public async Task<Pokemon> UpdateEvolutionWithJson(PokemonJson pokemonJson)
+        public async Task<Pokemon> UpdateEvolutionWithJson(PokemonJson pokemonJson, Pokemon pokemonUpdate)
         {
-            Pokemon pokemonUpdate = await GetByNameAsync(pokemonJson.Name);
-
-            if (pokemonUpdate.Updated)
-                return null;
-
             if (!string.IsNullOrEmpty(pokemonJson.Evolutions))
             {
                 string[] evolutionsTab = pokemonJson.Evolutions.Split(',');

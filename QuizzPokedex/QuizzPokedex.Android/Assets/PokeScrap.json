@@ -22115,7 +22115,7 @@
     "types": "Normal,Psy",
     "weakness": "Ténèbres,Insecte",
     "evolutions": "Cerfrousse,Cerbyllin",
-    "typeEvolution": "Hisui",
+    "typeEvolution": "Normal",
     "generation": 0,
     "nextUrl": "https://api.pokemon.com/fr/pokedex/hachecateur"
   },
@@ -22135,7 +22135,7 @@
     "types": "Insecte,Roche",
     "weakness": "Acier,Eau,Roche",
     "evolutions": "Insécateur,Cizayox,Hachécateur",
-    "typeEvolution": "Hisui",
+    "typeEvolution": "Normal",
     "generation": 0,
     "nextUrl": "https://api.pokemon.com/fr/pokedex/ursaking"
   },
@@ -22155,7 +22155,7 @@
     "types": "Sol,Normal",
     "weakness": "Eau,Plante,Glace,Combat",
     "evolutions": "Teddiursa,Ursaring,Ursaking",
-    "typeEvolution": "Hisui",
+    "typeEvolution": "Normal",
     "generation": 0,
     "nextUrl": "https://api.pokemon.com/fr/pokedex/paragruel"
   },
@@ -22175,7 +22175,7 @@
     "types": "Eau,Spectre",
     "weakness": "Spectre,Ténèbres,Plante,Électrik",
     "evolutions": "Bargantua,Paragruel",
-    "typeEvolution": "Hisui",
+    "typeEvolution": "Normal",
     "generation": 0,
     "nextUrl": "https://api.pokemon.com/fr/pokedex/farfurex"
   },
@@ -22215,7 +22215,7 @@
     "types": "Combat,Poison",
     "weakness": "Psy,Vol,Sol",
     "evolutions": "Farfuret,Farfurex",
-    "typeEvolution": "Hisui",
+    "typeEvolution": "Normal",
     "generation": 0,
     "nextUrl": "https://api.pokemon.com/fr/pokedex/qwilpik"
   },
@@ -22235,7 +22235,7 @@
     "types": "Ténèbres,Poison",
     "weakness": "Sol",
     "evolutions": "Qwilfish,Qwilpik",
-    "typeEvolution": "Hisui",
+    "typeEvolution": "Normal",
     "generation": 0,
     "nextUrl": "https://api.pokemon.com/fr/pokedex/amovenus"
   },
@@ -22255,7 +22255,7 @@
     "types": "Fée,Vol",
     "weakness": "Acier,Poison,Électrik,Glace,Roche",
     "evolutions": "Amovénus",
-    "typeEvolution": "Hisui",
+    "typeEvolution": "Normal",
     "generation": 0,
     "nextUrl": ""
   },
@@ -22275,7 +22275,7 @@
     "types": "Fée,Vol",
     "weakness": "Acier,Poison,Électrik,Glace,Roche",
     "evolutions": "Amovénus",
-    "typeEvolution": "Hisui",
+    "typeEvolution": "Variant",
     "generation": 0,
     "nextUrl": ""
   }

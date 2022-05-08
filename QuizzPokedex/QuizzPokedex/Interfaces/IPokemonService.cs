@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace QuizzPokedex.Interfaces
@@ -16,6 +17,9 @@ namespace QuizzPokedex.Interfaces
         Task<Pokemon> GetByNameAsync(string libelle);
         Task<List<Pokemon>> GetFamilyWithoutVariantAsync(string family);
         Task<List<Pokemon>> GetAllVariantAsync(string number, string typeEvolution);
+        Task<List<Pokemon>> GetPokemonsNotUpdatedAsync();
+        Task<Pokemon> UpdateEvolutionWithJson(Pokemon pokemonUpdate);
+        Task<Pokemon> UpdateEvolutionWithJson(PokemonJson pokemonJson, Pokemon pokemonUpdate);
         Task<int> CreateAsync(Pokemon pokemon);
         Task<int> DeleteAsync(Pokemon pokemon);
         Task<int> UpdateAsync(Pokemon pokemon);

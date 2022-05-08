@@ -4,6 +4,8 @@ using MvvmCross.Plugin.Messenger;
 using MvvmCross.ViewModels;
 using QuizzPokedex.Interfaces;
 using QuizzPokedex.Models;
+using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace QuizzPokedex.ViewModels
@@ -15,6 +17,7 @@ namespace QuizzPokedex.ViewModels
         private readonly ITypePokService _typePokService;
 
         //creation de l'abonnement ici (pour rafraichir via un abonné)
+        private CancellationTokenSource _cts;
         private readonly MvxSubscriptionToken _token;
         public PokedexViewModel(IMvxNavigationService navigation, IPokemonService pokemonService, ITypePokService typePokService, IMvxMessenger messenger)
         {
@@ -109,6 +112,14 @@ namespace QuizzPokedex.ViewModels
                 _selectedPokemon = value;
                 _ = DetailsPokemonAsync(_selectedPokemon);
             }
+        }
+
+        private bool _isCompleted;
+
+        public bool IsCompleted
+        {
+            get { return _isCompleted; }
+            set { SetProperty(ref _isCompleted, value); }
         }
 
         private string _searchText;
