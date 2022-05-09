@@ -112,6 +112,7 @@ namespace QuizzPokedex.ViewModels
             Types = new MvxObservableCollection<TypePok>(resultTypes);
 
             var resultWeakness = await _typePokService.GetTypesAsync(Pokemon.Weakness);
+            CountWeakness = GetNbSpan(resultWeakness.Count);
             Weakness = new MvxObservableCollection<TypePok>(resultWeakness);
         }
 
@@ -396,6 +397,14 @@ namespace QuizzPokedex.ViewModels
         {
             get { return _heightVariantEvol; }
             set { SetProperty(ref _heightVariantEvol, value); }
+        }
+
+        private int _countWeakness = 3;
+
+        public int CountWeakness
+        {
+            get { return _countWeakness; }
+            set { SetProperty(ref _countWeakness, value); }
         }
         #endregion
 

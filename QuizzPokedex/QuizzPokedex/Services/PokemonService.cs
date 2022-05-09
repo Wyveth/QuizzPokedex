@@ -292,6 +292,14 @@ namespace QuizzPokedex.Services
 
             pokemon.Evolutions = pokemonJson.Evolutions;
             pokemon.TypeEvolution = pokemonJson.TypeEvolution;
+            pokemon.whenEvolution = pokemonJson.whenEvolution;
+            pokemon.statPv = pokemonJson.statPv;
+            pokemon.statAttaque = pokemonJson.statAttaque;
+            pokemon.statDefense = pokemonJson.statDefense;
+            pokemon.statAttaqueSpe = pokemonJson.statAttaqueSpe;
+            pokemon.statDefenseSpe = pokemonJson.statDefenseSpe;
+            pokemon.statVitesse = pokemonJson.statVitesse;
+            pokemon.statTotal = pokemonJson.statTotal;
             pokemon.Generation = pokemonJson.Generation;
             pokemon.NextUrl = pokemonJson.NextUrl;
             pokemon.Updated = false;

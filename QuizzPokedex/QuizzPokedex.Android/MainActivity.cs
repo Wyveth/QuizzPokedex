@@ -10,7 +10,7 @@ using PanCardView.Droid;
 
 namespace QuizzPokedex.Droid
 {
-    [Activity(Label = "QuizzPokedex", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize)]
+    [Activity(Label = "QuizzPokedex", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize, ScreenOrientation = ScreenOrientation.Portrait)]
     public class MainActivity : MvxFormsAppCompatActivity<Setup, App, FormsApp>
     {
         protected override void OnCreate(Bundle savedInstanceState)

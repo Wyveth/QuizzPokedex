@@ -56,6 +56,30 @@ namespace QuizzPokedex.Models
         //Type Evolution : Normal, Méga, Gigamax, Alola, Galar, Variant
         public string TypeEvolution { get; set; }
 
+        //Savoir Quand où comment le pokémon évolue
+        public string whenEvolution { get; set; }
+
+        //Statistique PV
+        public int statPv { get; set; }
+
+        //Statistique Attaque
+        public int statAttaque { get; set; }
+
+        //Statistique Défense
+        public int statDefense { get; set; }
+
+        //Statistique Attaque Spéciale
+        public int statAttaqueSpe { get; set; }
+
+        //Statistique Défense Spéciale
+        public int statDefenseSpe { get; set; }
+
+        //Statistique Vitesse
+        public int statVitesse { get; set; }
+
+        //Statistique Total
+        public int statTotal { get; set; }
+
         //Generation Number
         public int Generation { get; set; }
 
