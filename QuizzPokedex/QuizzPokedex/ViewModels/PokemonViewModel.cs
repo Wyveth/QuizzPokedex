@@ -31,7 +31,7 @@ namespace QuizzPokedex.ViewModels
             _typePokService = typeService;
         }
 
-        public async override void Prepare(Pokemon pokemon)
+        public override void Prepare(Pokemon pokemon)
         {
             Pokemon = pokemon;
 

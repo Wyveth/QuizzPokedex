@@ -148,6 +148,40 @@
                 </shadows:Shadows>
             </StackLayout>
             <StackLayout
+                x:Name="backButton"
+                AbsoluteLayout.LayoutBounds="0,0.02,0.23,0.07"
+                AbsoluteLayout.LayoutFlags="All">
+                <shadows:Shadows Margin="30,0,30,50" CornerRadius="20">
+                    <shadows:Shadows.Shades>
+                        <shadows:ImmutableShades>
+                            <shadows:Shade
+                                BlurRadius="10"
+                                Opacity="0.5"
+                                Offset="-1,-1"
+                                Color="#464C56" />
+                            <shadows:Shade
+                                BlurRadius="10"
+                                Opacity="0.5"
+                                Offset="1,1"
+                                Color="#464C56" />
+                        </shadows:ImmutableShades>
+                    </shadows:Shadows.Shades>
+                    <cornerBorder:PancakeView
+                        BackgroundColor="White"
+                        Border="{cornerBorder:BorderMarkup Color=Gray,
+                                                           Thickness=0}"
+                        CornerRadius="100,100,100,100">
+                        <ImageButton
+                            Padding="5"
+                            BackgroundColor="White"
+                            Command="{Binding NavigationBackCommandAsync}"
+                            HeightRequest="35"
+                            Source="icons8back48.png"
+                            WidthRequest="35" />
+                    </cornerBorder:PancakeView>
+                </shadows:Shadows>
+            </StackLayout>
+            <StackLayout
                 x:Name="searchFilter"
                 AbsoluteLayout.LayoutBounds="0.5,0.02,0.8,0.07"
                 AbsoluteLayout.LayoutFlags="All"
