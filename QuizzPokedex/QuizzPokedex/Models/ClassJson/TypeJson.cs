@@ -24,5 +24,11 @@ namespace QuizzPokedex.Models.ClassJson
 
         //Url Autocollant Pokemon Home
         public string UrlAutoHome = "";
+
+        //Couleur de l'image du fond
+        public string imgColor = "";
+
+        //Couleur du Type
+        public string infoColor = "";
     }
 }

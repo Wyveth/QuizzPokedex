@@ -128,6 +128,8 @@ namespace QuizzPokedex.Services
             type.DataIconHome = await DownloadImageAsync(typeJson.UrlIconHome);
             type.UrlAutoHome = typeJson.UrlAutoHome;
             type.DataAutoHome = await DownloadImageAsync(typeJson.UrlAutoHome);
+            type.ImgColor = typeJson.imgColor;
+            type.InfoColor = typeJson.infoColor;
             return type;
         }
 

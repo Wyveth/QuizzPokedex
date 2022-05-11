@@ -12,10 +12,12 @@
 
   <ItemGroup>
     <PackageReference Include="CardsView" Version="2.8.1" />
+    <PackageReference Include="Microcharts.Forms" Version="1.0.0-preview1" />
     <PackageReference Include="MvvmCross" Version="8.0.2" />
     <PackageReference Include="MvvmCross.Forms" Version="8.0.2" />
     <PackageReference Include="MvvmCross.Plugin.Messenger" Version="8.0.2" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="SkiaSharp.Views.Forms" Version="2.80.3" />
     <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
     <PackageReference Include="Xamarin.FFImageLoading.Transformations" Version="2.4.11.982" />
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2196" />

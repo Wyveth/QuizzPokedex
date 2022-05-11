@@ -1,4 +1,5 @@
-﻿using MvvmCross.Commands;
+﻿using Microcharts;
+using MvvmCross.Commands;
 using MvvmCross.IoC;
 using MvvmCross.Navigation;
 using MvvmCross.Plugin.Messenger;
@@ -6,6 +7,8 @@ using MvvmCross.ViewModels;
 using QuizzPokedex.Interfaces;
 using QuizzPokedex.Models;
 using QuizzPokedex.Resources;
+using SkiaSharp;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
@@ -57,8 +60,12 @@ namespace QuizzPokedex.ViewModels
                 TalentIsVisible=false;
             }
 
-            if (!pokemon.Updated)
-                pokemon = await _pokemonService.UpdateEvolutionWithJson(Pokemon);
+            if (!Pokemon.statTotal.Equals(0))
+                StatisticIsVisible = true;
+            else
+                StatisticIsVisible = false;
+
+            ChartStats = CreateChartStats(pokemon);
 
             base.Prepare();
         }
@@ -71,156 +78,170 @@ namespace QuizzPokedex.ViewModels
 
         private async Task LoadPokemonAsync()
         {
+            if (!Pokemon.Updated)
+                await _pokemonService.UpdateEvolutionWithJson(Pokemon);
+
+            #region Family Evolution
             var resultFamilyEvolution = await _pokemonService.GetFamilyWithoutVariantAsync(Pokemon.Evolutions);
-            FamilyEvolIsVisible = GetVisible(resultFamilyEvolution.Count);
-            CountFamilyEvol = GetNbSpan(resultFamilyEvolution.Count);
-            HeightFamilyEvol = GetHeightSection(resultFamilyEvolution.Count);
+            FamilyEvolIsVisible = await GetVisible(resultFamilyEvolution.Count);
+            CountFamilyEvol = await GetNbSpan(resultFamilyEvolution.Count);
+            HeightFamilyEvol = await GetHeightSection(resultFamilyEvolution.Count);
             FamilyEvolution = new MvxObservableCollection<Pokemon>(resultFamilyEvolution);
+            #endregion
 
+            #region Mega Evolution
             var resultMegaEvolution = await _pokemonService.GetAllVariantAsync(Pokemon.Number, Constantes.MegaEvolution);
-            MegaEvolIsVisible = GetVisible(resultMegaEvolution.Count);
+            MegaEvolIsVisible = await GetVisible(resultMegaEvolution.Count);
             MegaEvolution = new MvxObservableCollection<Pokemon>(resultMegaEvolution);
+            #endregion
 
+            #region Gigamax Evolution
             var resultGigamaxEvolution = await _pokemonService.GetAllVariantAsync(Pokemon.Number, Constantes.GigaEvolution);
-            GigaEvolIsVisible = GetVisible(resultGigamaxEvolution.Count);
+            GigaEvolIsVisible = await GetVisible(resultGigamaxEvolution.Count);
             GigamaxEvolution = new MvxObservableCollection<Pokemon>(resultGigamaxEvolution);
+            #endregion
 
+            #region Alola Variant
             var resultAlolaVariant = await _pokemonService.GetAllVariantAsync(Pokemon.Number, Constantes.Alola);
-            AlolalIsVisible = GetVisible(resultAlolaVariant.Count);
+            AlolalIsVisible = await GetVisible(resultAlolaVariant.Count);
             AlolaVariant = new MvxObservableCollection<Pokemon>(resultAlolaVariant);
+            #endregion
 
+            #region Galar Variant
             var resultGalarVariant = await _pokemonService.GetAllVariantAsync(Pokemon.Number, Constantes.Galar);
-            GalarIsVisible = GetVisible(resultGalarVariant.Count);
+            GalarIsVisible = await GetVisible(resultGalarVariant.Count);
             GalarVariant = new MvxObservableCollection<Pokemon>(resultGalarVariant);
+            #endregion
 
+            #region Hisui Variant
             var resultHisuiVariant = await _pokemonService.GetAllVariantAsync(Pokemon.Number, Constantes.Hisui);
-            HisuiIsVisible = GetVisible(resultHisuiVariant.Count);
+            HisuiIsVisible = await GetVisible(resultHisuiVariant.Count);
             HisuiVariant = new MvxObservableCollection<Pokemon>(resultHisuiVariant);
+            #endregion
 
+            #region Sexe Variant
             var resultVarianteSexe = await _pokemonService.GetAllVariantAsync(Pokemon.Number, Constantes.VarianteSexe);
-            VarianteSexeIsVisible = GetVisible(resultVarianteSexe.Count);
+            VarianteSexeIsVisible = await GetVisible(resultVarianteSexe.Count);
             VarianteSexe = new MvxObservableCollection<Pokemon>(resultVarianteSexe);
+            #endregion
 
+            #region Variant
             var resultVariant = await _pokemonService.GetAllVariantAsync(Pokemon.Number, Constantes.Variant);
-            VariantIsVisible = GetVisible(resultVariant.Count);
+            VariantIsVisible = await GetVisible(resultVariant.Count);
             Variant = new MvxObservableCollection<Pokemon>(resultVariant);
+            #endregion
 
             FirstType = await _typePokService.GetByIdAsync(Pokemon.Types.Split(',')[0]);
-            SetColor(FirstType);
 
             var resultTypes = await _typePokService.GetTypesAsync(Pokemon.Types);
             Types = new MvxObservableCollection<TypePok>(resultTypes);
 
             var resultWeakness = await _typePokService.GetTypesAsync(Pokemon.Weakness);
-            CountWeakness = GetNbSpan(resultWeakness.Count);
+            HeightWeakness = await GetHeightSectionWeakness(resultWeakness.Count);
+            CountWeakness = await GetNbSpan(resultWeakness.Count);
             Weakness = new MvxObservableCollection<TypePok>(resultWeakness);
         }
 
-        private bool GetVisible(int count)
+        private Chart CreateChartStats(Pokemon pokemon)
+        {
+            ChartEntry[] entries = GenerateEntriesChart(pokemon);
+
+            return new RadarChart
+            {
+                Entries = entries,
+                LabelTextSize = 42,
+                LineSize = 5,
+                PointSize = 20,
+                BorderLineSize = 5,
+                AnimationProgress = 7,
+                AnimationDuration = TimeSpan.FromSeconds(7),
+                IsAnimated = true,
+                MaxValue = 255,
+                PointMode = PointMode.Circle
+            };
+        }
+
+        private ChartEntry[] GenerateEntriesChart(Pokemon pokemon)
+        {
+            return new[]
+            {
+                new ChartEntry(pokemon.statPv)
+                {
+                    Label = "PV",
+                    ValueLabel = pokemon.statPv.ToString(),
+                    Color = SKColor.Parse("#6BC563"),
+                },
+                new ChartEntry(pokemon.statAttaque)
+                {
+                    Label = "Att.",
+                    ValueLabel = pokemon.statAttaque.ToString(),
+                    Color = SKColor.Parse("#FFA75F"),
+                },
+                new ChartEntry(pokemon.statDefense)
+                {
+                    Label = "Def.",
+                    ValueLabel = pokemon.statDefense.ToString(),
+                    Color = SKColor.Parse("#579BE1"),
+                },
+                new ChartEntry(pokemon.statAttaqueSpe)
+                {
+                    Label = "Att. Sp.",
+                    ValueLabel = pokemon.statAttaqueSpe.ToString(),
+                    Color = SKColor.Parse("#F999F1"),
+                },
+                new ChartEntry(pokemon.statDefenseSpe)
+                {
+                    Label = "Def. Sp.",
+                    ValueLabel = pokemon.statDefenseSpe.ToString(),
+                    Color = SKColor.Parse("#FF7A7F"),
+                },
+                new ChartEntry(pokemon.statVitesse)
+                {
+                    Label = "Vit.",
+                    ValueLabel = pokemon.statVitesse.ToString(),
+                    Color = SKColor.Parse("#FDDD46"),
+                }
+            };
+        }
+
+        private async Task<bool> GetVisible(int count)
         {
             if (count != 0)
-                return true;
+                return await Task.FromResult(true);
             else
-                return false;
+                return await Task.FromResult(false);
         }
 
-        private int GetNbSpan(int count)
+        private async Task<int> GetNbSpan(int count)
         {
             if (count <= 2)
-                return count;
+                return await Task.FromResult(count);
             else
-                return 3;
+                return await Task.FromResult(3);
         }
 
-        private int GetHeightSection(int count)
+        private async Task<int> GetHeightSection(int count)
         {
             if (count <= 3)
-                return 150;
+                return await Task.FromResult(180);
             else if (count <= 6)
-                return 280;
+                return await Task.FromResult(320);
             else if (count <= 9)
-                return 420;
+                return await Task.FromResult(500);
             else
-                return 150;
+                return await Task.FromResult(180);
         }
 
-        private void SetColor(TypePok typePok)
+        private async Task<int> GetHeightSectionWeakness(int count)
         {
-            switch (typePok.Name)
-            {
-                case Constantes.Steel:
-                    ImgColor = Constantes.ImgColorSteel;
-                    InfoColor = Constantes.InfoColorSteel;
-                    break;
-                case Constantes.Fighting:
-                    ImgColor = Constantes.ImgColorFighting;
-                    InfoColor = Constantes.InfoColorFighting;
-                    break;
-                case Constantes.Dragon:
-                    ImgColor = Constantes.ImgColorDragon;
-                    InfoColor = Constantes.InfoColorDragon;
-                    break;
-                case Constantes.Water:
-                    ImgColor = Constantes.ImgColorWater;
-                    InfoColor = Constantes.InfoColorWater;
-                    break;
-                case Constantes.Electric:
-                    ImgColor = Constantes.ImgColorElectric;
-                    InfoColor = Constantes.InfoColorElectric;
-                    break;
-                case Constantes.Fairy:
-                    ImgColor = Constantes.ImgColorFairy;
-                    InfoColor = Constantes.InfoColorFairy;
-                    break;
-                case Constantes.Fire:
-                    ImgColor = Constantes.ImgColorFire;
-                    InfoColor = Constantes.InfoColorFire;
-                    break;
-                case Constantes.Ice:
-                    ImgColor = Constantes.ImgColorIce;
-                    InfoColor = Constantes.InfoColorIce;
-                    break;
-                case Constantes.Bug:
-                    ImgColor = Constantes.ImgColorBug;
-                    InfoColor = Constantes.InfoColorBug;
-                    break;
-                case Constantes.Normal:
-                    ImgColor = Constantes.ImgColorNormal;
-                    InfoColor = Constantes.InfoColorNormal;
-                    break;
-                case Constantes.Grass:
-                    ImgColor = Constantes.ImgColorGrass;
-                    InfoColor = Constantes.InfoColorGrass;
-                    break;
-                case Constantes.Poison:
-                    ImgColor = Constantes.ImgColorPoison;
-                    InfoColor = Constantes.InfoColorPoison;
-                    break;
-                case Constantes.Psychic:
-                    ImgColor = Constantes.ImgColorPsychic;
-                    InfoColor = Constantes.InfoColorPsychic;
-                    break;
-                case Constantes.Rock:
-                    ImgColor = Constantes.Rock;
-                    InfoColor = Constantes.InfoColorRock;
-                    break;
-                case Constantes.Ground:
-                    ImgColor = Constantes.ImgColorGround;
-                    InfoColor = Constantes.InfoColorGround;
-                    break;
-                case Constantes.Ghost:
-                    ImgColor = Constantes.ImgColorGhost;
-                    InfoColor = Constantes.InfoColorGhost;
-                    break;
-                case Constantes.Dark:
-                    ImgColor = Constantes.ImgColorDark;
-                    InfoColor = Constantes.InfoColorDark;
-                    break;
-                case Constantes.Flying:
-                    ImgColor = Constantes.ImgColorSteel;
-                    InfoColor = Constantes.InfoColorSteel;
-                    break;
-            }
+            if (count <= 3)
+                return await Task.FromResult(40);
+            else if (count <= 6)
+                return await Task.FromResult(70);
+            else if (count <= 9)
+                return await Task.FromResult(100);
+            else
+                return await Task.FromResult(40);
         }
 
         #region COMMAND
@@ -383,7 +404,7 @@ namespace QuizzPokedex.ViewModels
             set { SetProperty(ref _heightFamilyEvol, value); }
         }
 
-        private int _countVariantEvol;
+        private int _countVariantEvol = 3;
 
         public int CountVariantEvol
         {
@@ -406,6 +427,14 @@ namespace QuizzPokedex.ViewModels
             get { return _countWeakness; }
             set { SetProperty(ref _countWeakness, value); }
         }
+
+        private int _heightWeakness;
+
+        public int HeightWeakness
+        {
+            get { return _heightWeakness; }
+            set { SetProperty(ref _heightWeakness, value); }
+        }
         #endregion
 
         #region IsVisible
@@ -423,6 +452,14 @@ namespace QuizzPokedex.ViewModels
         {
             get { return _2ndTalentIsVisible; }
             set { SetProperty(ref _2ndTalentIsVisible, value); }
+        }
+
+        private bool _statisticIsVisible;
+
+        public bool StatisticIsVisible
+        {
+            get { return _statisticIsVisible; }
+            set { SetProperty(ref _statisticIsVisible, value); }
         }
 
         private bool _familyEvolIsVisible;
@@ -482,21 +519,21 @@ namespace QuizzPokedex.ViewModels
         }
         #endregion
 
-        #region Color
-        private string _imgColor;
+        #region Chart Stat
+        private Chart _chartStats;
 
-        public string ImgColor
+        public Chart ChartStats
         {
-            get { return _imgColor; }
-            set { SetProperty(ref _imgColor, value); }
+            get { return _chartStats; }
+            set { _chartStats = value; }
         }
 
-        private string _infoColor;
+        private ChartEntry[] _chartEntry;
 
-        public string InfoColor
+        public ChartEntry[] ChartEntry
         {
-            get { return _infoColor; }
-            set { SetProperty(ref _infoColor, value); }
+            get { return _chartEntry; }
+            set { SetProperty(ref _chartEntry, value); }
         }
         #endregion
         #endregion

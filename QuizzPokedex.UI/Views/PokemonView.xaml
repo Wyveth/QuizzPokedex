@@ -6,6 +6,7 @@
     xmlns:converters="clr-namespace:QuizzPokedex.UI.Converters"
     xmlns:cornerBorder="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
     xmlns:ef="clr-namespace:AiForms.Effects;assembly=AiForms.Effects"
+    xmlns:microcharts="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
     xmlns:shadows="http://sharpnado.com"
     xmlns:viewmodel="clr-namespace:QuizzPokedex.ViewModels;assembly=QuizzPokedex"
     xmlns:views="clr-namespace:MvvmCross.Forms.Views;assembly=MvvmCross.Forms"
@@ -24,11 +25,11 @@
                 <AbsoluteLayout HeightRequest="300">
                     <StackLayout AbsoluteLayout.LayoutBounds="0.5,0.08,0.656,0.4" AbsoluteLayout.LayoutFlags="All">
                         <StackLayout
-                            ef:Border.Color="{Binding ImgColor}"
+                            ef:Border.Color="{Binding FirstType.ImgColor}"
                             ef:Border.Radius="150"
                             ef:Border.Width="1"
                             xct:CornerRadiusEffect.CornerRadius="150"
-                            xct:ShadowEffect.Color="{Binding ImgColor}"
+                            xct:ShadowEffect.Color="{Binding FirstType.ImgColor}"
                             xct:ShadowEffect.OffsetX="-10"
                             xct:ShadowEffect.OffsetY="-10"
                             xct:ShadowEffect.Opacity="1"
@@ -49,11 +50,11 @@
                     <StackLayout AbsoluteLayout.LayoutBounds="0.5,0.02,0.4,0.05" AbsoluteLayout.LayoutFlags="All">
                         <StackLayout
                             Padding="10"
-                            ef:Border.Color="{Binding ImgColor}"
+                            ef:Border.Color="{Binding FirstType.ImgColor}"
                             ef:Border.Radius="150"
                             ef:Border.Width="1"
                             xct:CornerRadiusEffect.CornerRadius="150"
-                            xct:ShadowEffect.Color="{Binding ImgColor}"
+                            xct:ShadowEffect.Color="{Binding FirstType.ImgColor}"
                             xct:ShadowEffect.OffsetX="-10"
                             xct:ShadowEffect.OffsetY="-10"
                             xct:ShadowEffect.Opacity="1"
@@ -73,11 +74,11 @@
                     <StackLayout AbsoluteLayout.LayoutBounds="0.5,0.9,0.4,0.05" AbsoluteLayout.LayoutFlags="All">
                         <StackLayout
                             Padding="10"
-                            ef:Border.Color="{Binding ImgColor}"
+                            ef:Border.Color="{Binding FirstType.ImgColor}"
                             ef:Border.Radius="150"
                             ef:Border.Width="1"
                             xct:CornerRadiusEffect.CornerRadius="150"
-                            xct:ShadowEffect.Color="{Binding ImgColor}"
+                            xct:ShadowEffect.Color="{Binding FirstType.ImgColor}"
                             xct:ShadowEffect.OffsetX="-10"
                             xct:ShadowEffect.OffsetY="-10"
                             xct:ShadowEffect.Opacity="1"
@@ -160,7 +161,7 @@
                                 </shadows:ImmutableShades>
                             </shadows:Shadows.Shades>
                             <cornerBorder:PancakeView
-                                BackgroundColor="{Binding InfoColor}"
+                                BackgroundColor="{Binding FirstType.InfoColor}"
                                 Border="{cornerBorder:BorderMarkup Color=Black,
                                                                    Thickness=0}"
                                 CornerRadius="0,100,0,100">
@@ -263,7 +264,7 @@
                                 </shadows:ImmutableShades>
                             </shadows:Shadows.Shades>
                             <cornerBorder:PancakeView
-                                BackgroundColor="{Binding InfoColor}"
+                                BackgroundColor="{Binding FirstType.InfoColor}"
                                 Border="{cornerBorder:BorderMarkup Color=Black,
                                                                    Thickness=0}"
                                 CornerRadius="0,100,0,100">
@@ -308,6 +309,55 @@
                             TextColor="black" />
                     </StackLayout>
                 </RelativeLayout>
+                <RelativeLayout IsVisible="{Binding StatisticIsVisible}">
+                    <StackLayout WidthRequest="160">
+                        <shadows:Shadows CornerRadius="20">
+                            <shadows:Shadows.Shades>
+                                <shadows:ImmutableShades>
+                                    <shadows:Shade
+                                        BlurRadius="10"
+                                        Opacity="0.5"
+                                        Offset="-1,-1"
+                                        Color="#464C56" />
+                                    <shadows:Shade
+                                        BlurRadius="10"
+                                        Opacity="0.5"
+                                        Offset="1,1"
+                                        Color="#464C56" />
+                                </shadows:ImmutableShades>
+                            </shadows:Shadows.Shades>
+                            <cornerBorder:PancakeView
+                                BackgroundColor="{Binding FirstType.InfoColor}"
+                                Border="{cornerBorder:BorderMarkup Color=Black,
+                                                                   Thickness=0}"
+                                CornerRadius="0,100,0,100">
+                                <Label
+                                    Padding="20,4,4,4"
+                                    xct:ShadowEffect.Color="#464C56"
+                                    xct:ShadowEffect.OffsetY="10"
+                                    xct:ShadowEffect.Opacity="0.5"
+                                    Text="Statistiques"
+                                    TextColor="White" />
+                            </cornerBorder:PancakeView>
+                        </shadows:Shadows>
+                    </StackLayout>
+                    <StackLayout Margin="50,40,50,10">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <microcharts:ChartView
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                BackgroundColor="White"
+                                Chart="{Binding ChartStats}"
+                                HeightRequest="250" />
+                        </Grid>
+                    </StackLayout>
+                </RelativeLayout>
                 <RelativeLayout IsVisible="{Binding FamilyEvolIsVisible}">
                     <StackLayout WidthRequest="105">
                         <shadows:Shadows CornerRadius="20">
@@ -326,7 +376,7 @@
                                 </shadows:ImmutableShades>
                             </shadows:Shadows.Shades>
                             <cornerBorder:PancakeView
-                                BackgroundColor="{Binding InfoColor}"
+                                BackgroundColor="{Binding FirstType.InfoColor}"
                                 Border="{cornerBorder:BorderMarkup Color=Black,
                                                                    Thickness=0}"
                                 CornerRadius="0,100,0,100">
@@ -340,7 +390,7 @@
                             </cornerBorder:PancakeView>
                         </shadows:Shadows>
                     </StackLayout>
-                    <StackLayout Margin="20,40,20,10">
+                    <StackLayout Margin="20,40,20,0">
                         <CollectionView
                             x:Name="EvolutionList"
                             HeightRequest="{Binding HeightFamilyEvol}"
@@ -414,7 +464,7 @@
                                 </shadows:ImmutableShades>
                             </shadows:Shadows.Shades>
                             <cornerBorder:PancakeView
-                                BackgroundColor="{Binding InfoColor}"
+                                BackgroundColor="{Binding FirstType.InfoColor}"
                                 Border="{cornerBorder:BorderMarkup Color=Black,
                                                                    Thickness=0}"
                                 CornerRadius="0,100,0,100">
@@ -428,10 +478,10 @@
                             </cornerBorder:PancakeView>
                         </shadows:Shadows>
                     </StackLayout>
-                    <StackLayout Margin="20,30,20,10">
+                    <StackLayout Margin="20,40,20,0">
                         <CollectionView
                             x:Name="MegaEvolutionList"
-                            HeightRequest="150"
+                            HeightRequest="180"
                             ItemsSource="{Binding MegaEvolution}"
                             VerticalScrollBarVisibility="Never">
                             <CollectionView.ItemsLayout>
@@ -503,7 +553,7 @@
                                 </shadows:ImmutableShades>
                             </shadows:Shadows.Shades>
                             <cornerBorder:PancakeView
-                                BackgroundColor="{Binding InfoColor}"
+                                BackgroundColor="{Binding FirstType.InfoColor}"
                                 Border="{cornerBorder:BorderMarkup Color=Black,
                                                                    Thickness=0}"
                                 CornerRadius="0,100,0,100">
@@ -517,7 +567,7 @@
                             </cornerBorder:PancakeView>
                         </shadows:Shadows>
                     </StackLayout>
-                    <StackLayout Margin="20,30,20,0">
+                    <StackLayout Margin="20,40,20,0">
                         <CollectionView
                             x:Name="GigaEvolutionList"
                             HeightRequest="150"
@@ -582,7 +632,7 @@
                                 </shadows:ImmutableShades>
                             </shadows:Shadows.Shades>
                             <cornerBorder:PancakeView
-                                BackgroundColor="{Binding InfoColor}"
+                                BackgroundColor="{Binding FirstType.InfoColor}"
                                 Border="{cornerBorder:BorderMarkup Color=Black,
                                                                    Thickness=0}"
                                 CornerRadius="0,100,0,100">
@@ -661,7 +711,7 @@
                                 </shadows:ImmutableShades>
                             </shadows:Shadows.Shades>
                             <cornerBorder:PancakeView
-                                BackgroundColor="{Binding InfoColor}"
+                                BackgroundColor="{Binding FirstType.InfoColor}"
                                 Border="{cornerBorder:BorderMarkup Color=Black,
                                                                    Thickness=0}"
                                 CornerRadius="0,100,0,100">
@@ -740,7 +790,7 @@
                                 </shadows:ImmutableShades>
                             </shadows:Shadows.Shades>
                             <cornerBorder:PancakeView
-                                BackgroundColor="{Binding InfoColor}"
+                                BackgroundColor="{Binding FirstType.InfoColor}"
                                 Border="{cornerBorder:BorderMarkup Color=Black,
                                                                    Thickness=0}"
                                 CornerRadius="0,100,0,100">
@@ -819,7 +869,7 @@
                                 </shadows:ImmutableShades>
                             </shadows:Shadows.Shades>
                             <cornerBorder:PancakeView
-                                BackgroundColor="{Binding InfoColor}"
+                                BackgroundColor="{Binding FirstType.InfoColor}"
                                 Border="{cornerBorder:BorderMarkup Color=Black,
                                                                    Thickness=0}"
                                 CornerRadius="0,100,0,100">
@@ -898,7 +948,7 @@
                                 </shadows:ImmutableShades>
                             </shadows:Shadows.Shades>
                             <cornerBorder:PancakeView
-                                BackgroundColor="{Binding InfoColor}"
+                                BackgroundColor="{Binding FirstType.InfoColor}"
                                 Border="{cornerBorder:BorderMarkup Color=Black,
                                                                    Thickness=0}"
                                 CornerRadius="0,100,0,100">
@@ -977,7 +1027,7 @@
                                 </shadows:ImmutableShades>
                             </shadows:Shadows.Shades>
                             <cornerBorder:PancakeView
-                                BackgroundColor="{Binding InfoColor}"
+                                BackgroundColor="{Binding FirstType.InfoColor}"
                                 Border="{cornerBorder:BorderMarkup Color=Black,
                                                                    Thickness=0}"
                                 CornerRadius="0,100,0,100">
@@ -994,7 +1044,7 @@
                     <StackLayout Margin="20,40,20,0">
                         <CollectionView
                             x:Name="WeaknessList"
-                            HeightRequest="100"
+                            HeightRequest="{Binding HeightWeakness}"
                             ItemsSource="{Binding Weakness}"
                             VerticalScrollBarVisibility="Never">
                             <CollectionView.ItemsLayout>
@@ -1029,68 +1079,6 @@
                         </CollectionView>
                     </StackLayout>
                 </RelativeLayout>
-                <!--<RelativeLayout>
-                    <StackLayout WidthRequest="125">
-                        <shadows:Shadows CornerRadius="20">
-                            <shadows:Shadows.Shades>
-                                <shadows:ImmutableShades>
-                                    <shadows:Shade
-                                        BlurRadius="10"
-                                        Opacity="0.5"
-                                        Offset="-1,-1"
-                                        Color="#464C56" />
-                                    <shadows:Shade
-                                        BlurRadius="10"
-                                        Opacity="0.5"
-                                        Offset="1,1"
-                                        Color="#464C56" />
-                                </shadows:ImmutableShades>
-                            </shadows:Shadows.Shades>
-                            <cornerBorder:PancakeView
-                                BackgroundColor="{Binding InfoColor}"
-                                Border="{cornerBorder:BorderMarkup Color=Black,
-                                                                   Thickness=0}"
-                                CornerRadius="0,100,0,100">
-                                <Label
-                                    Padding="20,4,4,4"
-                                    xct:ShadowEffect.Color="#464C56"
-                                    xct:ShadowEffect.OffsetY="10"
-                                    xct:ShadowEffect.Opacity="0.5"
-                                    Text="Statistiques"
-                                    TextColor="White" />
-                            </cornerBorder:PancakeView>
-                        </shadows:Shadows>
-                    </StackLayout>
-                    <StackLayout Margin="20,40,20,0">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-                            <BoxView
-                                x:Name="boxView"
-                                Grid.Row="0"
-                                VerticalOptions="FillAndExpand"
-                                Color="Black" />
-
-                            <Slider x:Name="redSlider" Grid.Row="1" />
-
-                            <Slider x:Name="greenSlider" Grid.Row="2" />
-
-                            <Slider
-                                x:Name="blueSlider"
-                                Grid.Row="3"
-                                Maximum="200"
-                                Value="{Binding Pokemon.StatPv}" />
-                        </Grid>
-
-                    </StackLayout>
-                </RelativeLayout>-->
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

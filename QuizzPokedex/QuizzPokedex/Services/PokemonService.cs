@@ -215,7 +215,6 @@ namespace QuizzPokedex.Services
         {
             List<PokemonJson> pokemonsJson = GetListPokeScrapJson();
             List<Pokemon> pokemonsNoUpdated = await GetPokemonsNotUpdatedAsync();
-            Task.Delay(7000).Wait();
 
             foreach(Pokemon pokemonNoUpdated in pokemonsNoUpdated)
             {
