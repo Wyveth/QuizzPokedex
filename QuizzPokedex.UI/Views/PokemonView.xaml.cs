@@ -17,5 +17,52 @@ namespace QuizzPokedex.UI.Views
         {
             InitializeComponent();
         }
+
+        private void EvolutionList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (EvolutionList.SelectedItem != null)
+                EvolutionList.SelectedItem = null;
+        }
+
+        private void MegaEvolutionList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (MegaEvolutionList.SelectedItem != null)
+                MegaEvolutionList.SelectedItem = null;
+        }
+
+        private void GigaEvolutionList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (GigaEvolutionList.SelectedItem != null)
+                GigaEvolutionList.SelectedItem = null;
+        }
+
+        private void AlolaList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (AlolaList.SelectedItem != null)
+                AlolaList.SelectedItem = null;
+        }
+
+        private void GalarList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (GalarList.SelectedItem != null)
+                GalarList.SelectedItem = null;
+        }
+        private void HisuiList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (HisuiList.SelectedItem != null)
+                HisuiList.SelectedItem = null;
+        }
+
+        private void VariantList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (VariantList.SelectedItem != null)
+                VariantList.SelectedItem = null;
+        }
+
+        private void VarianteSexeList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (VarianteSexeList.SelectedItem != null)
+                VarianteSexeList.SelectedItem = null;
+        }
     }
 }

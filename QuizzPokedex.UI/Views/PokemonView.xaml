@@ -429,7 +429,9 @@
                             x:Name="EvolutionList"
                             HeightRequest="{Binding HeightFamilyEvol}"
                             ItemsSource="{Binding FamilyEvolution}"
-                            SelectedItem="{Binding SelectedPokemon}">
+                            SelectedItem="{Binding SelectedPokemon}"
+                            SelectionChanged="EvolutionList_SelectionChanged"
+                            SelectionMode="Single">
                             <CollectionView.ItemsLayout>
                                 <GridItemsLayout Orientation="Vertical" Span="{Binding CountFamilyEvol}" />
                             </CollectionView.ItemsLayout>
@@ -518,6 +520,9 @@
                             x:Name="MegaEvolutionList"
                             HeightRequest="180"
                             ItemsSource="{Binding MegaEvolution}"
+                            SelectedItem="{Binding SelectedPokemon}"
+                            SelectionChanged="MegaEvolutionList_SelectionChanged"
+                            SelectionMode="Single"
                             VerticalScrollBarVisibility="Never">
                             <CollectionView.ItemsLayout>
                                 <GridItemsLayout Orientation="Vertical" Span="{Binding MegaEvolution.Count}" />
@@ -607,6 +612,9 @@
                             x:Name="GigaEvolutionList"
                             HeightRequest="150"
                             ItemsSource="{Binding GigamaxEvolution}"
+                            SelectedItem="{Binding SelectedPokemon}"
+                            SelectionChanged="GigaEvolutionList_SelectionChanged"
+                            SelectionMode="Single"
                             VerticalScrollBarVisibility="Never">
                             <CollectionView.ItemsLayout>
                                 <GridItemsLayout Orientation="Vertical" Span="{Binding GigamaxEvolution.Count}" />
@@ -686,6 +694,9 @@
                             x:Name="AlolaList"
                             HeightRequest="150"
                             ItemsSource="{Binding AlolaVariant}"
+                            SelectedItem="{Binding SelectedPokemon}"
+                            SelectionChanged="AlolaList_SelectionChanged"
+                            SelectionMode="Single"
                             VerticalScrollBarVisibility="Never">
                             <CollectionView.ItemsLayout>
                                 <GridItemsLayout Orientation="Vertical" Span="{Binding AlolaVariant.Count}" />
@@ -765,6 +776,9 @@
                             x:Name="GalarList"
                             HeightRequest="150"
                             ItemsSource="{Binding GalarVariant}"
+                            SelectedItem="{Binding SelectedPokemon}"
+                            SelectionChanged="GalarList_SelectionChanged"
+                            SelectionMode="Single"
                             VerticalScrollBarVisibility="Never">
                             <CollectionView.ItemsLayout>
                                 <GridItemsLayout Orientation="Vertical" Span="{Binding GalarVariant.Count}" />
@@ -844,6 +858,9 @@
                             x:Name="HisuiList"
                             HeightRequest="150"
                             ItemsSource="{Binding HisuiVariant}"
+                            SelectedItem="{Binding SelectedPokemon}"
+                            SelectionChanged="HisuiList_SelectionChanged"
+                            SelectionMode="Single"
                             VerticalScrollBarVisibility="Never">
                             <CollectionView.ItemsLayout>
                                 <GridItemsLayout Orientation="Vertical" Span="{Binding HisuiVariant.Count}" />
@@ -923,6 +940,9 @@
                             x:Name="VariantList"
                             HeightRequest="150"
                             ItemsSource="{Binding Variant}"
+                            SelectedItem="{Binding SelectedPokemon}"
+                            SelectionChanged="VariantList_SelectionChanged"
+                            SelectionMode="Single"
                             VerticalScrollBarVisibility="Never">
                             <CollectionView.ItemsLayout>
                                 <GridItemsLayout Orientation="Vertical" Span="{Binding Variant.Count}" />
@@ -1002,6 +1022,9 @@
                             x:Name="VarianteSexeList"
                             HeightRequest="150"
                             ItemsSource="{Binding VarianteSexe}"
+                            SelectedItem="{Binding SelectedPokemon}"
+                            SelectionChanged="VarianteSexeList_SelectionChanged"
+                            SelectionMode="Single"
                             VerticalScrollBarVisibility="Never">
                             <CollectionView.ItemsLayout>
                                 <GridItemsLayout Orientation="Vertical" Span="{Binding VarianteSexe.Count}" />

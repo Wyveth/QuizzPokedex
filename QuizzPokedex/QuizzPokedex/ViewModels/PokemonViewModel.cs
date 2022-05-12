@@ -2,16 +2,13 @@
 using MvvmCross.Commands;
 using MvvmCross.IoC;
 using MvvmCross.Navigation;
-using MvvmCross.Plugin.Messenger;
 using MvvmCross.ViewModels;
 using QuizzPokedex.Interfaces;
 using QuizzPokedex.Models;
 using QuizzPokedex.Resources;
 using SkiaSharp;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using Xamarin.Essentials;
 
 namespace QuizzPokedex.ViewModels
 {
@@ -57,7 +54,7 @@ namespace QuizzPokedex.ViewModels
             }
             else
             {
-                TalentIsVisible=false;
+                TalentIsVisible = false;
             }
 
             if (!Pokemon.statTotal.Equals(0))
@@ -246,10 +243,16 @@ namespace QuizzPokedex.ViewModels
 
         #region COMMAND
         public IMvxAsyncCommand NavigationBackCommandAsync => new MvxAsyncCommand(NavigationBackAsync);
+        public IMvxAsyncCommand<Pokemon> DetailsPokemonCommandAsync => new MvxAsyncCommand<Pokemon>(DetailsPokemonAsync);
 
         private async Task NavigationBackAsync()
         {
             await _navigation.Close(this);
+        }
+
+        private async Task DetailsPokemonAsync(Pokemon Pokemon)
+        {
+            await _navigation.Navigate<PokemonViewModel, Pokemon>(Pokemon);
         }
         #endregion
 
@@ -342,6 +345,17 @@ namespace QuizzPokedex.ViewModels
         {
             get { return _weakness; }
             set { SetProperty(ref _weakness, value); }
+        }
+
+        private Pokemon _selectedPokemon;
+        public Pokemon SelectedPokemon
+        {
+            get { return _selectedPokemon; }
+            set
+            {
+                _selectedPokemon = value;
+                _ = DetailsPokemonAsync(_selectedPokemon);
+            }
         }
         #endregion
 

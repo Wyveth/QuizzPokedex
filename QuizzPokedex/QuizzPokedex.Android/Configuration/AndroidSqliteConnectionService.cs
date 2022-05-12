@@ -1,5 +1,7 @@
-﻿using QuizzPokedex.Interfaces;
+﻿using Java.IO;
+using QuizzPokedex.Interfaces;
 using SQLite;
+using System;
 using System.IO;
 
 namespace QuizzPokedex.Droid.Configuration
@@ -14,7 +16,7 @@ namespace QuizzPokedex.Droid.Configuration
             //création de la base si existe pas sinon renvoie la bdd courante
             if (_connection == null)
             {
-                var databaseFolder = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
+                var databaseFolder = System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData);
                 var databaseFilePath = Path.Combine(databaseFolder, FileName);
 
                 _connection = new SQLiteAsyncConnection(databaseFilePath);

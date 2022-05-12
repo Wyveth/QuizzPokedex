@@ -32,6 +32,9 @@ namespace QuizzPokedex.UI.Views
                 Task.WhenAll(
                     searchFilter.TranslateTo(0, -(trans + safeInsets.Top), 200, Easing.CubicIn),
                     searchFilter.FadeTo(0.25, 200));
+                Task.WhenAll(
+                    backButton.TranslateTo(0, -(trans + safeInsets.Top), 200, Easing.CubicIn),
+                    backButton.FadeTo(0.25, 200));
             }
             else if (transY != 0 &&
                      e.VerticalDelta < 0 &&
@@ -40,6 +43,9 @@ namespace QuizzPokedex.UI.Views
                 Task.WhenAll(
                     searchFilter.TranslateTo(0, 0, 200, Easing.CubicOut),
                     searchFilter.FadeTo(1, 200));
+                Task.WhenAll(
+                    backButton.TranslateTo(0, 0, 200, Easing.CubicOut),
+                    backButton.FadeTo(1, 200));
             }
 
             if (transY == 0 &&
@@ -66,6 +72,12 @@ namespace QuizzPokedex.UI.Views
         private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
         {
 
+        }
+
+        private void PokemonList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (PokemonList.SelectedItem != null)
+                PokemonList.SelectedItem = null;
         }
     }
 }

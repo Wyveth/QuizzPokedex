@@ -27,6 +27,7 @@
                     ItemsSource="{Binding Pokemons}"
                     Scrolled="CollectionView_Scrolled"
                     SelectedItem="{Binding SelectedPokemon}"
+                    SelectionChanged="PokemonList_SelectionChanged"
                     SelectionMode="Single">
                     <CollectionView.ItemsLayout>
                         <GridItemsLayout Orientation="Vertical" Span="3" />
