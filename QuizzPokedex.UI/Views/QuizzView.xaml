@@ -1,18 +1,85 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<views:MvxContentPage x:TypeArguments="viewmodel:QuizzViewModel"
-             xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="QuizzPokedex.UI.Views.QuizzView"
-             xmlns:views="clr-namespace:MvvmCross.Forms.Views;assembly=MvvmCross.Forms"
-             NavigationPage.HasNavigationBar="False"             
-             xmlns:shadows="http://sharpnado.com"         
-             xmlns:animation="clr-namespace:Lottie.Forms;assembly=Lottie.Forms" 
-             xmlns:viewmodel="clr-namespace:QuizzPokedex.ViewModels;assembly=QuizzPokedex"
-             xmlns:cornerBorder="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
-             BackgroundColor="#FFFFFF">
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<views:MvxContentPage
+    x:Class="QuizzPokedex.UI.Views.QuizzView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:animation="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
+    xmlns:converters="clr-namespace:QuizzPokedex.UI.Converters"
+    xmlns:cornerBorder="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+    xmlns:shadows="http://sharpnado.com"
+    xmlns:viewmodel="clr-namespace:QuizzPokedex.ViewModels;assembly=QuizzPokedex"
+    xmlns:views="clr-namespace:MvvmCross.Forms.Views;assembly=MvvmCross.Forms"
+    x:TypeArguments="viewmodel:QuizzViewModel"
+    BackgroundColor="#FFFFFF"
+    NavigationPage.HasNavigationBar="False">
+
+    <views:MvxContentPage.Resources>
+        <ResourceDictionary>
+            <converters:ByteToImageSourceConverter x:Key="ByteToImageSourceConverter" />
+        </ResourceDictionary>
+    </views:MvxContentPage.Resources>
+
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Hello Quizz" />
+            <AbsoluteLayout>
+                <StackLayout
+                    x:Name="backButton"
+                    AbsoluteLayout.LayoutBounds="0,0.075,0.23,0.07"
+                    AbsoluteLayout.LayoutFlags="All">
+                    <shadows:Shadows Margin="30,0,30,50" CornerRadius="20">
+                        <shadows:Shadows.Shades>
+                            <shadows:ImmutableShades>
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.5"
+                                    Offset="-1,-1"
+                                    Color="#464C56" />
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.5"
+                                    Offset="1,1"
+                                    Color="#464C56" />
+                            </shadows:ImmutableShades>
+                        </shadows:Shadows.Shades>
+                        <cornerBorder:PancakeView
+                            BackgroundColor="White"
+                            Border="{cornerBorder:BorderMarkup Color=Gray,
+                                                               Thickness=0}"
+                            CornerRadius="100,100,100,100">
+                            <ImageButton
+                                Padding="5"
+                                BackgroundColor="White"
+                                Command="{Binding NavigationBackCommandAsync}"
+                                HeightRequest="35"
+                                Source="icons8back48.png"
+                                WidthRequest="35" />
+                        </cornerBorder:PancakeView>
+                    </shadows:Shadows>
+                </StackLayout>
+            </AbsoluteLayout>
+            <RelativeLayout HorizontalOptions="Center" VerticalOptions="CenterAndExpand">
+                <StackLayout>
+                    <Image
+                        HeightRequest="300"
+                        Source="{Binding Pokemon.DataImg, Converter={StaticResource ByteToImageSourceConverter}}"
+                        WidthRequest="300" />
+                </StackLayout>
+            </RelativeLayout>
+            <RelativeLayout HorizontalOptions="Center" VerticalOptions="CenterAndExpand">
+                <StackLayout>
+                    <Label
+                        FontAttributes="Bold,Italic"
+                        FontSize="Medium"
+                        HorizontalOptions="CenterAndExpand"
+                        Text="Développement en cours..." />
+                    <animation:AnimationView
+                        Animation="Resources.104865-loading.json"
+                        AnimationSource="EmbeddedResource"
+                        HeightRequest="70"
+                        RepeatMode="Infinite"
+                        WidthRequest="200" />
+                </StackLayout>
+            </RelativeLayout>
         </StackLayout>
     </ContentPage.Content>
 </views:MvxContentPage>

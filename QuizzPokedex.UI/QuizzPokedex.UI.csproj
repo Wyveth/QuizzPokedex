@@ -37,6 +37,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<EmbeddedResource Include="Resources\104865-loading.json" />
 		<EmbeddedResource Include="Resources\96855-pokeball-loading-animation.json" />
 	</ItemGroup>
 	

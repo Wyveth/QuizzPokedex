@@ -17,13 +17,15 @@ namespace QuizzPokedex.ViewModels
         private readonly IMvxNavigationService _navigation;
         private readonly IMvxIoCProvider _logger;
         private readonly IQuizzService _quizzService;
+        private readonly IPokemonService _pokemonService;
         private readonly IMvxMessenger _messenger;
 
-        public QuizzViewModel(IMvxNavigationService navigation, IMvxIoCProvider logger, IQuizzService quizzService, IMvxMessenger messenger)
+        public QuizzViewModel(IMvxNavigationService navigation, IMvxIoCProvider logger, IQuizzService quizzService, IMvxMessenger messenger, IPokemonService pokemonService)
         {
             _navigation = navigation;
             _logger = logger;
             _quizzService = quizzService;
+            _pokemonService = pokemonService;
             _messenger = messenger;
         }
 
@@ -31,43 +33,21 @@ namespace QuizzPokedex.ViewModels
         {
             Quizz = quizz;
 
-            if (!Quizz.Id.Equals(0))
-                //mode édition
-                ModeUpdate = true;
-
             base.Prepare();
+        }
+
+        public async override Task Initialize()
+        {
+            Pokemon = await _pokemonService.GetByNameAsync("Charpenti");
+            await base.Initialize();
         }
 
         #region COMMAND
         public IMvxAsyncCommand NavigationBackCommandAsync => new MvxAsyncCommand(NavigationBackAsync);
-        public IMvxAsyncCommand SaveCommandAsync => new MvxAsyncCommand(SaveAsync);
 
         private async Task NavigationBackAsync()
         {
             await _navigation.Close(this);
-        }
-
-        private async Task SaveAsync()
-        {
-            //Save le quizz si complet (cf ci dessous)
-            if (Quizz.Id != 0)
-            {
-                if (ModeUpdate)
-                    await _quizzService.UpdateAsync(Quizz);
-                else
-                {
-                    //on va chercher le number le plus haut et on ajoute 1
-                    //var number = await _quizzService.FindNumberEtapeAsync(Quizz.IdRecette);
-                    //Quizz.Number = number + 1;
-                    await _quizzService.CreateAsync(Quizz);
-                }
-
-                //nouvel enregistrement crée on informe par abonnement de rafraichir
-                var refresh = new MessageRefresh(this, true);
-                _messenger.Publish(refresh);
-
-                await _navigation.Close(this);
-            }
         }
         #endregion
 
@@ -79,12 +59,12 @@ namespace QuizzPokedex.ViewModels
             set { SetProperty(ref _quizz, value); }
         }
 
-        private bool _modeUpdate;
+        private Pokemon _pokemon;
 
-        public bool ModeUpdate
+        public Pokemon Pokemon
         {
-            get { return _modeUpdate; }
-            set { SetProperty(ref _modeUpdate, value); }
+            get { return _pokemon; }
+            set { SetProperty(ref _pokemon, value); }
         }
         #endregion
     }
