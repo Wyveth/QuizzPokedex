@@ -259,7 +259,7 @@ namespace QuizzPokedex.ViewModels
         #region PROPERTIES
         public MvxNotifyTask LoadPokemonTask { get; private set; }
 
-        #region Liste
+        #region Collection
         private Pokemon _pokemon;
         public Pokemon Pokemon
         {
@@ -401,7 +401,7 @@ namespace QuizzPokedex.ViewModels
         }
         #endregion
 
-        #region Affichage Span List
+        #region View Span List
         private int _countFamilyEvol = 3;
 
         public int CountFamilyEvol

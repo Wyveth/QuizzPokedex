@@ -13,7 +13,6 @@ namespace QuizzPokedex.UI.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PokedexView : MvxContentPage<PokedexViewModel>
     {
-        //public PokedexViewModel ViewModel { get; set; }
         public PokedexView()
         {
             InitializeComponent();

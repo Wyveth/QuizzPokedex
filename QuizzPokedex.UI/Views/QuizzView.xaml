@@ -71,7 +71,8 @@
                         FontAttributes="Bold,Italic"
                         FontSize="Medium"
                         HorizontalOptions="CenterAndExpand"
-                        Text="Développement en cours..." />
+                        Text="Développement en cours..."
+                        TextColor="Black" />
                     <animation:AnimationView
                         Animation="Resources.104865-loading.json"
                         AnimationSource="EmbeddedResource"

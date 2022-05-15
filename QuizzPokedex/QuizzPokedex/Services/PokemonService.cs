@@ -45,14 +45,47 @@ namespace QuizzPokedex.Services
             return result;
         }
 
-        public async Task<List<Pokemon>> GetAllWithoutVariantAsync(string filter)
+        public async Task<List<Pokemon>> GetAllWithoutVariantAsync(string filter, 
+            bool gen1 = false, 
+            bool gen2 = false, 
+            bool gen3 = false, 
+            bool gen4 = false, 
+            bool gen5 = false, 
+            bool gen6 = false, 
+            bool gen7 = false, 
+            bool gen8 = false, 
+            bool genArceus = false)
         {
-            var result = await _database.Table<Pokemon>().Where(m => m.TypeEvolution.Equals(Constantes.NormalEvolution)).OrderBy(m => m.Number).ToListAsync();
+            List<Pokemon> result = await _database.Table<Pokemon>().Where(m => m.TypeEvolution.Equals(Constantes.NormalEvolution)).OrderBy(m => m.Number).ToListAsync();
+
+            List<Pokemon> resultFilter = new List<Pokemon>();
+
+            if (gen1)
+                resultFilter.AddRange(result.FindAll(m => m.Generation.Equals(1)));
+            if (gen2)
+                resultFilter.AddRange(result.FindAll(m => m.Generation.Equals(2)));
+            if (gen3)
+                resultFilter.AddRange(result.FindAll(m => m.Generation.Equals(3)));
+            if (gen4)
+                resultFilter.AddRange(result.FindAll(m => m.Generation.Equals(4)));
+            if (gen5)
+                resultFilter.AddRange(result.FindAll(m => m.Generation.Equals(5)));
+            if (gen6)
+                resultFilter.AddRange(result.FindAll(m => m.Generation.Equals(6)));
+            if (gen7)
+                resultFilter.AddRange(result.FindAll(m => m.Generation.Equals(7)));
+            if (gen8)
+                resultFilter.AddRange(result.FindAll(m => m.Generation.Equals(8)));
+            if (genArceus)
+                resultFilter.AddRange(result.FindAll(m => m.Generation.Equals(0)));
 
             if (!string.IsNullOrEmpty(filter))
-                result = result.FindAll(m => m.Name.ToLowerInvariant().Contains(filter) || m.Number.ToLowerInvariant().Contains(filter));
+                resultFilter = resultFilter.FindAll(m => m.Name.ToLowerInvariant().Contains(filter) || m.Number.ToLowerInvariant().Contains(filter));
 
-            return result;
+            if (resultFilter.Count != 0)
+                return resultFilter;
+            else
+                return result;
         }
 
         public async Task<List<Pokemon>> GetFamilyWithoutVariantAsync(string family)

@@ -17,5 +17,8 @@ namespace QuizzPokedex.Resources
 
         public const string Type_0 = "Type:0";
         public const string Type0 = "Type 0";
+
+        public const string BlackHexa = "#000000";
+        public const string WhiteHexa = "#ffffff";
     }
 }

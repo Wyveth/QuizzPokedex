@@ -12,7 +12,7 @@ namespace QuizzPokedex.Interfaces
         void Populate(int countInsertPokemon);
         void PopulateUpdateEvolution();
         Task<List<Pokemon>> GetAllAsync();
-        Task<List<Pokemon>> GetAllWithoutVariantAsync(string filter);
+        Task<List<Pokemon>> GetAllWithoutVariantAsync(string filter, bool gen1, bool gen2, bool gen3, bool gen4, bool gen5, bool gen6, bool gen7, bool gen8, bool genArceus);
         Task<Pokemon> GetByIdAsync(string identifiant);
         Task<Pokemon> GetByNameAsync(string libelle);
         Task<List<Pokemon>> GetFamilyWithoutVariantAsync(string family);
