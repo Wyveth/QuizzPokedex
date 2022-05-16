@@ -97,7 +97,7 @@
             </StackLayout>
             <StackLayout
                 x:Name="backButton"
-                AbsoluteLayout.LayoutBounds="0,0.02,0.23,0.07"
+                AbsoluteLayout.LayoutBounds="0,0.02,0.25,0.07"
                 AbsoluteLayout.LayoutFlags="All">
                 <shadows:Shadows Margin="30,0,30,50" CornerRadius="20">
                     <shadows:Shadows.Shades>
@@ -123,9 +123,9 @@
                             Padding="5"
                             BackgroundColor="White"
                             Command="{Binding NavigationBackCommandAsync}"
-                            HeightRequest="35"
-                            Source="icons8back48.png"
-                            WidthRequest="35" />
+                            HeightRequest="45"
+                            Source="@mipmap/icons8back48"
+                            WidthRequest="45" />
                     </cornerBorder:PancakeView>
                 </shadows:Shadows>
             </StackLayout>
@@ -157,7 +157,7 @@
                         <SearchBar
                             x:Name="SearchBar"
                             FontSize="14"
-                            HeightRequest="35"
+                            HeightRequest="45"
                             Placeholder="Rechercher un pokémon..."
                             SearchCommand="{Binding FilterByNameCommandAsync}"
                             Text="{Binding SearchText}"
@@ -167,7 +167,7 @@
             </StackLayout>
             <StackLayout
                 x:Name="menuFilter"
-                AbsoluteLayout.LayoutBounds="0.5,1,0.5,0.07"
+                AbsoluteLayout.LayoutBounds="0.5,1,0.5,0.08"
                 AbsoluteLayout.LayoutFlags="All"
                 HorizontalOptions="CenterAndExpand">
                 <shadows:Shadows Margin="30,0,30,50" CornerRadius="20">
@@ -192,37 +192,35 @@
                         CornerRadius="100,100,100,100">
                         <Grid>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="35" />
+                                <RowDefinition Height="45" />
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="55" />
-                                <ColumnDefinition Width="55" />
+                                <ColumnDefinition Width="70" />
+                                <ColumnDefinition Width="70" />
                             </Grid.ColumnDefinitions>
 
                             <Button
                                 x:Name="filterButton"
                                 Grid.Row="0"
                                 Grid.Column="0"
-                                Margin="15,5,-5,5"
-                                BackgroundColor="white"
+                                Margin="20,0,0,0"
+                                BackgroundColor="White"
                                 Command="{Binding ModalFilterCommandAsync}"
-                                ImageSource="icons8filter20.png"
-                                WidthRequest="100" />
+                                ImageSource="@mipmap/filter" />
                             <Button
                                 x:Name="likeButton"
                                 Grid.Row="0"
                                 Grid.Column="1"
-                                Margin="-5,5,15,5"
-                                BackgroundColor="white"
-                                ImageSource="icons8unlike20.png"
-                                WidthRequest="100" />
+                                Margin="0,0,20,0"
+                                BackgroundColor="White"
+                                ImageSource="@mipmap/love" />
                         </Grid>
                     </cornerBorder:PancakeView>
                 </shadows:Shadows>
             </StackLayout>
             <StackLayout
                 x:Name="filterModal"
-                AbsoluteLayout.LayoutBounds="0.5,0.98,0.8,0.2"
+                AbsoluteLayout.LayoutBounds="0.5,0.94,0.8,0.205"
                 AbsoluteLayout.LayoutFlags="All"
                 HorizontalOptions="CenterAndExpand"
                 IsVisible="{Binding IsVisibleModalFilter}">
@@ -246,8 +244,8 @@
                         Border="{cornerBorder:BorderMarkup Color=Gray,
                                                            Thickness=0}"
                         CornerRadius="20"
-                        HeightRequest="90"
-                        WidthRequest="140">
+                        HeightRequest="110"
+                        WidthRequest="180">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="2*" />
@@ -260,7 +258,6 @@
                             <Label
                                 Grid.Row="0"
                                 Grid.Column="0"
-                                Grid.ColumnSpan="2"
                                 Margin="15,15,0,0"
                                 xct:ShadowEffect.Color="black"
                                 xct:ShadowEffect.OffsetX="5"
@@ -271,6 +268,13 @@
                                 FontSize="11"
                                 Text="Filtrer part:"
                                 TextColor="black" />
+                            <Button
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                Margin="40,0,0,40"
+                                BackgroundColor="White"
+                                Command="{Binding ModalFilterCommandAsync}"
+                                ImageSource="@mipmap/close" />
                             <shadows:Shadows
                                 Grid.Row="1"
                                 Grid.Column="0"
@@ -356,7 +360,7 @@
             <StackLayout
                 x:Name="ModalFilterGen"
                 xct:CornerRadiusEffect.CornerRadius="30"
-                AbsoluteLayout.LayoutBounds="0.5,0.75,0.5,0.45"
+                AbsoluteLayout.LayoutBounds="0.5,0.5,0.6,0.5"
                 AbsoluteLayout.LayoutFlags="All"
                 BackgroundColor="white"
                 IsVisible="{Binding IsVisibleModalGenFilter}"
@@ -394,7 +398,7 @@
                         Grid.Row="1"
                         Grid.Column="0"
                         Margin="30,5,10,10"
-                        CornerRadius="20">
+                        CornerRadius="15">
                         <shadows:Shadows.Shades>
                             <shadows:ImmutableShades>
                                 <shadows:Shade
@@ -429,7 +433,7 @@
                         Grid.Row="1"
                         Grid.Column="1"
                         Margin="10,5,30,10"
-                        CornerRadius="20">
+                        CornerRadius="15">
                         <shadows:Shadows.Shades>
                             <shadows:ImmutableShades>
                                 <shadows:Shade
@@ -464,7 +468,7 @@
                         Grid.Row="2"
                         Grid.Column="0"
                         Margin="30,5,10,10"
-                        CornerRadius="20">
+                        CornerRadius="15">
                         <shadows:Shadows.Shades>
                             <shadows:ImmutableShades>
                                 <shadows:Shade
@@ -499,7 +503,7 @@
                         Grid.Row="2"
                         Grid.Column="1"
                         Margin="10,5,30,10"
-                        CornerRadius="20">
+                        CornerRadius="15">
                         <shadows:Shadows.Shades>
                             <shadows:ImmutableShades>
                                 <shadows:Shade
@@ -534,7 +538,7 @@
                         Grid.Row="3"
                         Grid.Column="0"
                         Margin="30,5,10,10"
-                        CornerRadius="20">
+                        CornerRadius="15">
                         <shadows:Shadows.Shades>
                             <shadows:ImmutableShades>
                                 <shadows:Shade
@@ -569,7 +573,7 @@
                         Grid.Row="3"
                         Grid.Column="1"
                         Margin="10,5,30,10"
-                        CornerRadius="20">
+                        CornerRadius="15">
                         <shadows:Shadows.Shades>
                             <shadows:ImmutableShades>
                                 <shadows:Shade
@@ -604,7 +608,7 @@
                         Grid.Row="4"
                         Grid.Column="0"
                         Margin="30,5,10,10"
-                        CornerRadius="20">
+                        CornerRadius="15">
                         <shadows:Shadows.Shades>
                             <shadows:ImmutableShades>
                                 <shadows:Shade
@@ -639,7 +643,7 @@
                         Grid.Row="4"
                         Grid.Column="1"
                         Margin="10,5,30,10"
-                        CornerRadius="20">
+                        CornerRadius="15">
                         <shadows:Shadows.Shades>
                             <shadows:ImmutableShades>
                                 <shadows:Shade
@@ -675,7 +679,7 @@
                         Grid.Column="0"
                         Grid.ColumnSpan="2"
                         Margin="60,0,60,10"
-                        CornerRadius="20">
+                        CornerRadius="15">
                         <shadows:Shadows.Shades>
                             <shadows:ImmutableShades>
                                 <shadows:Shade
@@ -780,11 +784,43 @@
             </StackLayout>
             <StackLayout
                 x:Name="ModalFilterType"
-                AbsoluteLayout.LayoutBounds="0.5,0.6,0.7,0.6"
+                xct:CornerRadiusEffect.CornerRadius="30"
+                AbsoluteLayout.LayoutBounds="0.5,0.5,0.6,0.5"
                 AbsoluteLayout.LayoutFlags="All"
-                BackgroundColor="White"
+                BackgroundColor="white"
                 IsVisible="{Binding IsVisibleModalTypeFilter}"
-                Opacity="1" />
+                Opacity="1">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="10*" />
+                        <RowDefinition Height="15*" />
+                        <RowDefinition Height="15*" />
+                        <RowDefinition Height="15*" />
+                        <RowDefinition Height="15*" />
+                        <RowDefinition Height="15*" />
+                        <RowDefinition Height="15*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50*" />
+                        <ColumnDefinition Width="50*" />
+                    </Grid.ColumnDefinitions>
+                    <Label
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        Margin="15,15,0,0"
+                        xct:ShadowEffect.Color="black"
+                        xct:ShadowEffect.OffsetX="5"
+                        xct:ShadowEffect.OffsetY="10"
+                        xct:ShadowEffect.Opacity="0.5"
+                        xct:ShadowEffect.Radius="20"
+                        FontAttributes="Bold"
+                        FontSize="12"
+                        HorizontalOptions="CenterAndExpand"
+                        Text="Filtrer part:"
+                        TextColor="black" />
+                </Grid>
+            </StackLayout>
         </AbsoluteLayout>
     </ContentPage.Content>
 </views:MvxContentPage>

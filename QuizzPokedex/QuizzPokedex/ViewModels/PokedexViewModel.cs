@@ -70,12 +70,11 @@ namespace QuizzPokedex.ViewModels
         public IMvxAsyncCommand FilterByGenArceusCommandAsync => new MvxAsyncCommand(FilterByGenArceusAsync);
         #endregion
 
+        #region Navigation Back & Filter
         private async Task NavigationBackAsync()
         {
             await _navigation.Close(this);
         }
-
-        #region Modal Filter
 
         private async Task ModalFilterAsync()
         {
@@ -277,6 +276,7 @@ namespace QuizzPokedex.ViewModels
         }
         #endregion
 
+        #region CRUD
         private async Task CreatePokemonAsync()
         {
             await _navigation.Navigate<PokemonViewModel, Pokemon>(new Pokemon());
@@ -301,6 +301,7 @@ namespace QuizzPokedex.ViewModels
         {
             await _navigation.Navigate<PokemonViewModel, Pokemon>(Pokemon);
         }
+        #endregion
         #endregion
 
         #region PROPERTIES
