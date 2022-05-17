@@ -7,7 +7,8 @@
     "urlIconHome": "https://www.pokepedia.fr/images/0/0e/Ic%C3%B4ne_Type_Acier_HOME.png",
     "urlAutoHome": "https://www.pokepedia.fr/images/b/bc/Autocollant_Type_Acier_HOME.png",
     "imgColor": "#0B334C",
-    "infoColor": "#6399AC"
+    "infoColor": "#6399AC",
+    "typeColor": "#5A8EA1"
   },
   {
     "name": "Dragon",
@@ -17,7 +18,8 @@
     "urlIconHome": "https://www.pokepedia.fr/images/5/5c/Ic%C3%B4ne_Type_Dragon_HOME.png",
     "urlAutoHome": "https://www.pokepedia.fr/images/9/93/Autocollant_Type_Dragon_HOME.png",
     "imgColor": "#738B62",
-    "infoColor": "#1477D2"
+    "infoColor": "#1477D2",
+    "typeColor": "#096DC4"
   },
   {
     "name": "Électrik",
@@ -27,7 +29,8 @@
     "urlIconHome": "https://www.pokepedia.fr/images/c/c5/Ic%C3%B4ne_Type_%C3%89lectrik_HOME.png",
     "urlAutoHome": "https://www.pokepedia.fr/images/1/10/Autocollant_Type_%C3%89lectrik_HOME.png",
     "imgColor": "#0A4A6B",
-    "infoColor": "#FDDD46"
+    "infoColor": "#FDDD46",
+    "typeColor": "#F3D23B"
   },
   {
     "name": "Feu",
@@ -37,7 +40,8 @@
     "urlIconHome": "https://www.pokepedia.fr/images/2/23/Ic%C3%B4ne_Type_Feu_HOME.png",
     "urlAutoHome": "https://www.pokepedia.fr/images/a/a8/Autocollant_Type_Feu_HOME.png",
     "imgColor": "#823C42",
-    "infoColor": "#FFA75F"
+    "infoColor": "#FFA75F",
+    "typeColor": "#FF9C54"
   },
   {
     "name": "Insecte",
@@ -47,7 +51,8 @@
     "urlIconHome": "https://www.pokepedia.fr/images/6/62/Ic%C3%B4ne_Type_Insecte_HOME.png",
     "urlAutoHome": "https://www.pokepedia.fr/images/0/0f/Autocollant_Type_Insecte_HOME.png",
     "imgColor": "#35995A",
-    "infoColor": "#9BCC38"
+    "infoColor": "#9BCC38",
+    "typeColor": "#90C12C"
   },
   {
     "name": "Plante",
@@ -57,7 +62,8 @@
     "urlIconHome": "https://www.pokepedia.fr/images/0/0b/Ic%C3%B4ne_Type_Plante_HOME.png",
     "urlAutoHome": "https://www.pokepedia.fr/images/4/44/Autocollant_Type_Plante_HOME.png",
     "imgColor": "#B4D553",
-    "infoColor": "#6BC563"
+    "infoColor": "#6BC563",
+    "typeColor": "#63BB5B"
   },
   {
     "name": "Psy",
@@ -67,7 +73,8 @@
     "urlIconHome": "https://www.pokepedia.fr/images/4/42/Ic%C3%B4ne_Type_Psy_HOME.png",
     "urlAutoHome": "https://www.pokepedia.fr/images/0/0c/Autocollant_Type_Psy_HOME.png",
     "imgColor": "#482769",
-    "infoColor": "#FF7A7F"
+    "infoColor": "#FF7A7F",
+    "typeColor": "#F97176"
   },
   {
     "name": "Sol",
@@ -77,7 +84,8 @@
     "urlIconHome": "https://www.pokepedia.fr/images/3/37/Ic%C3%B4ne_Type_Sol_HOME.png",
     "urlAutoHome": "https://www.pokepedia.fr/images/5/5e/Autocollant_Type_Sol_HOME.png",
     "imgColor": "#D2A97F",
-    "infoColor": "#E5804F"
+    "infoColor": "#E5804F",
+    "typeColor": "#D97746"
   },
   {
     "name": "Ténèbres",
@@ -87,7 +95,8 @@
     "urlIconHome": "https://www.pokepedia.fr/images/d/d2/Ic%C3%B4ne_Type_T%C3%A9n%C3%A8bres_HOME.png",
     "urlAutoHome": "https://www.pokepedia.fr/images/f/fa/Autocollant_Type_T%C3%A9n%C3%A8bres_HOME.png",
     "imgColor": "#0C1435",
-    "infoColor": "#635C6F"
+    "infoColor": "#635C6F",
+    "typeColor": "#5A5366"
   },
   {
     "name": "Combat",
@@ -97,7 +106,8 @@
     "urlIconHome": "https://www.pokepedia.fr/images/2/25/Ic%C3%B4ne_Type_Combat_HOME.png",
     "urlAutoHome": "https://www.pokepedia.fr/images/5/5d/Autocollant_Type_Combat_HOME.png",
     "imgColor": "#47362E",
-    "infoColor": "#D94A73"
+    "infoColor": "#D94A73",
+    "typeColor": "#CE4069"
   },
   {
     "name": "Eau",
@@ -107,7 +117,8 @@
     "urlIconHome": "https://www.pokepedia.fr/images/3/30/Ic%C3%B4ne_Type_Eau_HOME.png",
     "urlAutoHome": "https://www.pokepedia.fr/images/6/6a/Autocollant_Type_Eau_HOME.png",
     "imgColor": "#0E9FB0",
-    "infoColor": "#579BE1"
+    "infoColor": "#579BE1",
+    "typeColor": "#4D90D5"
   },
   {
     "name": "Fée",
@@ -117,7 +128,8 @@
     "urlIconHome": "https://www.pokepedia.fr/images/6/62/Ic%C3%B4ne_Type_F%C3%A9e_HOME.png",
     "urlAutoHome": "https://www.pokepedia.fr/images/3/3c/Autocollant_Type_F%C3%A9e_HOME.png",
     "imgColor": "#6254BF",
-    "infoColor": "#F999F1"
+    "infoColor": "#F999F1",
+    "typeColor": "#EC8FE6"
   },
   {
     "name": "Glace",
@@ -127,7 +139,8 @@
     "urlIconHome": "https://www.pokepedia.fr/images/1/19/Ic%C3%B4ne_Type_Glace_HOME.png",
     "urlAutoHome": "https://www.pokepedia.fr/images/e/e3/Autocollant_Type_Glace_HOME.png",
     "imgColor": "#1E7EA2",
-    "infoColor": "#7BD9C8"
+    "infoColor": "#7BD9C8",
+    "typeColor": "#74CEC0"
   },
   {
     "name": "Normal",
@@ -137,7 +150,8 @@
     "urlIconHome": "https://www.pokepedia.fr/images/0/05/Ic%C3%B4ne_Type_Normal_HOME.png",
     "urlAutoHome": "https://www.pokepedia.fr/images/7/7f/Autocollant_Type_Normal_HOME.png",
     "imgColor": "#D1C097",
-    "infoColor": "#9BA3AB"
+    "infoColor": "#9BA3AB",
+    "typeColor": "#9099A1"
   },
   {
     "name": "Poison",
@@ -147,7 +161,8 @@
     "urlIconHome": "https://www.pokepedia.fr/images/4/45/Ic%C3%B4ne_Type_Poison_HOME.png",
     "urlAutoHome": "https://www.pokepedia.fr/images/0/07/Autocollant_Type_Poison_HOME.png",
     "imgColor": "#371880",
-    "infoColor": "#B474D1"
+    "infoColor": "#B474D1",
+    "typeColor": "#AB6AC8"
   },
   {
     "name": "Roche",
@@ -157,7 +172,8 @@
     "urlIconHome": "https://www.pokepedia.fr/images/2/27/Ic%C3%B4ne_Type_Roche_HOME.png",
     "urlAutoHome": "https://www.pokepedia.fr/images/6/69/Autocollant_Type_Roche_HOME.png",
     "imgColor": "#96969E",
-    "infoColor": "#D1C194"
+    "infoColor": "#D1C194",
+    "typeColor": "#C7B78B"
   },
   {
     "name": "Spectre",
@@ -167,7 +183,8 @@
     "urlIconHome": "https://www.pokepedia.fr/images/e/e2/Ic%C3%B4ne_Type_Spectre_HOME.png",
     "urlAutoHome": "https://www.pokepedia.fr/images/0/08/Autocollant_Type_Spectre_HOME.png",
     "imgColor": "#153D67",
-    "infoColor": "#5F72B4"
+    "infoColor": "#5F72B4",
+    "typeColor": "#5269AC"
   },
   {
     "name": "Vol",
@@ -176,7 +193,8 @@
     "urlMiniHome": "https://www.pokepedia.fr/images/1/19/Miniature_Type_Vol_HOME.png",
     "urlIconHome": "https://www.pokepedia.fr/images/8/84/Ic%C3%B4ne_Type_Vol_HOME.png",
     "urlAutoHome": "https://www.pokepedia.fr/images/8/84/Autocollant_Type_Vol_HOME.png",
-    "imgColor": "#0B334C",
-    "infoColor": "#6399AC"
+    "imgColor": "#D4C49A",
+    "infoColor": "#98B3E9",
+    "typeColor": "#92AADE"
   }
 ]

@@ -97,7 +97,7 @@
             </StackLayout>
             <StackLayout
                 x:Name="backButton"
-                AbsoluteLayout.LayoutBounds="0,0.02,0.25,0.07"
+                AbsoluteLayout.LayoutBounds="-0.02,0.02,0.256,0.07"
                 AbsoluteLayout.LayoutFlags="All">
                 <shadows:Shadows Margin="30,0,30,50" CornerRadius="20">
                     <shadows:Shadows.Shades>
@@ -124,7 +124,7 @@
                             BackgroundColor="White"
                             Command="{Binding NavigationBackCommandAsync}"
                             HeightRequest="45"
-                            Source="@mipmap/icons8back48"
+                            Source="back.png"
                             WidthRequest="45" />
                     </cornerBorder:PancakeView>
                 </shadows:Shadows>
@@ -271,7 +271,7 @@
                             <Button
                                 Grid.Row="0"
                                 Grid.Column="1"
-                                Margin="40,0,0,40"
+                                Margin="40,0,0,30"
                                 BackgroundColor="White"
                                 Command="{Binding ModalFilterCommandAsync}"
                                 ImageSource="@mipmap/close" />
@@ -785,7 +785,7 @@
             <StackLayout
                 x:Name="ModalFilterType"
                 xct:CornerRadiusEffect.CornerRadius="30"
-                AbsoluteLayout.LayoutBounds="0.5,0.5,0.6,0.5"
+                AbsoluteLayout.LayoutBounds="0.5,0.1,0.6,0.72"
                 AbsoluteLayout.LayoutFlags="All"
                 BackgroundColor="white"
                 IsVisible="{Binding IsVisibleModalTypeFilter}"
@@ -793,12 +793,16 @@
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="10*" />
-                        <RowDefinition Height="15*" />
-                        <RowDefinition Height="15*" />
-                        <RowDefinition Height="15*" />
-                        <RowDefinition Height="15*" />
-                        <RowDefinition Height="15*" />
-                        <RowDefinition Height="15*" />
+                        <RowDefinition Height="9*" />
+                        <RowDefinition Height="9*" />
+                        <RowDefinition Height="9*" />
+                        <RowDefinition Height="9*" />
+                        <RowDefinition Height="9*" />
+                        <RowDefinition Height="9*" />
+                        <RowDefinition Height="9*" />
+                        <RowDefinition Height="9*" />
+                        <RowDefinition Height="9*" />
+                        <RowDefinition Height="9*" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="50*" />
@@ -819,6 +823,725 @@
                         HorizontalOptions="CenterAndExpand"
                         Text="Filtrer part:"
                         TextColor="black" />
+                    <shadows:Shadows
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Margin="30,5,10,10"
+                        CornerRadius="15">
+                        <shadows:Shadows.Shades>
+                            <shadows:ImmutableShades>
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.3"
+                                    Offset="-1,-1"
+                                    Color="#464C56" />
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.5"
+                                    Offset="1,1"
+                                    Color="#464C56" />
+                            </shadows:ImmutableShades>
+                        </shadows:Shadows.Shades>
+                        <cornerBorder:PancakeView
+                            BackgroundColor="White"
+                            Border="{cornerBorder:BorderMarkup Color=Gray,
+                                                               Thickness=0}"
+                            CornerRadius="10">
+                            <Button
+                                Padding="5,5,5,5"
+                                BackgroundColor="{Binding BackgroundColorSteel}"
+                                Command="{Binding FilterByTypeSteelCommandAsync}"
+                                FontAttributes="Bold"
+                                FontSize="11"
+                                ImageSource="{Binding ImgTypeSteelFilter, Converter={StaticResource ByteToImageSourceConverter}}"
+                                Text="Acier"
+                                TextColor="{Binding TextColorSteel}"
+                                TextTransform="None" />
+                        </cornerBorder:PancakeView>
+                    </shadows:Shadows>
+                    <shadows:Shadows
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Margin="10,5,30,10"
+                        CornerRadius="15">
+                        <shadows:Shadows.Shades>
+                            <shadows:ImmutableShades>
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.3"
+                                    Offset="-1,-1"
+                                    Color="#464C56" />
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.5"
+                                    Offset="1,1"
+                                    Color="#464C56" />
+                            </shadows:ImmutableShades>
+                        </shadows:Shadows.Shades>
+                        <cornerBorder:PancakeView
+                            BackgroundColor="White"
+                            Border="{cornerBorder:BorderMarkup Color=Gray,
+                                                               Thickness=0}"
+                            CornerRadius="10">
+                            <Button
+                                Padding="5,5,5,5"
+                                BackgroundColor="{Binding BackgroundColorFighting}"
+                                Command="{Binding FilterByTypeFightingCommandAsync}"
+                                FontAttributes="Bold"
+                                FontSize="11"
+                                ImageSource="{Binding ImgTypeFightingFilter, Converter={StaticResource ByteToImageSourceConverter}}"
+                                Text="Combat"
+                                TextColor="{Binding TextColorFighting}"
+                                TextTransform="None" />
+                        </cornerBorder:PancakeView>
+                    </shadows:Shadows>
+                    <shadows:Shadows
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        Margin="30,5,10,10"
+                        CornerRadius="15">
+                        <shadows:Shadows.Shades>
+                            <shadows:ImmutableShades>
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.3"
+                                    Offset="-1,-1"
+                                    Color="#464C56" />
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.5"
+                                    Offset="1,1"
+                                    Color="#464C56" />
+                            </shadows:ImmutableShades>
+                        </shadows:Shadows.Shades>
+                        <cornerBorder:PancakeView
+                            BackgroundColor="White"
+                            Border="{cornerBorder:BorderMarkup Color=Gray,
+                                                               Thickness=0}"
+                            CornerRadius="10">
+                            <Button
+                                Padding="5,5,5,5"
+                                BackgroundColor="{Binding BackgroundColorDragon}"
+                                Command="{Binding FilterByTypeDragonCommandAsync}"
+                                FontAttributes="Bold"
+                                FontSize="11"
+                                ImageSource="{Binding ImgTypeDragonFilter, Converter={StaticResource ByteToImageSourceConverter}}"
+                                Text="Dragon"
+                                TextColor="{Binding TextColorDragon}"
+                                TextTransform="None" />
+                        </cornerBorder:PancakeView>
+                    </shadows:Shadows>
+                    <shadows:Shadows
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        Margin="10,5,30,10"
+                        CornerRadius="15">
+                        <shadows:Shadows.Shades>
+                            <shadows:ImmutableShades>
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.3"
+                                    Offset="-1,-1"
+                                    Color="#464C56" />
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.5"
+                                    Offset="1,1"
+                                    Color="#464C56" />
+                            </shadows:ImmutableShades>
+                        </shadows:Shadows.Shades>
+                        <cornerBorder:PancakeView
+                            BackgroundColor="White"
+                            Border="{cornerBorder:BorderMarkup Color=Gray,
+                                                               Thickness=0}"
+                            CornerRadius="10">
+                            <Button
+                                Padding="5,5,5,5"
+                                BackgroundColor="{Binding BackgroundColorWater}"
+                                Command="{Binding FilterByTypeWaterCommandAsync}"
+                                FontAttributes="Bold"
+                                FontSize="11"
+                                ImageSource="{Binding ImgTypeWaterFilter, Converter={StaticResource ByteToImageSourceConverter}}"
+                                Text="Eau"
+                                TextColor="{Binding TextColorWater}"
+                                TextTransform="None" />
+                        </cornerBorder:PancakeView>
+                    </shadows:Shadows>
+                    <shadows:Shadows
+                        Grid.Row="3"
+                        Grid.Column="0"
+                        Margin="30,5,10,10"
+                        CornerRadius="15">
+                        <shadows:Shadows.Shades>
+                            <shadows:ImmutableShades>
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.3"
+                                    Offset="-1,-1"
+                                    Color="#464C56" />
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.5"
+                                    Offset="1,1"
+                                    Color="#464C56" />
+                            </shadows:ImmutableShades>
+                        </shadows:Shadows.Shades>
+                        <cornerBorder:PancakeView
+                            BackgroundColor="White"
+                            Border="{cornerBorder:BorderMarkup Color=Gray,
+                                                               Thickness=0}"
+                            CornerRadius="10">
+                            <Button
+                                Padding="5,5,5,5"
+                                BackgroundColor="{Binding BackgroundColorElectric}"
+                                Command="{Binding FilterByTypeElectricCommandAsync}"
+                                FontAttributes="Bold"
+                                FontSize="11"
+                                ImageSource="{Binding ImgTypeElectricFilter, Converter={StaticResource ByteToImageSourceConverter}}"
+                                Text="Électrik"
+                                TextColor="{Binding TextColorElectric}"
+                                TextTransform="None" />
+                        </cornerBorder:PancakeView>
+                    </shadows:Shadows>
+                    <shadows:Shadows
+                        Grid.Row="3"
+                        Grid.Column="1"
+                        Margin="10,5,30,10"
+                        CornerRadius="15">
+                        <shadows:Shadows.Shades>
+                            <shadows:ImmutableShades>
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.3"
+                                    Offset="-1,-1"
+                                    Color="#464C56" />
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.5"
+                                    Offset="1,1"
+                                    Color="#464C56" />
+                            </shadows:ImmutableShades>
+                        </shadows:Shadows.Shades>
+                        <cornerBorder:PancakeView
+                            BackgroundColor="White"
+                            Border="{cornerBorder:BorderMarkup Color=Gray,
+                                                               Thickness=0}"
+                            CornerRadius="10">
+                            <Button
+                                Padding="5,5,5,5"
+                                BackgroundColor="{Binding BackgroundColorFairy}"
+                                Command="{Binding FilterByTypeFairyCommandAsync}"
+                                FontAttributes="Bold"
+                                FontSize="11"
+                                ImageSource="{Binding ImgTypeFairyFilter, Converter={StaticResource ByteToImageSourceConverter}}"
+                                Text="Fée"
+                                TextColor="{Binding TextColorFairy}"
+                                TextTransform="None" />
+                        </cornerBorder:PancakeView>
+                    </shadows:Shadows>
+                    <shadows:Shadows
+                        Grid.Row="4"
+                        Grid.Column="0"
+                        Margin="30,5,10,10"
+                        CornerRadius="15">
+                        <shadows:Shadows.Shades>
+                            <shadows:ImmutableShades>
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.3"
+                                    Offset="-1,-1"
+                                    Color="#464C56" />
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.5"
+                                    Offset="1,1"
+                                    Color="#464C56" />
+                            </shadows:ImmutableShades>
+                        </shadows:Shadows.Shades>
+                        <cornerBorder:PancakeView
+                            BackgroundColor="White"
+                            Border="{cornerBorder:BorderMarkup Color=Gray,
+                                                               Thickness=0}"
+                            CornerRadius="10">
+                            <Button
+                                Padding="5,5,5,5"
+                                BackgroundColor="{Binding BackgroundColorFire}"
+                                Command="{Binding FilterByTypeFireCommandAsync}"
+                                FontAttributes="Bold"
+                                FontSize="11"
+                                ImageSource="{Binding ImgTypeFireFilter, Converter={StaticResource ByteToImageSourceConverter}}"
+                                Text="Feu"
+                                TextColor="{Binding TextColorFire}"
+                                TextTransform="None" />
+                        </cornerBorder:PancakeView>
+                    </shadows:Shadows>
+                    <shadows:Shadows
+                        Grid.Row="4"
+                        Grid.Column="1"
+                        Margin="10,5,30,10"
+                        CornerRadius="15">
+                        <shadows:Shadows.Shades>
+                            <shadows:ImmutableShades>
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.3"
+                                    Offset="-1,-1"
+                                    Color="#464C56" />
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.5"
+                                    Offset="1,1"
+                                    Color="#464C56" />
+                            </shadows:ImmutableShades>
+                        </shadows:Shadows.Shades>
+                        <cornerBorder:PancakeView
+                            BackgroundColor="White"
+                            Border="{cornerBorder:BorderMarkup Color=Gray,
+                                                               Thickness=0}"
+                            CornerRadius="10">
+                            <Button
+                                Padding="5,5,5,5"
+                                BackgroundColor="{Binding BackgroundColorIce}"
+                                Command="{Binding FilterByTypeIceCommandAsync}"
+                                FontAttributes="Bold"
+                                FontSize="11"
+                                ImageSource="{Binding ImgTypeIceFilter, Converter={StaticResource ByteToImageSourceConverter}}"
+                                Text="Glace"
+                                TextColor="{Binding TextColorIce}"
+                                TextTransform="None" />
+                        </cornerBorder:PancakeView>
+                    </shadows:Shadows>
+                    <shadows:Shadows
+                        Grid.Row="5"
+                        Grid.Column="0"
+                        Margin="30,5,10,10"
+                        CornerRadius="15">
+                        <shadows:Shadows.Shades>
+                            <shadows:ImmutableShades>
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.3"
+                                    Offset="-1,-1"
+                                    Color="#464C56" />
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.5"
+                                    Offset="1,1"
+                                    Color="#464C56" />
+                            </shadows:ImmutableShades>
+                        </shadows:Shadows.Shades>
+                        <cornerBorder:PancakeView
+                            BackgroundColor="White"
+                            Border="{cornerBorder:BorderMarkup Color=Gray,
+                                                               Thickness=0}"
+                            CornerRadius="10">
+                            <Button
+                                Padding="5,5,5,5"
+                                BackgroundColor="{Binding BackgroundColorBug}"
+                                Command="{Binding FilterByTypeBugCommandAsync}"
+                                FontAttributes="Bold"
+                                FontSize="11"
+                                ImageSource="{Binding ImgTypeBugFilter, Converter={StaticResource ByteToImageSourceConverter}}"
+                                Text="Insecte"
+                                TextColor="{Binding TextColorBug}"
+                                TextTransform="None" />
+                        </cornerBorder:PancakeView>
+                    </shadows:Shadows>
+                    <shadows:Shadows
+                        Grid.Row="5"
+                        Grid.Column="1"
+                        Margin="10,5,30,10"
+                        CornerRadius="15">
+                        <shadows:Shadows.Shades>
+                            <shadows:ImmutableShades>
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.3"
+                                    Offset="-1,-1"
+                                    Color="#464C56" />
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.5"
+                                    Offset="1,1"
+                                    Color="#464C56" />
+                            </shadows:ImmutableShades>
+                        </shadows:Shadows.Shades>
+                        <cornerBorder:PancakeView
+                            BackgroundColor="White"
+                            Border="{cornerBorder:BorderMarkup Color=Gray,
+                                                               Thickness=0}"
+                            CornerRadius="10">
+                            <Button
+                                Padding="5,5,5,5"
+                                BackgroundColor="{Binding BackgroundColorNormal}"
+                                Command="{Binding FilterByTypeNormalCommandAsync}"
+                                FontAttributes="Bold"
+                                FontSize="11"
+                                ImageSource="{Binding ImgTypeNormalFilter, Converter={StaticResource ByteToImageSourceConverter}}"
+                                Text="Normal"
+                                TextColor="{Binding TextColorNormal}"
+                                TextTransform="None" />
+                        </cornerBorder:PancakeView>
+                    </shadows:Shadows>
+                    <shadows:Shadows
+                        Grid.Row="6"
+                        Grid.Column="0"
+                        Margin="30,5,10,10"
+                        CornerRadius="15">
+                        <shadows:Shadows.Shades>
+                            <shadows:ImmutableShades>
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.3"
+                                    Offset="-1,-1"
+                                    Color="#464C56" />
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.5"
+                                    Offset="1,1"
+                                    Color="#464C56" />
+                            </shadows:ImmutableShades>
+                        </shadows:Shadows.Shades>
+                        <cornerBorder:PancakeView
+                            BackgroundColor="White"
+                            Border="{cornerBorder:BorderMarkup Color=Gray,
+                                                               Thickness=0}"
+                            CornerRadius="10">
+                            <Button
+                                Padding="5,5,5,5"
+                                BackgroundColor="{Binding BackgroundColorGrass}"
+                                Command="{Binding FilterByTypeGrassCommandAsync}"
+                                FontAttributes="Bold"
+                                FontSize="11"
+                                ImageSource="{Binding ImgTypeGrassFilter, Converter={StaticResource ByteToImageSourceConverter}}"
+                                Text="Plante"
+                                TextColor="{Binding TextColorGrass}"
+                                TextTransform="None" />
+                        </cornerBorder:PancakeView>
+                    </shadows:Shadows>
+                    <shadows:Shadows
+                        Grid.Row="6"
+                        Grid.Column="1"
+                        Margin="10,5,30,10"
+                        CornerRadius="15">
+                        <shadows:Shadows.Shades>
+                            <shadows:ImmutableShades>
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.3"
+                                    Offset="-1,-1"
+                                    Color="#464C56" />
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.5"
+                                    Offset="1,1"
+                                    Color="#464C56" />
+                            </shadows:ImmutableShades>
+                        </shadows:Shadows.Shades>
+                        <cornerBorder:PancakeView
+                            BackgroundColor="White"
+                            Border="{cornerBorder:BorderMarkup Color=Gray,
+                                                               Thickness=0}"
+                            CornerRadius="10">
+                            <Button
+                                Padding="5,5,5,5"
+                                BackgroundColor="{Binding BackgroundColorPoison}"
+                                Command="{Binding FilterByTypePoisonCommandAsync}"
+                                FontAttributes="Bold"
+                                FontSize="11"
+                                ImageSource="{Binding ImgTypePoisonFilter, Converter={StaticResource ByteToImageSourceConverter}}"
+                                Text="Poison"
+                                TextColor="{Binding TextColorPoison}"
+                                TextTransform="None" />
+                        </cornerBorder:PancakeView>
+                    </shadows:Shadows>
+                    <shadows:Shadows
+                        Grid.Row="7"
+                        Grid.Column="0"
+                        Margin="30,5,10,10"
+                        CornerRadius="15">
+                        <shadows:Shadows.Shades>
+                            <shadows:ImmutableShades>
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.3"
+                                    Offset="-1,-1"
+                                    Color="#464C56" />
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.5"
+                                    Offset="1,1"
+                                    Color="#464C56" />
+                            </shadows:ImmutableShades>
+                        </shadows:Shadows.Shades>
+                        <cornerBorder:PancakeView
+                            BackgroundColor="White"
+                            Border="{cornerBorder:BorderMarkup Color=Gray,
+                                                               Thickness=0}"
+                            CornerRadius="10">
+                            <Button
+                                Padding="5,5,5,5"
+                                BackgroundColor="{Binding BackgroundColorPsychic}"
+                                Command="{Binding FilterByTypePsychicCommandAsync}"
+                                FontAttributes="Bold"
+                                FontSize="11"
+                                ImageSource="{Binding ImgTypePsychicFilter, Converter={StaticResource ByteToImageSourceConverter}}"
+                                Text="Psy"
+                                TextColor="{Binding TextColorPsychic}"
+                                TextTransform="None" />
+                        </cornerBorder:PancakeView>
+                    </shadows:Shadows>
+                    <shadows:Shadows
+                        Grid.Row="7"
+                        Grid.Column="1"
+                        Margin="10,5,30,10"
+                        CornerRadius="15">
+                        <shadows:Shadows.Shades>
+                            <shadows:ImmutableShades>
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.3"
+                                    Offset="-1,-1"
+                                    Color="#464C56" />
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.5"
+                                    Offset="1,1"
+                                    Color="#464C56" />
+                            </shadows:ImmutableShades>
+                        </shadows:Shadows.Shades>
+                        <cornerBorder:PancakeView
+                            BackgroundColor="White"
+                            Border="{cornerBorder:BorderMarkup Color=Gray,
+                                                               Thickness=0}"
+                            CornerRadius="10">
+                            <Button
+                                Padding="5,5,5,5"
+                                BackgroundColor="{Binding BackgroundColorRock}"
+                                Command="{Binding FilterByTypeRockCommandAsync}"
+                                FontAttributes="Bold"
+                                FontSize="11"
+                                ImageSource="{Binding ImgTypeRockFilter, Converter={StaticResource ByteToImageSourceConverter}}"
+                                Text="Roche"
+                                TextColor="{Binding TextColorRock}"
+                                TextTransform="None" />
+                        </cornerBorder:PancakeView>
+                    </shadows:Shadows>
+                    <shadows:Shadows
+                        Grid.Row="8"
+                        Grid.Column="0"
+                        Margin="30,5,10,10"
+                        CornerRadius="15">
+                        <shadows:Shadows.Shades>
+                            <shadows:ImmutableShades>
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.3"
+                                    Offset="-1,-1"
+                                    Color="#464C56" />
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.5"
+                                    Offset="1,1"
+                                    Color="#464C56" />
+                            </shadows:ImmutableShades>
+                        </shadows:Shadows.Shades>
+                        <cornerBorder:PancakeView
+                            BackgroundColor="White"
+                            Border="{cornerBorder:BorderMarkup Color=Gray,
+                                                               Thickness=0}"
+                            CornerRadius="10">
+                            <Button
+                                Padding="5,5,5,5"
+                                BackgroundColor="{Binding BackgroundColorGround}"
+                                Command="{Binding FilterByTypeGroundCommandAsync}"
+                                FontAttributes="Bold"
+                                FontSize="11"
+                                ImageSource="{Binding ImgTypeGroundFilter, Converter={StaticResource ByteToImageSourceConverter}}"
+                                Text="Sol"
+                                TextColor="{Binding TextColorGround}"
+                                TextTransform="None" />
+                        </cornerBorder:PancakeView>
+                    </shadows:Shadows>
+                    <shadows:Shadows
+                        Grid.Row="8"
+                        Grid.Column="1"
+                        Margin="10,5,30,10"
+                        CornerRadius="15">
+                        <shadows:Shadows.Shades>
+                            <shadows:ImmutableShades>
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.3"
+                                    Offset="-1,-1"
+                                    Color="#464C56" />
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.5"
+                                    Offset="1,1"
+                                    Color="#464C56" />
+                            </shadows:ImmutableShades>
+                        </shadows:Shadows.Shades>
+                        <cornerBorder:PancakeView
+                            BackgroundColor="White"
+                            Border="{cornerBorder:BorderMarkup Color=Gray,
+                                                               Thickness=0}"
+                            CornerRadius="10">
+                            <Button
+                                Padding="5,5,5,5"
+                                BackgroundColor="{Binding BackgroundColorGhost}"
+                                Command="{Binding FilterByTypeGhostCommandAsync}"
+                                FontAttributes="Bold"
+                                FontSize="11"
+                                ImageSource="{Binding ImgTypeGhostFilter, Converter={StaticResource ByteToImageSourceConverter}}"
+                                Text="Spectre"
+                                TextColor="{Binding TextColorGhost}"
+                                TextTransform="None" />
+                        </cornerBorder:PancakeView>
+                    </shadows:Shadows>
+                    <shadows:Shadows
+                        Grid.Row="9"
+                        Grid.Column="0"
+                        Margin="30,5,10,10"
+                        CornerRadius="15">
+                        <shadows:Shadows.Shades>
+                            <shadows:ImmutableShades>
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.3"
+                                    Offset="-1,-1"
+                                    Color="#464C56" />
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.5"
+                                    Offset="1,1"
+                                    Color="#464C56" />
+                            </shadows:ImmutableShades>
+                        </shadows:Shadows.Shades>
+                        <cornerBorder:PancakeView
+                            BackgroundColor="White"
+                            Border="{cornerBorder:BorderMarkup Color=Gray,
+                                                               Thickness=0}"
+                            CornerRadius="10">
+                            <Button
+                                Margin="-1,0,0,0"
+                                Padding="5,5,5,5"
+                                BackgroundColor="{Binding BackgroundColorDark}"
+                                Command="{Binding FilterByTypeDarkCommandAsync}"
+                                FontAttributes="Bold"
+                                FontSize="11"
+                                ImageSource="{Binding ImgTypeDarkFilter, Converter={StaticResource ByteToImageSourceConverter}}"
+                                Text="Ténèbre"
+                                TextColor="{Binding TextColorDark}"
+                                TextTransform="None" />
+                        </cornerBorder:PancakeView>
+                    </shadows:Shadows>
+                    <shadows:Shadows
+                        Grid.Row="9"
+                        Grid.Column="1"
+                        Margin="10,5,30,10"
+                        CornerRadius="15">
+                        <shadows:Shadows.Shades>
+                            <shadows:ImmutableShades>
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.3"
+                                    Offset="-1,-1"
+                                    Color="#464C56" />
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.5"
+                                    Offset="1,1"
+                                    Color="#464C56" />
+                            </shadows:ImmutableShades>
+                        </shadows:Shadows.Shades>
+                        <cornerBorder:PancakeView
+                            BackgroundColor="White"
+                            Border="{cornerBorder:BorderMarkup Color=Gray,
+                                                               Thickness=0}"
+                            CornerRadius="10">
+                            <Button
+                                Padding="5,5,5,5"
+                                BackgroundColor="{Binding BackgroundColorFlying}"
+                                Command="{Binding FilterByTypeFlyingCommandAsync}"
+                                FontAttributes="Bold"
+                                FontSize="11"
+                                ImageSource="{Binding ImgTypeFlyingFilter, Converter={StaticResource ByteToImageSourceConverter}}"
+                                Text="Vol"
+                                TextColor="{Binding TextColorFlying}"
+                                TextTransform="None" />
+                        </cornerBorder:PancakeView>
+                    </shadows:Shadows>
+                    <shadows:Shadows
+                        Grid.Row="10"
+                        Grid.Column="0"
+                        Margin="30,0,10,15"
+                        CornerRadius="20">
+                        <shadows:Shadows.Shades>
+                            <shadows:ImmutableShades>
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.3"
+                                    Offset="-1,-1"
+                                    Color="#464C56" />
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.5"
+                                    Offset="1,1"
+                                    Color="#464C56" />
+                            </shadows:ImmutableShades>
+                        </shadows:Shadows.Shades>
+                        <cornerBorder:PancakeView
+                            BackgroundColor="Black"
+                            Border="{cornerBorder:BorderMarkup Color=Gray,
+                                                               Thickness=0}"
+                            CornerRadius="10">
+                            <Button
+                                Padding="6"
+                                BackgroundColor="Black"
+                                Command="{Binding BackModalTypeFilterCommandAsync}"
+                                FontAttributes="Bold"
+                                FontSize="11"
+                                Text="Retour"
+                                TextColor="White"
+                                TextTransform="None" />
+                        </cornerBorder:PancakeView>
+                    </shadows:Shadows>
+                    <shadows:Shadows
+                        Grid.Row="10"
+                        Grid.Column="1"
+                        Margin="10,0,30,15"
+                        CornerRadius="20">
+                        <shadows:Shadows.Shades>
+                            <shadows:ImmutableShades>
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.3"
+                                    Offset="-1,-1"
+                                    Color="#464C56" />
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.5"
+                                    Offset="1,1"
+                                    Color="#464C56" />
+                            </shadows:ImmutableShades>
+                        </shadows:Shadows.Shades>
+                        <cornerBorder:PancakeView
+                            BackgroundColor="Black"
+                            Border="{cornerBorder:BorderMarkup Color=Gray,
+                                                               Thickness=0}"
+                            CornerRadius="10">
+                            <Button
+                                Padding="6"
+                                BackgroundColor="Black"
+                                Command="{Binding CloseModalTypeFilterCommandAsync}"
+                                FontAttributes="Bold"
+                                FontSize="11"
+                                Text="Filtrer"
+                                TextColor="White"
+                                TextTransform="None" />
+                        </cornerBorder:PancakeView>
+                    </shadows:Shadows>
                 </Grid>
             </StackLayout>
         </AbsoluteLayout>

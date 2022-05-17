@@ -64,6 +64,12 @@ namespace QuizzPokedex.Services
             var result = await _database.Table<TypePok>().ToListAsync();
             return result.Find(m => m.Name.Equals(libelle));
         }
+
+        public async Task<string> GetBackgroundColorType(string libelle)
+        {
+            var result = await _database.Table<TypePok>().ToListAsync();
+            return result.Find(m => m.Name.Equals(libelle)).TypeColor;
+        }
         #endregion
 
         #region CRUD
@@ -130,6 +136,7 @@ namespace QuizzPokedex.Services
             type.DataAutoHome = await DownloadImageAsync(typeJson.UrlAutoHome);
             type.ImgColor = typeJson.imgColor;
             type.InfoColor = typeJson.infoColor;
+            type.TypeColor = typeJson.typeColor;
             return type;
         }
 

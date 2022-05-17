@@ -52,7 +52,7 @@
                                     BackgroundColor="White"
                                     Command="{Binding NavigationBackCommandAsync}"
                                     HeightRequest="35"
-                                    Source="icons8back48.png"
+                                    Source="@mipmap/back"
                                     WidthRequest="35" />
                             </cornerBorder:PancakeView>
                         </shadows:Shadows>

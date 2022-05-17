@@ -45,16 +45,7 @@ namespace QuizzPokedex.Services
             return result;
         }
 
-        public async Task<List<Pokemon>> GetAllWithoutVariantAsync(string filter, 
-            bool gen1 = false, 
-            bool gen2 = false, 
-            bool gen3 = false, 
-            bool gen4 = false, 
-            bool gen5 = false, 
-            bool gen6 = false, 
-            bool gen7 = false, 
-            bool gen8 = false, 
-            bool genArceus = false)
+        public async Task<List<Pokemon>> GetAllWithoutVariantAsync(string filter, bool gen1, bool gen2, bool gen3, bool gen4, bool gen5, bool gen6, bool gen7, bool gen8, bool genArceus, bool steel, bool fighting, bool dragon, bool water, bool electric, bool fairy, bool fire, bool ice, bool bug, bool normal, bool grass, bool poison, bool psychic, bool rock, bool ground, bool ghost, bool dark, bool flying)
         {
             List<Pokemon> result = await _database.Table<Pokemon>().Where(m => m.TypeEvolution.Equals(Constantes.NormalEvolution)).OrderBy(m => m.Number).ToListAsync();
 
@@ -79,13 +70,104 @@ namespace QuizzPokedex.Services
             if (genArceus)
                 resultFilter.AddRange(result.FindAll(m => m.Generation.Equals(0)));
 
-            if (!string.IsNullOrEmpty(filter))
+            if (!string.IsNullOrEmpty(filter) && resultFilter.Count != 0)
                 resultFilter = resultFilter.FindAll(m => m.Name.ToLowerInvariant().Contains(filter) || m.Number.ToLowerInvariant().Contains(filter));
+            else if (!string.IsNullOrEmpty(filter) && resultFilter.Count == 0)
+                resultFilter = result.FindAll(m => m.Name.ToLowerInvariant().Contains(filter) || m.Number.ToLowerInvariant().Contains(filter));
+            else if (string.IsNullOrEmpty(filter) && resultFilter.Count == 0)
+                resultFilter = result;
 
-            if (resultFilter.Count != 0)
-                return resultFilter;
-            else
-                return result;
+            if (steel)
+            {
+
+            }
+
+            if (fighting)
+            {
+
+            }
+
+            if (dragon)
+            {
+
+            }
+
+            if (water)
+            {
+
+            }
+
+            if (electric)
+            {
+
+            }
+
+            if (fairy)
+            {
+
+            }
+
+            if (fire)
+            {
+
+            }
+
+            if (ice)
+            {
+
+            }
+
+            if (bug)
+            {
+
+            }
+
+            if (normal)
+            {
+
+            }
+
+            if (grass)
+            {
+
+            }
+
+            if (poison)
+            {
+
+            }
+
+            if (psychic)
+            {
+
+            }
+
+            if (rock)
+            {
+
+            }
+
+            if (ground)
+            {
+
+            }
+
+            if (ghost)
+            {
+
+            }
+
+            if (dark)
+            {
+
+            }
+
+            if (flying)
+            {
+
+            }
+
+            return resultFilter;
         }
 
         public async Task<List<Pokemon>> GetFamilyWithoutVariantAsync(string family)
@@ -243,13 +325,13 @@ namespace QuizzPokedex.Services
                 }
             }
         }
-        
+
         public async void PopulateUpdateEvolution()
         {
             List<PokemonJson> pokemonsJson = GetListPokeScrapJson();
             List<Pokemon> pokemonsNoUpdated = await GetPokemonsNotUpdatedAsync();
 
-            foreach(Pokemon pokemonNoUpdated in pokemonsNoUpdated)
+            foreach (Pokemon pokemonNoUpdated in pokemonsNoUpdated)
             {
                 PokemonJson pokemonJson = pokemonsJson.Find(m => m.Name.Equals(pokemonNoUpdated.Name));
 

@@ -13,6 +13,7 @@ namespace QuizzPokedex.Interfaces
         Task<List<TypePok>> GetTypesAsync(string types);
         Task<TypePok> GetByIdAsync(string identifiant);
         Task<TypePok> GetByNameAsync(string libelle);
+        Task<string> GetBackgroundColorType(string libelle);
         Task<int> CreateAsync(TypePok typePok);
         Task<int> DeleteAsync(TypePok typePok);
         Task<int> UpdateAsync(TypePok typePok);

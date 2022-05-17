@@ -38,5 +38,8 @@ namespace QuizzPokedex.Models
 
         //Couleur du Type
         public string InfoColor { get; set; }
+
+        //Couleur Background Type
+        public string TypeColor { get; set; }
     }
 }
