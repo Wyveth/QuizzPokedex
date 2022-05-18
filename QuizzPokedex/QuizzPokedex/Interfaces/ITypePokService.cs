@@ -15,8 +15,7 @@ namespace QuizzPokedex.Interfaces
         Task<TypePok> GetByNameAsync(string libelle);
         Task<string> GetBackgroundColorType(string libelle);
         Task<int> CreateAsync(TypePok typePok);
-        Task<int> DeleteAsync(TypePok typePok);
-        Task<int> UpdateAsync(TypePok typePok);
+        Task<int> GetNumberTypeJsonAsync();
         Task<int> GetNumberAsync();
         Task<byte[]> DownloadImageAsync(string UrlImg);
     }

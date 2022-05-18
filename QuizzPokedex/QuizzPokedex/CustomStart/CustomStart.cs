@@ -48,6 +48,7 @@ namespace QuizzPokedex.CustomStart
 
         protected async void populateDb()
         {
+            int nbTypeMax = await _typePokService.GetNumberTypeJsonAsync();
             int nbTypePok = await _typePokService.GetNumberAsync();
 
             await Task.Run(() =>
@@ -56,7 +57,7 @@ namespace QuizzPokedex.CustomStart
                     _typePokService.Populate();
             });
 
-            int nbPokMax = _pokemonService.GetNumberPokJsonAsync();
+            int nbPokMax = await _pokemonService.GetNumberPokJsonAsync();
             int nbPok = await _pokemonService.GetNumberInDbAsync();
             int nbPokNotUpdated = await _pokemonService.GetNumberPokUpdateAsync();
 

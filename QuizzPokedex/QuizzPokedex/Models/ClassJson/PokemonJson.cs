@@ -57,7 +57,7 @@ namespace QuizzPokedex.Models
         public string TypeEvolution { get; set; }
 
         //Savoir Quand où comment le pokémon évolue
-        public string whenEvolution { get; set; }
+        public string WhenEvolution { get; set; }
 
         //Statistique PV
         public int statPv { get; set; }

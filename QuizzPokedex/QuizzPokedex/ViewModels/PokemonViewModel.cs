@@ -14,12 +14,14 @@ namespace QuizzPokedex.ViewModels
 {
     public class PokemonViewModel : MvxViewModel<Pokemon>
     {
-
+        #region Fields
         private readonly IMvxNavigationService _navigation;
         private readonly IMvxIoCProvider _logger;
         private readonly IPokemonService _pokemonService;
         private readonly ITypePokService _typePokService;
+        #endregion
 
+        #region Constructor
         public PokemonViewModel(IMvxNavigationService navigation, IMvxIoCProvider logger, IPokemonService pokemonService, ITypePokService typeService)
         {
             _navigation = navigation;
@@ -27,7 +29,9 @@ namespace QuizzPokedex.ViewModels
             _pokemonService = pokemonService;
             _typePokService = typeService;
         }
+        #endregion
 
+        #region Public Methods
         public override void Prepare(Pokemon pokemon)
         {
             Pokemon = pokemon;
@@ -57,7 +61,7 @@ namespace QuizzPokedex.ViewModels
                 TalentIsVisible = false;
             }
 
-            if (!Pokemon.statTotal.Equals(0))
+            if (!Pokemon.StatTotal.Equals(0))
                 StatisticIsVisible = true;
             else
                 StatisticIsVisible = false;
@@ -72,7 +76,9 @@ namespace QuizzPokedex.ViewModels
             LoadPokemonTask = MvxNotifyTask.Create(LoadPokemonAsync);
             await base.Initialize();
         }
+        #endregion
 
+        #region Private Methods
         private async Task LoadPokemonAsync()
         {
             if (!Pokemon.Updated)
@@ -125,15 +131,17 @@ namespace QuizzPokedex.ViewModels
             #region Variant
             var resultVariant = await _pokemonService.GetAllVariantAsync(Pokemon.Number, Constantes.Variant);
             VariantIsVisible = await GetVisible(resultVariant.Count);
+            CountVariantEvol = await GetNbSpan(resultVariant.Count);
+            HeightVariantEvol = await GetHeightSectionVariant(resultVariant.Count);
             Variant = new MvxObservableCollection<Pokemon>(resultVariant);
             #endregion
 
-            FirstType = await _typePokService.GetByIdAsync(Pokemon.Types.Split(',')[0]);
+            FirstType = await _typePokService.GetByIdAsync(Pokemon.TypesID.Split(',')[0]);
 
-            var resultTypes = await _typePokService.GetTypesAsync(Pokemon.Types);
+            var resultTypes = await _typePokService.GetTypesAsync(Pokemon.TypesID);
             Types = new MvxObservableCollection<TypePok>(resultTypes);
 
-            var resultWeakness = await _typePokService.GetTypesAsync(Pokemon.Weakness);
+            var resultWeakness = await _typePokService.GetTypesAsync(Pokemon.WeaknessID);
             HeightWeakness = await GetHeightSectionWeakness(resultWeakness.Count);
             CountWeakness = await GetNbSpan(resultWeakness.Count);
             Weakness = new MvxObservableCollection<TypePok>(resultWeakness);
@@ -162,40 +170,40 @@ namespace QuizzPokedex.ViewModels
         {
             return new[]
             {
-                new ChartEntry(pokemon.statPv)
+                new ChartEntry(pokemon.StatPv)
                 {
                     Label = "PV",
-                    ValueLabel = pokemon.statPv.ToString(),
+                    ValueLabel = pokemon.StatPv.ToString(),
                     Color = SKColor.Parse("#6BC563"),
                 },
-                new ChartEntry(pokemon.statAttaque)
+                new ChartEntry(pokemon.StatAttaque)
                 {
                     Label = "Att.",
-                    ValueLabel = pokemon.statAttaque.ToString(),
+                    ValueLabel = pokemon.StatAttaque.ToString(),
                     Color = SKColor.Parse("#FFA75F"),
                 },
-                new ChartEntry(pokemon.statDefense)
+                new ChartEntry(pokemon.StatDefense)
                 {
                     Label = "Def.",
-                    ValueLabel = pokemon.statDefense.ToString(),
+                    ValueLabel = pokemon.StatDefense.ToString(),
                     Color = SKColor.Parse("#579BE1"),
                 },
-                new ChartEntry(pokemon.statAttaqueSpe)
+                new ChartEntry(pokemon.StatAttaqueSpe)
                 {
                     Label = "Att. Sp.",
-                    ValueLabel = pokemon.statAttaqueSpe.ToString(),
+                    ValueLabel = pokemon.StatAttaqueSpe.ToString(),
                     Color = SKColor.Parse("#F999F1"),
                 },
-                new ChartEntry(pokemon.statDefenseSpe)
+                new ChartEntry(pokemon.StatDefenseSpe)
                 {
                     Label = "Def. Sp.",
-                    ValueLabel = pokemon.statDefenseSpe.ToString(),
+                    ValueLabel = pokemon.StatDefenseSpe.ToString(),
                     Color = SKColor.Parse("#FF7A7F"),
                 },
-                new ChartEntry(pokemon.statVitesse)
+                new ChartEntry(pokemon.StatVitesse)
                 {
                     Label = "Vit.",
-                    ValueLabel = pokemon.statVitesse.ToString(),
+                    ValueLabel = pokemon.StatVitesse.ToString(),
                     Color = SKColor.Parse("#FDDD46"),
                 }
             };
@@ -229,6 +237,18 @@ namespace QuizzPokedex.ViewModels
                 return await Task.FromResult(180);
         }
 
+        private async Task<int> GetHeightSectionVariant(int count)
+        {
+            if (count <= 3)
+                return await Task.FromResult(180);
+            else if (count <= 6)
+                return await Task.FromResult(290);
+            else if (count <= 9)
+                return await Task.FromResult(500);
+            else
+                return await Task.FromResult(180);
+        }
+
         private async Task<int> GetHeightSectionWeakness(int count)
         {
             if (count <= 3)
@@ -240,8 +260,9 @@ namespace QuizzPokedex.ViewModels
             else
                 return await Task.FromResult(40);
         }
+        #endregion
 
-        #region COMMAND
+        #region Command
         public IMvxAsyncCommand NavigationBackCommandAsync => new MvxAsyncCommand(NavigationBackAsync);
         public IMvxAsyncCommand<Pokemon> DetailsPokemonCommandAsync => new MvxAsyncCommand<Pokemon>(DetailsPokemonAsync);
 
@@ -256,7 +277,7 @@ namespace QuizzPokedex.ViewModels
         }
         #endregion
 
-        #region PROPERTIES
+        #region Properties
         public MvxNotifyTask LoadPokemonTask { get; private set; }
 
         #region Collection

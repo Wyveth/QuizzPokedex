@@ -30,10 +30,9 @@ namespace QuizzPokedex.UI.Views
                 // Start both animations concurrently
                 Task.WhenAll(
                     searchFilter.TranslateTo(0, -(trans + safeInsets.Top), 200, Easing.CubicIn),
-                    searchFilter.FadeTo(0.25, 200));
-                Task.WhenAll(
+                    searchFilter.FadeTo(0, 200),
                     backButton.TranslateTo(0, -(trans + safeInsets.Top), 200, Easing.CubicIn),
-                    backButton.FadeTo(0.25, 200));
+                    backButton.FadeTo(0, 200));
             }
             else if (transY != 0 &&
                      e.VerticalDelta < 0 &&
@@ -41,8 +40,7 @@ namespace QuizzPokedex.UI.Views
             {
                 Task.WhenAll(
                     searchFilter.TranslateTo(0, 0, 200, Easing.CubicOut),
-                    searchFilter.FadeTo(1, 200));
-                Task.WhenAll(
+                    searchFilter.FadeTo(1, 200),
                     backButton.TranslateTo(0, 0, 200, Easing.CubicOut),
                     backButton.FadeTo(1, 200));
             }
@@ -56,7 +54,11 @@ namespace QuizzPokedex.UI.Views
                 // Start both animations concurrently
                 Task.WhenAll(
                     menuFilter.TranslateTo(0, (trans + safeInsets.Bottom), 200, Easing.CubicIn),
-                    menuFilter.FadeTo(0.25, 200));
+                    menuFilter.FadeTo(0, 200),
+                    filterModal.TranslateTo(0, (trans + safeInsets.Bottom), 200, Easing.CubicIn),
+                    filterModal.FadeTo(0, 200),
+                    ordererModal.TranslateTo(0, (trans + safeInsets.Bottom), 200, Easing.CubicIn),
+                    ordererModal.FadeTo(0, 200));
             }
             else if (transY != 0 &&
                      e.VerticalDelta > 0 &&
@@ -64,7 +66,16 @@ namespace QuizzPokedex.UI.Views
             {
                 Task.WhenAll(
                     menuFilter.TranslateTo(0, 0, 200, Easing.CubicOut),
-                    menuFilter.FadeTo(1, 200));
+                    menuFilter.FadeTo(1, 200),
+                    filterModal.TranslateTo(0, 0, 200, Easing.CubicOut),
+                    filterModal.FadeTo(1, 200),
+                    ordererModal.TranslateTo(0, 0, 200, Easing.CubicOut),
+                    ordererModal.FadeTo(1, 200));
+            }
+
+            if(e.VerticalDelta == 0)
+            {
+                DisplayAlert("Test", "Stop Scrolling", "Bordel!!!");
             }
         }
 

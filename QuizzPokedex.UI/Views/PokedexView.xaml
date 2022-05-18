@@ -120,11 +120,11 @@
                                                            Thickness=0}"
                         CornerRadius="100,100,100,100">
                         <ImageButton
-                            Padding="5"
+                            Padding="10,5,12,5"
                             BackgroundColor="White"
                             Command="{Binding NavigationBackCommandAsync}"
                             HeightRequest="45"
-                            Source="back.png"
+                            Source="@mipmap/left"
                             WidthRequest="45" />
                     </cornerBorder:PancakeView>
                 </shadows:Shadows>
@@ -272,9 +272,16 @@
                                 Grid.Row="0"
                                 Grid.Column="1"
                                 Margin="40,0,0,30"
-                                BackgroundColor="White"
+                                BackgroundColor="white"
                                 Command="{Binding ModalFilterCommandAsync}"
                                 ImageSource="@mipmap/close" />
+                            <Button
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                Margin="5,0,40,30"
+                                BackgroundColor="white"
+                                Command="{Binding ResetFilterCommandAsync}"
+                                ImageSource="@mipmap/reset" />
                             <shadows:Shadows
                                 Grid.Row="1"
                                 Grid.Column="0"
@@ -344,6 +351,112 @@
                                         Text="Gen"
                                         TextColor="Black"
                                         TextTransform="None" />
+                                </cornerBorder:PancakeView>
+                            </shadows:Shadows>
+                        </Grid>
+                    </cornerBorder:PancakeView>
+                </shadows:Shadows>
+            </StackLayout>
+            <StackLayout
+                x:Name="ordererModal"
+                AbsoluteLayout.LayoutBounds="1,0.965,0.4,0.205"
+                AbsoluteLayout.LayoutFlags="All"
+                HorizontalOptions="CenterAndExpand"
+                IsVisible="{Binding IsVisibleModalFilter}">
+                <shadows:Shadows Margin="10,10,10,10" CornerRadius="30">
+                    <shadows:Shadows.Shades>
+                        <shadows:ImmutableShades>
+                            <shadows:Shade
+                                BlurRadius="10"
+                                Opacity="0.5"
+                                Offset="-1,-1"
+                                Color="#464C56" />
+                            <shadows:Shade
+                                BlurRadius="10"
+                                Opacity="0.5"
+                                Offset="1,1"
+                                Color="#464C56" />
+                        </shadows:ImmutableShades>
+                    </shadows:Shadows.Shades>
+                    <cornerBorder:PancakeView
+                        BackgroundColor="White"
+                        Border="{cornerBorder:BorderMarkup Color=Gray,
+                                                           Thickness=0}"
+                        CornerRadius="10"
+                        HeightRequest="80"
+                        WidthRequest="40">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="2*" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <shadows:Shadows
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                Margin="5,8,5,12"
+                                CornerRadius="10">
+                                <shadows:Shadows.Shades>
+                                    <shadows:ImmutableShades>
+                                        <shadows:Shade
+                                            BlurRadius="20"
+                                            Opacity="0.25"
+                                            Offset="-1,-1"
+                                            Color="#464C56" />
+                                        <shadows:Shade
+                                            BlurRadius="20"
+                                            Opacity="0.25"
+                                            Offset="1,1"
+                                            Color="#464C56" />
+                                    </shadows:ImmutableShades>
+                                </shadows:Shadows.Shades>
+                                <cornerBorder:PancakeView
+                                    BackgroundColor="White"
+                                    Border="{cornerBorder:BorderMarkup Color=Gray,
+                                                                       Thickness=0}"
+                                    CornerRadius="10">
+                                    <ImageButton
+                                        Padding="5"
+                                        BackgroundColor="White"
+                                        Command="{Binding OrdererModalDescendingCommandAsync}"
+                                        HeightRequest="45"
+                                        Source="@mipmap/up"
+                                        WidthRequest="45" />
+                                </cornerBorder:PancakeView>
+                            </shadows:Shadows>
+                            <shadows:Shadows
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                Margin="5,-12,5,8"
+                                CornerRadius="10">
+                                <shadows:Shadows.Shades>
+                                    <shadows:ImmutableShades>
+                                        <shadows:Shade
+                                            BlurRadius="20"
+                                            Opacity="0.25"
+                                            Offset="-1,-1"
+                                            Color="#464C56" />
+                                        <shadows:Shade
+                                            BlurRadius="20"
+                                            Opacity="0.25"
+                                            Offset="1,1"
+                                            Color="#464C56" />
+                                    </shadows:ImmutableShades>
+                                </shadows:Shadows.Shades>
+                                <cornerBorder:PancakeView
+                                    BackgroundColor="White"
+                                    Border="{cornerBorder:BorderMarkup Color=Gray,
+                                                                       Thickness=0}"
+                                    CornerRadius="10">
+                                    <ImageButton
+                                        Padding="5"
+                                        BackgroundColor="White"
+                                        Command="{Binding OrdererModalAscendingCommandAsync}"
+                                        HeightRequest="45"
+                                        Source="@mipmap/down"
+                                        WidthRequest="45" />
                                 </cornerBorder:PancakeView>
                             </shadows:Shadows>
                         </Grid>
@@ -785,7 +898,7 @@
             <StackLayout
                 x:Name="ModalFilterType"
                 xct:CornerRadiusEffect.CornerRadius="30"
-                AbsoluteLayout.LayoutBounds="0.5,0.1,0.6,0.72"
+                AbsoluteLayout.LayoutBounds="0.5,0.5,0.7,0.72"
                 AbsoluteLayout.LayoutFlags="All"
                 BackgroundColor="white"
                 IsVisible="{Binding IsVisibleModalTypeFilter}"

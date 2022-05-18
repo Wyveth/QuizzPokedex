@@ -19,22 +19,28 @@ namespace QuizzPokedex.ViewModels
 {
     public class PokedexViewModel : MvxViewModel
     {
+        #region Fields
         private readonly IMvxNavigationService _navigation;
         private readonly IPokemonService _pokemonService;
         private readonly ITypePokService _typePokService;
+        #endregion
 
+        #region Constructor
         public PokedexViewModel(IMvxNavigationService navigation, IPokemonService pokemonService, ITypePokService typePokService, IMvxMessenger messenger)
         {
             _navigation = navigation;
             _pokemonService = pokemonService;
             _typePokService = typePokService;
         }
+        #endregion
 
+        #region Public Methods
         public override async Task Initialize()
         {
             LoadPokemonTask = MvxNotifyTask.Create(LoadPokemonAsync);
             await base.Initialize();
         }
+        #endregion
 
         #region Private Method
         private async Task LoadPokemonAsync()
@@ -66,7 +72,8 @@ namespace QuizzPokedex.ViewModels
                 , FiltreActiveTypeGround
                 , FiltreActiveTypeGhost
                 , FiltreActiveTypeDark
-                , FiltreActiveTypeFlying);
+                , FiltreActiveTypeFlying
+                , Descending);
             Pokemons = new MvxObservableCollection<Pokemon>(resultPokemon);
             await GetBytesTypesFilter();
         }
@@ -82,7 +89,7 @@ namespace QuizzPokedex.ViewModels
                 switch (type.Name)
                 {
                     case Constantes.Steel:
-                        if(ImgTypeSteelFilter == null)
+                        if (ImgTypeSteelFilter == null)
                             ImgTypeSteelFilter = await getByteTypeIcon(Constantes.Icon_Steel_BW);
                         break;
                     case Constantes.Fighting:
@@ -170,20 +177,148 @@ namespace QuizzPokedex.ViewModels
 
             return await Task.FromResult(imgByte);
         }
+
+        private async Task<bool> resetFiltreType()
+        {
+            FiltreActiveTypeSteel = false;
+            ImgTypeSteelFilter = await getByteTypeIcon(Constantes.Icon_Steel_BW);
+            BackgroundColorSteel = Constantes.WhiteHexa;
+            TextColorSteel = Constantes.BlackHexa;
+
+            FiltreActiveTypeDragon = false;
+            ImgTypeDragonFilter = await getByteTypeIcon(Constantes.Icon_Dragon_BW);
+            BackgroundColorDragon = Constantes.WhiteHexa;
+            TextColorDragon = Constantes.BlackHexa;
+
+            FiltreActiveTypeElectric = false;
+            ImgTypeElectricFilter = await getByteTypeIcon(Constantes.Icon_Electric_BW);
+            BackgroundColorElectric = Constantes.WhiteHexa;
+            TextColorElectric = Constantes.BlackHexa;
+
+            FiltreActiveTypeFire = false;
+            ImgTypeFireFilter = await getByteTypeIcon(Constantes.Icon_Fire_BW);
+            BackgroundColorFire = Constantes.WhiteHexa;
+            TextColorFire = Constantes.BlackHexa;
+
+            FiltreActiveTypeBug = false;
+            ImgTypeBugFilter = await getByteTypeIcon(Constantes.Icon_Bug_BW);
+            BackgroundColorBug = Constantes.WhiteHexa;
+            TextColorBug = Constantes.BlackHexa;
+
+            FiltreActiveTypeGrass = false;
+            ImgTypeGrassFilter = await getByteTypeIcon(Constantes.Icon_Grass_BW);
+            BackgroundColorGrass = Constantes.WhiteHexa;
+            TextColorGrass = Constantes.BlackHexa;
+
+            FiltreActiveTypePsychic = false;
+            ImgTypePsychicFilter = await getByteTypeIcon(Constantes.Icon_Psychic_BW);
+            BackgroundColorPsychic = Constantes.WhiteHexa;
+            TextColorPsychic = Constantes.BlackHexa;
+
+            FiltreActiveTypeGround = false;
+            ImgTypeGroundFilter = await getByteTypeIcon(Constantes.Icon_Ground_BW);
+            BackgroundColorGround = Constantes.WhiteHexa;
+            TextColorGround = Constantes.BlackHexa;
+
+            FiltreActiveTypeDark = false;
+            ImgTypeDarkFilter = await getByteTypeIcon(Constantes.Icon_Dark_BW);
+            BackgroundColorDark = Constantes.WhiteHexa;
+            TextColorDark = Constantes.BlackHexa;
+
+            FiltreActiveTypeFighting = false;
+            ImgTypeFightingFilter = await getByteTypeIcon(Constantes.Icon_Fighting_BW);
+            BackgroundColorFighting = Constantes.WhiteHexa;
+            TextColorFighting = Constantes.BlackHexa;
+
+            FiltreActiveTypeWater = false;
+            ImgTypeWaterFilter = await getByteTypeIcon(Constantes.Icon_Water_BW);
+            BackgroundColorWater = Constantes.WhiteHexa;
+            TextColorWater = Constantes.BlackHexa;
+
+            FiltreActiveTypeFairy = false;
+            ImgTypeFairyFilter = await getByteTypeIcon(Constantes.Icon_Fairy_BW);
+            BackgroundColorFairy = Constantes.WhiteHexa;
+            TextColorFairy = Constantes.BlackHexa;
+
+            FiltreActiveTypeIce = false;
+            ImgTypeIceFilter = await getByteTypeIcon(Constantes.Icon_Ice_BW);
+            BackgroundColorIce = Constantes.WhiteHexa;
+            TextColorIce = Constantes.BlackHexa;
+
+            FiltreActiveTypeNormal = false;
+            ImgTypeNormalFilter = await getByteTypeIcon(Constantes.Icon_Normal_BW);
+            BackgroundColorNormal = Constantes.WhiteHexa;
+            TextColorNormal = Constantes.BlackHexa;
+
+            FiltreActiveTypePoison = false;
+            ImgTypePoisonFilter = await getByteTypeIcon(Constantes.Icon_Poison_BW);
+            BackgroundColorPoison = Constantes.WhiteHexa;
+            TextColorPoison = Constantes.BlackHexa;
+
+            FiltreActiveTypeRock = false;
+            ImgTypeRockFilter = await getByteTypeIcon(Constantes.Icon_Rock_BW);
+            BackgroundColorRock = Constantes.WhiteHexa;
+            TextColorRock = Constantes.BlackHexa;
+
+            FiltreActiveTypeGhost = false;
+            ImgTypeGhostFilter = await getByteTypeIcon(Constantes.Icon_Ghost_BW);
+            BackgroundColorGhost = Constantes.WhiteHexa;
+            TextColorGhost = Constantes.BlackHexa;
+
+            FiltreActiveTypeFlying = false;
+            ImgTypeFlyingFilter = await getByteTypeIcon(Constantes.Icon_Flying_BW);
+            BackgroundColorFlying = Constantes.WhiteHexa;
+            TextColorFlying = Constantes.BlackHexa;
+
+            return await Task.FromResult(true);
+        }
+
+        private async Task<bool> resetFiltreGen()
+        {
+            FiltreActiveGen1 = false;
+            BackgroundColorGen1 = Constantes.WhiteHexa;
+            TextColorGen1 = Constantes.BlackHexa;
+            FiltreActiveGen2 = false;
+            BackgroundColorGen2 = Constantes.WhiteHexa;
+            TextColorGen2 = Constantes.BlackHexa;
+            FiltreActiveGen3 = false;
+            BackgroundColorGen3 = Constantes.WhiteHexa;
+            TextColorGen3 = Constantes.BlackHexa;
+            FiltreActiveGen4 = false;
+            BackgroundColorGen4 = Constantes.WhiteHexa;
+            TextColorGen4 = Constantes.BlackHexa;
+            FiltreActiveGen5 = false;
+            BackgroundColorGen5 = Constantes.WhiteHexa;
+            TextColorGen5 = Constantes.BlackHexa;
+            FiltreActiveGen6 = false;
+            BackgroundColorGen6 = Constantes.WhiteHexa;
+            TextColorGen6 = Constantes.BlackHexa;
+            FiltreActiveGen7 = false;
+            BackgroundColorGen7 = Constantes.WhiteHexa;
+            TextColorGen7 = Constantes.BlackHexa;
+            FiltreActiveGen8 = false;
+            BackgroundColorGen8 = Constantes.WhiteHexa;
+            TextColorGen8 = Constantes.BlackHexa;
+            FiltreActiveGenArceus = false;
+            BackgroundColorGenArceus = Constantes.WhiteHexa;
+            TextColorGenArceus = Constantes.BlackHexa;
+
+            return await Task.FromResult(true);
+        }
         #endregion
 
-        #region COMMAND
+        #region Command
         public IMvxAsyncCommand NavigationBackCommandAsync => new MvxAsyncCommand(NavigationBackAsync);
         public IMvxAsyncCommand ModalFilterCommandAsync => new MvxAsyncCommand(ModalFilterAsync);
         public IMvxAsyncCommand ModalTypeFilterCommandAsync => new MvxAsyncCommand(ModalTypeFilterAsync);
+        public IMvxAsyncCommand ResetFilterCommandAsync => new MvxAsyncCommand(ResetFilterAsync);
         public IMvxAsyncCommand ModalGenFilterCommandAsync => new MvxAsyncCommand(ModalGenFilterAsync);
         public IMvxAsyncCommand BackModalTypeFilterCommandAsync => new MvxAsyncCommand(BackModalTypeFilterAsync);
         public IMvxAsyncCommand CloseModalTypeFilterCommandAsync => new MvxAsyncCommand(CloseModalTypeFilterAsync);
         public IMvxAsyncCommand BackModalGenFilterCommandAsync => new MvxAsyncCommand(BackModalGenFilterAsync);
         public IMvxAsyncCommand CloseModalGenFilterCommandAsync => new MvxAsyncCommand(CloseModalGenFilterAsync);
-        public IMvxAsyncCommand CreatePokemonCommandAsync => new MvxAsyncCommand(CreatePokemonAsync);
-        public IMvxAsyncCommand<Pokemon> UpdatePokemonCommandAsync => new MvxAsyncCommand<Pokemon>(UpdatePokemonAsync);
-        public IMvxAsyncCommand<Pokemon> DeletePokemonCommandAsync => new MvxAsyncCommand<Pokemon>(DeletePokemonAsync);
+        public IMvxAsyncCommand OrdererModalAscendingCommandAsync => new MvxAsyncCommand(ordererModalAscendingAsync);
+        public IMvxAsyncCommand OrdererModalDescendingCommandAsync => new MvxAsyncCommand(ordererModalDescendingAsync);
         public IMvxAsyncCommand<Pokemon> DetailsPokemonCommandAsync => new MvxAsyncCommand<Pokemon>(DetailsPokemonAsync);
 
         #region Command Filter
@@ -231,31 +366,43 @@ namespace QuizzPokedex.ViewModels
         {
             IsVisibleModalFilter = !IsVisibleModalFilter;
         }
+        private async Task ModalTypeFilterAsync()
+        {
+            IsVisibleBackgroundModalFilter = !IsVisibleBackgroundModalFilter;
+            IsVisibleModalTypeFilter = !IsVisibleModalTypeFilter;
+        }
+
+        private async Task ResetFilterAsync()
+        {
+            #region Filtre
+            await resetFiltreType();
+            #endregion
+
+            #region Generation
+            await resetFiltreGen();
+            #endregion
+
+            Descending = false;
+
+            await LoadPokemonAsync();
+        }
 
         private async Task ModalGenFilterAsync()
         {
             IsVisibleBackgroundModalFilter = !IsVisibleBackgroundModalFilter;
             IsVisibleModalGenFilter = !IsVisibleModalGenFilter;
         }
-
-        private async Task ModalTypeFilterAsync()
-        {
-            IsVisibleBackgroundModalFilter = !IsVisibleBackgroundModalFilter;
-            IsVisibleModalTypeFilter = !IsVisibleModalTypeFilter;
-        }
         private async Task BackModalTypeFilterAsync()
         {
             IsVisibleBackgroundModalFilter = false;
             IsVisibleModalTypeFilter = false;
         }
-
         private async Task CloseModalTypeFilterAsync()
         {
             IsVisibleBackgroundModalFilter = false;
             IsVisibleModalTypeFilter = false;
             IsVisibleModalFilter = false;
         }
-
 
         private async Task BackModalGenFilterAsync()
         {
@@ -268,6 +415,18 @@ namespace QuizzPokedex.ViewModels
             IsVisibleBackgroundModalFilter = false;
             IsVisibleModalGenFilter = false;
             IsVisibleModalFilter = false;
+        }
+
+        private async Task ordererModalAscendingAsync()
+        {
+            Descending = false;
+            await LoadPokemonAsync();
+        }
+
+        private async Task ordererModalDescendingAsync()
+        {
+            Descending = true;
+            await LoadPokemonAsync();
         }
         #endregion
 
@@ -805,26 +964,6 @@ namespace QuizzPokedex.ViewModels
         #endregion
 
         #region CRUD
-        private async Task CreatePokemonAsync()
-        {
-            await _navigation.Navigate<PokemonViewModel, Pokemon>(new Pokemon());
-        }
-
-        private async Task UpdatePokemonAsync(Pokemon Pokemon)
-        {
-            await _navigation.Navigate<PokemonViewModel, Pokemon>(Pokemon);
-        }
-
-        private async Task DeletePokemonAsync(Pokemon Pokemon)
-        {
-            //Peut etre mettre une boite de dialogue de confirmation avant delete (leçon sur les dialogBox)
-
-            await _pokemonService.DeleteAsync(Pokemon).ContinueWith(
-                async (result) =>
-                    await LoadPokemonAsync()
-                    );
-        }
-
         private async Task DetailsPokemonAsync(Pokemon Pokemon)
         {
             await _navigation.Navigate<PokemonViewModel, Pokemon>(Pokemon);
@@ -832,7 +971,7 @@ namespace QuizzPokedex.ViewModels
         #endregion
         #endregion
 
-        #region PROPERTIES
+        #region Properties
         #region Collection
         public MvxNotifyTask LoadPokemonTask { get; private set; }
 
@@ -1768,6 +1907,13 @@ namespace QuizzPokedex.ViewModels
         #endregion
         #endregion
 
+        private bool _descending = false;
+
+        public bool Descending
+        {
+            get { return _descending; }
+            set { SetProperty(ref _descending, value); }
+        }
         #endregion
     }
 }

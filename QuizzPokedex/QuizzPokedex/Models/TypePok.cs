@@ -7,10 +7,11 @@ namespace QuizzPokedex.Models
 {
     public class TypePok
     {
-        [PrimaryKey, AutoIncrement]
+        [PrimaryKey, AutoIncrement, Indexed]
         public int Id { get; set; }
 
         //Nom Type
+        [Indexed]
         public string Name { get; set; }
 
         //Url Miniature Pokemon Go
