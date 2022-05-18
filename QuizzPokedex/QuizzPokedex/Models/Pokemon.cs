@@ -10,7 +10,7 @@ namespace QuizzPokedex.Models
 {
     public class Pokemon
     {
-        [PrimaryKey, AutoIncrement]
+        [PrimaryKey, AutoIncrement, Indexed]
         public int Id { get; set; }
 
         //Numéro du Pokémon
@@ -54,8 +54,14 @@ namespace QuizzPokedex.Models
         //Description du Talent
         public string DescriptionTalent { get; set; }
 
+        //ID des Types
+        public string TypesID { get; set; }
+
         //Nom des Types
         public string Types { get; set; }
+
+        //ID des Faiblesses
+        public string WeaknessID { get; set; }
 
         //Nom des Faiblesses
         public string Weakness { get; set; }
@@ -67,28 +73,28 @@ namespace QuizzPokedex.Models
         public string TypeEvolution { get; set; }
 
         //Savoir Quand où comment le pokémon évolue
-        public string whenEvolution { get; set; }
+        public string WhenEvolution { get; set; }
 
         //Statistique PV
-        public int statPv { get; set; }
+        public int StatPv { get; set; }
 
         //Statistique Attaque
-        public int statAttaque { get; set; }
+        public int StatAttaque { get; set; }
 
         //Statistique Défense
-        public int statDefense { get; set; }
+        public int StatDefense { get; set; }
 
         //Statistique Attaque Spéciale
-        public int statAttaqueSpe { get; set; }
+        public int StatAttaqueSpe { get; set; }
 
         //Statistique Défense Spéciale
-        public int statDefenseSpe { get; set; }
+        public int StatDefenseSpe { get; set; }
 
         //Statistique Vitesse
-        public int statVitesse { get; set; }
+        public int StatVitesse { get; set; }
 
         //Statistique Total
-        public int statTotal { get; set; }
+        public int StatTotal { get; set; }
 
         //Generation Number
         public int Generation { get; set; }

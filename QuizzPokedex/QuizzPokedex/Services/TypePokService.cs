@@ -79,18 +79,6 @@ namespace QuizzPokedex.Services
             return result;
         }
 
-        public async Task<int> DeleteAsync(TypePok typePok)
-        {
-            var result = await _database.DeleteAsync(typePok);
-            return result;
-        }
-
-        public async Task<int> UpdateAsync(TypePok typePok)
-        {
-            var result = await _database.InsertOrReplaceAsync(typePok);
-            return result;
-        }
-
         public async Task<int> GetNumberAsync()
         {
             var result = await _database.Table<TypePok>().CountAsync();
@@ -138,6 +126,18 @@ namespace QuizzPokedex.Services
             type.InfoColor = typeJson.infoColor;
             type.TypeColor = typeJson.typeColor;
             return type;
+        }
+
+        public async Task<int> GetNumberTypeJsonAsync()
+        {
+            AssetManager assets = Android.App.Application.Context.Assets;
+            string json;
+            using (StreamReader sr = new StreamReader(assets.Open("TypeScrap.json")))
+            {
+                json = sr.ReadToEnd();
+            }
+
+            return await Task.FromResult(JsonConvert.DeserializeObject<List<TypeJson>>(json).Count);
         }
 
         public async Task<byte[]> DownloadImageAsync(string imageUrl)

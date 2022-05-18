@@ -47,11 +47,11 @@
                                                                Thickness=0}"
                             CornerRadius="100,100,100,100">
                             <ImageButton
-                                Padding="5"
+                                Padding="4,9,5,9"
                                 BackgroundColor="White"
                                 Command="{Binding NavigationBackCommandAsync}"
                                 HeightRequest="35"
-                                Source="icons8back48.png"
+                                Source="@mipmap/left"
                                 WidthRequest="35" />
                         </cornerBorder:PancakeView>
                     </shadows:Shadows>

@@ -18,6 +18,12 @@ namespace QuizzPokedex.UI.Views
             InitializeComponent();
         }
 
+        protected override void OnAppearing()
+        {
+            ScrollViewPok.ScrollToAsync(0, 0, true);
+            base.OnAppearing();
+        }
+
         private void EvolutionList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (EvolutionList.SelectedItem != null)

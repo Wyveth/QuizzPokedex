@@ -8,6 +8,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -45,131 +46,39 @@ namespace QuizzPokedex.Services
             return result;
         }
 
-        public async Task<List<Pokemon>> GetAllWithoutVariantAsync(string filter, bool gen1, bool gen2, bool gen3, bool gen4, bool gen5, bool gen6, bool gen7, bool gen8, bool genArceus, bool steel, bool fighting, bool dragon, bool water, bool electric, bool fairy, bool fire, bool ice, bool bug, bool normal, bool grass, bool poison, bool psychic, bool rock, bool ground, bool ghost, bool dark, bool flying)
+        public async Task<List<Pokemon>> GetAllWithoutVariantAsync(string filter, bool gen1, bool gen2, bool gen3, bool gen4, bool gen5, bool gen6, bool gen7, bool gen8, bool genArceus, bool steel, bool fighting, bool dragon, bool water, bool electric, bool fairy, bool fire, bool ice, bool bug, bool normal, bool grass, bool poison, bool psychic, bool rock, bool ground, bool ghost, bool dark, bool flying, bool descending)
         {
             List<Pokemon> result = await _database.Table<Pokemon>().Where(m => m.TypeEvolution.Equals(Constantes.NormalEvolution)).OrderBy(m => m.Number).ToListAsync();
 
             List<Pokemon> resultFilter = new List<Pokemon>();
+            List<Pokemon> resultFilterGen = new List<Pokemon>();
+            List<Pokemon> resultFilterType = new List<Pokemon>();
 
-            if (gen1)
-                resultFilter.AddRange(result.FindAll(m => m.Generation.Equals(1)));
-            if (gen2)
-                resultFilter.AddRange(result.FindAll(m => m.Generation.Equals(2)));
-            if (gen3)
-                resultFilter.AddRange(result.FindAll(m => m.Generation.Equals(3)));
-            if (gen4)
-                resultFilter.AddRange(result.FindAll(m => m.Generation.Equals(4)));
-            if (gen5)
-                resultFilter.AddRange(result.FindAll(m => m.Generation.Equals(5)));
-            if (gen6)
-                resultFilter.AddRange(result.FindAll(m => m.Generation.Equals(6)));
-            if (gen7)
-                resultFilter.AddRange(result.FindAll(m => m.Generation.Equals(7)));
-            if (gen8)
-                resultFilter.AddRange(result.FindAll(m => m.Generation.Equals(8)));
-            if (genArceus)
-                resultFilter.AddRange(result.FindAll(m => m.Generation.Equals(0)));
+            resultFilterGen = await GetPokemonsWithFilterGen(result, gen1, gen2, gen3, gen4, gen5, gen6, gen7, gen8, genArceus);
 
-            if (!string.IsNullOrEmpty(filter) && resultFilter.Count != 0)
-                resultFilter = resultFilter.FindAll(m => m.Name.ToLowerInvariant().Contains(filter) || m.Number.ToLowerInvariant().Contains(filter));
-            else if (!string.IsNullOrEmpty(filter) && resultFilter.Count == 0)
+            resultFilterType = await GetPokemonsWithFilterType(resultFilterGen, steel, fighting, dragon, water, electric, fairy, fire, ice, bug, normal, grass, poison, psychic, rock, ground, ghost, dark, flying);
+
+            if (!string.IsNullOrEmpty(filter) && resultFilterType.Count != 0)
+                resultFilter = resultFilterType.FindAll(m => m.Name.ToLowerInvariant().Contains(filter) || m.Number.ToLowerInvariant().Contains(filter));
+            else if (!string.IsNullOrEmpty(filter) && resultFilterType.Count == 0)
                 resultFilter = result.FindAll(m => m.Name.ToLowerInvariant().Contains(filter) || m.Number.ToLowerInvariant().Contains(filter));
-            else if (string.IsNullOrEmpty(filter) && resultFilter.Count == 0)
+            else if (string.IsNullOrEmpty(filter) && resultFilterType.Count != 0)
+                resultFilter = resultFilterType;
+            else if (string.IsNullOrEmpty(filter) && resultFilterType.Count == 0)
                 resultFilter = result;
 
-            if (steel)
-            {
-
-            }
-
-            if (fighting)
-            {
-
-            }
-
-            if (dragon)
-            {
-
-            }
-
-            if (water)
-            {
-
-            }
-
-            if (electric)
-            {
-
-            }
-
-            if (fairy)
-            {
-
-            }
-
-            if (fire)
-            {
-
-            }
-
-            if (ice)
-            {
-
-            }
-
-            if (bug)
-            {
-
-            }
-
-            if (normal)
-            {
-
-            }
-
-            if (grass)
-            {
-
-            }
-
-            if (poison)
-            {
-
-            }
-
-            if (psychic)
-            {
-
-            }
-
-            if (rock)
-            {
-
-            }
-
-            if (ground)
-            {
-
-            }
-
-            if (ghost)
-            {
-
-            }
-
-            if (dark)
-            {
-
-            }
-
-            if (flying)
-            {
-
-            }
-
-            return resultFilter;
+            if(!descending)
+                return resultFilter.Distinct()
+            .OrderBy(x => int.Parse(x.Number))
+            .ThenBy(x => x.Number)
+            .ToList();
+            else
+                return resultFilter.Distinct()
+            .OrderByDescending(x => int.Parse(x.Number))
+            .ThenBy(x => x.Number)
+            .ToList();
         }
-
+        
         public async Task<List<Pokemon>> GetFamilyWithoutVariantAsync(string family)
         {
             string[] vs = family.Split(',');
@@ -224,16 +133,87 @@ namespace QuizzPokedex.Services
         }
         #endregion
 
+        #region Private Methods
+        private async Task<List<Pokemon>> GetPokemonsWithFilterGen(List<Pokemon> result, bool gen1, bool gen2, bool gen3, bool gen4, bool gen5, bool gen6, bool gen7, bool gen8, bool genArceus)
+        {
+            List<Pokemon> resultFilterGen = new List<Pokemon>();
+
+            if (gen1)
+                resultFilterGen.AddRange(result.FindAll(m => m.Generation.Equals(1)));
+            if (gen2)
+                resultFilterGen.AddRange(result.FindAll(m => m.Generation.Equals(2)));
+            if (gen3)
+                resultFilterGen.AddRange(result.FindAll(m => m.Generation.Equals(3)));
+            if (gen4)
+                resultFilterGen.AddRange(result.FindAll(m => m.Generation.Equals(4)));
+            if (gen5)
+                resultFilterGen.AddRange(result.FindAll(m => m.Generation.Equals(5)));
+            if (gen6)
+                resultFilterGen.AddRange(result.FindAll(m => m.Generation.Equals(6)));
+            if (gen7)
+                resultFilterGen.AddRange(result.FindAll(m => m.Generation.Equals(7)));
+            if (gen8)
+                resultFilterGen.AddRange(result.FindAll(m => m.Generation.Equals(8)));
+            if (genArceus)
+                resultFilterGen.AddRange(result.FindAll(m => m.Generation.Equals(0)));
+
+            if (resultFilterGen.Count.Equals(0))
+                resultFilterGen = result;
+
+            return await Task.FromResult(resultFilterGen);
+        }
+
+        private async Task<List<Pokemon>> GetPokemonsWithFilterType(List<Pokemon> resultFilterGen, bool steel, bool fighting, bool dragon, bool water, bool electric, bool fairy, bool fire, bool ice, bool bug, bool normal, bool grass, bool poison, bool psychic, bool rock, bool ground, bool ghost, bool dark, bool flying)
+        {
+            List<Pokemon> resultFilterType = new List<Pokemon>();
+            if (steel)
+                resultFilterType.AddRange(resultFilterGen.FindAll(m => m.Types.Contains(Constantes.Steel)));
+            if (fighting)
+                resultFilterType.AddRange(resultFilterGen.FindAll(m => m.Types.Contains(Constantes.Fighting)));
+            if (dragon)
+                resultFilterType.AddRange(resultFilterGen.FindAll(m => m.Types.Contains(Constantes.Dragon)));
+            if (water)
+                resultFilterType.AddRange(resultFilterGen.FindAll(m => m.Types.Contains(Constantes.Water)));
+            if (electric)
+                resultFilterType.AddRange(resultFilterGen.FindAll(m => m.Types.Contains(Constantes.Electric)));
+            if (fairy)
+                resultFilterType.AddRange(resultFilterGen.FindAll(m => m.Types.Contains(Constantes.Fairy)));
+            if (fire)
+                resultFilterType.AddRange(resultFilterGen.FindAll(m => m.Types.Contains(Constantes.Fire)));
+            if (ice)
+                resultFilterType.AddRange(resultFilterGen.FindAll(m => m.Types.Contains(Constantes.Ice)));
+            if (bug)
+                resultFilterType.AddRange(resultFilterGen.FindAll(m => m.Types.Contains(Constantes.Bug)));
+            if (normal)
+                resultFilterType.AddRange(resultFilterGen.FindAll(m => m.Types.Contains(Constantes.Normal)));
+            if (grass)
+                resultFilterType.AddRange(resultFilterGen.FindAll(m => m.Types.Contains(Constantes.Grass)));
+            if (poison)
+                resultFilterType.AddRange(resultFilterGen.FindAll(m => m.Types.Contains(Constantes.Poison)));
+            if (psychic)
+                resultFilterType.AddRange(resultFilterGen.FindAll(m => m.Types.Contains(Constantes.Psychic)));
+            if (rock)
+                resultFilterType.AddRange(resultFilterGen.FindAll(m => m.Types.Contains(Constantes.Rock)));
+            if (ground)
+                resultFilterType.AddRange(resultFilterGen.FindAll(m => m.Types.Contains(Constantes.Ground)));
+            if (ghost)
+                resultFilterType.AddRange(resultFilterGen.FindAll(m => m.Types.Contains(Constantes.Ghost)));
+            if (dark)
+                resultFilterType.AddRange(resultFilterGen.FindAll(m => m.Types.Contains(Constantes.Dark)));
+            if (flying)
+                resultFilterType.AddRange(resultFilterGen.FindAll(m => m.Types.Contains(Constantes.Flying)));
+
+            if (resultFilterType.Count.Equals(0))
+                resultFilterType = resultFilterGen;
+
+            return await Task.FromResult(resultFilterType);
+        }
+        #endregion
+
         #region CRUD
         public async Task<int> CreateAsync(Pokemon Pokemon)
         {
             var result = await _database.InsertAsync(Pokemon);
-            return result;
-        }
-
-        public async Task<int> DeleteAsync(Pokemon Pokemon)
-        {
-            var result = await _database.DeleteAsync(Pokemon);
             return result;
         }
 
@@ -249,7 +229,7 @@ namespace QuizzPokedex.Services
             return result;
         }
 
-        public int GetNumberPokJsonAsync()
+        public async Task<int> GetNumberPokJsonAsync()
         {
             AssetManager assets = Android.App.Application.Context.Assets;
             string json;
@@ -258,7 +238,7 @@ namespace QuizzPokedex.Services
                 json = sr.ReadToEnd();
             }
 
-            return JsonConvert.DeserializeObject<List<PokemonJson>>(json).Count;
+            return await Task.FromResult(JsonConvert.DeserializeObject<List<PokemonJson>>(json).Count);
         }
 
         public async Task<int> GetNumberPokUpdateAsync()
@@ -379,12 +359,14 @@ namespace QuizzPokedex.Services
                 TypePok type = await _typePokService.GetByNameAsync(item);
                 if (i == 0)
                 {
-                    pokemon.Types = type.Id.ToString();
+                    pokemon.Types = type.Name.ToString();
+                    pokemon.TypesID = type.Id.ToString();
                     i++;
                 }
                 else
                 {
-                    pokemon.Types += ',' + type.Id.ToString();
+                    pokemon.Types += ',' + type.Name.ToString();
+                    pokemon.TypesID += ',' + type.Id.ToString();
                 }
             }
 
@@ -395,25 +377,27 @@ namespace QuizzPokedex.Services
                 TypePok type = await _typePokService.GetByNameAsync(item);
                 if (i == 0)
                 {
-                    pokemon.Weakness = type.Id.ToString();
+                    pokemon.WeaknessID = type.Name.ToString();
+                    pokemon.WeaknessID = type.Id.ToString();
                     i++;
                 }
                 else
                 {
-                    pokemon.Weakness += ',' + type.Id.ToString();
+                    pokemon.Weakness += ',' + type.Name.ToString();
+                    pokemon.WeaknessID += ',' + type.Id.ToString();
                 }
             }
 
             pokemon.Evolutions = pokemonJson.Evolutions;
             pokemon.TypeEvolution = pokemonJson.TypeEvolution;
-            pokemon.whenEvolution = pokemonJson.whenEvolution;
-            pokemon.statPv = pokemonJson.statPv;
-            pokemon.statAttaque = pokemonJson.statAttaque;
-            pokemon.statDefense = pokemonJson.statDefense;
-            pokemon.statAttaqueSpe = pokemonJson.statAttaqueSpe;
-            pokemon.statDefenseSpe = pokemonJson.statDefenseSpe;
-            pokemon.statVitesse = pokemonJson.statVitesse;
-            pokemon.statTotal = pokemonJson.statTotal;
+            pokemon.WhenEvolution = pokemonJson.WhenEvolution;
+            pokemon.StatPv = pokemonJson.statPv;
+            pokemon.StatAttaque = pokemonJson.statAttaque;
+            pokemon.StatDefense = pokemonJson.statDefense;
+            pokemon.StatAttaqueSpe = pokemonJson.statAttaqueSpe;
+            pokemon.StatDefenseSpe = pokemonJson.statDefenseSpe;
+            pokemon.StatVitesse = pokemonJson.statVitesse;
+            pokemon.StatTotal = pokemonJson.statTotal;
             pokemon.Generation = pokemonJson.Generation;
             pokemon.NextUrl = pokemonJson.NextUrl;
             pokemon.Updated = false;
