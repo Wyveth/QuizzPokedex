@@ -72,11 +72,6 @@ namespace QuizzPokedex.UI.Views
                     ordererModal.TranslateTo(0, 0, 200, Easing.CubicOut),
                     ordererModal.FadeTo(1, 200));
             }
-
-            if(e.VerticalDelta == 0)
-            {
-                DisplayAlert("Test", "Stop Scrolling", "Bordel!!!");
-            }
         }
 
         private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
