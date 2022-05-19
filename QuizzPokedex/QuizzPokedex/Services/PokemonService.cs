@@ -262,36 +262,11 @@ namespace QuizzPokedex.Services
             return JsonConvert.DeserializeObject<List<PokemonJson>>(json);
         }
 
-        public async Task<Pokemon> UpdateEvolutionWithJson(Pokemon pokemonNoUpdated)
+        public async Task Populate(int countInsertPokemon)
         {
             List<PokemonJson> pokemonsJson = GetListPokeScrapJson();
 
-            PokemonJson pokemonJson = pokemonsJson.Find(m => m.Name.Equals(pokemonNoUpdated.Name));
-
-            int i = int.Parse(pokemonJson.Number);
-            try
-            {
-                Pokemon pokemonUpdated = await UpdateEvolutionWithJson(pokemonJson, pokemonNoUpdated);
-                if (pokemonUpdated != null)
-                    _ = UpdateAsync(pokemonUpdated);
-
-                Debug.Write("Update: " + pokemonJson.Number + " - " + pokemonJson.Name);
-                return pokemonUpdated;
-            }
-            catch
-            {
-                Debug.Write("Update Error: " + pokemonJson.Number + " - " + pokemonJson.Name);
-                return null;
-            }
-        }
-
-        public async void Populate(int countInsertPokemon)
-        {
-            List<PokemonJson> pokemonsJson = GetListPokeScrapJson();
-
-            Task.Delay(4000).Wait();
             int countPokemonJson = 0;
-
             foreach (PokemonJson pokemonJson in pokemonsJson)
             {
                 countPokemonJson++;
@@ -302,31 +277,6 @@ namespace QuizzPokedex.Services
                     _ = CreateAsync(pokemon);
 
                     Debug.Write("Creation:" + pokemon.Number + " - " + pokemon.Name);
-                }
-            }
-        }
-
-        public async void PopulateUpdateEvolution()
-        {
-            List<PokemonJson> pokemonsJson = GetListPokeScrapJson();
-            List<Pokemon> pokemonsNoUpdated = await GetPokemonsNotUpdatedAsync();
-
-            foreach (Pokemon pokemonNoUpdated in pokemonsNoUpdated)
-            {
-                PokemonJson pokemonJson = pokemonsJson.Find(m => m.Name.Equals(pokemonNoUpdated.Name));
-
-                int i = int.Parse(pokemonJson.Number);
-                try
-                {
-                    Pokemon pokemonUpdated = await UpdateEvolutionWithJson(pokemonJson, pokemonNoUpdated);
-                    if (pokemonUpdated != null)
-                        _ = UpdateAsync(pokemonUpdated);
-
-                    Debug.Write("Update: " + pokemonJson.Number + " - " + pokemonJson.Name);
-                }
-                catch
-                {
-                    Debug.Write("Update Error: " + pokemonJson.Number + " - " + pokemonJson.Name);
                 }
             }
         }
@@ -357,6 +307,7 @@ namespace QuizzPokedex.Services
             foreach (string item in typesTab)
             {
                 TypePok type = await _typePokService.GetByNameAsync(item);
+
                 if (i == 0)
                 {
                     pokemon.Types = type.Name.ToString();
@@ -403,6 +354,54 @@ namespace QuizzPokedex.Services
             pokemon.Updated = false;
 
             return pokemon;
+        }
+
+        public async void PopulateUpdateEvolution()
+        {
+            List<PokemonJson> pokemonsJson = GetListPokeScrapJson();
+            List<Pokemon> pokemonsNoUpdated = await GetPokemonsNotUpdatedAsync();
+
+            foreach (Pokemon pokemonNoUpdated in pokemonsNoUpdated)
+            {
+                PokemonJson pokemonJson = pokemonsJson.Find(m => m.Name.Equals(pokemonNoUpdated.Name));
+
+                int i = int.Parse(pokemonJson.Number);
+                try
+                {
+                    Pokemon pokemonUpdated = await UpdateEvolutionWithJson(pokemonJson, pokemonNoUpdated);
+                    if (pokemonUpdated != null)
+                        _ = UpdateAsync(pokemonUpdated);
+
+                    Debug.Write("Update: " + pokemonJson.Number + " - " + pokemonJson.Name);
+                }
+                catch
+                {
+                    Debug.Write("Update Error: " + pokemonJson.Number + " - " + pokemonJson.Name);
+                }
+            }
+        }
+
+        public async Task<Pokemon> UpdateEvolutionWithJson(Pokemon pokemonNoUpdated)
+        {
+            List<PokemonJson> pokemonsJson = GetListPokeScrapJson();
+
+            PokemonJson pokemonJson = pokemonsJson.Find(m => m.Name.Equals(pokemonNoUpdated.Name));
+
+            int i = int.Parse(pokemonJson.Number);
+            try
+            {
+                Pokemon pokemonUpdated = await UpdateEvolutionWithJson(pokemonJson, pokemonNoUpdated);
+                if (pokemonUpdated != null)
+                    _ = UpdateAsync(pokemonUpdated);
+
+                Debug.Write("Update: " + pokemonJson.Number + " - " + pokemonJson.Name);
+                return pokemonUpdated;
+            }
+            catch
+            {
+                Debug.Write("Update Error: " + pokemonJson.Number + " - " + pokemonJson.Name);
+                return null;
+            }
         }
 
         public async Task<Pokemon> UpdateEvolutionWithJson(PokemonJson pokemonJson, Pokemon pokemonUpdate)

@@ -16,7 +16,7 @@ using QuizzPokedex.ViewModels;
 
 namespace QuizzPokedex.CustomStart
 {
-    public class AppStart: MvxAppStart
+    public class AppStart : MvxAppStart
     {
         private readonly ISqliteConnectionService _connectionService;
         private readonly IPokemonService _pokemonService;
@@ -48,27 +48,33 @@ namespace QuizzPokedex.CustomStart
 
         protected async void populateDb()
         {
+            await Task.Run(async () =>
+            {
+                await PopulateTypePok();
+                await PopulatePokemon();
+            });
+        }
+
+        private async Task PopulateTypePok()
+        {
             int nbTypeMax = await _typePokService.GetNumberTypeJsonAsync();
             int nbTypePok = await _typePokService.GetNumberAsync();
 
-            await Task.Run(() =>
-            {
-                if (nbTypePok.Equals(0))
-                    _typePokService.Populate();
-            });
+            if (!nbTypePok.Equals(nbTypeMax))
+                await _typePokService.Populate(nbTypePok);
+        }
 
+        private async Task PopulatePokemon()
+        {
             int nbPokMax = await _pokemonService.GetNumberPokJsonAsync();
             int nbPok = await _pokemonService.GetNumberInDbAsync();
             int nbPokNotUpdated = await _pokemonService.GetNumberPokUpdateAsync();
 
-            await Task.Run(() =>
-            {
-                if(!nbPok.Equals(nbPokMax))
-                    _pokemonService.Populate(nbPok);
+            if (!nbPok.Equals(nbPokMax))
+                await _pokemonService.Populate(nbPok);
 
-                if (!nbPokNotUpdated.Equals(0))
-                    _pokemonService.PopulateUpdateEvolution();
-            });
+            if (!nbPokNotUpdated.Equals(0))
+                _pokemonService.PopulateUpdateEvolution();
         }
     }
 }

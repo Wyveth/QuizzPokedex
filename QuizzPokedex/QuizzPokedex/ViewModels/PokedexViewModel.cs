@@ -26,7 +26,7 @@ namespace QuizzPokedex.ViewModels
         #endregion
 
         #region Constructor
-        public PokedexViewModel(IMvxNavigationService navigation, IPokemonService pokemonService, ITypePokService typePokService, IMvxMessenger messenger)
+        public PokedexViewModel(IMvxNavigationService navigation, IPokemonService pokemonService, ITypePokService typePokService)
         {
             _navigation = navigation;
             _pokemonService = pokemonService;

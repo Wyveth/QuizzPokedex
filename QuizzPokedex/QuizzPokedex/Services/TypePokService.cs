@@ -84,14 +84,9 @@ namespace QuizzPokedex.Services
             var result = await _database.Table<TypePok>().CountAsync();
             return result;
         }
-        #endregion
-        #endregion
 
-        #region Populate Database
-        public async void Populate()
+        public async Task<int> GetNumberTypeJsonAsync()
         {
-            List<TypePok> typesPok = new List<TypePok>();
-
             AssetManager assets = Android.App.Application.Context.Assets;
             string json;
             using (StreamReader sr = new StreamReader(assets.Open("TypeScrap.json")))
@@ -99,12 +94,40 @@ namespace QuizzPokedex.Services
                 json = sr.ReadToEnd();
             }
 
-            List<TypeJson> typeJsonLst = JsonConvert.DeserializeObject<List<TypeJson>>(json);
-            foreach (TypeJson typeJson in typeJsonLst)
+            return await Task.FromResult(JsonConvert.DeserializeObject<List<TypeJson>>(json).Count);
+        }
+        #endregion
+        #endregion
+
+        #region Populate Database
+        private List<TypeJson> GetListTypeScrapJson()
+        {
+            AssetManager assets = Android.App.Application.Context.Assets;
+            string json;
+            using (StreamReader sr = new StreamReader(assets.Open("TypeScrap.json")))
             {
-                TypePok type = await ConvertTypePokJsonInTypePok(typeJson);
-                _ = CreateAsync(type);
-                Console.WriteLine(type.Name);
+                json = sr.ReadToEnd();
+            }
+
+            return JsonConvert.DeserializeObject<List<TypeJson>>(json);
+        }
+
+        public async Task Populate(int countInsertTypePok)
+        {
+            List<TypeJson> typesJson = GetListTypeScrapJson();
+
+            int countTypeJson = 0;
+            foreach (TypeJson typeJson in typesJson)
+            {
+                countTypeJson++;
+
+                if (countTypeJson > countInsertTypePok)
+                {
+                    TypePok type = await ConvertTypePokJsonInTypePok(typeJson);
+                    _ = CreateAsync(type);
+
+                    Console.WriteLine("Creation Type: " + type.Name);
+                }
             }
         }
 
@@ -126,18 +149,6 @@ namespace QuizzPokedex.Services
             type.InfoColor = typeJson.infoColor;
             type.TypeColor = typeJson.typeColor;
             return type;
-        }
-
-        public async Task<int> GetNumberTypeJsonAsync()
-        {
-            AssetManager assets = Android.App.Application.Context.Assets;
-            string json;
-            using (StreamReader sr = new StreamReader(assets.Open("TypeScrap.json")))
-            {
-                json = sr.ReadToEnd();
-            }
-
-            return await Task.FromResult(JsonConvert.DeserializeObject<List<TypeJson>>(json).Count);
         }
 
         public async Task<byte[]> DownloadImageAsync(string imageUrl)

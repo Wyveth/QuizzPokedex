@@ -9,7 +9,7 @@ namespace QuizzPokedex.Interfaces
 {
     public interface IPokemonService
     {
-        void Populate(int countInsertPokemon);
+        Task Populate(int countInsertPokemon);
         void PopulateUpdateEvolution();
         Task<List<Pokemon>> GetAllAsync();
         Task<List<Pokemon>> GetAllWithoutVariantAsync(string filter, bool gen1, bool gen2, bool gen3, bool gen4, bool gen5, bool gen6, bool gen7, bool gen8, bool genArceus, bool steel, bool fighting, bool dragon, bool water, bool electric, bool fairy, bool fire, bool ice, bool bug, bool normal, bool grass, bool poison, bool psychic, bool rock, bool ground, bool ghost, bool dark, bool flying, bool descending);

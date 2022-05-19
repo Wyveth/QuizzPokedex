@@ -8,7 +8,7 @@ namespace QuizzPokedex.Interfaces
 {
     public interface ITypePokService
     {
-        void Populate();
+        Task Populate(int countInsertTypePok);
         Task<List<TypePok>> GetAllAsync();
         Task<List<TypePok>> GetTypesAsync(string types);
         Task<TypePok> GetByIdAsync(string identifiant);

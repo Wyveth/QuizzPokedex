@@ -136,6 +136,7 @@ namespace QuizzPokedex.ViewModels
             Variant = new MvxObservableCollection<Pokemon>(resultVariant);
             #endregion
 
+            #region Type + Weakness
             FirstType = await _typePokService.GetByIdAsync(Pokemon.TypesID.Split(',')[0]);
 
             var resultTypes = await _typePokService.GetTypesAsync(Pokemon.TypesID);
@@ -145,8 +146,10 @@ namespace QuizzPokedex.ViewModels
             HeightWeakness = await GetHeightSectionWeakness(resultWeakness.Count);
             CountWeakness = await GetNbSpan(resultWeakness.Count);
             Weakness = new MvxObservableCollection<TypePok>(resultWeakness);
+            #endregion
         }
 
+        #region Display/Size Variable + Chart
         private Chart CreateChartStats(Pokemon pokemon)
         {
             ChartEntry[] entries = GenerateEntriesChart(pokemon);
@@ -260,6 +263,7 @@ namespace QuizzPokedex.ViewModels
             else
                 return await Task.FromResult(40);
         }
+        #endregion
         #endregion
 
         #region Command
