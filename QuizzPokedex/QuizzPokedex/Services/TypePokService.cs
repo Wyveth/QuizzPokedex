@@ -70,20 +70,6 @@ namespace QuizzPokedex.Services
             var result = await _database.Table<TypePok>().ToListAsync();
             return result.Find(m => m.Name.Equals(libelle)).TypeColor;
         }
-        #endregion
-
-        #region CRUD
-        public async Task<int> CreateAsync(TypePok typePok)
-        {
-            var result = await _database.InsertAsync(typePok);
-            return result;
-        }
-
-        public async Task<int> GetNumberAsync()
-        {
-            var result = await _database.Table<TypePok>().CountAsync();
-            return result;
-        }
 
         public async Task<int> GetNumberTypeJsonAsync()
         {
@@ -96,11 +82,25 @@ namespace QuizzPokedex.Services
 
             return await Task.FromResult(JsonConvert.DeserializeObject<List<TypeJson>>(json).Count);
         }
+
+        public async Task<int> GetNumberInDbAsync()
+        {
+            var result = await _database.Table<TypePok>().CountAsync();
+            return result;
+        }
+        #endregion
+
+        #region CRUD
+        public async Task<int> CreateAsync(TypePok typePok)
+        {
+            var result = await _database.InsertAsync(typePok);
+            return result;
+        }
         #endregion
         #endregion
 
         #region Populate Database
-        private List<TypeJson> GetListTypeScrapJson()
+        public async Task<List<TypeJson>> GetListTypeScrapJson()
         {
             AssetManager assets = Android.App.Application.Context.Assets;
             string json;
@@ -109,24 +109,25 @@ namespace QuizzPokedex.Services
                 json = sr.ReadToEnd();
             }
 
-            return JsonConvert.DeserializeObject<List<TypeJson>>(json);
+            return await Task.FromResult(JsonConvert.DeserializeObject<List<TypeJson>>(json));
         }
 
-        public async Task Populate(int countInsertTypePok)
+        public async Task Populate(int nbTypePokInDb, List<TypeJson> typesJson)
         {
-            List<TypeJson> typesJson = GetListTypeScrapJson();
-
-            int countTypeJson = 0;
-            foreach (TypeJson typeJson in typesJson)
+            if (!nbTypePokInDb.Equals(typesJson.Count))
             {
-                countTypeJson++;
-
-                if (countTypeJson > countInsertTypePok)
+                int countTypeJson = 0;
+                foreach (TypeJson typeJson in typesJson)
                 {
-                    TypePok type = await ConvertTypePokJsonInTypePok(typeJson);
-                    _ = CreateAsync(type);
+                    countTypeJson++;
 
-                    Console.WriteLine("Creation Type: " + type.Name);
+                    if (countTypeJson > nbTypePokInDb)
+                    {
+                        TypePok type = await ConvertTypePokJsonInTypePok(typeJson);
+                        _ = CreateAsync(type);
+
+                        Console.WriteLine("Creation Type: " + type.Name);
+                    }
                 }
             }
         }

@@ -13,23 +13,23 @@ namespace QuizzPokedex.ViewModels
 {
     public class TypePokViewModel : MvxViewModel
     {
+        #region Field
         private readonly IMvxNavigationService _navigation;
         private readonly ITypePokService _typePokService;
-        //creation de l'abonnement ici (pour rafraichir via un abonné)
-        private readonly MvxSubscriptionToken _token;
+        #endregion
 
+        #region Constructor
         public TypePokViewModel(IMvxNavigationService navigation, ITypePokService typePokService, IMvxMessenger messenger)
         {
             _navigation = navigation;
             _typePokService = typePokService;
-            _token = messenger.Subscribe<MessageRefresh>(RefreshAsync);
         }
+        #endregion
 
+        #region Methods
+        #region Public Methods
         public override void Prepare()
         {
-            //var itemsTypePoks = _typePokService.PopulateTypePoks();
-
-            //TypePoks = new MvxObservableCollection<TypePok>(itemsTypePoks);
             base.Prepare();
         }
 
@@ -38,7 +38,9 @@ namespace QuizzPokedex.ViewModels
             LoadTypePokTask = MvxNotifyTask.Create(LoadTypePokAsync);
             await base.Initialize();
         }
+        #endregion
 
+        #region Private Methods
         private async Task LoadTypePokAsync()
         {
             var result = await _typePokService.GetAllAsync();
@@ -50,6 +52,8 @@ namespace QuizzPokedex.ViewModels
             if (msg.Refresh)
                 await LoadTypePokAsync();
         }
+        #endregion
+        #endregion
 
         #region COMMAND
         public IMvxAsyncCommand NavigationBackCommandAsync => new MvxAsyncCommand(NavigationBackAsync);

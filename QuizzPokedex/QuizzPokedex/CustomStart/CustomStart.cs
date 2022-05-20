@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using Android.Content.Res;
-using MvvmCross.Navigation;
+﻿using MvvmCross.Navigation;
 using MvvmCross.ViewModels;
-using Newtonsoft.Json;
 using QuizzPokedex.Interfaces;
 using QuizzPokedex.Models;
-using QuizzPokedex.Services;
+using QuizzPokedex.Models.ClassJson;
 using QuizzPokedex.ViewModels;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace QuizzPokedex.CustomStart
 {
@@ -57,24 +50,19 @@ namespace QuizzPokedex.CustomStart
 
         private async Task PopulateTypePok()
         {
-            int nbTypeMax = await _typePokService.GetNumberTypeJsonAsync();
-            int nbTypePok = await _typePokService.GetNumberAsync();
+            List<TypeJson> typesJson = await _typePokService.GetListTypeScrapJson();
+            int nbTypePokInDb = await _typePokService.GetNumberInDbAsync();
 
-            if (!nbTypePok.Equals(nbTypeMax))
-                await _typePokService.Populate(nbTypePok);
+            await _typePokService.Populate(nbTypePokInDb, typesJson);
         }
 
         private async Task PopulatePokemon()
         {
-            int nbPokMax = await _pokemonService.GetNumberPokJsonAsync();
-            int nbPok = await _pokemonService.GetNumberInDbAsync();
-            int nbPokNotUpdated = await _pokemonService.GetNumberPokUpdateAsync();
+            List<PokemonJson> PoksJson = await _pokemonService.GetListPokeScrapJson();
+            int nbPokInDb = await _pokemonService.GetNumberInDbAsync();
 
-            if (!nbPok.Equals(nbPokMax))
-                await _pokemonService.Populate(nbPok);
-
-            if (!nbPokNotUpdated.Equals(0))
-                _pokemonService.PopulateUpdateEvolution();
+            await _pokemonService.Populate(nbPokInDb, PoksJson);
+            await _pokemonService.PopulateUpdateEvolution(PoksJson);
         }
     }
 }

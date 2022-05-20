@@ -57,9 +57,7 @@ namespace QuizzPokedex.ViewModels
                 }
             }
             else
-            {
                 TalentIsVisible = false;
-            }
 
             if (!Pokemon.StatTotal.Equals(0))
                 StatisticIsVisible = true;
@@ -83,6 +81,13 @@ namespace QuizzPokedex.ViewModels
         {
             if (!Pokemon.Updated)
                 await _pokemonService.UpdateEvolutionWithJson(Pokemon);
+
+            #region Type
+            FirstType = await _typePokService.GetByIdAsync(Pokemon.TypesID.Split(',')[0]);
+
+            var resultTypes = await _typePokService.GetTypesAsync(Pokemon.TypesID);
+            Types = new MvxObservableCollection<TypePok>(resultTypes);
+            #endregion
 
             #region Family Evolution
             var resultFamilyEvolution = await _pokemonService.GetFamilyWithoutVariantAsync(Pokemon.Evolutions);
@@ -136,12 +141,7 @@ namespace QuizzPokedex.ViewModels
             Variant = new MvxObservableCollection<Pokemon>(resultVariant);
             #endregion
 
-            #region Type + Weakness
-            FirstType = await _typePokService.GetByIdAsync(Pokemon.TypesID.Split(',')[0]);
-
-            var resultTypes = await _typePokService.GetTypesAsync(Pokemon.TypesID);
-            Types = new MvxObservableCollection<TypePok>(resultTypes);
-
+            #region Weakness
             var resultWeakness = await _typePokService.GetTypesAsync(Pokemon.WeaknessID);
             HeightWeakness = await GetHeightSectionWeakness(resultWeakness.Count);
             CountWeakness = await GetNbSpan(resultWeakness.Count);

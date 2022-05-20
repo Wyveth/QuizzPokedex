@@ -243,14 +243,14 @@ namespace QuizzPokedex.Services
 
         public async Task<int> GetNumberPokUpdateAsync()
         {
-            var result = await _database.Table<Pokemon>().Where(m => m.Updated.Equals(false)).CountAsync();
+            var result = await _database.Table<Pokemon>().Where(m => m.Updated.Equals(true)).CountAsync();
             return result;
         }
         #endregion
         #endregion
 
         #region Populate Database
-        private List<PokemonJson> GetListPokeScrapJson()
+        public async Task<List<PokemonJson>> GetListPokeScrapJson()
         {
             AssetManager assets = Android.App.Application.Context.Assets;
             string json;
@@ -259,24 +259,25 @@ namespace QuizzPokedex.Services
                 json = sr.ReadToEnd();
             }
 
-            return JsonConvert.DeserializeObject<List<PokemonJson>>(json);
+            return await Task.FromResult(JsonConvert.DeserializeObject<List<PokemonJson>>(json));
         }
 
-        public async Task Populate(int countInsertPokemon)
+        public async Task Populate(int nbPokInDb, List<PokemonJson> pokemonsJson)
         {
-            List<PokemonJson> pokemonsJson = GetListPokeScrapJson();
-
-            int countPokemonJson = 0;
-            foreach (PokemonJson pokemonJson in pokemonsJson)
+            if (!nbPokInDb.Equals(pokemonsJson.Count))
             {
-                countPokemonJson++;
-
-                if (countPokemonJson > countInsertPokemon)
+                int countPokemonJson = 0;
+                foreach (PokemonJson pokemonJson in pokemonsJson)
                 {
-                    Pokemon pokemon = await ConvertPokemonJsonInPokemon(pokemonJson);
-                    _ = CreateAsync(pokemon);
+                    countPokemonJson++;
 
-                    Debug.Write("Creation:" + pokemon.Number + " - " + pokemon.Name);
+                    if (countPokemonJson > nbPokInDb)
+                    {
+                        Pokemon pokemon = await ConvertPokemonJsonInPokemon(pokemonJson);
+                        _ = CreateAsync(pokemon);
+
+                        Debug.Write("Creation:" + pokemon.Number + " - " + pokemon.Name);
+                    }
                 }
             }
         }
@@ -356,12 +357,11 @@ namespace QuizzPokedex.Services
             return pokemon;
         }
 
-        public async void PopulateUpdateEvolution()
+        public async Task PopulateUpdateEvolution(List<PokemonJson> pokemonsJson)
         {
-            List<PokemonJson> pokemonsJson = GetListPokeScrapJson();
             List<Pokemon> pokemonsNoUpdated = await GetPokemonsNotUpdatedAsync();
 
-            foreach (Pokemon pokemonNoUpdated in pokemonsNoUpdated)
+                foreach (Pokemon pokemonNoUpdated in pokemonsNoUpdated)
             {
                 PokemonJson pokemonJson = pokemonsJson.Find(m => m.Name.Equals(pokemonNoUpdated.Name));
 
@@ -383,7 +383,7 @@ namespace QuizzPokedex.Services
 
         public async Task<Pokemon> UpdateEvolutionWithJson(Pokemon pokemonNoUpdated)
         {
-            List<PokemonJson> pokemonsJson = GetListPokeScrapJson();
+            List<PokemonJson> pokemonsJson = await GetListPokeScrapJson();
 
             PokemonJson pokemonJson = pokemonsJson.Find(m => m.Name.Equals(pokemonNoUpdated.Name));
 
