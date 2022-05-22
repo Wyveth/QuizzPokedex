@@ -5,7 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:animation="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
     xmlns:converters="clr-namespace:QuizzPokedex.UI.Converters"
-    xmlns:cornerBorder="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+    xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
     xmlns:shadows="http://sharpnado.com"
     xmlns:viewmodel="clr-namespace:QuizzPokedex.ViewModels;assembly=QuizzPokedex"
     xmlns:views="clr-namespace:MvvmCross.Forms.Views;assembly=MvvmCross.Forms"
@@ -41,9 +41,9 @@
                                     Color="#464C56" />
                             </shadows:ImmutableShades>
                         </shadows:Shadows.Shades>
-                        <cornerBorder:PancakeView
+                        <pv:PancakeView
                             BackgroundColor="White"
-                            Border="{cornerBorder:BorderMarkup Color=Gray,
+                            Border="{pv:BorderMarkup Color=Gray,
                                                                Thickness=0}"
                             CornerRadius="100,100,100,100">
                             <ImageButton
@@ -53,7 +53,7 @@
                                 HeightRequest="35"
                                 Source="@mipmap/left"
                                 WidthRequest="35" />
-                        </cornerBorder:PancakeView>
+                        </pv:PancakeView>
                     </shadows:Shadows>
                 </StackLayout>
             </AbsoluteLayout>

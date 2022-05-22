@@ -8,6 +8,8 @@ namespace QuizzPokedex.Interfaces
 {
     public interface IProfileService
     {
+        Task<Profile> GetProfileActivatedAsync();
+        Task<List<Profile>> GetProfileNotActivatedAsync();
         Task<List<Profile>> GetAllAsync();
         Task<int> CreateAsync(Profile profile);
         Task<int> DeleteAsync(Profile profile);

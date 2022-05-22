@@ -11,23 +11,30 @@ namespace QuizzPokedex.ViewModels
 {
     public class WelcomeViewModel : MvxViewModel
     {
+        #region Field
         private readonly IMvxNavigationService _navigation;
         private readonly IPokemonService _pokemonService;
         private readonly ITypePokService _typePokService;
+        #endregion
 
+        #region Constructor
         public WelcomeViewModel(IMvxNavigationService navigation, IPokemonService pokemonService, ITypePokService typePokService)
         {
             _navigation = navigation;
             _pokemonService = pokemonService;
             _typePokService = typePokService;
         }
+        #endregion
 
+        #region Public Methods
         public override async Task Initialize()
         {
             ProgressBarTask = MvxNotifyTask.Create(ProgressBarAsync);
             await base.Initialize();
         }
+        #endregion
 
+        #region Private Methods
         private async Task ProgressBarAsync()
         {
             int nbTypeMax = await _typePokService.GetNumberTypeJsonAsync();
@@ -96,7 +103,9 @@ namespace QuizzPokedex.ViewModels
             percent = double.Parse(result.ToString());
             return await Task.FromResult(percent);
         }
+        #endregion
 
+        #region Command
         public IMvxAsyncCommand NavigationQuizzCommandAsync => new MvxAsyncCommand(NavigationQuizzAsync);
         public IMvxAsyncCommand NavigationPokedexCommandAsync => new MvxAsyncCommand(NavigationPokedexAsync);
 
@@ -105,10 +114,16 @@ namespace QuizzPokedex.ViewModels
             await _navigation.Navigate<QuizzViewModel>();
         }
 
+        private async Task NavigationProfileAsync()
+        {
+            await _navigation.Navigate<QuizzViewModel>();
+        }
+
         private async Task NavigationPokedexAsync()
         {
             await _navigation.Navigate<PokedexViewModel>();
         }
+        #endregion
 
         #region Properties
         #region Collection
@@ -140,6 +155,48 @@ namespace QuizzPokedex.ViewModels
             set { SetProperty(ref _textProgressBar, value); }
         }
 
+        #endregion
+
+        #region Profile
+        private bool _firstProfileCreated = false;
+
+        public bool FirstProfileCreated
+        {
+            get { return _firstProfileCreated; }
+            set { SetProperty(ref _firstProfileCreated, value); }
+        }
+
+        private bool _secondProfileCreated = false;
+
+        public bool SecondProfileCreated
+        {
+            get { return _secondProfileCreated; }
+            set { SetProperty(ref _secondProfileCreated, value); }
+        }
+
+        private bool _isVisibleSecondProfile = false;
+
+        public bool IsVisibleSecondProfile
+        {
+            get { return _isVisibleSecondProfile; }
+            set { SetProperty(ref _isVisibleSecondProfile, value); }
+        }
+
+        private bool _thirdProfileCreated = false;
+
+        public bool ThirdProfileCreated
+        {
+            get { return _thirdProfileCreated; }
+            set { SetProperty(ref _thirdProfileCreated, value); }
+        }
+
+        private bool _isVisibleThirdProfile = false;
+
+        public bool IsVisibleThirdProfile
+        {
+            get { return _isVisibleThirdProfile; }
+            set { SetProperty(ref _isVisibleThirdProfile, value); }
+        }
         #endregion
         #endregion
     }

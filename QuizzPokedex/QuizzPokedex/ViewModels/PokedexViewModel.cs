@@ -3,6 +3,7 @@ using Android.Content.Res;
 using Android.Graphics;
 using Android.Graphics.Drawables;
 using MvvmCross.Commands;
+using MvvmCross.IoC;
 using MvvmCross.Navigation;
 using MvvmCross.Plugin.Messenger;
 using MvvmCross.ViewModels;
@@ -21,14 +22,16 @@ namespace QuizzPokedex.ViewModels
     {
         #region Fields
         private readonly IMvxNavigationService _navigation;
+        private readonly IMvxIoCProvider _logger;
         private readonly IPokemonService _pokemonService;
         private readonly ITypePokService _typePokService;
         #endregion
 
         #region Constructor
-        public PokedexViewModel(IMvxNavigationService navigation, IPokemonService pokemonService, ITypePokService typePokService)
+        public PokedexViewModel(IMvxNavigationService navigation, IMvxIoCProvider logger, IPokemonService pokemonService, ITypePokService typePokService)
         {
             _navigation = navigation;
+            _logger = logger;
             _pokemonService = pokemonService;
             _typePokService = typePokService;
         }

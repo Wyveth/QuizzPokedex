@@ -7,7 +7,16 @@ namespace QuizzPokedex.Models
 {
     public class Quizz
     {
-        [PrimaryKey, AutoIncrement]
+        [PrimaryKey, AutoIncrement, Indexed]
         public int Id { get; set; }
+
+        //Identifiant des questions
+        public string QuestionsID { get; set; }
+
+        //Savoir si le questionnaire est terminé
+        public bool Terminate { get; set; }
+
+        //Identifiant du Profil
+        public int ProfileId { get; set; }
     }
 }

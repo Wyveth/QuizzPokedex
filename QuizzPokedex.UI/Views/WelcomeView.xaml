@@ -4,129 +4,291 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:animation="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
-    xmlns:cornerBorder="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+    xmlns:converters="clr-namespace:QuizzPokedex.UI.Converters"
+    xmlns:ef="clr-namespace:AiForms.Effects;assembly=AiForms.Effects"
+    xmlns:extensions="http://xamarin.com/schemas/2020/toolkit"
+    xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
     xmlns:shadows="http://sharpnado.com"
     xmlns:viewmodel="clr-namespace:QuizzPokedex.ViewModels;assembly=QuizzPokedex"
     xmlns:views="clr-namespace:MvvmCross.Forms.Views;assembly=MvvmCross.Forms"
+    xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
     x:TypeArguments="viewmodel:WelcomeViewModel"
     BackgroundColor="#FFFFFF"
     NavigationPage.HasNavigationBar="False">
+    <views:MvxContentPage.Resources>
+        <ResourceDictionary>
+            <converters:ByteToImageSourceConverter x:Key="ByteToImageSourceConverter" />
+            <converters:InverseBoolConverter x:Key="InverseBoolConverter" />
+        </ResourceDictionary>
+    </views:MvxContentPage.Resources>
     <ContentPage.Content>
-        <Grid
-            Margin="20,20,20,20"
-            ColumnSpacing="0"
-            RowSpacing="0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="10*" />
-                <RowDefinition Height="30*" />
-                <RowDefinition Height="40*" />
-                <RowDefinition Height="25*" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+        <AbsoluteLayout>
+            <StackLayout
+                AbsoluteLayout.LayoutBounds="0,0,1,1"
+                AbsoluteLayout.LayoutFlags="All"
+                BackgroundColor="White">
+                <Grid
+                    Margin="20,20,20,20"
+                    ColumnSpacing="0"
+                    RowSpacing="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="10*" />
+                        <RowDefinition Height="30*" />
+                        <RowDefinition Height="5*" />
+                        <RowDefinition Height="20*" />
+                        <RowDefinition Height="40*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
 
-            <Label
-                Grid.Row="1"
-                Grid.Column="1"
-                Grid.ColumnSpan="2"
-                HorizontalOptions="CenterAndExpand"
-                IsVisible="{Binding ProgressBarIsVisible}"
-                Text="{Binding TextProgressBar}"
-                TextColor="#464C56" />
-            <ProgressBar
-                Grid.Row="0"
-                Grid.Column="1"
-                Grid.ColumnSpan="2"
-                IsVisible="{Binding ProgressBarIsVisible}"
-                Progress="{Binding ValueProgressBar}"
-                ProgressColor="#F75E6D"
-                ScaleY="3" />
+                    <Label
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Grid.ColumnSpan="2"
+                        HorizontalOptions="CenterAndExpand"
+                        IsVisible="{Binding ProgressBarIsVisible}"
+                        Text="{Binding TextProgressBar}"
+                        TextColor="#464C56" />
+                    <ProgressBar
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Grid.ColumnSpan="2"
+                        IsVisible="{Binding ProgressBarIsVisible}"
+                        Progress="{Binding ValueProgressBar}"
+                        ProgressColor="#F75E6D"
+                        ScaleY="3" />
 
-            <animation:AnimationView
-                Grid.Row="2"
-                Grid.Column="1"
-                Grid.ColumnSpan="2"
-                Animation="Resources.96855-pokeball-loading-animation.json"
-                AnimationSource="EmbeddedResource"
-                HorizontalOptions="FillAndExpand"
-                RepeatMode="Infinite"
-                VerticalOptions="FillAndExpand" />
+                    <animation:AnimationView
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        Grid.ColumnSpan="2"
+                        AbsoluteLayout.LayoutBounds="0,0,0,0"
+                        AbsoluteLayout.LayoutFlags="All"
+                        Animation="Resources.96855-pokeball-loading-animation.json"
+                        AnimationSource="EmbeddedResource"
+                        HorizontalOptions="FillAndExpand"
+                        RepeatMode="Infinite"
+                        VerticalOptions="FillAndExpand" />
 
-            <shadows:Shadows
-                x:Name="BtnQuizz"
-                Grid.Row="4"
-                Grid.RowSpan="2"
-                Grid.Column="1"
-                Margin="30,0,30,50"
-                CornerRadius="20">
-                <shadows:Shadows.Shades>
-                    <shadows:ImmutableShades>
-                        <shadows:Shade
-                            BlurRadius="10"
-                            Opacity="0.5"
-                            Offset="-10,-10"
-                            Color="#F75E6D" />
-                        <shadows:Shade
-                            BlurRadius="10"
-                            Opacity="0.5"
-                            Offset="10,10"
-                            Color="#464C56" />
-                    </shadows:ImmutableShades>
-                </shadows:Shadows.Shades>
-                <cornerBorder:PancakeView
-                    BackgroundColor="White"
-                    Border="{cornerBorder:BorderMarkup Color=Gray,
-                                                       Thickness=1}"
-                    CornerRadius="20,20,20,20">
-                    <Button
-                        BackgroundColor="Transparent"
-                        Command="{Binding NavigationQuizzCommandAsync}"
-                        FontFamily="Montserrat-SemiBold"
-                        FontSize="20"
-                        Text="Quizz"
-                        TextColor="#F75E6D"
-                        TextTransform="None" />
-                </cornerBorder:PancakeView>
-            </shadows:Shadows>
-            <shadows:Shadows
-                x:Name="BtnPokedex"
-                Grid.Row="4"
-                Grid.RowSpan="2"
-                Grid.Column="2"
-                Margin="30,0,30,50"
-                CornerRadius="20">
-                <shadows:Shadows.Shades>
-                    <shadows:ImmutableShades>
-                        <shadows:Shade
-                            BlurRadius="10"
-                            Opacity="0.5"
-                            Offset="-10,-10"
-                            Color="#F75E6D" />
-                        <shadows:Shade
-                            BlurRadius="10"
-                            Opacity="0.5"
-                            Offset="10,10"
-                            Color="#464C56" />
-                    </shadows:ImmutableShades>
-                </shadows:Shadows.Shades>
-                <cornerBorder:PancakeView
-                    BackgroundColor="White"
-                    Border="{cornerBorder:BorderMarkup Color=Gray,
-                                                       Thickness=1}"
-                    CornerRadius="20,20,20,20">
-                    <Button
-                        BackgroundColor="Transparent"
-                        Command="{Binding NavigationPokedexCommandAsync}"
-                        FontFamily="Montserrat-SemiBold"
-                        FontSize="20"
-                        Text="Pokédex"
-                        TextColor="#F75E6D"
-                        TextTransform="None" />
-                </cornerBorder:PancakeView>
-            </shadows:Shadows>
-        </Grid>
+                    <shadows:Shadows
+                        x:Name="BtnQuizz"
+                        Grid.Row="4"
+                        Grid.Column="1"
+                        Margin="30,0,30,50"
+                        CornerRadius="20">
+                        <shadows:Shadows.Shades>
+                            <shadows:ImmutableShades>
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.5"
+                                    Offset="-10,-10"
+                                    Color="#F75E6D" />
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.5"
+                                    Offset="10,10"
+                                    Color="#464C56" />
+                            </shadows:ImmutableShades>
+                        </shadows:Shadows.Shades>
+                        <pv:PancakeView
+                            BackgroundColor="White"
+                            Border="{pv:BorderMarkup Color=Gray,
+                                                     Thickness=1}"
+                            CornerRadius="20,20,20,20">
+                            <Button
+                                BackgroundColor="Transparent"
+                                Command="{Binding NavigationQuizzCommandAsync}"
+                                FontFamily="Montserrat-SemiBold"
+                                FontSize="20"
+                                Text="Quizz"
+                                TextColor="#F75E6D"
+                                TextTransform="None" />
+                        </pv:PancakeView>
+                    </shadows:Shadows>
+                    <shadows:Shadows
+                        x:Name="BtnPokedex"
+                        Grid.Row="4"
+                        Grid.Column="2"
+                        Margin="30,0,30,50"
+                        CornerRadius="20">
+                        <shadows:Shadows.Shades>
+                            <shadows:ImmutableShades>
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.5"
+                                    Offset="-10,-10"
+                                    Color="#F75E6D" />
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.5"
+                                    Offset="10,10"
+                                    Color="#464C56" />
+                            </shadows:ImmutableShades>
+                        </shadows:Shadows.Shades>
+                        <pv:PancakeView
+                            BackgroundColor="White"
+                            Border="{pv:BorderMarkup Color=Gray,
+                                                     Thickness=1}"
+                            CornerRadius="20,20,20,20">
+                            <Button
+                                BackgroundColor="Transparent"
+                                Command="{Binding NavigationPokedexCommandAsync}"
+                                FontFamily="Montserrat-SemiBold"
+                                FontSize="20"
+                                Text="Pokédex"
+                                TextColor="#F75E6D"
+                                TextTransform="None" />
+                        </pv:PancakeView>
+                    </shadows:Shadows>
+                </Grid>
+            </StackLayout>
+            <StackLayout
+                extensions:CornerRadiusEffect.CornerRadius="40"
+                AbsoluteLayout.LayoutBounds="0.97,0.99,0.15,0.08"
+                AbsoluteLayout.LayoutFlags="All">
+                <shadows:Shadows CornerRadius="20">
+                    <shadows:Shadows.Shades>
+                        <shadows:ImmutableShades>
+                            <shadows:Shade
+                                BlurRadius="10"
+                                Opacity="0.5"
+                                Offset="-1,-1"
+                                Color="#464C56" />
+                            <shadows:Shade
+                                BlurRadius="10"
+                                Opacity="0.5"
+                                Offset="1,1"
+                                Color="#464C56" />
+                        </shadows:ImmutableShades>
+                    </shadows:Shadows.Shades>
+                    <pv:PancakeView
+                        Padding="15"
+                        BackgroundColor="white"
+                        Border="{pv:BorderMarkup Color=Gray,
+                                                 Thickness=1}"
+                        CornerRadius="40"
+                        HeightRequest="20"
+                        HorizontalOptions="Center"
+                        IsVisible="{Binding FirstProfileCreated, Converter={StaticResource InverseBoolConverter}}"
+                        VerticalOptions="EndAndExpand"
+                        WidthRequest="20">
+                        <ImageButton
+                            Margin="-15"
+                            Padding="10"
+                            BackgroundColor="white"
+                            Command="{Binding}"
+                            CornerRadius="40"
+                            HeightRequest="35"
+                            Source="@mipmap/plus"
+                            WidthRequest="35" />
+                    </pv:PancakeView>
+                </shadows:Shadows>
+                <pv:PancakeView
+                    Padding="15"
+                    BackgroundColor="white"
+                    Border="{pv:BorderMarkup Color=Gray,
+                                             Thickness=1}"
+                    CornerRadius="40"
+                    HeightRequest="30"
+                    HorizontalOptions="Center"
+                    IsVisible="{Binding FirstProfileCreated}"
+                    VerticalOptions="EndAndExpand"
+                    WidthRequest="30">
+                    <Image
+                        HeightRequest="30"
+                        Source="pokeball.png"
+                        WidthRequest="30" />
+                </pv:PancakeView>
+            </StackLayout>
+            <StackLayout
+                extensions:CornerRadiusEffect.CornerRadius="40"
+                AbsoluteLayout.LayoutBounds="0.97,0.89,0.15,0.08"
+                AbsoluteLayout.LayoutFlags="All"
+                IsVisible="{Binding IsVisibleSecondProfile}">
+                <pv:PancakeView
+                    Padding="15"
+                    BackgroundColor="white"
+                    Border="{pv:BorderMarkup Color=Gray,
+                                             Thickness=1}"
+                    CornerRadius="40"
+                    HeightRequest="30"
+                    HorizontalOptions="Center"
+                    IsVisible="{Binding SecondProfileCreated, Converter={StaticResource InverseBoolConverter}}"
+                    VerticalOptions="EndAndExpand"
+                    WidthRequest="30">
+                    <ImageButton
+                        Margin="-15"
+                        Padding="10"
+                        BackgroundColor="white"
+                        Command="{Binding}"
+                        CornerRadius="40"
+                        HeightRequest="35"
+                        Source="@mipmap/plus"
+                        WidthRequest="35" />
+                </pv:PancakeView>
+                <pv:PancakeView
+                    Padding="15"
+                    BackgroundColor="white"
+                    Border="{pv:BorderMarkup Color=Gray,
+                                             Thickness=1}"
+                    CornerRadius="40"
+                    HeightRequest="30"
+                    HorizontalOptions="Center"
+                    IsVisible="{Binding SecondProfileCreated}"
+                    VerticalOptions="EndAndExpand"
+                    WidthRequest="30">
+                    <Image
+                        HeightRequest="30"
+                        Source="pokeball.png"
+                        WidthRequest="30" />
+                </pv:PancakeView>
+            </StackLayout>
+            <StackLayout
+                extensions:CornerRadiusEffect.CornerRadius="40"
+                AbsoluteLayout.LayoutBounds="0.97,0.79,0.15,0.08"
+                AbsoluteLayout.LayoutFlags="All"
+                IsVisible="{Binding IsVisibleThirdProfile}">
+                <pv:PancakeView
+                    Padding="15"
+                    BackgroundColor="white"
+                    Border="{pv:BorderMarkup Color=Gray,
+                                             Thickness=1}"
+                    CornerRadius="40"
+                    HeightRequest="30"
+                    HorizontalOptions="Center"
+                    IsVisible="{Binding ThirdProfileCreated, Converter={StaticResource InverseBoolConverter}}"
+                    VerticalOptions="EndAndExpand"
+                    WidthRequest="30">
+                    <ImageButton
+                        Margin="-15"
+                        Padding="10"
+                        BackgroundColor="white"
+                        Command="{Binding}"
+                        CornerRadius="40"
+                        HeightRequest="35"
+                        Source="@mipmap/plus"
+                        WidthRequest="35" />
+                </pv:PancakeView>
+                <pv:PancakeView
+                    Padding="15"
+                    BackgroundColor="white"
+                    Border="{pv:BorderMarkup Color=Gray,
+                                             Thickness=1}"
+                    CornerRadius="40"
+                    HeightRequest="30"
+                    HorizontalOptions="Center"
+                    IsVisible="{Binding ThirdProfileCreated}"
+                    VerticalOptions="EndAndExpand"
+                    WidthRequest="30">
+                    <Image
+                        HeightRequest="30"
+                        Source="pokeball.png"
+                        WidthRequest="30" />
+                </pv:PancakeView>
+            </StackLayout>
+        </AbsoluteLayout>
     </ContentPage.Content>
 </views:MvxContentPage>

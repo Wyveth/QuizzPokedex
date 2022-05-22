@@ -6,26 +6,35 @@ using MvvmCross.ViewModels;
 using QuizzPokedex.Interfaces;
 using QuizzPokedex.Models;
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
+using Xamarin.Forms;
 
 namespace QuizzPokedex.ViewModels
 {
     public class ProfileViewModel : MvxViewModel<Profile>
     {
+        #region Field
         private readonly IMvxNavigationService _navigation;
         private readonly IMvxIoCProvider _logger;
-        private readonly IProfileService _ProfileService;
+        private readonly IProfileService _profileService;
         private readonly IMvxMessenger _messenger;
+        #endregion
 
+        #region Constructor
         public ProfileViewModel(IMvxNavigationService navigation, IMvxIoCProvider logger, IProfileService ProfileService, IMvxMessenger messenger)
         {
             _navigation = navigation;
             _logger = logger;
-            _ProfileService = ProfileService;
+            _profileService = ProfileService;
             _messenger = messenger;
         }
+        #endregion
 
+        #region Public Methods
         public override void Prepare(Profile profile)
         {
             Profile = profile;
@@ -39,6 +48,7 @@ namespace QuizzPokedex.ViewModels
 
             base.Prepare();
         }
+        #endregion
 
         #region COMMAND
         public IMvxAsyncCommand NavigationBackCommandAsync => new MvxAsyncCommand(NavigationBackAsync);
@@ -54,12 +64,12 @@ namespace QuizzPokedex.ViewModels
         {
             //Save l'Profile s'il est complet  (nom, calorie, photo et categorie)
             if (Profile.Name != string.Empty &&
-                Profile.BirthDate != string.Empty )
+                Profile.BirthDate != string.Empty)
             {
                 if (ModeUpdate)
-                    await _ProfileService.UpdateAsync(Profile);
+                    await _profileService.UpdateAsync(Profile);
                 else
-                    await _ProfileService.CreateAsync(Profile);
+                    await _profileService.CreateAsync(Profile);
 
                 //nouvel enregistrement crée on informe par abonnement de rafraichir
                 var refresh = new MessageRefresh(this, true);
@@ -87,30 +97,6 @@ namespace QuizzPokedex.ViewModels
                 //_logger.ErrorException("Exception sur Photo", ex);
             }
         }
-
-        //private async Task LoadPhotoFromCacheAsync(FileResult photo)
-        //{
-        //    if (photo!=null)
-        //    {
-        //        //recupération de la photo du cache suivant le device
-        //        var filePhoto = Path.Combine(FileSystem.CacheDirectory, photo.FileName);
-
-        //        using (var stream = await photo.OpenReadAsync())
-        //        {
-        //            using (var newStream = File.OpenWrite(filePhoto))
-        //            {
-        //                await stream.CopyToAsync(newStream);
-        //            }
-
-        //            //On attribue a notre image la photo du cache pour prévisualiser le résultat
-        //            var imageSource = ImageSource.FromFile(filePhoto);
-        //            Photo = imageSource;
-        //            TakePhotoCommandVisible = false;
-        //            await RaisePropertyChanged(() => Photo);
-        //            await RaisePropertyChanged(() => TakePhotoCommandVisible);
-        //        }
-        //    }
-        //}
         #endregion
 
         #region PROPERTIES

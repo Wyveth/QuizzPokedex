@@ -7,10 +7,11 @@ namespace QuizzPokedex.Models
 {
     public class Profile
     {
-        [PrimaryKey, AutoIncrement]
+        [PrimaryKey, AutoIncrement, Indexed]
         public int Id { get; set; }
 
         //Nom du Profil
+        [Indexed]
         public string Name { get; set; }
 
         //Date Naissance
@@ -18,5 +19,8 @@ namespace QuizzPokedex.Models
         
         //Photo
         public byte[] Picture { get; set; }
+
+        //Actif
+        public bool Activated { get; set; }
     }
 }

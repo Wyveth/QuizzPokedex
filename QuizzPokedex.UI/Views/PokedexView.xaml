@@ -4,7 +4,7 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:converters="clr-namespace:QuizzPokedex.UI.Converters"
-    xmlns:cornerBorder="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+    xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
     xmlns:ef="clr-namespace:AiForms.Effects;assembly=AiForms.Effects"
     xmlns:shadows="http://sharpnado.com"
     xmlns:viewmodel="clr-namespace:QuizzPokedex.ViewModels;assembly=QuizzPokedex"
@@ -114,9 +114,9 @@
                                 Color="#464C56" />
                         </shadows:ImmutableShades>
                     </shadows:Shadows.Shades>
-                    <cornerBorder:PancakeView
+                    <pv:PancakeView
                         BackgroundColor="White"
-                        Border="{cornerBorder:BorderMarkup Color=Gray,
+                        Border="{pv:BorderMarkup Color=Gray,
                                                            Thickness=0}"
                         CornerRadius="100,100,100,100">
                         <ImageButton
@@ -126,7 +126,7 @@
                             HeightRequest="45"
                             Source="@mipmap/left"
                             WidthRequest="45" />
-                    </cornerBorder:PancakeView>
+                    </pv:PancakeView>
                 </shadows:Shadows>
             </StackLayout>
             <StackLayout
@@ -149,9 +149,9 @@
                                 Color="#464C56" />
                         </shadows:ImmutableShades>
                     </shadows:Shadows.Shades>
-                    <cornerBorder:PancakeView
+                    <pv:PancakeView
                         BackgroundColor="White"
-                        Border="{cornerBorder:BorderMarkup Color=Gray,
+                        Border="{pv:BorderMarkup Color=Gray,
                                                            Thickness=0}"
                         CornerRadius="100,100,100,100">
                         <SearchBar
@@ -162,7 +162,7 @@
                             SearchCommand="{Binding FilterByNameCommandAsync}"
                             Text="{Binding SearchText}"
                             TextChanged="SearchBar_TextChanged" />
-                    </cornerBorder:PancakeView>
+                    </pv:PancakeView>
                 </shadows:Shadows>
             </StackLayout>
             <StackLayout
@@ -185,9 +185,9 @@
                                 Color="#464C56" />
                         </shadows:ImmutableShades>
                     </shadows:Shadows.Shades>
-                    <cornerBorder:PancakeView
+                    <pv:PancakeView
                         BackgroundColor="White"
-                        Border="{cornerBorder:BorderMarkup Color=Gray,
+                        Border="{pv:BorderMarkup Color=Gray,
                                                            Thickness=0}"
                         CornerRadius="100,100,100,100">
                         <Grid>
@@ -215,7 +215,7 @@
                                 BackgroundColor="White"
                                 ImageSource="@mipmap/love" />
                         </Grid>
-                    </cornerBorder:PancakeView>
+                    </pv:PancakeView>
                 </shadows:Shadows>
             </StackLayout>
             <StackLayout
@@ -239,9 +239,9 @@
                                 Color="#464C56" />
                         </shadows:ImmutableShades>
                     </shadows:Shadows.Shades>
-                    <cornerBorder:PancakeView
+                    <pv:PancakeView
                         BackgroundColor="White"
-                        Border="{cornerBorder:BorderMarkup Color=Gray,
+                        Border="{pv:BorderMarkup Color=Gray,
                                                            Thickness=0}"
                         CornerRadius="20"
                         HeightRequest="110"
@@ -301,9 +301,9 @@
                                             Color="#464C56" />
                                     </shadows:ImmutableShades>
                                 </shadows:Shadows.Shades>
-                                <cornerBorder:PancakeView
+                                <pv:PancakeView
                                     BackgroundColor="White"
-                                    Border="{cornerBorder:BorderMarkup Color=Gray,
+                                    Border="{pv:BorderMarkup Color=Gray,
                                                                        Thickness=0}"
                                     CornerRadius="10">
                                     <Button
@@ -315,7 +315,7 @@
                                         Text="Type"
                                         TextColor="Black"
                                         TextTransform="None" />
-                                </cornerBorder:PancakeView>
+                                </pv:PancakeView>
                             </shadows:Shadows>
                             <shadows:Shadows
                                 Grid.Row="1"
@@ -336,9 +336,9 @@
                                             Color="#464C56" />
                                     </shadows:ImmutableShades>
                                 </shadows:Shadows.Shades>
-                                <cornerBorder:PancakeView
+                                <pv:PancakeView
                                     BackgroundColor="White"
-                                    Border="{cornerBorder:BorderMarkup Color=Gray,
+                                    Border="{pv:BorderMarkup Color=Gray,
                                                                        Thickness=0}"
                                     CornerRadius="10">
                                     <Button
@@ -351,10 +351,10 @@
                                         Text="Gen"
                                         TextColor="Black"
                                         TextTransform="None" />
-                                </cornerBorder:PancakeView>
+                                </pv:PancakeView>
                             </shadows:Shadows>
                         </Grid>
-                    </cornerBorder:PancakeView>
+                    </pv:PancakeView>
                 </shadows:Shadows>
             </StackLayout>
             <StackLayout
@@ -378,9 +378,9 @@
                                 Color="#464C56" />
                         </shadows:ImmutableShades>
                     </shadows:Shadows.Shades>
-                    <cornerBorder:PancakeView
+                    <pv:PancakeView
                         BackgroundColor="White"
-                        Border="{cornerBorder:BorderMarkup Color=Gray,
+                        Border="{pv:BorderMarkup Color=Gray,
                                                            Thickness=0}"
                         CornerRadius="10"
                         HeightRequest="80"
@@ -412,9 +412,9 @@
                                             Color="#464C56" />
                                     </shadows:ImmutableShades>
                                 </shadows:Shadows.Shades>
-                                <cornerBorder:PancakeView
+                                <pv:PancakeView
                                     BackgroundColor="White"
-                                    Border="{cornerBorder:BorderMarkup Color=Gray,
+                                    Border="{pv:BorderMarkup Color=Gray,
                                                                        Thickness=0}"
                                     CornerRadius="10">
                                     <ImageButton
@@ -424,7 +424,7 @@
                                         HeightRequest="45"
                                         Source="@mipmap/up"
                                         WidthRequest="45" />
-                                </cornerBorder:PancakeView>
+                                </pv:PancakeView>
                             </shadows:Shadows>
                             <shadows:Shadows
                                 Grid.Row="1"
@@ -445,9 +445,9 @@
                                             Color="#464C56" />
                                     </shadows:ImmutableShades>
                                 </shadows:Shadows.Shades>
-                                <cornerBorder:PancakeView
+                                <pv:PancakeView
                                     BackgroundColor="White"
-                                    Border="{cornerBorder:BorderMarkup Color=Gray,
+                                    Border="{pv:BorderMarkup Color=Gray,
                                                                        Thickness=0}"
                                     CornerRadius="10">
                                     <ImageButton
@@ -457,10 +457,10 @@
                                         HeightRequest="45"
                                         Source="@mipmap/down"
                                         WidthRequest="45" />
-                                </cornerBorder:PancakeView>
+                                </pv:PancakeView>
                             </shadows:Shadows>
                         </Grid>
-                    </cornerBorder:PancakeView>
+                    </pv:PancakeView>
                 </shadows:Shadows>
             </StackLayout>
             <StackLayout
@@ -526,9 +526,9 @@
                                     Color="#464C56" />
                             </shadows:ImmutableShades>
                         </shadows:Shadows.Shades>
-                        <cornerBorder:PancakeView
+                        <pv:PancakeView
                             BackgroundColor="White"
-                            Border="{cornerBorder:BorderMarkup Color=Gray,
+                            Border="{pv:BorderMarkup Color=Gray,
                                                                Thickness=0}"
                             CornerRadius="10">
                             <Button
@@ -540,7 +540,7 @@
                                 Text="Gen 1"
                                 TextColor="{Binding TextColorGen1}"
                                 TextTransform="None" />
-                        </cornerBorder:PancakeView>
+                        </pv:PancakeView>
                     </shadows:Shadows>
                     <shadows:Shadows
                         Grid.Row="1"
@@ -561,9 +561,9 @@
                                     Color="#464C56" />
                             </shadows:ImmutableShades>
                         </shadows:Shadows.Shades>
-                        <cornerBorder:PancakeView
+                        <pv:PancakeView
                             BackgroundColor="White"
-                            Border="{cornerBorder:BorderMarkup Color=Gray,
+                            Border="{pv:BorderMarkup Color=Gray,
                                                                Thickness=0}"
                             CornerRadius="10">
                             <Button
@@ -575,7 +575,7 @@
                                 Text="Gen 2"
                                 TextColor="{Binding TextColorGen2}"
                                 TextTransform="None" />
-                        </cornerBorder:PancakeView>
+                        </pv:PancakeView>
                     </shadows:Shadows>
                     <shadows:Shadows
                         Grid.Row="2"
@@ -596,9 +596,9 @@
                                     Color="#464C56" />
                             </shadows:ImmutableShades>
                         </shadows:Shadows.Shades>
-                        <cornerBorder:PancakeView
+                        <pv:PancakeView
                             BackgroundColor="White"
-                            Border="{cornerBorder:BorderMarkup Color=Gray,
+                            Border="{pv:BorderMarkup Color=Gray,
                                                                Thickness=0}"
                             CornerRadius="10">
                             <Button
@@ -610,7 +610,7 @@
                                 Text="Gen 3"
                                 TextColor="{Binding TextColorGen3}"
                                 TextTransform="None" />
-                        </cornerBorder:PancakeView>
+                        </pv:PancakeView>
                     </shadows:Shadows>
                     <shadows:Shadows
                         Grid.Row="2"
@@ -631,9 +631,9 @@
                                     Color="#464C56" />
                             </shadows:ImmutableShades>
                         </shadows:Shadows.Shades>
-                        <cornerBorder:PancakeView
+                        <pv:PancakeView
                             BackgroundColor="White"
-                            Border="{cornerBorder:BorderMarkup Color=Gray,
+                            Border="{pv:BorderMarkup Color=Gray,
                                                                Thickness=0}"
                             CornerRadius="10">
                             <Button
@@ -645,7 +645,7 @@
                                 Text="Gen 4"
                                 TextColor="{Binding TextColorGen4}"
                                 TextTransform="None" />
-                        </cornerBorder:PancakeView>
+                        </pv:PancakeView>
                     </shadows:Shadows>
                     <shadows:Shadows
                         Grid.Row="3"
@@ -666,9 +666,9 @@
                                     Color="#464C56" />
                             </shadows:ImmutableShades>
                         </shadows:Shadows.Shades>
-                        <cornerBorder:PancakeView
+                        <pv:PancakeView
                             BackgroundColor="White"
-                            Border="{cornerBorder:BorderMarkup Color=Gray,
+                            Border="{pv:BorderMarkup Color=Gray,
                                                                Thickness=0}"
                             CornerRadius="10">
                             <Button
@@ -680,7 +680,7 @@
                                 Text="Gen 5"
                                 TextColor="{Binding TextColorGen5}"
                                 TextTransform="None" />
-                        </cornerBorder:PancakeView>
+                        </pv:PancakeView>
                     </shadows:Shadows>
                     <shadows:Shadows
                         Grid.Row="3"
@@ -701,9 +701,9 @@
                                     Color="#464C56" />
                             </shadows:ImmutableShades>
                         </shadows:Shadows.Shades>
-                        <cornerBorder:PancakeView
+                        <pv:PancakeView
                             BackgroundColor="White"
-                            Border="{cornerBorder:BorderMarkup Color=Gray,
+                            Border="{pv:BorderMarkup Color=Gray,
                                                                Thickness=0}"
                             CornerRadius="10">
                             <Button
@@ -715,7 +715,7 @@
                                 Text="Gen 6"
                                 TextColor="{Binding TextColorGen6}"
                                 TextTransform="None" />
-                        </cornerBorder:PancakeView>
+                        </pv:PancakeView>
                     </shadows:Shadows>
                     <shadows:Shadows
                         Grid.Row="4"
@@ -736,9 +736,9 @@
                                     Color="#464C56" />
                             </shadows:ImmutableShades>
                         </shadows:Shadows.Shades>
-                        <cornerBorder:PancakeView
+                        <pv:PancakeView
                             BackgroundColor="White"
-                            Border="{cornerBorder:BorderMarkup Color=Gray,
+                            Border="{pv:BorderMarkup Color=Gray,
                                                                Thickness=0}"
                             CornerRadius="10">
                             <Button
@@ -750,7 +750,7 @@
                                 Text="Gen 7"
                                 TextColor="{Binding TextColorGen7}"
                                 TextTransform="None" />
-                        </cornerBorder:PancakeView>
+                        </pv:PancakeView>
                     </shadows:Shadows>
                     <shadows:Shadows
                         Grid.Row="4"
@@ -771,9 +771,9 @@
                                     Color="#464C56" />
                             </shadows:ImmutableShades>
                         </shadows:Shadows.Shades>
-                        <cornerBorder:PancakeView
+                        <pv:PancakeView
                             BackgroundColor="White"
-                            Border="{cornerBorder:BorderMarkup Color=Gray,
+                            Border="{pv:BorderMarkup Color=Gray,
                                                                Thickness=0}"
                             CornerRadius="10">
                             <Button
@@ -785,7 +785,7 @@
                                 Text="Gen 8"
                                 TextColor="{Binding TextColorGen8}"
                                 TextTransform="None" />
-                        </cornerBorder:PancakeView>
+                        </pv:PancakeView>
                     </shadows:Shadows>
                     <shadows:Shadows
                         Grid.Row="5"
@@ -807,9 +807,9 @@
                                     Color="#464C56" />
                             </shadows:ImmutableShades>
                         </shadows:Shadows.Shades>
-                        <cornerBorder:PancakeView
+                        <pv:PancakeView
                             BackgroundColor="White"
-                            Border="{cornerBorder:BorderMarkup Color=Gray,
+                            Border="{pv:BorderMarkup Color=Gray,
                                                                Thickness=0}"
                             CornerRadius="10">
                             <Button
@@ -821,7 +821,7 @@
                                 Text="Gen Arceus"
                                 TextColor="{Binding TextColorGenArceus}"
                                 TextTransform="None" />
-                        </cornerBorder:PancakeView>
+                        </pv:PancakeView>
                     </shadows:Shadows>
                     <shadows:Shadows
                         Grid.Row="6"
@@ -842,9 +842,9 @@
                                     Color="#464C56" />
                             </shadows:ImmutableShades>
                         </shadows:Shadows.Shades>
-                        <cornerBorder:PancakeView
+                        <pv:PancakeView
                             BackgroundColor="Black"
-                            Border="{cornerBorder:BorderMarkup Color=Gray,
+                            Border="{pv:BorderMarkup Color=Gray,
                                                                Thickness=0}"
                             CornerRadius="10">
                             <Button
@@ -856,7 +856,7 @@
                                 Text="Retour"
                                 TextColor="White"
                                 TextTransform="None" />
-                        </cornerBorder:PancakeView>
+                        </pv:PancakeView>
                     </shadows:Shadows>
                     <shadows:Shadows
                         Grid.Row="6"
@@ -877,9 +877,9 @@
                                     Color="#464C56" />
                             </shadows:ImmutableShades>
                         </shadows:Shadows.Shades>
-                        <cornerBorder:PancakeView
+                        <pv:PancakeView
                             BackgroundColor="Black"
-                            Border="{cornerBorder:BorderMarkup Color=Gray,
+                            Border="{pv:BorderMarkup Color=Gray,
                                                                Thickness=0}"
                             CornerRadius="10">
                             <Button
@@ -891,7 +891,7 @@
                                 Text="Filtrer"
                                 TextColor="White"
                                 TextTransform="None" />
-                        </cornerBorder:PancakeView>
+                        </pv:PancakeView>
                     </shadows:Shadows>
                 </Grid>
             </StackLayout>
@@ -955,9 +955,9 @@
                                     Color="#464C56" />
                             </shadows:ImmutableShades>
                         </shadows:Shadows.Shades>
-                        <cornerBorder:PancakeView
+                        <pv:PancakeView
                             BackgroundColor="White"
-                            Border="{cornerBorder:BorderMarkup Color=Gray,
+                            Border="{pv:BorderMarkup Color=Gray,
                                                                Thickness=0}"
                             CornerRadius="10">
                             <Button
@@ -970,7 +970,7 @@
                                 Text="Acier"
                                 TextColor="{Binding TextColorSteel}"
                                 TextTransform="None" />
-                        </cornerBorder:PancakeView>
+                        </pv:PancakeView>
                     </shadows:Shadows>
                     <shadows:Shadows
                         Grid.Row="1"
@@ -991,9 +991,9 @@
                                     Color="#464C56" />
                             </shadows:ImmutableShades>
                         </shadows:Shadows.Shades>
-                        <cornerBorder:PancakeView
+                        <pv:PancakeView
                             BackgroundColor="White"
-                            Border="{cornerBorder:BorderMarkup Color=Gray,
+                            Border="{pv:BorderMarkup Color=Gray,
                                                                Thickness=0}"
                             CornerRadius="10">
                             <Button
@@ -1006,7 +1006,7 @@
                                 Text="Combat"
                                 TextColor="{Binding TextColorFighting}"
                                 TextTransform="None" />
-                        </cornerBorder:PancakeView>
+                        </pv:PancakeView>
                     </shadows:Shadows>
                     <shadows:Shadows
                         Grid.Row="2"
@@ -1027,9 +1027,9 @@
                                     Color="#464C56" />
                             </shadows:ImmutableShades>
                         </shadows:Shadows.Shades>
-                        <cornerBorder:PancakeView
+                        <pv:PancakeView
                             BackgroundColor="White"
-                            Border="{cornerBorder:BorderMarkup Color=Gray,
+                            Border="{pv:BorderMarkup Color=Gray,
                                                                Thickness=0}"
                             CornerRadius="10">
                             <Button
@@ -1042,7 +1042,7 @@
                                 Text="Dragon"
                                 TextColor="{Binding TextColorDragon}"
                                 TextTransform="None" />
-                        </cornerBorder:PancakeView>
+                        </pv:PancakeView>
                     </shadows:Shadows>
                     <shadows:Shadows
                         Grid.Row="2"
@@ -1063,9 +1063,9 @@
                                     Color="#464C56" />
                             </shadows:ImmutableShades>
                         </shadows:Shadows.Shades>
-                        <cornerBorder:PancakeView
+                        <pv:PancakeView
                             BackgroundColor="White"
-                            Border="{cornerBorder:BorderMarkup Color=Gray,
+                            Border="{pv:BorderMarkup Color=Gray,
                                                                Thickness=0}"
                             CornerRadius="10">
                             <Button
@@ -1078,7 +1078,7 @@
                                 Text="Eau"
                                 TextColor="{Binding TextColorWater}"
                                 TextTransform="None" />
-                        </cornerBorder:PancakeView>
+                        </pv:PancakeView>
                     </shadows:Shadows>
                     <shadows:Shadows
                         Grid.Row="3"
@@ -1099,9 +1099,9 @@
                                     Color="#464C56" />
                             </shadows:ImmutableShades>
                         </shadows:Shadows.Shades>
-                        <cornerBorder:PancakeView
+                        <pv:PancakeView
                             BackgroundColor="White"
-                            Border="{cornerBorder:BorderMarkup Color=Gray,
+                            Border="{pv:BorderMarkup Color=Gray,
                                                                Thickness=0}"
                             CornerRadius="10">
                             <Button
@@ -1114,7 +1114,7 @@
                                 Text="Électrik"
                                 TextColor="{Binding TextColorElectric}"
                                 TextTransform="None" />
-                        </cornerBorder:PancakeView>
+                        </pv:PancakeView>
                     </shadows:Shadows>
                     <shadows:Shadows
                         Grid.Row="3"
@@ -1135,9 +1135,9 @@
                                     Color="#464C56" />
                             </shadows:ImmutableShades>
                         </shadows:Shadows.Shades>
-                        <cornerBorder:PancakeView
+                        <pv:PancakeView
                             BackgroundColor="White"
-                            Border="{cornerBorder:BorderMarkup Color=Gray,
+                            Border="{pv:BorderMarkup Color=Gray,
                                                                Thickness=0}"
                             CornerRadius="10">
                             <Button
@@ -1150,7 +1150,7 @@
                                 Text="Fée"
                                 TextColor="{Binding TextColorFairy}"
                                 TextTransform="None" />
-                        </cornerBorder:PancakeView>
+                        </pv:PancakeView>
                     </shadows:Shadows>
                     <shadows:Shadows
                         Grid.Row="4"
@@ -1171,9 +1171,9 @@
                                     Color="#464C56" />
                             </shadows:ImmutableShades>
                         </shadows:Shadows.Shades>
-                        <cornerBorder:PancakeView
+                        <pv:PancakeView
                             BackgroundColor="White"
-                            Border="{cornerBorder:BorderMarkup Color=Gray,
+                            Border="{pv:BorderMarkup Color=Gray,
                                                                Thickness=0}"
                             CornerRadius="10">
                             <Button
@@ -1186,7 +1186,7 @@
                                 Text="Feu"
                                 TextColor="{Binding TextColorFire}"
                                 TextTransform="None" />
-                        </cornerBorder:PancakeView>
+                        </pv:PancakeView>
                     </shadows:Shadows>
                     <shadows:Shadows
                         Grid.Row="4"
@@ -1207,9 +1207,9 @@
                                     Color="#464C56" />
                             </shadows:ImmutableShades>
                         </shadows:Shadows.Shades>
-                        <cornerBorder:PancakeView
+                        <pv:PancakeView
                             BackgroundColor="White"
-                            Border="{cornerBorder:BorderMarkup Color=Gray,
+                            Border="{pv:BorderMarkup Color=Gray,
                                                                Thickness=0}"
                             CornerRadius="10">
                             <Button
@@ -1222,7 +1222,7 @@
                                 Text="Glace"
                                 TextColor="{Binding TextColorIce}"
                                 TextTransform="None" />
-                        </cornerBorder:PancakeView>
+                        </pv:PancakeView>
                     </shadows:Shadows>
                     <shadows:Shadows
                         Grid.Row="5"
@@ -1243,9 +1243,9 @@
                                     Color="#464C56" />
                             </shadows:ImmutableShades>
                         </shadows:Shadows.Shades>
-                        <cornerBorder:PancakeView
+                        <pv:PancakeView
                             BackgroundColor="White"
-                            Border="{cornerBorder:BorderMarkup Color=Gray,
+                            Border="{pv:BorderMarkup Color=Gray,
                                                                Thickness=0}"
                             CornerRadius="10">
                             <Button
@@ -1258,7 +1258,7 @@
                                 Text="Insecte"
                                 TextColor="{Binding TextColorBug}"
                                 TextTransform="None" />
-                        </cornerBorder:PancakeView>
+                        </pv:PancakeView>
                     </shadows:Shadows>
                     <shadows:Shadows
                         Grid.Row="5"
@@ -1279,9 +1279,9 @@
                                     Color="#464C56" />
                             </shadows:ImmutableShades>
                         </shadows:Shadows.Shades>
-                        <cornerBorder:PancakeView
+                        <pv:PancakeView
                             BackgroundColor="White"
-                            Border="{cornerBorder:BorderMarkup Color=Gray,
+                            Border="{pv:BorderMarkup Color=Gray,
                                                                Thickness=0}"
                             CornerRadius="10">
                             <Button
@@ -1294,7 +1294,7 @@
                                 Text="Normal"
                                 TextColor="{Binding TextColorNormal}"
                                 TextTransform="None" />
-                        </cornerBorder:PancakeView>
+                        </pv:PancakeView>
                     </shadows:Shadows>
                     <shadows:Shadows
                         Grid.Row="6"
@@ -1315,9 +1315,9 @@
                                     Color="#464C56" />
                             </shadows:ImmutableShades>
                         </shadows:Shadows.Shades>
-                        <cornerBorder:PancakeView
+                        <pv:PancakeView
                             BackgroundColor="White"
-                            Border="{cornerBorder:BorderMarkup Color=Gray,
+                            Border="{pv:BorderMarkup Color=Gray,
                                                                Thickness=0}"
                             CornerRadius="10">
                             <Button
@@ -1330,7 +1330,7 @@
                                 Text="Plante"
                                 TextColor="{Binding TextColorGrass}"
                                 TextTransform="None" />
-                        </cornerBorder:PancakeView>
+                        </pv:PancakeView>
                     </shadows:Shadows>
                     <shadows:Shadows
                         Grid.Row="6"
@@ -1351,9 +1351,9 @@
                                     Color="#464C56" />
                             </shadows:ImmutableShades>
                         </shadows:Shadows.Shades>
-                        <cornerBorder:PancakeView
+                        <pv:PancakeView
                             BackgroundColor="White"
-                            Border="{cornerBorder:BorderMarkup Color=Gray,
+                            Border="{pv:BorderMarkup Color=Gray,
                                                                Thickness=0}"
                             CornerRadius="10">
                             <Button
@@ -1366,7 +1366,7 @@
                                 Text="Poison"
                                 TextColor="{Binding TextColorPoison}"
                                 TextTransform="None" />
-                        </cornerBorder:PancakeView>
+                        </pv:PancakeView>
                     </shadows:Shadows>
                     <shadows:Shadows
                         Grid.Row="7"
@@ -1387,9 +1387,9 @@
                                     Color="#464C56" />
                             </shadows:ImmutableShades>
                         </shadows:Shadows.Shades>
-                        <cornerBorder:PancakeView
+                        <pv:PancakeView
                             BackgroundColor="White"
-                            Border="{cornerBorder:BorderMarkup Color=Gray,
+                            Border="{pv:BorderMarkup Color=Gray,
                                                                Thickness=0}"
                             CornerRadius="10">
                             <Button
@@ -1402,7 +1402,7 @@
                                 Text="Psy"
                                 TextColor="{Binding TextColorPsychic}"
                                 TextTransform="None" />
-                        </cornerBorder:PancakeView>
+                        </pv:PancakeView>
                     </shadows:Shadows>
                     <shadows:Shadows
                         Grid.Row="7"
@@ -1423,9 +1423,9 @@
                                     Color="#464C56" />
                             </shadows:ImmutableShades>
                         </shadows:Shadows.Shades>
-                        <cornerBorder:PancakeView
+                        <pv:PancakeView
                             BackgroundColor="White"
-                            Border="{cornerBorder:BorderMarkup Color=Gray,
+                            Border="{pv:BorderMarkup Color=Gray,
                                                                Thickness=0}"
                             CornerRadius="10">
                             <Button
@@ -1438,7 +1438,7 @@
                                 Text="Roche"
                                 TextColor="{Binding TextColorRock}"
                                 TextTransform="None" />
-                        </cornerBorder:PancakeView>
+                        </pv:PancakeView>
                     </shadows:Shadows>
                     <shadows:Shadows
                         Grid.Row="8"
@@ -1459,9 +1459,9 @@
                                     Color="#464C56" />
                             </shadows:ImmutableShades>
                         </shadows:Shadows.Shades>
-                        <cornerBorder:PancakeView
+                        <pv:PancakeView
                             BackgroundColor="White"
-                            Border="{cornerBorder:BorderMarkup Color=Gray,
+                            Border="{pv:BorderMarkup Color=Gray,
                                                                Thickness=0}"
                             CornerRadius="10">
                             <Button
@@ -1474,7 +1474,7 @@
                                 Text="Sol"
                                 TextColor="{Binding TextColorGround}"
                                 TextTransform="None" />
-                        </cornerBorder:PancakeView>
+                        </pv:PancakeView>
                     </shadows:Shadows>
                     <shadows:Shadows
                         Grid.Row="8"
@@ -1495,9 +1495,9 @@
                                     Color="#464C56" />
                             </shadows:ImmutableShades>
                         </shadows:Shadows.Shades>
-                        <cornerBorder:PancakeView
+                        <pv:PancakeView
                             BackgroundColor="White"
-                            Border="{cornerBorder:BorderMarkup Color=Gray,
+                            Border="{pv:BorderMarkup Color=Gray,
                                                                Thickness=0}"
                             CornerRadius="10">
                             <Button
@@ -1510,7 +1510,7 @@
                                 Text="Spectre"
                                 TextColor="{Binding TextColorGhost}"
                                 TextTransform="None" />
-                        </cornerBorder:PancakeView>
+                        </pv:PancakeView>
                     </shadows:Shadows>
                     <shadows:Shadows
                         Grid.Row="9"
@@ -1531,9 +1531,9 @@
                                     Color="#464C56" />
                             </shadows:ImmutableShades>
                         </shadows:Shadows.Shades>
-                        <cornerBorder:PancakeView
+                        <pv:PancakeView
                             BackgroundColor="White"
-                            Border="{cornerBorder:BorderMarkup Color=Gray,
+                            Border="{pv:BorderMarkup Color=Gray,
                                                                Thickness=0}"
                             CornerRadius="10">
                             <Button
@@ -1547,7 +1547,7 @@
                                 Text="Ténèbre"
                                 TextColor="{Binding TextColorDark}"
                                 TextTransform="None" />
-                        </cornerBorder:PancakeView>
+                        </pv:PancakeView>
                     </shadows:Shadows>
                     <shadows:Shadows
                         Grid.Row="9"
@@ -1568,9 +1568,9 @@
                                     Color="#464C56" />
                             </shadows:ImmutableShades>
                         </shadows:Shadows.Shades>
-                        <cornerBorder:PancakeView
+                        <pv:PancakeView
                             BackgroundColor="White"
-                            Border="{cornerBorder:BorderMarkup Color=Gray,
+                            Border="{pv:BorderMarkup Color=Gray,
                                                                Thickness=0}"
                             CornerRadius="10">
                             <Button
@@ -1583,7 +1583,7 @@
                                 Text="Vol"
                                 TextColor="{Binding TextColorFlying}"
                                 TextTransform="None" />
-                        </cornerBorder:PancakeView>
+                        </pv:PancakeView>
                     </shadows:Shadows>
                     <shadows:Shadows
                         Grid.Row="10"
@@ -1604,9 +1604,9 @@
                                     Color="#464C56" />
                             </shadows:ImmutableShades>
                         </shadows:Shadows.Shades>
-                        <cornerBorder:PancakeView
+                        <pv:PancakeView
                             BackgroundColor="Black"
-                            Border="{cornerBorder:BorderMarkup Color=Gray,
+                            Border="{pv:BorderMarkup Color=Gray,
                                                                Thickness=0}"
                             CornerRadius="10">
                             <Button
@@ -1618,7 +1618,7 @@
                                 Text="Retour"
                                 TextColor="White"
                                 TextTransform="None" />
-                        </cornerBorder:PancakeView>
+                        </pv:PancakeView>
                     </shadows:Shadows>
                     <shadows:Shadows
                         Grid.Row="10"
@@ -1639,9 +1639,9 @@
                                     Color="#464C56" />
                             </shadows:ImmutableShades>
                         </shadows:Shadows.Shades>
-                        <cornerBorder:PancakeView
+                        <pv:PancakeView
                             BackgroundColor="Black"
-                            Border="{cornerBorder:BorderMarkup Color=Gray,
+                            Border="{pv:BorderMarkup Color=Gray,
                                                                Thickness=0}"
                             CornerRadius="10">
                             <Button
@@ -1653,7 +1653,7 @@
                                 Text="Filtrer"
                                 TextColor="White"
                                 TextTransform="None" />
-                        </cornerBorder:PancakeView>
+                        </pv:PancakeView>
                     </shadows:Shadows>
                 </Grid>
             </StackLayout>

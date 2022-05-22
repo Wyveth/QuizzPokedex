@@ -4,9 +4,9 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:converters="clr-namespace:QuizzPokedex.UI.Converters"
-    xmlns:cornerBorder="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
     xmlns:ef="clr-namespace:AiForms.Effects;assembly=AiForms.Effects"
     xmlns:microcharts="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
+    xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
     xmlns:shadows="http://sharpnado.com"
     xmlns:viewmodel="clr-namespace:QuizzPokedex.ViewModels;assembly=QuizzPokedex"
     xmlns:views="clr-namespace:MvvmCross.Forms.Views;assembly=MvvmCross.Forms"
@@ -42,10 +42,10 @@
                                         Color="#464C56" />
                                 </shadows:ImmutableShades>
                             </shadows:Shadows.Shades>
-                            <cornerBorder:PancakeView
+                            <pv:PancakeView
                                 BackgroundColor="White"
-                                Border="{cornerBorder:BorderMarkup Color=Gray,
-                                                                   Thickness=0}"
+                                Border="{pv:BorderMarkup Color=Gray,
+                                                         Thickness=0}"
                                 CornerRadius="100,100,100,100">
                                 <ImageButton
                                     Padding="4,9,5,9"
@@ -54,7 +54,7 @@
                                     HeightRequest="35"
                                     Source="@mipmap/left"
                                     WidthRequest="35" />
-                            </cornerBorder:PancakeView>
+                            </pv:PancakeView>
                         </shadows:Shadows>
                     </StackLayout>
                     <StackLayout AbsoluteLayout.LayoutBounds="0.5,0.08,0.656,0.4" AbsoluteLayout.LayoutFlags="All">
@@ -194,10 +194,10 @@
                                         Color="#464C56" />
                                 </shadows:ImmutableShades>
                             </shadows:Shadows.Shades>
-                            <cornerBorder:PancakeView
+                            <pv:PancakeView
                                 BackgroundColor="{Binding FirstType.InfoColor}"
-                                Border="{cornerBorder:BorderMarkup Color=Black,
-                                                                   Thickness=0}"
+                                Border="{pv:BorderMarkup Color=Black,
+                                                         Thickness=0}"
                                 CornerRadius="0,100,0,100">
                                 <Label
                                     Padding="20,4,4,4"
@@ -206,7 +206,7 @@
                                     xct:ShadowEffect.Opacity="0.5"
                                     Text="Données de Base"
                                     TextColor="White" />
-                            </cornerBorder:PancakeView>
+                            </pv:PancakeView>
                         </shadows:Shadows>
                     </StackLayout>
                     <StackLayout Margin="0,30,0,0">
@@ -297,10 +297,10 @@
                                         Color="#464C56" />
                                 </shadows:ImmutableShades>
                             </shadows:Shadows.Shades>
-                            <cornerBorder:PancakeView
+                            <pv:PancakeView
                                 BackgroundColor="{Binding FirstType.InfoColor}"
-                                Border="{cornerBorder:BorderMarkup Color=Black,
-                                                                   Thickness=0}"
+                                Border="{pv:BorderMarkup Color=Black,
+                                                         Thickness=0}"
                                 CornerRadius="0,100,0,100">
                                 <Label
                                     Padding="20,4,4,4"
@@ -309,7 +309,7 @@
                                     xct:ShadowEffect.Opacity="0.5"
                                     Text="Capacité Spéciale"
                                     TextColor="White" />
-                            </cornerBorder:PancakeView>
+                            </pv:PancakeView>
                         </shadows:Shadows>
                     </StackLayout>
                     <StackLayout Margin="50,40,50,10">
@@ -360,10 +360,10 @@
                                         Color="#464C56" />
                                 </shadows:ImmutableShades>
                             </shadows:Shadows.Shades>
-                            <cornerBorder:PancakeView
+                            <pv:PancakeView
                                 BackgroundColor="{Binding FirstType.InfoColor}"
-                                Border="{cornerBorder:BorderMarkup Color=Black,
-                                                                   Thickness=0}"
+                                Border="{pv:BorderMarkup Color=Black,
+                                                         Thickness=0}"
                                 CornerRadius="0,100,0,100">
                                 <Label
                                     Padding="20,4,4,4"
@@ -372,7 +372,7 @@
                                     xct:ShadowEffect.Opacity="0.5"
                                     Text="Statistiques"
                                     TextColor="White" />
-                            </cornerBorder:PancakeView>
+                            </pv:PancakeView>
                         </shadows:Shadows>
                     </StackLayout>
                     <StackLayout Margin="50,40,50,10">
@@ -409,10 +409,10 @@
                                         Color="#464C56" />
                                 </shadows:ImmutableShades>
                             </shadows:Shadows.Shades>
-                            <cornerBorder:PancakeView
+                            <pv:PancakeView
                                 BackgroundColor="{Binding FirstType.InfoColor}"
-                                Border="{cornerBorder:BorderMarkup Color=Black,
-                                                                   Thickness=0}"
+                                Border="{pv:BorderMarkup Color=Black,
+                                                         Thickness=0}"
                                 CornerRadius="0,100,0,100">
                                 <Label
                                     Padding="20,4,4,4"
@@ -421,7 +421,7 @@
                                     xct:ShadowEffect.Opacity="0.5"
                                     Text="Évolution"
                                     TextColor="White" />
-                            </cornerBorder:PancakeView>
+                            </pv:PancakeView>
                         </shadows:Shadows>
                     </StackLayout>
                     <StackLayout Margin="20,40,20,0">
@@ -500,10 +500,10 @@
                                         Color="#464C56" />
                                 </shadows:ImmutableShades>
                             </shadows:Shadows.Shades>
-                            <cornerBorder:PancakeView
+                            <pv:PancakeView
                                 BackgroundColor="{Binding FirstType.InfoColor}"
-                                Border="{cornerBorder:BorderMarkup Color=Black,
-                                                                   Thickness=0}"
+                                Border="{pv:BorderMarkup Color=Black,
+                                                         Thickness=0}"
                                 CornerRadius="0,100,0,100">
                                 <Label
                                     Padding="20,4,4,4"
@@ -512,7 +512,7 @@
                                     xct:ShadowEffect.Opacity="0.5"
                                     Text="Méga-Évolution"
                                     TextColor="White" />
-                            </cornerBorder:PancakeView>
+                            </pv:PancakeView>
                         </shadows:Shadows>
                     </StackLayout>
                     <StackLayout Margin="20,40,20,0">
@@ -592,10 +592,10 @@
                                         Color="#464C56" />
                                 </shadows:ImmutableShades>
                             </shadows:Shadows.Shades>
-                            <cornerBorder:PancakeView
+                            <pv:PancakeView
                                 BackgroundColor="{Binding FirstType.InfoColor}"
-                                Border="{cornerBorder:BorderMarkup Color=Black,
-                                                                   Thickness=0}"
+                                Border="{pv:BorderMarkup Color=Black,
+                                                         Thickness=0}"
                                 CornerRadius="0,100,0,100">
                                 <Label
                                     Padding="20,4,4,4"
@@ -604,7 +604,7 @@
                                     xct:ShadowEffect.Opacity="0.5"
                                     Text="Forme Gigamax"
                                     TextColor="White" />
-                            </cornerBorder:PancakeView>
+                            </pv:PancakeView>
                         </shadows:Shadows>
                     </StackLayout>
                     <StackLayout Margin="20,40,20,0">
@@ -674,10 +674,10 @@
                                         Color="#464C56" />
                                 </shadows:ImmutableShades>
                             </shadows:Shadows.Shades>
-                            <cornerBorder:PancakeView
+                            <pv:PancakeView
                                 BackgroundColor="{Binding FirstType.InfoColor}"
-                                Border="{cornerBorder:BorderMarkup Color=Black,
-                                                                   Thickness=0}"
+                                Border="{pv:BorderMarkup Color=Black,
+                                                         Thickness=0}"
                                 CornerRadius="0,100,0,100">
                                 <Label
                                     Padding="20,4,4,4"
@@ -686,7 +686,7 @@
                                     xct:ShadowEffect.Opacity="0.5"
                                     Text="Forme d'Alola"
                                     TextColor="White" />
-                            </cornerBorder:PancakeView>
+                            </pv:PancakeView>
                         </shadows:Shadows>
                     </StackLayout>
                     <StackLayout Margin="20,30,20,0">
@@ -756,10 +756,10 @@
                                         Color="#464C56" />
                                 </shadows:ImmutableShades>
                             </shadows:Shadows.Shades>
-                            <cornerBorder:PancakeView
+                            <pv:PancakeView
                                 BackgroundColor="{Binding FirstType.InfoColor}"
-                                Border="{cornerBorder:BorderMarkup Color=Black,
-                                                                   Thickness=0}"
+                                Border="{pv:BorderMarkup Color=Black,
+                                                         Thickness=0}"
                                 CornerRadius="0,100,0,100">
                                 <Label
                                     Padding="20,4,4,4"
@@ -768,7 +768,7 @@
                                     xct:ShadowEffect.Opacity="0.5"
                                     Text="Forme de Galar"
                                     TextColor="White" />
-                            </cornerBorder:PancakeView>
+                            </pv:PancakeView>
                         </shadows:Shadows>
                     </StackLayout>
                     <StackLayout Margin="20,30,20,0">
@@ -838,10 +838,10 @@
                                         Color="#464C56" />
                                 </shadows:ImmutableShades>
                             </shadows:Shadows.Shades>
-                            <cornerBorder:PancakeView
+                            <pv:PancakeView
                                 BackgroundColor="{Binding FirstType.InfoColor}"
-                                Border="{cornerBorder:BorderMarkup Color=Black,
-                                                                   Thickness=0}"
+                                Border="{pv:BorderMarkup Color=Black,
+                                                         Thickness=0}"
                                 CornerRadius="0,100,0,100">
                                 <Label
                                     Padding="20,4,4,4"
@@ -850,7 +850,7 @@
                                     xct:ShadowEffect.Opacity="0.5"
                                     Text="Forme d'Hisui"
                                     TextColor="White" />
-                            </cornerBorder:PancakeView>
+                            </pv:PancakeView>
                         </shadows:Shadows>
                     </StackLayout>
                     <StackLayout Margin="20,30,20,0">
@@ -920,10 +920,10 @@
                                         Color="#464C56" />
                                 </shadows:ImmutableShades>
                             </shadows:Shadows.Shades>
-                            <cornerBorder:PancakeView
+                            <pv:PancakeView
                                 BackgroundColor="{Binding FirstType.InfoColor}"
-                                Border="{cornerBorder:BorderMarkup Color=Black,
-                                                                   Thickness=0}"
+                                Border="{pv:BorderMarkup Color=Black,
+                                                         Thickness=0}"
                                 CornerRadius="0,100,0,100">
                                 <Label
                                     Padding="20,4,4,4"
@@ -932,7 +932,7 @@
                                     xct:ShadowEffect.Opacity="0.5"
                                     Text="Variant"
                                     TextColor="White" />
-                            </cornerBorder:PancakeView>
+                            </pv:PancakeView>
                         </shadows:Shadows>
                     </StackLayout>
                     <StackLayout Margin="20,40,20,0">
@@ -1002,10 +1002,10 @@
                                         Color="#464C56" />
                                 </shadows:ImmutableShades>
                             </shadows:Shadows.Shades>
-                            <cornerBorder:PancakeView
+                            <pv:PancakeView
                                 BackgroundColor="{Binding FirstType.InfoColor}"
-                                Border="{cornerBorder:BorderMarkup Color=Black,
-                                                                   Thickness=0}"
+                                Border="{pv:BorderMarkup Color=Black,
+                                                         Thickness=0}"
                                 CornerRadius="0,100,0,100">
                                 <Label
                                     Padding="20,4,4,4"
@@ -1014,7 +1014,7 @@
                                     xct:ShadowEffect.Opacity="0.5"
                                     Text="Variant Sexe"
                                     TextColor="White" />
-                            </cornerBorder:PancakeView>
+                            </pv:PancakeView>
                         </shadows:Shadows>
                     </StackLayout>
                     <StackLayout Margin="20,30,20,0">
@@ -1084,10 +1084,10 @@
                                         Color="#464C56" />
                                 </shadows:ImmutableShades>
                             </shadows:Shadows.Shades>
-                            <cornerBorder:PancakeView
+                            <pv:PancakeView
                                 BackgroundColor="{Binding FirstType.InfoColor}"
-                                Border="{cornerBorder:BorderMarkup Color=Black,
-                                                                   Thickness=0}"
+                                Border="{pv:BorderMarkup Color=Black,
+                                                         Thickness=0}"
                                 CornerRadius="0,100,0,100">
                                 <Label
                                     Padding="20,4,4,4"
@@ -1096,7 +1096,7 @@
                                     xct:ShadowEffect.Opacity="0.5"
                                     Text="Faiblesse(s)"
                                     TextColor="White" />
-                            </cornerBorder:PancakeView>
+                            </pv:PancakeView>
                         </shadows:Shadows>
                     </StackLayout>
                     <StackLayout Margin="20,40,20,0">

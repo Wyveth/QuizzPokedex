@@ -18,15 +18,13 @@ namespace QuizzPokedex.ViewModels
         private readonly IMvxIoCProvider _logger;
         private readonly IQuizzService _quizzService;
         private readonly IPokemonService _pokemonService;
-        private readonly IMvxMessenger _messenger;
 
-        public QuizzViewModel(IMvxNavigationService navigation, IMvxIoCProvider logger, IQuizzService quizzService, IMvxMessenger messenger, IPokemonService pokemonService)
+        public QuizzViewModel(IMvxNavigationService navigation, IMvxIoCProvider logger, IQuizzService quizzService, IPokemonService pokemonService)
         {
             _navigation = navigation;
             _logger = logger;
             _quizzService = quizzService;
             _pokemonService = pokemonService;
-            _messenger = messenger;
         }
 
         public override void Prepare(Quizz quizz)
