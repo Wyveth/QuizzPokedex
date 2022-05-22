@@ -11,6 +11,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="SQlite.QuizzPokedex.db" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="SQlite.QuizzPokedex.db" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="CardsView" Version="2.8.1" />
     <PackageReference Include="Microcharts.Forms" Version="1.0.0-preview1" />
     <PackageReference Include="MvvmCross" Version="8.0.2" />

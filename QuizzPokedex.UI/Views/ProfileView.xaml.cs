@@ -1,4 +1,7 @@
-﻿using System;
+﻿using MvvmCross.Forms.Views;
+using QuizzPokedex.Models;
+using QuizzPokedex.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +13,7 @@ using Xamarin.Forms.Xaml;
 namespace QuizzPokedex.UI.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class ProfileView : ContentView
+    public partial class ProfileView : MvxContentPage<ProfileViewModel>
     {
         public ProfileView()
         {
