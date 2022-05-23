@@ -17,6 +17,10 @@ namespace QuizzPokedex.Resources
 
         public const string Type_0 = "Type:0";
         public const string Type0 = "Type 0";
+        public const string Ningale = "Ningale";
+        public const string Ninjask = "Ninjask";
+        public const string Munja = "Munja";
+        public const string Prismillon = "Prismillon";
 
         public const string BlackHexa = "#000000";
         public const string WhiteHexa = "#ffffff";

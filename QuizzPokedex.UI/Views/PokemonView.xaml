@@ -441,7 +441,7 @@
                                     <Grid>
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="110" />
-                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="15" />
                                             <RowDefinition Height="*" />
                                         </Grid.RowDefinitions>
                                         <Image
@@ -533,7 +533,7 @@
                                     <Grid>
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="110" />
-                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="15" />
                                             <RowDefinition Height="*" />
                                         </Grid.RowDefinitions>
                                         <Image
@@ -953,7 +953,7 @@
                                     <Grid>
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="110" />
-                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="35" />
                                         </Grid.RowDefinitions>
                                         <Image
                                             Grid.Row="0"

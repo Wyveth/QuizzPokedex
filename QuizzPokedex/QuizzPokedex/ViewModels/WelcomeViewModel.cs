@@ -107,6 +107,7 @@ namespace QuizzPokedex.ViewModels
 
         #region Command
         public IMvxAsyncCommand NavigationQuizzCommandAsync => new MvxAsyncCommand(NavigationQuizzAsync);
+        public IMvxAsyncCommand NavigationProfileCommandAsync => new MvxAsyncCommand(NavigationProfileAsync);
         public IMvxAsyncCommand NavigationPokedexCommandAsync => new MvxAsyncCommand(NavigationPokedexAsync);
 
         private async Task NavigationQuizzAsync()
@@ -116,7 +117,7 @@ namespace QuizzPokedex.ViewModels
 
         private async Task NavigationProfileAsync()
         {
-            await _navigation.Navigate<QuizzViewModel>();
+            await _navigation.Navigate<ProfileViewModel>();
         }
 
         private async Task NavigationPokedexAsync()

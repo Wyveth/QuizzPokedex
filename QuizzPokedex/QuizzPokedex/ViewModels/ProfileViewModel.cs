@@ -1,10 +1,12 @@
-﻿using MvvmCross.Commands;
+﻿using Android.Graphics;
+using MvvmCross.Commands;
 using MvvmCross.IoC;
 using MvvmCross.Navigation;
 using MvvmCross.Plugin.Messenger;
 using MvvmCross.ViewModels;
 using QuizzPokedex.Interfaces;
 using QuizzPokedex.Models;
+using QuizzPokedex.Resources;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -22,14 +24,17 @@ namespace QuizzPokedex.ViewModels
         private readonly IMvxIoCProvider _logger;
         private readonly IProfileService _profileService;
         private readonly IMvxMessenger _messenger;
+        private readonly ITypePokService _typePokService;
+        private readonly object BitmapExtension;
         #endregion
 
         #region Constructor
-        public ProfileViewModel(IMvxNavigationService navigation, IMvxIoCProvider logger, IProfileService ProfileService, IMvxMessenger messenger)
+        public ProfileViewModel(IMvxNavigationService navigation, IMvxIoCProvider logger, IProfileService ProfileService, ITypePokService typePokService, IMvxMessenger messenger)
         {
             _navigation = navigation;
             _logger = logger;
             _profileService = ProfileService;
+            _typePokService = typePokService;
             _messenger = messenger;
         }
         #endregion
@@ -39,21 +44,19 @@ namespace QuizzPokedex.ViewModels
         {
             Profile = profile;
 
-            if (Profile.Id.Equals(0))
-                //mode création
-                TakePhotoCommandVisible = true;
-            else
-                //mode édition
-                ModeUpdate = true;
-
             base.Prepare();
+        }
+
+        public override async Task Initialize()
+        {
+            TypePok typePok = await _typePokService.GetByNameAsync(Constantes.Fire);
+            Bitmap bitmap = BitmapFactory.DecodeByteArray(typePok.DataFondGo, 0, typePok.DataFondGo.Length);
         }
         #endregion
 
         #region COMMAND
         public IMvxAsyncCommand NavigationBackCommandAsync => new MvxAsyncCommand(NavigationBackAsync);
         public IMvxAsyncCommand SaveCommandAsync => new MvxAsyncCommand(SaveAsync);
-        public IMvxAsyncCommand TakePhotoCommandAsync => new MvxAsyncCommand(TakePhotoAsync);
 
         private async Task NavigationBackAsync()
         {
@@ -78,25 +81,6 @@ namespace QuizzPokedex.ViewModels
                 await _navigation.Close(this);
             }
         }
-
-        private async Task TakePhotoAsync()
-        {
-            try
-            {
-                var photo = await MediaPicker.CapturePhotoAsync();
-                //Affichage de la photo a partir du cache
-
-                Photo = photo;
-                TakePhotoCommandVisible = false;
-                await RaisePropertyChanged(() => Photo);
-                await RaisePropertyChanged(() => TakePhotoCommandVisible);
-
-            }
-            catch (Exception ex)
-            {
-                //_logger.ErrorException("Exception sur Photo", ex);
-            }
-        }
         #endregion
 
         #region PROPERTIES
@@ -107,21 +91,14 @@ namespace QuizzPokedex.ViewModels
             set { SetProperty(ref _Profile, value); }
         }
 
-        private FileResult _photo;
+        private byte[] _backgroundType;
 
-        public FileResult Photo
+        public byte[] MyProperty
         {
-            get { return _photo; }
-            set { SetProperty(ref _photo, value); }
+            get { return _backgroundType; }
+            set { _backgroundType = value; }
         }
 
-        private bool _takePhotoCommandVisible;
-
-        public bool TakePhotoCommandVisible
-        {
-            get { return _takePhotoCommandVisible; }
-            set { SetProperty(ref _takePhotoCommandVisible, value); }
-        }
 
         private bool _modeUpdate;
 

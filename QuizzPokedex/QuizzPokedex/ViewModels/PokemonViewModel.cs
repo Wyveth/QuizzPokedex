@@ -230,10 +230,14 @@ namespace QuizzPokedex.ViewModels
 
         private async Task<int> GetHeightSection(int count)
         {
+            if (Pokemon.Name.Contains(Constantes.Ningale) 
+                || Pokemon.Name.Contains(Constantes.Ninjask) 
+                || Pokemon.Name.Contains(Constantes.Munja))
+                return await Task.FromResult(200);
             if (count <= 3)
                 return await Task.FromResult(180);
             else if (count <= 6)
-                return await Task.FromResult(320);
+                return await Task.FromResult(340);
             else if (count <= 9)
                 return await Task.FromResult(500);
             else
@@ -242,7 +246,9 @@ namespace QuizzPokedex.ViewModels
 
         private async Task<int> GetHeightSectionVariant(int count)
         {
-            if (count <= 3)
+            if (Pokemon.Name.Contains(Constantes.Prismillon))
+                return await Task.FromResult(320);
+            else if (count <= 3)
                 return await Task.FromResult(180);
             else if (count <= 6)
                 return await Task.FromResult(290);
