@@ -7,6 +7,7 @@ using Android.OS;
 using QuizzPokedex.UI;
 using MvvmCross.Forms.Platforms.Android.Views;
 using PanCardView.Droid;
+using FFImageLoading.Forms.Platform;
 
 namespace QuizzPokedex.Droid
 {
@@ -22,6 +23,7 @@ namespace QuizzPokedex.Droid
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
+            CachedImageRenderer.Init(true);
             CardsViewRenderer.Preserve();
         }
 

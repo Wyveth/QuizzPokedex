@@ -17,6 +17,10 @@ namespace QuizzPokedex.UI.Views
         public QuizzView()
         {
             InitializeComponent();
+
+            //List<ITransformation> ts = new List<ITransformation>();
+            //ITransformation ImageTransformation = new GrayscaleTransformation();
+            //ts.Add(ImageTransformation);
         }
     }
 }

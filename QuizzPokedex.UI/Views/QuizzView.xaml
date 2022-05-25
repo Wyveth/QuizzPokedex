@@ -44,7 +44,7 @@
                         <pv:PancakeView
                             BackgroundColor="White"
                             Border="{pv:BorderMarkup Color=Gray,
-                                                               Thickness=0}"
+                                                     Thickness=0}"
                             CornerRadius="100,100,100,100">
                             <ImageButton
                                 Padding="4,9,5,9"
@@ -84,3 +84,9 @@
         </StackLayout>
     </ContentPage.Content>
 </views:MvxContentPage>
+
+<!--<forms:CachedImage
+                    Margin="0,25,0,0"
+                    DownsampleToViewSize="True"
+                    Source="{Binding BackgroundType, Converter={StaticResource ByteToImageSourceConverter}}"
+                    Transformations="{Binding Transformations}" />-->

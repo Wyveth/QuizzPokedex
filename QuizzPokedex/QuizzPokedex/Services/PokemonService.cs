@@ -46,6 +46,20 @@ namespace QuizzPokedex.Services
             return result;
         }
 
+        public async Task<List<Pokemon>> GetAllStartGen1Async()
+        {
+            List<Pokemon> pokemons = new List<Pokemon>();
+
+            var result = await GetAllAsync();
+
+            pokemons.Add(result.Find(m => m.Number.Equals("001")));
+            pokemons.Add(result.Find(m => m.Number.Equals("004")));
+            pokemons.Add(result.Find(m => m.Number.Equals("007")));
+            pokemons.Add(result.Find(m => m.Number.Equals("025")));
+
+            return await Task.FromResult(pokemons);
+        }
+
         public async Task<List<Pokemon>> GetAllWithoutVariantAsync(string filter, bool gen1, bool gen2, bool gen3, bool gen4, bool gen5, bool gen6, bool gen7, bool gen8, bool genArceus, bool steel, bool fighting, bool dragon, bool water, bool electric, bool fairy, bool fire, bool ice, bool bug, bool normal, bool grass, bool poison, bool psychic, bool rock, bool ground, bool ghost, bool dark, bool flying, bool descending)
         {
             List<Pokemon> result = await _database.Table<Pokemon>().Where(m => m.TypeEvolution.Equals(Constantes.NormalEvolution)).OrderBy(m => m.Number).ToListAsync();
