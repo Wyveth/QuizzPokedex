@@ -17,8 +17,8 @@ namespace QuizzPokedex.Models
         //Date Naissance
         public string BirthDate { get; set; }
         
-        //Photo
-        public byte[] Picture { get; set; }
+        //ID Pokemon
+        public int PokemonID { get; set; }
 
         //Actif
         public bool Activated { get; set; }

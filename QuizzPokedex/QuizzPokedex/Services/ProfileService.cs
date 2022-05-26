@@ -33,6 +33,17 @@ namespace QuizzPokedex.Services
             return await _database.Table<Profile>().Where(m => m.Activated.Equals(false)).ToListAsync();
         }
 
+        public async Task<bool> CheckIfProfilPokemonExist(Pokemon pokemon)
+        {
+            List<Profile> profiles = await GetAllAsync();
+            Profile profile = profiles.Find(m => m.PokemonID.Equals(pokemon.Id));
+
+            if (profile == null)
+                return false;
+            else
+                return true;
+        }
+
         public async Task<int> CreateAsync(Profile profile)
         {
             var result = await _database.InsertAsync(profile);

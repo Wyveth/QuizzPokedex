@@ -28,9 +28,9 @@
         <Grid ColumnSpacing="0" RowSpacing="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="10*" />
+                <RowDefinition Height="25*" />
+                <RowDefinition Height="15*" />
                 <RowDefinition Height="30*" />
-                <RowDefinition Height="20*" />
-                <RowDefinition Height="20*" />
                 <RowDefinition Height="20*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
@@ -41,43 +41,52 @@
             </Grid.ColumnDefinitions>
 
             <!--  BackButton  -->
+            <StackLayout x:Name="backButton">
+                <shadows:Shadows Margin="23,15,35,50" CornerRadius="20">
+                    <shadows:Shadows.Shades>
+                        <shadows:ImmutableShades>
+                            <shadows:Shade
+                                BlurRadius="10"
+                                Opacity="0.5"
+                                Offset="-1,-1"
+                                Color="#464C56" />
+                            <shadows:Shade
+                                BlurRadius="10"
+                                Opacity="0.5"
+                                Offset="1,1"
+                                Color="#464C56" />
+                        </shadows:ImmutableShades>
+                    </shadows:Shadows.Shades>
+                    <pv:PancakeView BackgroundColor="White" CornerRadius="100,100,100,100">
+                        <ImageButton
+                            Padding="10,5,12,5"
+                            BackgroundColor="White"
+                            Command="{Binding NavigationBackCommandAsync}"
+                            HeightRequest="45"
+                            Source="@mipmap/left"
+                            WidthRequest="45" />
+                    </pv:PancakeView>
+                </shadows:Shadows>
+            </StackLayout>
             <StackLayout
                 Grid.Row="0"
                 Grid.ColumnSpan="4"
-                Margin="0,0,0,0"
+                Margin="90,0,90,0"
                 BackgroundColor="white"
                 Orientation="Horizontal">
-                <animation:AnimationView
-                    Animation="Resources.lf30_editor_j21rvxzk.json"
-                    AnimationSource="EmbeddedResource"
-                    Command="{Binding NavigationBackCommandAsync}"
-                    HeightRequest="70"
-                    HorizontalOptions="Start"
-                    RepeatMode="Restart"
-                    Rotation="180"
-                    ScaleX="1.5"
-                    ScaleY="1.5"
-                    VerticalOptions="StartAndExpand"
-                    WidthRequest="70" />
-                <Image Margin="6,3,0,3" Source="@mipmap/pokeball" />
+                <Image Margin="0,3,0,3" Source="@drawable/normalball.png" />
+
                 <Label
                     FontFamily="Montserrat-SemiBold"
-                    FontSize="20"
+                    FontSize="16"
                     HorizontalOptions="CenterAndExpand"
                     LineBreakMode="TailTruncation"
                     Text="Créer son profil"
                     TextColor="#464C56"
+                    TextDecorations="Underline"
                     VerticalOptions="CenterAndExpand" />
-                <Image Margin="6,3,0,3" Source="@mipmap/pokeball" />
-                <animation:AnimationView
-                    Animation="Resources.lf30_editor_nypmp9yw.json"
-                    AnimationSource="EmbeddedResource"
-                    Command="{Binding SaveCommandAsync}"
-                    HeightRequest="70"
-                    HorizontalOptions="Start"
-                    RepeatMode="Restart"
-                    VerticalOptions="StartAndExpand"
-                    WidthRequest="70" />
+
+                <Image Margin="0,3,0,3" Source="@drawable/superball.png" />
             </StackLayout>
 
             <Grid
@@ -180,13 +189,51 @@
                 Grid.Row="3"
                 Grid.Column="1"
                 Grid.ColumnSpan="2">
-                <Image Source="{Binding pokemonSelected.DataImg, Converter={StaticResource ByteToImageSourceConverter}}" />
+                <Image
+                    IsVisible="{Binding IsVisibleStarter}"
+                    Source="{Binding pokemonSelected.DataImg, Converter={StaticResource ByteToImageSourceConverter}}"
+                    VerticalOptions="CenterAndExpand" />
+                <Image
+                    Margin="-45,-20,-45,0"
+                    IsVisible="{Binding IsVisibleStarter, Converter={StaticResource InverseBoolConverter}}"
+                    Source="@drawable/ProfChen.png" />
             </StackLayout>
             <StackLayout
                 Grid.Row="4"
-                Grid.Column="1"
-                Grid.ColumnSpan="2">
-                <Button Text="Je te choisi!" TextTransform="None" />
+                Grid.ColumnSpan="4"
+                Margin="50,0,50,-20"
+                HorizontalOptions="CenterAndExpand"
+                Orientation="Horizontal"
+                VerticalOptions="CenterAndExpand">
+                <Image Margin="6,3,0,3" Source="@drawable/hyperball.png" />
+                <shadows:Shadows Margin="5,15,5,15" CornerRadius="30">
+                    <shadows:Shadows.Shades>
+                        <shadows:ImmutableShades>
+                            <shadows:Shade
+                                BlurRadius="10"
+                                Opacity="0.5"
+                                Offset="-1,-1"
+                                Color="#464C56" />
+                            <shadows:Shade
+                                BlurRadius="10"
+                                Opacity="0.5"
+                                Offset="1,1"
+                                Color="#464C56" />
+                        </shadows:ImmutableShades>
+                    </shadows:Shadows.Shades>
+                    <pv:PancakeView
+                        Padding="12,0,12,0"
+                        BackgroundColor="White"
+                        CornerRadius="100,100,100,100">
+                        <Button
+                            Padding="10"
+                            BackgroundColor="White"
+                            Command="{Binding SaveCommandAsync}"
+                            Text="Je te choisi!"
+                            TextTransform="None" />
+                    </pv:PancakeView>
+                </shadows:Shadows>
+                <Image Margin="0,3,6,3" Source="@drawable/masterball.png" />
             </StackLayout>
         </Grid>
     </ContentPage.Content>

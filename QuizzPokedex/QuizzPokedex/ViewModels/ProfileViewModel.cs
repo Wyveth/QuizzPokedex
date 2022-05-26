@@ -8,6 +8,7 @@ using MvvmCross.ViewModels;
 using QuizzPokedex.Interfaces;
 using QuizzPokedex.Models;
 using QuizzPokedex.Resources;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -60,10 +61,11 @@ namespace QuizzPokedex.ViewModels
             StarterFire = pokemonsAvailable[1];
             StarterWater = pokemonsAvailable[2];
             StarterElectrik = pokemonsAvailable[3];
+            IsVisibleStarter = true;
         }
         #endregion
 
-            #region COMMAND
+        #region COMMAND
         public IMvxAsyncCommand NavigationBackCommandAsync => new MvxAsyncCommand(NavigationBackAsync);
         public IMvxAsyncCommand SelectedStarterGrassCommandAsync => new MvxAsyncCommand(SelectedStarterGrassAsync);
         public IMvxAsyncCommand SelectedStarterFireCommandAsync => new MvxAsyncCommand(SelectedStarterFireAsync);
@@ -78,34 +80,76 @@ namespace QuizzPokedex.ViewModels
 
         private async Task SelectedStarterGrassAsync()
         {
-            pokemonSelected = StarterGrass;
+            bool exist = await _profileService.CheckIfProfilPokemonExist(StarterGrass);
+            if (!exist)
+            {
+                pokemonSelected = StarterGrass;
+                IsVisibleStarter = true;
+            }
+            else
+            {
+                pokemonSelected = null;
+                IsVisibleStarter = false;
+            }
         }
 
         private async Task SelectedStarterFireAsync()
         {
-            pokemonSelected = StarterFire;
+            bool exist = await _profileService.CheckIfProfilPokemonExist(StarterFire);
+            if (!exist)
+            {
+                pokemonSelected = StarterFire;
+                IsVisibleStarter = true;
+            }
+            else
+            {
+                pokemonSelected = null;
+                IsVisibleStarter = false;
+            }
         }
 
         private async Task SelectedStarterWaterAsync()
         {
-            pokemonSelected = StarterWater;
+            bool exist = await _profileService.CheckIfProfilPokemonExist(StarterWater);
+            if (!exist)
+            {
+                pokemonSelected = StarterWater;
+                IsVisibleStarter = true;
+            }
+            else
+            {
+                pokemonSelected = null;
+                IsVisibleStarter = false;
+            }
         }
 
         private async Task SelectedStarterElectrikAsync()
         {
-            pokemonSelected = StarterElectrik;
+            bool exist = await _profileService.CheckIfProfilPokemonExist(StarterElectrik);
+            if (!exist)
+            {
+                pokemonSelected = StarterElectrik;
+                IsVisibleStarter = true;
+            }
+            else
+            {
+                pokemonSelected = null;
+                IsVisibleStarter = false;
+            }
         }
 
         private async Task SaveAsync()
         {
-            //Save l'Profile s'il est complet  (nom, calorie, photo et categorie)
+            //Save le Profile s'il est complet  (Pseudo, Date de naissance, Pokémon)
             if (Profile.Name != string.Empty &&
-                Profile.BirthDate != string.Empty)
+                pokemonSelected != null)
             {
-                if (ModeUpdate)
-                    await _profileService.UpdateAsync(Profile);
-                else
-                    await _profileService.CreateAsync(Profile);
+                if (Profile.BirthDate == string.Empty)
+                    Profile.BirthDate = DateTime.Now.ToShortDateString();
+
+                Profile.PokemonID = pokemonSelected.Id;
+                Profile.Activated = true;
+                await _profileService.CreateAsync(Profile);
 
                 //nouvel enregistrement crée on informe par abonnement de rafraichir
                 var refresh = new MessageRefresh(this, true);
@@ -134,6 +178,13 @@ namespace QuizzPokedex.ViewModels
             set { SetProperty(ref _pokemonSelected, value); }
         }
 
+        private bool _isVisibleStarter;
+
+        public bool IsVisibleStarter
+        {
+            get { return _isVisibleStarter; }
+            set { SetProperty(ref _isVisibleStarter, value); }
+        }
 
         #region Starter Grass
         private Pokemon _starterGrass;
@@ -142,14 +193,6 @@ namespace QuizzPokedex.ViewModels
         {
             get { return _starterGrass; }
             set { SetProperty(ref _starterGrass, value); }
-        }
-
-        private bool _isVisibleStarterGrass;
-
-        public bool IsVisibleStarterGrass
-        {
-            get { return _isVisibleStarterGrass; }
-            set { SetProperty(ref _isVisibleStarterGrass, value); }
         }
         #endregion
 
@@ -161,14 +204,6 @@ namespace QuizzPokedex.ViewModels
             get { return _starterFire; }
             set { SetProperty(ref _starterFire, value); }
         }
-
-        private bool _isVisibleStarterFire;
-
-        public bool IsVisibleStarterFire
-        {
-            get { return _isVisibleStarterFire; }
-            set { SetProperty(ref _isVisibleStarterFire, value); }
-        }
         #endregion
 
         #region Starter Water
@@ -178,14 +213,6 @@ namespace QuizzPokedex.ViewModels
         {
             get { return _starterWater; }
             set { SetProperty(ref _starterWater, value); }
-        }
-
-        private bool _isVisibleStarterWater;
-
-        public bool IsVisibleStarterWater
-        {
-            get { return _isVisibleStarterWater; }
-            set { SetProperty(ref _isVisibleStarterWater, value); }
         }
         #endregion
 
@@ -197,15 +224,15 @@ namespace QuizzPokedex.ViewModels
             get { return _starterElectrik; }
             set { SetProperty(ref _starterElectrik, value); }
         }
-
-        private bool _isVisibleStarterElectrik;
-
-        public bool IsVisibleStarterElectrik
-        {
-            get { return _isVisibleStarterElectrik; }
-            set { SetProperty(ref _isVisibleStarterElectrik, value); }
-        }
         #endregion
+
+        private bool _isEnabled = false;
+
+        public bool IsEnabled
+        {
+            get { return _isEnabled; }
+            set { SetProperty(ref _isEnabled, value); }
+        }
 
         private bool _modeUpdate;
 

@@ -1,7 +1,9 @@
 ﻿using MvvmCross.Commands;
 using MvvmCross.Navigation;
+using MvvmCross.Plugin.Messenger;
 using MvvmCross.ViewModels;
 using QuizzPokedex.Interfaces;
+using QuizzPokedex.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,14 +17,20 @@ namespace QuizzPokedex.ViewModels
         private readonly IMvxNavigationService _navigation;
         private readonly IPokemonService _pokemonService;
         private readonly ITypePokService _typePokService;
+        private readonly IProfileService _profileService;
+
+        //Creation de l'abonnement ici (pour rafraichir via un abonné)
+        private readonly MvxSubscriptionToken _token;
         #endregion
 
         #region Constructor
-        public WelcomeViewModel(IMvxNavigationService navigation, IPokemonService pokemonService, ITypePokService typePokService)
+        public WelcomeViewModel(IMvxNavigationService navigation, IMvxMessenger messenger, IPokemonService pokemonService, ITypePokService typePokService, IProfileService profileService)
         {
             _navigation = navigation;
+            _token = messenger.Subscribe<MessageRefresh>(RefreshAsync);
             _pokemonService = pokemonService;
             _typePokService = typePokService;
+            _profileService = profileService;
         }
         #endregion
 
@@ -30,6 +38,7 @@ namespace QuizzPokedex.ViewModels
         public override async Task Initialize()
         {
             ProgressBarTask = MvxNotifyTask.Create(ProgressBarAsync);
+            ProfileTask = MvxNotifyTask.Create(ProfileAsync);
             await base.Initialize();
         }
         #endregion
@@ -103,6 +112,39 @@ namespace QuizzPokedex.ViewModels
             percent = double.Parse(result.ToString());
             return await Task.FromResult(percent);
         }
+
+        private async Task ProfileAsync()
+        {
+            List<Profile> profiles = await _profileService.GetAllAsync();
+            if (profiles.Count == 1)
+            {
+                FirstProfileCreated = true;
+                Profile profile = profiles.Find(m => m.Activated.Equals(true));
+                ActivatedProfile = await _pokemonService.GetByIdAsync(profile.PokemonID.ToString());
+                IsVisibleSecondProfile = true;
+            }
+            else if (profiles.Count == 2)
+            {
+                FirstProfileCreated = true;
+                SecondProfileCreated = true;
+                IsVisibleSecondProfile = true;
+                IsVisibleThirdProfile = true;
+            }
+            else if (profiles.Count == 3)
+            {
+                FirstProfileCreated = true;
+                SecondProfileCreated = true;
+                IsVisibleSecondProfile = true;
+                ThirdProfileCreated = true;
+                IsVisibleThirdProfile = true;
+            }
+        }
+
+        private async void RefreshAsync(MessageRefresh msg)
+        {
+            if (msg.Refresh)
+                await ProfileAsync();
+        }
         #endregion
 
         #region Command
@@ -117,7 +159,7 @@ namespace QuizzPokedex.ViewModels
 
         private async Task NavigationProfileAsync()
         {
-            await _navigation.Navigate<ProfileViewModel>();
+            await _navigation.Navigate<ProfileViewModel, Profile>(new Profile());
         }
 
         private async Task NavigationPokedexAsync()
@@ -129,6 +171,7 @@ namespace QuizzPokedex.ViewModels
         #region Properties
         #region Collection
         public MvxNotifyTask ProgressBarTask { get; private set; }
+        public MvxNotifyTask ProfileTask { get; private set; }
         #endregion
 
         #region ProgressBar
@@ -197,6 +240,30 @@ namespace QuizzPokedex.ViewModels
         {
             get { return _isVisibleThirdProfile; }
             set { SetProperty(ref _isVisibleThirdProfile, value); }
+        }
+
+        private Pokemon _activatedProfile;
+
+        public Pokemon ActivatedProfile
+        {
+            get { return _activatedProfile; }
+            set { SetProperty(ref _activatedProfile, value); }
+        }
+
+        private Pokemon _notActivatedFirstProfile;
+
+        public Pokemon NotActivatedFirstProfile
+        {
+            get { return _notActivatedFirstProfile; }
+            set { SetProperty(ref _notActivatedFirstProfile, value); }
+        }
+
+        private Pokemon _notActivatedSecondProfile;
+
+        public Pokemon NotActivatedSecondProfile
+        {
+            get { return _notActivatedSecondProfile; }
+            set { SetProperty(ref _notActivatedSecondProfile, value); }
         }
         #endregion
         #endregion
