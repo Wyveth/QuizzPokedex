@@ -47,6 +47,10 @@ namespace QuizzPokedex.Services
         public async Task<int> CreateAsync(Profile profile)
         {
             var result = await _database.InsertAsync(profile);
+
+            //Update Other Profile
+            _ = await UpdateProfileActivatedAsync(profile);
+
             return result;
         }
 
@@ -59,6 +63,21 @@ namespace QuizzPokedex.Services
         public async Task<int> UpdateAsync(Profile profile)
         {
             var result = await _database.InsertOrReplaceAsync(profile);
+            return result;
+        }
+
+        public async Task<bool> UpdateProfileActivatedAsync(Profile profile)
+        {
+            List<Profile> profiles = await GetAllAsync();
+            bool result = false;
+            foreach (Profile item in profiles)
+            {
+                if(item.Id == profile.Id)
+                    item.Activated = true;
+                else
+                    item.Activated = false;
+                _ =  await UpdateAsync(item);
+            }
             return result;
         }
     }

@@ -15,5 +15,6 @@ namespace QuizzPokedex.Interfaces
         Task<int> CreateAsync(Profile profile);
         Task<int> DeleteAsync(Profile profile);
         Task<int> UpdateAsync(Profile profile);
+        Task<bool> UpdateProfileActivatedAsync(Profile profile);
     }
 }

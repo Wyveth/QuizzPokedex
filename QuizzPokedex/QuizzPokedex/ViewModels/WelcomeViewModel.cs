@@ -116,27 +116,39 @@ namespace QuizzPokedex.ViewModels
         private async Task ProfileAsync()
         {
             List<Profile> profiles = await _profileService.GetAllAsync();
+
+            Profile profileActivated = profiles.Find(m => m.Activated.Equals(true));
+            List<Profile> profileNotActivated = profiles.FindAll(m => m.Activated.Equals(false));
+
             if (profiles.Count == 1)
             {
                 FirstProfileCreated = true;
-                Profile profile = profiles.Find(m => m.Activated.Equals(true));
-                ActivatedProfile = await _pokemonService.GetByIdAsync(profile.PokemonID.ToString());
+                ActivatedProfile = await _pokemonService.GetByIdAsync(profileActivated.PokemonID.ToString());
                 IsVisibleSecondProfile = true;
             }
             else if (profiles.Count == 2)
             {
                 FirstProfileCreated = true;
+                ActivatedProfile = await _pokemonService.GetByIdAsync(profileActivated.PokemonID.ToString());
+
                 SecondProfileCreated = true;
                 IsVisibleSecondProfile = true;
+                NotActivatedFirstProfile = await _pokemonService.GetByIdAsync(profileNotActivated[0].PokemonID.ToString());
+
                 IsVisibleThirdProfile = true;
             }
             else if (profiles.Count == 3)
             {
                 FirstProfileCreated = true;
+                ActivatedProfile = await _pokemonService.GetByIdAsync(profileActivated.PokemonID.ToString());
+
                 SecondProfileCreated = true;
                 IsVisibleSecondProfile = true;
+                NotActivatedFirstProfile = await _pokemonService.GetByIdAsync(profileNotActivated[0].PokemonID.ToString());
+
                 ThirdProfileCreated = true;
                 IsVisibleThirdProfile = true;
+                NotActivatedSecondProfile = await _pokemonService.GetByIdAsync(profileNotActivated[1].PokemonID.ToString());
             }
         }
 

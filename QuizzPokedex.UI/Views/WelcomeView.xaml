@@ -211,10 +211,11 @@
                         IsVisible="{Binding FirstProfileCreated}"
                         VerticalOptions="EndAndExpand"
                         WidthRequest="30">
-                        <Image
-                            HeightRequest="30"
-                            Source="{Binding ActivatedProfile.DataImg, Converter={StaticResource ByteToImageSourceConverter}}"
-                            WidthRequest="30" />
+                        <ImageButton
+                            Margin="-20"
+                            Padding="12"
+                            BackgroundColor="White"
+                            Source="{Binding ActivatedProfile.DataImg, Converter={StaticResource ByteToImageSourceConverter}}" />
                     </pv:PancakeView>
                 </shadows:Shadows>
             </StackLayout>
@@ -285,10 +286,11 @@
                         IsVisible="{Binding SecondProfileCreated}"
                         VerticalOptions="EndAndExpand"
                         WidthRequest="30">
-                        <Image
-                            HeightRequest="30"
-                            Source="@drawable/pokeball.png"
-                            WidthRequest="30" />
+                        <ImageButton
+                            Margin="-20"
+                            Padding="12"
+                            BackgroundColor="White"
+                            Source="{Binding NotActivatedFirstProfile.DataImg, Converter={StaticResource ByteToImageSourceConverter}}" />
                     </pv:PancakeView>
                 </shadows:Shadows>
             </StackLayout>
@@ -325,7 +327,7 @@
                         WidthRequest="30">
                         <ImageButton
                             Margin="-15"
-                            Padding="10"
+                            Padding="12"
                             BackgroundColor="white"
                             Command="{Binding NavigationProfileCommandAsync}"
                             CornerRadius="40"
@@ -360,10 +362,11 @@
                         IsVisible="{Binding ThirdProfileCreated}"
                         VerticalOptions="EndAndExpand"
                         WidthRequest="30">
-                        <Image
-                            HeightRequest="30"
-                            Source="@drawable/pokeball.png"
-                            WidthRequest="30" />
+                        <ImageButton
+                            Margin="-20"
+                            Padding="10"
+                            BackgroundColor="White"
+                            Source="{Binding NotActivatedSecondProfile.DataImg, Converter={StaticResource ByteToImageSourceConverter}}" />
                     </pv:PancakeView>
                 </shadows:Shadows>
             </StackLayout>

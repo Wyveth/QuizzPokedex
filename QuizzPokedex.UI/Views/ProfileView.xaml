@@ -201,11 +201,11 @@
             <StackLayout
                 Grid.Row="4"
                 Grid.ColumnSpan="4"
-                Margin="50,0,50,-20"
+                Margin="30,0,30,-20"
                 HorizontalOptions="CenterAndExpand"
                 Orientation="Horizontal"
                 VerticalOptions="CenterAndExpand">
-                <Image Margin="6,3,0,3" Source="@drawable/hyperball.png" />
+                <Image Margin="0,3,0,3" Source="@drawable/hyperball.png" />
                 <shadows:Shadows Margin="5,15,5,15" CornerRadius="30">
                     <shadows:Shadows.Shades>
                         <shadows:ImmutableShades>
@@ -229,11 +229,11 @@
                             Padding="10"
                             BackgroundColor="White"
                             Command="{Binding SaveCommandAsync}"
-                            Text="Je te choisi!"
+                            ImageSource="@drawable/IChooseYou.png"
                             TextTransform="None" />
                     </pv:PancakeView>
                 </shadows:Shadows>
-                <Image Margin="0,3,6,3" Source="@drawable/masterball.png" />
+                <Image Margin="0,3,0,3" Source="@drawable/masterball.png" />
             </StackLayout>
         </Grid>
     </ContentPage.Content>

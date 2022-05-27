@@ -55,13 +55,13 @@ namespace QuizzPokedex.ViewModels
         #region Private Methods
         private async Task LoadPokemonAsync()
         {
+            IsVisibleStarter = true;
             List<Pokemon> pokemonsAvailable = await _pokemonService.GetAllStartGen1Async();
-
             StarterGrass = pokemonsAvailable[0];
             StarterFire = pokemonsAvailable[1];
             StarterWater = pokemonsAvailable[2];
             StarterElectrik = pokemonsAvailable[3];
-            IsVisibleStarter = true;
+            
         }
         #endregion
 
@@ -141,7 +141,7 @@ namespace QuizzPokedex.ViewModels
         private async Task SaveAsync()
         {
             //Save le Profile s'il est complet  (Pseudo, Date de naissance, Pokémon)
-            if (Profile.Name != string.Empty &&
+            if (!string.IsNullOrEmpty(Profile.Name) &&
                 pokemonSelected != null)
             {
                 if (Profile.BirthDate == string.Empty)
@@ -178,7 +178,7 @@ namespace QuizzPokedex.ViewModels
             set { SetProperty(ref _pokemonSelected, value); }
         }
 
-        private bool _isVisibleStarter;
+        private bool _isVisibleStarter = false;
 
         public bool IsVisibleStarter
         {
