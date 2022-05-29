@@ -214,8 +214,10 @@
                         <ImageButton
                             Margin="-20"
                             Padding="12"
+                            ef:AddCommand.LongCommand="{Binding}"
                             BackgroundColor="White"
-                            Source="{Binding ActivatedProfile.DataImg, Converter={StaticResource ByteToImageSourceConverter}}" />
+                            Command="{Binding ShowHideOtherProfileCommandAsync}"
+                            Source="{Binding ActivatedPokemonProfile.DataImg, Converter={StaticResource ByteToImageSourceConverter}}" />
                     </pv:PancakeView>
                 </shadows:Shadows>
             </StackLayout>
@@ -290,7 +292,9 @@
                             Margin="-20"
                             Padding="12"
                             BackgroundColor="White"
-                            Source="{Binding NotActivatedFirstProfile.DataImg, Converter={StaticResource ByteToImageSourceConverter}}" />
+                            Command="{Binding OpenModalChangeProfileCommandAsync}"
+                            CommandParameter="{Binding NotActivatedFirstProfile}"
+                            Source="{Binding NotActivatedPokemonFirstProfile.DataImg, Converter={StaticResource ByteToImageSourceConverter}}" />
                     </pv:PancakeView>
                 </shadows:Shadows>
             </StackLayout>
@@ -364,11 +368,125 @@
                         WidthRequest="30">
                         <ImageButton
                             Margin="-20"
-                            Padding="10"
+                            Padding="12"
                             BackgroundColor="White"
-                            Source="{Binding NotActivatedSecondProfile.DataImg, Converter={StaticResource ByteToImageSourceConverter}}" />
+                            Command="{Binding OpenModalChangeProfileCommandAsync}"
+                            CommandParameter="{Binding NotActivatedSecondProfile}"
+                            Source="{Binding NotActivatedPokemonSecondProfile.DataImg, Converter={StaticResource ByteToImageSourceConverter}}" />
                     </pv:PancakeView>
                 </shadows:Shadows>
+            </StackLayout>
+            <StackLayout
+                x:Name="BackgroundModalFilter"
+                AbsoluteLayout.LayoutBounds="1,1,1,1"
+                AbsoluteLayout.LayoutFlags="All"
+                BackgroundColor="Black"
+                IsVisible="{Binding IsVisibleBackgroundModalFilter}"
+                Opacity="0.3" />
+            <StackLayout
+                x:Name="ModalChangeProfile"
+                ef:Border.Color="Black"
+                ef:Border.On="True"
+                ef:Border.Radius="30"
+                ef:Border.Width="0.75"
+                xct:CornerRadiusEffect.CornerRadius="30"
+                AbsoluteLayout.LayoutBounds="0.5,0.5,0.6,0.15"
+                AbsoluteLayout.LayoutFlags="All"
+                BackgroundColor="White"
+                IsVisible="{Binding IsVisibleModalChangeProfile}"
+                Opacity="1">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Label
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        Margin="15"
+                        xct:ShadowEffect.Color="black"
+                        xct:ShadowEffect.OffsetX="5"
+                        xct:ShadowEffect.OffsetY="10"
+                        xct:ShadowEffect.Opacity="0.5"
+                        xct:ShadowEffect.Radius="20"
+                        FontAttributes="Bold"
+                        HorizontalOptions="CenterAndExpand"
+                        Text="Veux tu changer de profil?"
+                        TextColor="Black" />
+                    <shadows:Shadows
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        Margin="10,0,10,10"
+                        CornerRadius="20">
+                        <shadows:Shadows.Shades>
+                            <shadows:ImmutableShades>
+                                <shadows:Shade
+                                    BlurRadius="20"
+                                    Opacity="0.5"
+                                    Offset="-3,-3"
+                                    Color="#464C56" />
+                                <shadows:Shade
+                                    BlurRadius="20"
+                                    Opacity="0.5"
+                                    Offset="3,3"
+                                    Color="#464C56" />
+                            </shadows:ImmutableShades>
+                        </shadows:Shadows.Shades>
+                        <pv:PancakeView
+                            Margin="20,0,0,0"
+                            BackgroundColor="White"
+                            Border="{pv:BorderMarkup Color=Gray,
+                                                     Thickness=1}"
+                            CornerRadius="20,20,20,20">
+                            <Button
+                                Grid.Row="2"
+                                Grid.Column="0"
+                                BackgroundColor="White"
+                                Command="{Binding CloseModalChangeProfileCommandAsync}"
+                                HorizontalOptions="CenterAndExpand"
+                                Text="Non" />
+                        </pv:PancakeView>
+                    </shadows:Shadows>
+                    <shadows:Shadows
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        Margin="10,0,10,10"
+                        CornerRadius="20">
+                        <shadows:Shadows.Shades>
+                            <shadows:ImmutableShades>
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.5"
+                                    Offset="-3,-3"
+                                    Color="#464C56" />
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.5"
+                                    Offset="3,3"
+                                    Color="#464C56" />
+                            </shadows:ImmutableShades>
+                        </shadows:Shadows.Shades>
+                        <pv:PancakeView
+                            Margin="6,0,20,0"
+                            BackgroundColor="White"
+                            Border="{pv:BorderMarkup Color=Gray,
+                                                     Thickness=1}"
+                            CornerRadius="20,20,20,20">
+                            <Button
+                                Grid.Row="2"
+                                Grid.Column="1"
+                                BackgroundColor="White"
+                                Command="{Binding ChangeProfileCommandAsync}"
+                                HorizontalOptions="CenterAndExpand"
+                                Text="Oui" />
+                        </pv:PancakeView>
+                    </shadows:Shadows>
+                </Grid>
             </StackLayout>
         </AbsoluteLayout>
     </ContentPage.Content>

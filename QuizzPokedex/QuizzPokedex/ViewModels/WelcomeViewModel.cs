@@ -116,39 +116,24 @@ namespace QuizzPokedex.ViewModels
         private async Task ProfileAsync()
         {
             List<Profile> profiles = await _profileService.GetAllAsync();
+            ActivatedProfile = profiles.Find(m => m.Activated.Equals(true));
 
-            Profile profileActivated = profiles.Find(m => m.Activated.Equals(true));
-            List<Profile> profileNotActivated = profiles.FindAll(m => m.Activated.Equals(false));
-
-            if (profiles.Count == 1)
+            if (profiles.Count >= 1)
             {
                 FirstProfileCreated = true;
-                ActivatedProfile = await _pokemonService.GetByIdAsync(profileActivated.PokemonID.ToString());
-                IsVisibleSecondProfile = true;
+                ActivatedPokemonProfile = await _pokemonService.GetByIdAsync(ActivatedProfile.PokemonID.ToString());
             }
-            else if (profiles.Count == 2)
+
+            if (profiles.Count >= 2)
             {
-                FirstProfileCreated = true;
-                ActivatedProfile = await _pokemonService.GetByIdAsync(profileActivated.PokemonID.ToString());
-
-                SecondProfileCreated = true;
-                IsVisibleSecondProfile = true;
-                NotActivatedFirstProfile = await _pokemonService.GetByIdAsync(profileNotActivated[0].PokemonID.ToString());
-
-                IsVisibleThirdProfile = true;
+                SecondProfileCreated = false;
+                IsVisibleSecondProfile = false;
+                IsVisibleThirdProfile = false;
             }
-            else if (profiles.Count == 3)
+
+            if (profiles.Count == 3)
             {
-                FirstProfileCreated = true;
-                ActivatedProfile = await _pokemonService.GetByIdAsync(profileActivated.PokemonID.ToString());
-
-                SecondProfileCreated = true;
-                IsVisibleSecondProfile = true;
-                NotActivatedFirstProfile = await _pokemonService.GetByIdAsync(profileNotActivated[0].PokemonID.ToString());
-
-                ThirdProfileCreated = true;
-                IsVisibleThirdProfile = true;
-                NotActivatedSecondProfile = await _pokemonService.GetByIdAsync(profileNotActivated[1].PokemonID.ToString());
+                ThirdProfileCreated = false;
             }
         }
 
@@ -164,6 +149,15 @@ namespace QuizzPokedex.ViewModels
         public IMvxAsyncCommand NavigationProfileCommandAsync => new MvxAsyncCommand(NavigationProfileAsync);
         public IMvxAsyncCommand NavigationPokedexCommandAsync => new MvxAsyncCommand(NavigationPokedexAsync);
 
+        public IMvxAsyncCommand ShowHideOtherProfileCommandAsync => new MvxAsyncCommand(ShowHideOtherProfileAsync);
+        public IMvxAsyncCommand ActivatedProfileLongCommandAsync => new MvxAsyncCommand(ActivatedProfileLongAsync);
+
+        public IMvxAsyncCommand<Profile> OpenModalChangeProfileCommandAsync => new MvxAsyncCommand<Profile>(OpenModalChangeProfileAsync);
+
+        public IMvxAsyncCommand CloseModalChangeProfileCommandAsync => new MvxAsyncCommand(CloseModalChangeProfileAsync);
+
+        public IMvxAsyncCommand ChangeProfileCommandAsync => new MvxAsyncCommand(ChangeProfileAsync);
+
         private async Task NavigationQuizzAsync()
         {
             await _navigation.Navigate<QuizzViewModel>();
@@ -177,6 +171,74 @@ namespace QuizzPokedex.ViewModels
         private async Task NavigationPokedexAsync()
         {
             await _navigation.Navigate<PokedexViewModel>();
+        }
+
+        private async Task ShowHideOtherProfileAsync()
+        {
+            List<Profile> profiles = await _profileService.GetAllAsync();
+            List<Profile> profileNotActivated = profiles.FindAll(m => m.Activated.Equals(false));
+
+            if (profiles.Count >= 1)
+            {
+                ActivatedProfile = profiles.Find(m => m.Activated.Equals(true));
+                ActivatedPokemonProfile = await _pokemonService.GetByIdAsync(ActivatedProfile.PokemonID.ToString());
+                IsVisibleSecondProfile = !IsVisibleSecondProfile;
+            }
+
+            if (profiles.Count >= 2)
+            {
+                SecondProfileCreated = !SecondProfileCreated;
+                NotActivatedFirstProfile = profileNotActivated[0];
+                NotActivatedPokemonFirstProfile = await _pokemonService.GetByIdAsync(profileNotActivated[0].PokemonID.ToString());
+                IsVisibleThirdProfile = !IsVisibleThirdProfile;
+            }
+
+            if (profiles.Count == 3)
+            {
+                ThirdProfileCreated = !ThirdProfileCreated;
+                NotActivatedSecondProfile = profileNotActivated[1];
+                NotActivatedPokemonSecondProfile = await _pokemonService.GetByIdAsync(profileNotActivated[1].PokemonID.ToString());
+            }
+        }
+
+        private async Task ActivatedProfileLongAsync()
+        {
+            await Task.Run(() =>
+            {
+            });
+        }
+
+        private async Task OpenModalChangeProfileAsync(Profile profile)
+        {
+            SelectedProfileChange = profile;
+            await ShowHideModal();
+        }
+
+        private async Task CloseModalChangeProfileAsync()
+        {
+            await Task.Run(() =>
+            {
+                IsVisibleBackgroundModalFilter = !IsVisibleBackgroundModalFilter;
+                IsVisibleModalChangeProfile = !IsVisibleModalChangeProfile;
+                SelectedProfileChange = null;
+            });
+        }
+
+        private async Task ChangeProfileAsync()
+        {
+            await _profileService.UpdateProfileActivatedAsync(SelectedProfileChange);
+            SelectedProfileChange = null;
+            await ProfileAsync();
+            await ShowHideModal();
+        }
+
+        private async Task ShowHideModal()
+        {
+            await Task.Run(() =>
+            {
+                IsVisibleBackgroundModalFilter = !IsVisibleBackgroundModalFilter;
+                IsVisibleModalChangeProfile = !IsVisibleModalChangeProfile;
+            });
         }
         #endregion
 
@@ -254,28 +316,78 @@ namespace QuizzPokedex.ViewModels
             set { SetProperty(ref _isVisibleThirdProfile, value); }
         }
 
-        private Pokemon _activatedProfile;
+        private Profile _selectedProfileChange;
 
-        public Pokemon ActivatedProfile
+        public Profile SelectedProfileChange
+        {
+            get { return _selectedProfileChange; }
+            set { SetProperty(ref _selectedProfileChange, value); }
+        }
+
+        private Profile _activatedProfile;
+
+        public Profile ActivatedProfile
         {
             get { return _activatedProfile; }
             set { SetProperty(ref _activatedProfile, value); }
         }
 
-        private Pokemon _notActivatedFirstProfile;
+        private Pokemon _activatedPokemonProfile;
 
-        public Pokemon NotActivatedFirstProfile
+        public Pokemon ActivatedPokemonProfile
+        {
+            get { return _activatedPokemonProfile; }
+            set { SetProperty(ref _activatedPokemonProfile, value); }
+        }
+
+        private Profile _notActivatedFirstProfile;
+
+        public Profile NotActivatedFirstProfile
         {
             get { return _notActivatedFirstProfile; }
             set { SetProperty(ref _notActivatedFirstProfile, value); }
         }
 
-        private Pokemon _notActivatedSecondProfile;
+        private Pokemon _notActivatedPokemonFirstProfile;
 
-        public Pokemon NotActivatedSecondProfile
+        public Pokemon NotActivatedPokemonFirstProfile
+        {
+            get { return _notActivatedPokemonFirstProfile; }
+            set { SetProperty(ref _notActivatedPokemonFirstProfile, value); }
+        }
+
+        private Profile _notActivatedSecondProfile;
+
+        public Profile NotActivatedSecondProfile
         {
             get { return _notActivatedSecondProfile; }
             set { SetProperty(ref _notActivatedSecondProfile, value); }
+        }
+
+        private Pokemon _notActivatedPokemonSecondProfile;
+
+        public Pokemon NotActivatedPokemonSecondProfile
+        {
+            get { return _notActivatedPokemonSecondProfile; }
+            set { SetProperty(ref _notActivatedPokemonSecondProfile, value); }
+        }
+        #endregion
+
+        #region Modal
+        private bool _isVisibleBackgroundModalFilter = false;
+
+        public bool IsVisibleBackgroundModalFilter
+        {
+            get { return _isVisibleBackgroundModalFilter; }
+            set { SetProperty(ref _isVisibleBackgroundModalFilter, value); }
+        }
+
+        private bool _isVisibleModalChangeProfile = false;
+
+        public bool IsVisibleModalChangeProfile
+        {
+            get { return _isVisibleModalChangeProfile; }
+            set { SetProperty(ref _isVisibleModalChangeProfile, value); }
         }
         #endregion
         #endregion

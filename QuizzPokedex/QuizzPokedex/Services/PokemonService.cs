@@ -467,7 +467,7 @@ namespace QuizzPokedex.Services
             catch (Exception e)
             {
                 //Handle Exception
-                return null;
+                throw new Exception(e.Message);
             }
         }
         #endregion

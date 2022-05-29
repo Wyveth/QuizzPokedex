@@ -367,12 +367,18 @@ namespace QuizzPokedex.ViewModels
 
         private async Task ModalFilterAsync()
         {
-            IsVisibleModalFilter = !IsVisibleModalFilter;
+            await Task.Run(() =>
+            {
+                IsVisibleModalFilter = !IsVisibleModalFilter;
+            });
         }
         private async Task ModalTypeFilterAsync()
         {
-            IsVisibleBackgroundModalFilter = !IsVisibleBackgroundModalFilter;
-            IsVisibleModalTypeFilter = !IsVisibleModalTypeFilter;
+            await Task.Run(() =>
+            {
+                IsVisibleBackgroundModalFilter = !IsVisibleBackgroundModalFilter;
+                IsVisibleModalTypeFilter = !IsVisibleModalTypeFilter;
+            });
         }
 
         private async Task ResetFilterAsync()
@@ -392,32 +398,47 @@ namespace QuizzPokedex.ViewModels
 
         private async Task ModalGenFilterAsync()
         {
-            IsVisibleBackgroundModalFilter = !IsVisibleBackgroundModalFilter;
-            IsVisibleModalGenFilter = !IsVisibleModalGenFilter;
+            await Task.Run(() =>
+            {
+                IsVisibleBackgroundModalFilter = !IsVisibleBackgroundModalFilter;
+                IsVisibleModalGenFilter = !IsVisibleModalGenFilter;
+            });
         }
         private async Task BackModalTypeFilterAsync()
         {
-            IsVisibleBackgroundModalFilter = false;
-            IsVisibleModalTypeFilter = false;
+            await Task.Run(() =>
+            {
+                IsVisibleBackgroundModalFilter = false;
+                IsVisibleModalTypeFilter = false;
+            });
         }
         private async Task CloseModalTypeFilterAsync()
         {
-            IsVisibleBackgroundModalFilter = false;
-            IsVisibleModalTypeFilter = false;
-            IsVisibleModalFilter = false;
+            await Task.Run(() =>
+            {
+                IsVisibleBackgroundModalFilter = false;
+                IsVisibleModalTypeFilter = false;
+                IsVisibleModalFilter = false;
+            });
         }
 
         private async Task BackModalGenFilterAsync()
         {
-            IsVisibleBackgroundModalFilter = false;
-            IsVisibleModalGenFilter = false;
+            await Task.Run(() =>
+            {
+                IsVisibleBackgroundModalFilter = false;
+                IsVisibleModalGenFilter = false;
+            });
         }
 
         private async Task CloseModalGenFilterAsync()
         {
-            IsVisibleBackgroundModalFilter = false;
-            IsVisibleModalGenFilter = false;
-            IsVisibleModalFilter = false;
+            await Task.Run(() =>
+            {
+                IsVisibleBackgroundModalFilter = false;
+                IsVisibleModalGenFilter = false;
+                IsVisibleModalFilter = false;
+            });
         }
 
         private async Task ordererModalAscendingAsync()
