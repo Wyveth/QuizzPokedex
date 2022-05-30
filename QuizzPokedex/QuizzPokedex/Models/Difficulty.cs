@@ -5,15 +5,12 @@ using System.Text;
 
 namespace QuizzPokedex.Models
 {
-    public class QuestionType
+    public  class Difficulty
     {
         [PrimaryKey, AutoIncrement, Indexed]
         public int Id { get; set; }
 
-        public string Code { get; set; }
-
+        //Libellé de la Difficulté
         public string Libelle { get; set; }
-
-        public int DifficultyID { get; set; }
     }
 }

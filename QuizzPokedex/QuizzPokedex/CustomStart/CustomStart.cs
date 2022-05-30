@@ -33,6 +33,7 @@ namespace QuizzPokedex.CustomStart
             _connectionService.GetAsyncConnection().CreateTableAsync<TypePok>().Wait();
             _connectionService.GetAsyncConnection().CreateTableAsync<Pokemon>().Wait();
             _connectionService.GetAsyncConnection().CreateTableAsync<Profile>().Wait();
+            _connectionService.GetAsyncConnection().CreateTableAsync<Difficulty>().Wait();
 
             populateDb();
 
@@ -45,6 +46,7 @@ namespace QuizzPokedex.CustomStart
             {
                 await PopulateTypePok();
                 await PopulatePokemon();
+                await PopulateDifficulty();
             });
         }
 
@@ -63,6 +65,14 @@ namespace QuizzPokedex.CustomStart
 
             await _pokemonService.Populate(nbPokInDb, PoksJson);
             await _pokemonService.PopulateUpdateEvolution(PoksJson);
+        }
+
+        private async Task PopulateDifficulty()
+        {
+            await Task.Run(() =>
+            {
+
+            });
         }
     }
 }

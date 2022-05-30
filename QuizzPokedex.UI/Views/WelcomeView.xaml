@@ -448,6 +448,7 @@
                                 Grid.Column="0"
                                 BackgroundColor="White"
                                 Command="{Binding CloseModalChangeProfileCommandAsync}"
+                                FontAttributes="Bold"
                                 HorizontalOptions="CenterAndExpand"
                                 Text="Non" />
                         </pv:PancakeView>
@@ -482,6 +483,7 @@
                                 Grid.Column="1"
                                 BackgroundColor="White"
                                 Command="{Binding ChangeProfileCommandAsync}"
+                                FontAttributes="Bold"
                                 HorizontalOptions="CenterAndExpand"
                                 Text="Oui" />
                         </pv:PancakeView>

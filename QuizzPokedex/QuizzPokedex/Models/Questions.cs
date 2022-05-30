@@ -10,10 +10,12 @@ namespace QuizzPokedex.Models
         [PrimaryKey, AutoIncrement, Indexed]
         public int Id { get; set; }
 
+        //Numéro d'ordre du Quizz
         public int Order { get; set; }
 
-        public Pokemon Pokemon { get; set; }
+        public int PokemonID { get; set; }
 
+        //Identifiant Type Question
         public int QuestionTypeID {get;set;}
     }
 }

@@ -17,6 +17,6 @@ namespace QuizzPokedex.Models
         public bool Terminate { get; set; }
 
         //Identifiant du Profil
-        public int ProfileId { get; set; }
+        public int ProfileID { get; set; }
     }
 }
