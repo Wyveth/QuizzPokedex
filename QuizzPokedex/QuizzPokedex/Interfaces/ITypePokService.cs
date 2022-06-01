@@ -12,7 +12,7 @@ namespace QuizzPokedex.Interfaces
         Task Populate(int nbTypePokInDb, List<TypeJson> typesJson);
         Task<List<TypePok>> GetAllAsync();
         Task<List<TypePok>> GetTypesAsync(string types);
-        Task<TypePok> GetByIdAsync(string identifiant);
+        Task<TypePok> GetByIdAsync(int id);
         Task<TypePok> GetByNameAsync(string libelle);
         Task<string> GetBackgroundColorType(string libelle);
         Task<int> CreateAsync(TypePok typePok);

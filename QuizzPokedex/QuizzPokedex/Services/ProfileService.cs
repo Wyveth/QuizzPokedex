@@ -49,7 +49,7 @@ namespace QuizzPokedex.Services
             var result = await _database.InsertAsync(profile);
 
             //Update Other Profile
-            _ = await UpdateProfileActivatedAsync(profile);
+            await UpdateProfileActivatedAsync(profile);
 
             return result;
         }
@@ -76,7 +76,7 @@ namespace QuizzPokedex.Services
                     item.Activated = true;
                 else
                     item.Activated = false;
-                _ =  await UpdateAsync(item);
+                await UpdateAsync(item);
             }
             return result;
         }

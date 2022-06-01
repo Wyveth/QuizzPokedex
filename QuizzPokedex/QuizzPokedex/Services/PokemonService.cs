@@ -4,16 +4,13 @@ using QuizzPokedex.Interfaces;
 using QuizzPokedex.Models;
 using QuizzPokedex.Resources;
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
-using Xamarin.Forms;
 
 namespace QuizzPokedex.Services
 {
@@ -100,7 +97,8 @@ namespace QuizzPokedex.Services
 
             foreach (var item in vs)
             {
-                Pokemon pokemon = await GetByIdAsync(item);
+                int id = int.Parse(item);
+                Pokemon pokemon = await GetByIdAsync(id);
                 if (pokemon != null)
                     result.Add(pokemon);
             }
@@ -120,9 +118,8 @@ namespace QuizzPokedex.Services
             return result;
         }
 
-        public async Task<Pokemon> GetByIdAsync(string identifiant)
+        public async Task<Pokemon> GetByIdAsync(int id)
         {
-            int id = int.Parse(identifiant);
             return await _database.Table<Pokemon>().Where(m => m.Id.Equals(id)).FirstAsync();
         }
 
@@ -145,6 +142,45 @@ namespace QuizzPokedex.Services
                 return result = pokemons.Find(m => m.Name.Contains(libelle.Split(' ')[0]) && m.TypeEvolution.Equals(Constantes.NormalEvolution));
             }
         }
+        #endregion
+
+        #region CRUD
+        public async Task<int> CreateAsync(Pokemon Pokemon)
+        {
+            var result = await _database.InsertAsync(Pokemon);
+            return result;
+        }
+
+        public async Task<int> UpdateAsync(Pokemon Pokemon)
+        {
+            var result = await _database.InsertOrReplaceAsync(Pokemon);
+            return result;
+        }
+
+        public async Task<int> GetNumberInDbAsync()
+        {
+            var result = await _database.Table<Pokemon>().CountAsync();
+            return result;
+        }
+
+        public async Task<int> GetNumberPokJsonAsync()
+        {
+            AssetManager assets = Android.App.Application.Context.Assets;
+            string json;
+            using (StreamReader sr = new StreamReader(assets.Open("PokeScrap.json")))
+            {
+                json = sr.ReadToEnd();
+            }
+
+            return await Task.FromResult(JsonConvert.DeserializeObject<List<PokemonJson>>(json).Count);
+        }
+
+        public async Task<int> GetNumberPokUpdateAsync()
+        {
+            var result = await _database.Table<Pokemon>().Where(m => m.Updated.Equals(true)).CountAsync();
+            return result;
+        }
+        #endregion
         #endregion
 
         #region Private Methods
@@ -224,45 +260,6 @@ namespace QuizzPokedex.Services
         }
         #endregion
 
-        #region CRUD
-        public async Task<int> CreateAsync(Pokemon Pokemon)
-        {
-            var result = await _database.InsertAsync(Pokemon);
-            return result;
-        }
-
-        public async Task<int> UpdateAsync(Pokemon Pokemon)
-        {
-            var result = await _database.InsertOrReplaceAsync(Pokemon);
-            return result;
-        }
-
-        public async Task<int> GetNumberInDbAsync()
-        {
-            var result = await _database.Table<Pokemon>().CountAsync();
-            return result;
-        }
-
-        public async Task<int> GetNumberPokJsonAsync()
-        {
-            AssetManager assets = Android.App.Application.Context.Assets;
-            string json;
-            using (StreamReader sr = new StreamReader(assets.Open("PokeScrap.json")))
-            {
-                json = sr.ReadToEnd();
-            }
-
-            return await Task.FromResult(JsonConvert.DeserializeObject<List<PokemonJson>>(json).Count);
-        }
-
-        public async Task<int> GetNumberPokUpdateAsync()
-        {
-            var result = await _database.Table<Pokemon>().Where(m => m.Updated.Equals(true)).CountAsync();
-            return result;
-        }
-        #endregion
-        #endregion
-
         #region Populate Database
         public async Task<List<PokemonJson>> GetListPokeScrapJson()
         {
@@ -288,7 +285,7 @@ namespace QuizzPokedex.Services
                     if (countPokemonJson > nbPokInDb)
                     {
                         Pokemon pokemon = await ConvertPokemonJsonInPokemon(pokemonJson);
-                        _ = CreateAsync(pokemon);
+                        await CreateAsync(pokemon);
 
                         Debug.Write("Creation:" + pokemon.Number + " - " + pokemon.Name);
                     }
@@ -384,7 +381,7 @@ namespace QuizzPokedex.Services
                 {
                     Pokemon pokemonUpdated = await UpdateEvolutionWithJson(pokemonJson, pokemonNoUpdated);
                     if (pokemonUpdated != null)
-                        _ = UpdateAsync(pokemonUpdated);
+                        await UpdateAsync(pokemonUpdated);
 
                     Debug.Write("Update: " + pokemonJson.Number + " - " + pokemonJson.Name);
                 }
@@ -406,7 +403,7 @@ namespace QuizzPokedex.Services
             {
                 Pokemon pokemonUpdated = await UpdateEvolutionWithJson(pokemonJson, pokemonNoUpdated);
                 if (pokemonUpdated != null)
-                    _ = UpdateAsync(pokemonUpdated);
+                    await UpdateAsync(pokemonUpdated);
 
                 Debug.Write("Update: " + pokemonJson.Number + " - " + pokemonJson.Name);
                 return pokemonUpdated;
@@ -469,6 +466,19 @@ namespace QuizzPokedex.Services
                 //Handle Exception
                 throw new Exception(e.Message);
             }
+        }
+        #endregion
+
+        #region Generate Quizz
+        public async Task<Pokemon> getPokemonRandom(bool gen1, bool gen2, bool gen3, bool gen4, bool gen5, bool gen6, bool gen7, bool gen8, bool genArceus)
+        {
+            List<Pokemon> result = await GetAllAsync();
+            List<Pokemon> resultFilterGen = await GetPokemonsWithFilterGen(result, gen1, gen2, gen3, gen4, gen5, gen6, gen7, gen8, genArceus);
+            
+            Random random = new Random();
+            int numberRandom = random.Next(resultFilterGen.Count);
+
+            return await Task.FromResult(resultFilterGen[numberRandom]);
         }
         #endregion
     }

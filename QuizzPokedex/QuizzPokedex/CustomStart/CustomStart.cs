@@ -14,13 +14,17 @@ namespace QuizzPokedex.CustomStart
         private readonly ISqliteConnectionService _connectionService;
         private readonly IPokemonService _pokemonService;
         private readonly ITypePokService _typePokService;
+        private readonly IDifficultyService _difficultyService;
+        private readonly IQuestionTypeService _questionTypeService;
 
-        public AppStart(IMvxApplication app, IMvxNavigationService mvxNavigationService, ISqliteConnectionService connectionService, IPokemonService pokemonService, ITypePokService typePokService)
+        public AppStart(IMvxApplication app, IMvxNavigationService mvxNavigationService, ISqliteConnectionService connectionService, IPokemonService pokemonService, ITypePokService typePokService, IDifficultyService difficultyService, IQuestionTypeService questionTypeService)
             : base(app, mvxNavigationService)
         {
             _connectionService = connectionService;
             _pokemonService = pokemonService;
             _typePokService = typePokService;
+            _difficultyService = difficultyService;
+            _questionTypeService = questionTypeService;
         }
 
         protected override Task NavigateToFirstViewModel(object hint = null)
@@ -29,11 +33,20 @@ namespace QuizzPokedex.CustomStart
             //_connectionService.GetAsyncConnection().DropTableAsync<TypePok>().Wait();
             //_connectionService.GetAsyncConnection().DropTableAsync<Pokemon>().Wait();
             //_connectionService.GetAsyncConnection().DropTableAsync<Profile>().Wait();
+            _connectionService.GetAsyncConnection().DropTableAsync<Difficulty>().Wait();
+            _connectionService.GetAsyncConnection().DropTableAsync<QuestionType>().Wait();
+            _connectionService.GetAsyncConnection().DropTableAsync<Answer>().Wait();
+            _connectionService.GetAsyncConnection().DropTableAsync<Question>().Wait();
+            _connectionService.GetAsyncConnection().DropTableAsync<Quizz>().Wait();
 
             _connectionService.GetAsyncConnection().CreateTableAsync<TypePok>().Wait();
             _connectionService.GetAsyncConnection().CreateTableAsync<Pokemon>().Wait();
             _connectionService.GetAsyncConnection().CreateTableAsync<Profile>().Wait();
             _connectionService.GetAsyncConnection().CreateTableAsync<Difficulty>().Wait();
+            _connectionService.GetAsyncConnection().CreateTableAsync<QuestionType>().Wait();
+            _connectionService.GetAsyncConnection().CreateTableAsync<Answer>().Wait();
+            _connectionService.GetAsyncConnection().CreateTableAsync<Question>().Wait();
+            _connectionService.GetAsyncConnection().CreateTableAsync<Quizz>().Wait();
 
             populateDb();
 
@@ -47,6 +60,7 @@ namespace QuizzPokedex.CustomStart
                 await PopulateTypePok();
                 await PopulatePokemon();
                 await PopulateDifficulty();
+                await PopulateQuestionType();
             });
         }
 
@@ -69,9 +83,17 @@ namespace QuizzPokedex.CustomStart
 
         private async Task PopulateDifficulty()
         {
-            await Task.Run(() =>
+            await Task.Run(async () =>
             {
+                await _difficultyService.Populate();
+            });
+        }
 
+        private async Task PopulateQuestionType()
+        {
+            await Task.Run(async () =>
+            {
+                await _questionTypeService.Populate();
             });
         }
     }

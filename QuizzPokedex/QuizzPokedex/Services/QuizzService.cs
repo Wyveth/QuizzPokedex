@@ -10,11 +10,13 @@ namespace QuizzPokedex.Services
     public class QuizzService : IQuizzService
     {
         private readonly ISqliteConnectionService _connectionService;
+        private readonly IQuestionService _questionService;
         private SQLite.SQLiteAsyncConnection _database => _connectionService.GetAsyncConnection();
 
-        public QuizzService(ISqliteConnectionService connectionService)
+        public QuizzService(ISqliteConnectionService connectionService, IQuestionService questionService)
         {
             _connectionService = connectionService;
+            _questionService = questionService;
         }
 
         public async Task<List<Quizz>> GetAllAsync()
@@ -27,12 +29,11 @@ namespace QuizzPokedex.Services
         {
             int id = int.Parse(profileId);
             var result = await _database.Table<Quizz>().ToListAsync();
-            return result.FindAll(m => m.ProfileId.Equals(id));
+            return result.FindAll(m => m.ProfileID.Equals(id));
         }
 
-        public async Task<Quizz> GetByIdAsync(string identifiant)
+        public async Task<Quizz> GetByIdAsync(int id)
         {
-            int id = int.Parse(identifiant);
             var result = await _database.Table<Quizz>().ToListAsync();
             return result.Find(m => m.Id.Equals(id));
         }
@@ -53,6 +54,20 @@ namespace QuizzPokedex.Services
         {
             var result = await _database.InsertOrReplaceAsync(quizz);
             return result;
+        }
+
+        public async Task<Quizz> GenerateQuizz(int profileId, bool gen1, bool gen2, bool gen3, bool gen4, bool gen5, bool gen6, bool gen7, bool gen8, bool genArceus, bool easy, bool normal, bool hard)
+        {
+            Quizz quizz = new Quizz()
+            {
+                QuestionsID = await _questionService.GenerateQuestions(gen1, gen2, gen3, gen4, gen5, gen6, gen7, gen8, genArceus, easy, normal, hard),
+                Terminate = false,
+                ProfileID = profileId
+            };
+
+            await CreateAsync(quizz);
+
+            return await Task.FromResult(quizz);
         }
     }
 }

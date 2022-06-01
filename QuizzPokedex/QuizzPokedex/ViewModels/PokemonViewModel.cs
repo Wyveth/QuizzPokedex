@@ -83,7 +83,8 @@ namespace QuizzPokedex.ViewModels
                 await _pokemonService.UpdateEvolutionWithJson(Pokemon);
 
             #region Type
-            FirstType = await _typePokService.GetByIdAsync(Pokemon.TypesID.Split(',')[0]);
+            int typeID = int.Parse(Pokemon.TypesID.Split(',')[0]);
+            FirstType = await _typePokService.GetByIdAsync(typeID);
 
             var resultTypes = await _typePokService.GetTypesAsync(Pokemon.TypesID);
             Types = new MvxObservableCollection<TypePok>(resultTypes);

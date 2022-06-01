@@ -6,6 +6,7 @@ namespace QuizzPokedex.Resources
 {
     public class Constantes
     {
+        #region Evolution Type
         public const string MegaEvolution = "Mega";
         public const string GigaEvolution = "Gigamax";
         public const string NormalEvolution = "Normal";
@@ -14,17 +15,23 @@ namespace QuizzPokedex.Resources
         public const string VarianteSexe = "VarianteSexe";
         public const string Variant = "Variant";
         public const string Hisui = "Hisui";
+        #endregion
 
+        #region Pokemon Affichage Distinct
         public const string Type_0 = "Type:0";
         public const string Type0 = "Type 0";
         public const string Ningale = "Ningale";
         public const string Ninjask = "Ninjask";
         public const string Munja = "Munja";
         public const string Prismillon = "Prismillon";
+        #endregion
 
+        #region Color Hexa
         public const string BlackHexa = "#000000";
         public const string WhiteHexa = "#ffffff";
+        #endregion
 
+        #region Type
         public const string Steel = "Acier";
         public const string Fighting = "Combat";
         public const string Dragon = "Dragon";
@@ -43,9 +50,13 @@ namespace QuizzPokedex.Resources
         public const string Ghost = "Spectre";
         public const string Dark = "Ténèbres";
         public const string Flying = "Vol";
+        #endregion
 
+        #region FileExtension
         public const string ExtensionImage = ".png";
+        #endregion
 
+        #region Icon Type
         public const string Icon_Steel = "Icon_Steel" + ExtensionImage;
         public const string Icon_Steel_BW = "Icon_Steel_BW" + ExtensionImage;
         public const string Icon_Fighting = "Icon_Fighting" + ExtensionImage;
@@ -82,5 +93,12 @@ namespace QuizzPokedex.Resources
         public const string Icon_Dark_BW = "Icon_Dark_BW" + ExtensionImage;
         public const string Icon_Flying = "Icon_Flying" + ExtensionImage;
         public const string Icon_Flying_BW = "Icon_Flying_BW" + ExtensionImage;
+        #endregion
+
+        #region Difficulty
+        public const string EasyTQ = "Facile";
+        public const string NormalTQ = "Normal";
+        public const string HardTQ = "Difficile";
+        #endregion
     }
 }

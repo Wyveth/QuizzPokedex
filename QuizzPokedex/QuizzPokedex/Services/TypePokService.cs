@@ -45,16 +45,16 @@ namespace QuizzPokedex.Services
             List<TypePok> result = new List<TypePok>();
             foreach (var item in vs)
             {
-                TypePok typePok = await GetByIdAsync(item);
+                int id = int.Parse(item);
+                TypePok typePok = await GetByIdAsync(id);
                 if(typePok != null)
                     result.Add(typePok);
             }
 
             return result;
         }
-        public async Task<TypePok> GetByIdAsync(string identifiant)
+        public async Task<TypePok> GetByIdAsync(int id)
         {
-            int id = int.Parse(identifiant);
             var result = await _database.Table<TypePok>().ToListAsync();
             return result.Find(m => m.Id.Equals(id));
         }
@@ -124,7 +124,7 @@ namespace QuizzPokedex.Services
                     if (countTypeJson > nbTypePokInDb)
                     {
                         TypePok type = await ConvertTypePokJsonInTypePok(typeJson);
-                        _ = CreateAsync(type);
+                        await CreateAsync(type);
 
                         Console.WriteLine("Creation Type: " + type.Name);
                     }

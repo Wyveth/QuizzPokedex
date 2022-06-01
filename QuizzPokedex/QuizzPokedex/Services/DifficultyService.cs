@@ -1,5 +1,6 @@
 ﻿using QuizzPokedex.Interfaces;
 using QuizzPokedex.Models;
+using QuizzPokedex.Resources;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -23,11 +24,16 @@ namespace QuizzPokedex.Services
             return result;
         }
 
-        public async Task<Difficulty> GetByIdAsync(string identifiant)
+        public async Task<Difficulty> GetByIdAsync(int id)
         {
-            int id = int.Parse(identifiant);
             var result = await _database.Table<Difficulty>().ToListAsync();
             return result.Find(m => m.Id.Equals(id));
+        }
+
+        public async Task<Difficulty> GetByLibelleAsync(string libelle)
+        {
+            var result = await _database.Table<Difficulty>().ToListAsync();
+            return result.Find(m => m.Libelle.Equals(libelle));
         }
 
         public async Task<int> CreateAsync(Difficulty difficulty)
@@ -45,6 +51,27 @@ namespace QuizzPokedex.Services
         {
             var result = await _database.InsertOrReplaceAsync(difficulty);
             return result;
+        }
+
+        public async Task Populate()
+        {
+            Difficulty difficulty = new Difficulty()
+            {
+                Libelle = Constantes.EasyTQ
+            };
+            await CreateAsync(difficulty);
+
+            difficulty = new Difficulty()
+            {
+                Libelle = Constantes.NormalTQ
+            };
+            await CreateAsync(difficulty);
+
+            difficulty = new Difficulty()
+            {
+                Libelle = Constantes.HardTQ
+            };
+            await CreateAsync(difficulty);
         }
     }
 }

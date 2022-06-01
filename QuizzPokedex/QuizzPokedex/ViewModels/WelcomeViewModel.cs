@@ -121,7 +121,7 @@ namespace QuizzPokedex.ViewModels
             if (profiles.Count >= 1)
             {
                 FirstProfileCreated = true;
-                ActivatedPokemonProfile = await _pokemonService.GetByIdAsync(ActivatedProfile.PokemonID.ToString());
+                ActivatedPokemonProfile = await _pokemonService.GetByIdAsync(ActivatedProfile.PokemonID);
             }
 
             if (profiles.Count >= 2)
@@ -181,7 +181,7 @@ namespace QuizzPokedex.ViewModels
             if (profiles.Count >= 1)
             {
                 ActivatedProfile = profiles.Find(m => m.Activated.Equals(true));
-                ActivatedPokemonProfile = await _pokemonService.GetByIdAsync(ActivatedProfile.PokemonID.ToString());
+                ActivatedPokemonProfile = await _pokemonService.GetByIdAsync(ActivatedProfile.PokemonID);
                 IsVisibleSecondProfile = !IsVisibleSecondProfile;
             }
 
@@ -189,7 +189,7 @@ namespace QuizzPokedex.ViewModels
             {
                 SecondProfileCreated = !SecondProfileCreated;
                 NotActivatedFirstProfile = profileNotActivated[0];
-                NotActivatedPokemonFirstProfile = await _pokemonService.GetByIdAsync(profileNotActivated[0].PokemonID.ToString());
+                NotActivatedPokemonFirstProfile = await _pokemonService.GetByIdAsync(profileNotActivated[0].PokemonID);
                 IsVisibleThirdProfile = !IsVisibleThirdProfile;
             }
 
@@ -197,7 +197,7 @@ namespace QuizzPokedex.ViewModels
             {
                 ThirdProfileCreated = !ThirdProfileCreated;
                 NotActivatedSecondProfile = profileNotActivated[1];
-                NotActivatedPokemonSecondProfile = await _pokemonService.GetByIdAsync(profileNotActivated[1].PokemonID.ToString());
+                NotActivatedPokemonSecondProfile = await _pokemonService.GetByIdAsync(profileNotActivated[1].PokemonID);
             }
         }
 

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace QuizzPokedex.Models
 {
-    public class Questions
+    public class Question
     {
         [PrimaryKey, AutoIncrement, Indexed]
         public int Id { get; set; }
@@ -13,7 +13,7 @@ namespace QuizzPokedex.Models
         //Numéro d'ordre du Quizz
         public int Order { get; set; }
 
-        public int PokemonID { get; set; }
+        public string AnswersID { get; set; }
 
         //Identifiant Type Question
         public int QuestionTypeID {get;set;}
