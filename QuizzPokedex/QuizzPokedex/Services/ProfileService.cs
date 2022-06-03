@@ -10,14 +10,21 @@ namespace QuizzPokedex.Services
 {
     public class ProfileService : IProfileService
     {
+        #region Fields
         private readonly ISqliteConnectionService _connectionService;
         private SQLite.SQLiteAsyncConnection _database => _connectionService.GetAsyncConnection();
+        #endregion
 
+        #region Constructor
         public ProfileService(ISqliteConnectionService connectionService)
         {
             _connectionService = connectionService;
         }
+        #endregion
 
+        #region Public Methods
+        #region CRUD
+        #region Get Data
         public async Task<List<Profile>> GetAllAsync()
         {
             return await _database.Table<Profile>().ToListAsync();
@@ -32,17 +39,7 @@ namespace QuizzPokedex.Services
         {
             return await _database.Table<Profile>().Where(m => m.Activated.Equals(false)).ToListAsync();
         }
-
-        public async Task<bool> CheckIfProfilPokemonExist(Pokemon pokemon)
-        {
-            List<Profile> profiles = await GetAllAsync();
-            Profile profile = profiles.Find(m => m.PokemonID.Equals(pokemon.Id));
-
-            if (profile == null)
-                return false;
-            else
-                return true;
-        }
+        #endregion
 
         public async Task<int> CreateAsync(Profile profile)
         {
@@ -80,5 +77,17 @@ namespace QuizzPokedex.Services
             }
             return result;
         }
+        #endregion
+        public async Task<bool> CheckIfProfilPokemonExist(Pokemon pokemon)
+        {
+            List<Profile> profiles = await GetAllAsync();
+            Profile profile = profiles.Find(m => m.PokemonID.Equals(pokemon.Id));
+
+            if (profile == null)
+                return false;
+            else
+                return true;
+        }
+        #endregion
     }
 }

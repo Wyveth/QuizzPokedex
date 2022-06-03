@@ -1,5 +1,6 @@
 ﻿using QuizzPokedex.Interfaces;
 using QuizzPokedex.Models;
+using QuizzPokedex.Resources;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,20 +10,29 @@ namespace QuizzPokedex.Services
 {
     public class QuestionService : IQuestionService
     {
+        #region Fields
         private readonly ISqliteConnectionService _connectionService;
+        private readonly ITypePokService _typePokService;
         private readonly IPokemonService _pokemonService;
         private readonly IQuestionTypeService _questionTypeService;
         private readonly IAnswerService _answerService;
         private SQLite.SQLiteAsyncConnection _database => _connectionService.GetAsyncConnection();
+        #endregion
 
-        public QuestionService(ISqliteConnectionService connectionService, IPokemonService pokemonService, IQuestionTypeService questionTypeService, IAnswerService answerService)
+        #region Constructor
+        public QuestionService(ISqliteConnectionService connectionService, ITypePokService typePokService, IPokemonService pokemonService, IQuestionTypeService questionTypeService, IAnswerService answerService)
         {
             _connectionService = connectionService;
+            _typePokService = typePokService;
             _pokemonService = pokemonService;
             _questionTypeService = questionTypeService;
             _answerService = answerService;
         }
+        #endregion
 
+        #region Public Methods
+        #region CRUD
+        #region Get Data
         public async Task<List<Question>> GetAllAsync()
         {
             var result = await _database.Table<Question>().ToListAsync();
@@ -37,7 +47,7 @@ namespace QuizzPokedex.Services
                 int id = int.Parse(item);
                 result.Add(await GetByIdAsync(id));
             }
-            
+
             return await Task.FromResult(result);
         }
 
@@ -46,6 +56,7 @@ namespace QuizzPokedex.Services
             var result = await _database.Table<Question>().ToListAsync();
             return result.Find(m => m.Id.Equals(id));
         }
+        #endregion
 
         public async Task<int> CreateAsync(Question question)
         {
@@ -64,34 +75,42 @@ namespace QuizzPokedex.Services
             var result = await _database.InsertOrReplaceAsync(question);
             return result;
         }
+        #endregion
 
+        #region Generate Quizz
         public async Task<string> GenerateQuestions(bool gen1, bool gen2, bool gen3, bool gen4, bool gen5, bool gen6, bool gen7, bool gen8, bool genArceus, bool easy, bool normal, bool hard)
         {
             int nbQuestionMax = 10;
-            int nbAnswerMax = 4;
 
             string result = string.Empty;
             List<Question> questions = new List<Question>();
-            
+
             for (int nbQuestion = 0; nbQuestion < nbQuestionMax; nbQuestion++)
             {
-                List<Pokemon> pokemonsAnswer = new List<Pokemon>();
-                for (int nbAnswer = 0; nbAnswer < nbAnswerMax; nbAnswer++)
-                {
-                    pokemonsAnswer.Add(await _pokemonService.getPokemonRandom(gen1, gen2, gen3, gen4, gen5, gen6, gen7, gen8, genArceus));
-                }
-                
+                QuestionType questionType = await _questionTypeService.GetQuestionTypeRandom(easy, normal, hard);
+
+                string AnswersID = await GetAnswersID(questionType, gen1, gen2, gen3, gen4, gen5, gen6, gen7, gen8, genArceus);
+
                 Question question = new Question()
                 {
                     Order = nbQuestion + 1,
-                    AnswersID = await _answerService.GenerateAnswers(pokemonsAnswer),
-                    QuestionTypeID = await _questionTypeService.GetQuestionTypeRandom(easy, normal, hard)
+                    AnswersID = AnswersID,
+                    QuestionTypeID = questionType.Id
                 };
 
                 await CreateAsync(question);
                 questions.Add(question);
             }
 
+            return await Task.FromResult(await GetQuestionsID(questions));
+        }
+        #endregion
+        #endregion
+
+        #region Private Methods
+        private async Task<string> GetQuestionsID(List<Question> questions)
+        {
+            string result = string.Empty;
             int i = 0;
             foreach (Question question in questions)
             {
@@ -108,5 +127,30 @@ namespace QuizzPokedex.Services
 
             return await Task.FromResult(result);
         }
+        private async Task<string> GetAnswersID(QuestionType questionType, bool gen1, bool gen2, bool gen3, bool gen4, bool gen5, bool gen6, bool gen7, bool gen8, bool genArceus)
+        {
+            string AnswersID = string.Empty;
+            if (questionType.Code.Equals(Constantes.QTypPok))
+            {
+                List<TypePok> typesAnswer = new List<TypePok>();
+                for (int nbAnswer = 0; nbAnswer < questionType.NbAnswers; nbAnswer++)
+                {
+                    typesAnswer.Add(await _typePokService.GetTypeRandom());
+                }
+                AnswersID = await _answerService.GenerateAnswers(typesAnswer);
+            }
+            else
+            {
+                List<Pokemon> pokemonsAnswer = new List<Pokemon>();
+                for (int nbAnswer = 0; nbAnswer < questionType.NbAnswers; nbAnswer++)
+                {
+                    pokemonsAnswer.Add(await _pokemonService.GetPokemonRandom(gen1, gen2, gen3, gen4, gen5, gen6, gen7, gen8, genArceus));
+                }
+                AnswersID = await _answerService.GenerateAnswers(pokemonsAnswer);
+            }
+
+            return await Task.FromResult(AnswersID);
+        }
+        #endregion
     }
 }

@@ -13,7 +13,7 @@ namespace QuizzPokedex.ViewModels
 {
     public class ProfilesViewModel : MvxViewModel
     {
-        #region Field
+        #region Fields
         private readonly IMvxNavigationService _navigation;
         private readonly IProfileService _profileService;
         //creation de l'abonnement ici (pour rafraichir via un abonné)
@@ -56,7 +56,7 @@ namespace QuizzPokedex.ViewModels
         }
         #endregion
 
-        #region COMMAND
+        #region Command
         public IMvxAsyncCommand NavigationBackCommandAsync => new MvxAsyncCommand(NavigationBackAsync);
         public IMvxAsyncCommand CreateProfileCommandAsync => new MvxAsyncCommand(CreateProfileAsync);
         public IMvxAsyncCommand<Profile> UpdateProfileCommandAsync => new MvxAsyncCommand<Profile>(UpdateProfileAsync);
@@ -89,7 +89,7 @@ namespace QuizzPokedex.ViewModels
 
         #endregion
 
-        #region PROPERTIES
+        #region Properties
         public MvxNotifyTask LoadProfileTask { get; private set; }
 
         private MvxObservableCollection<Profile> _profiles;

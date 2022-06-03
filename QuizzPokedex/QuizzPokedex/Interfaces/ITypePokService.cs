@@ -19,6 +19,7 @@ namespace QuizzPokedex.Interfaces
         Task<List<TypeJson>> GetListTypeScrapJson();
         Task<int> GetNumberTypeJsonAsync();
         Task<int> GetNumberInDbAsync();
+        Task<TypePok> GetTypeRandom();
         Task<byte[]> DownloadImageAsync(string UrlImg);
     }
 }

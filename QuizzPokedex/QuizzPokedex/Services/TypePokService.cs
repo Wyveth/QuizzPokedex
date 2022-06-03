@@ -16,7 +16,7 @@ namespace QuizzPokedex.Services
 {
     public class TypePokService : ITypePokService
     {
-        #region Properties
+        #region Fields
         private const int _downloadImageTimeoutInSeconds = 15;
 
         private readonly ISqliteConnectionService _connectionService;
@@ -32,6 +32,7 @@ namespace QuizzPokedex.Services
         #endregion
 
         #region Public Methods
+        #region CRUD
         #region Get Data
         public async Task<List<TypePok>> GetAllAsync()
         {
@@ -90,13 +91,22 @@ namespace QuizzPokedex.Services
         }
         #endregion
 
-        #region CRUD
         public async Task<int> CreateAsync(TypePok typePok)
         {
             var result = await _database.InsertAsync(typePok);
             return result;
         }
         #endregion
+
+        public async Task<TypePok> GetTypeRandom()
+        {
+            List<TypePok> result = await GetAllAsync();
+
+            Random random = new Random();
+            int numberRandom = random.Next(result.Count);
+
+            return await Task.FromResult(result[numberRandom]);
+        }
         #endregion
 
         #region Populate Database

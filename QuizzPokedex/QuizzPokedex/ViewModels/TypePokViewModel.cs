@@ -13,7 +13,7 @@ namespace QuizzPokedex.ViewModels
 {
     public class TypePokViewModel : MvxViewModel
     {
-        #region Field
+        #region Fields
         private readonly IMvxNavigationService _navigation;
         private readonly ITypePokService _typePokService;
         #endregion
@@ -55,7 +55,7 @@ namespace QuizzPokedex.ViewModels
         #endregion
         #endregion
 
-        #region COMMAND
+        #region Command
         public IMvxAsyncCommand NavigationBackCommandAsync => new MvxAsyncCommand(NavigationBackAsync);
         public IMvxAsyncCommand<string> FilterTypePoksCommand => new MvxAsyncCommand<string>(FilterTypePokAsync);
 
@@ -63,7 +63,6 @@ namespace QuizzPokedex.ViewModels
         {
             await _navigation.Close(this);
         }
-
 
         private async Task FilterTypePokAsync(string libelle)
         {
@@ -73,7 +72,7 @@ namespace QuizzPokedex.ViewModels
         }
         #endregion
 
-        #region PROPERTIES
+        #region Properties
         public MvxNotifyTask LoadTypePokTask { get; private set; }
 
         private MvxObservableCollection<TypePok> _typePoks;

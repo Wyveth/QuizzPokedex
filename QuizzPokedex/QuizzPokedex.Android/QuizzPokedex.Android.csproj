@@ -487,6 +487,15 @@
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\IChooseYou.png" />
   </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Pokedex_Welcome.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Pokedex_Down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Pokedex_Up.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>

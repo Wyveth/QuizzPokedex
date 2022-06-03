@@ -14,6 +14,6 @@ namespace QuizzPokedex.Interfaces
         Task<int> CreateAsync(QuestionType questionType);
         Task<int> DeleteAsync(QuestionType questionType);
         Task<int> UpdateAsync(QuestionType questionType);
-        Task<int> GetQuestionTypeRandom(bool easy, bool normal, bool hard);
+        Task<QuestionType> GetQuestionTypeRandom(bool easy, bool normal, bool hard);
     }
 }

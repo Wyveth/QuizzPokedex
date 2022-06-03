@@ -5,6 +5,7 @@ using MvvmCross.Plugin.Messenger;
 using MvvmCross.ViewModels;
 using QuizzPokedex.Interfaces;
 using QuizzPokedex.Models;
+using QuizzPokedex.Resources;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -40,11 +41,11 @@ namespace QuizzPokedex.ViewModels
 
         public async override Task Initialize()
         {
-            Pokemon = await _pokemonService.GetByNameAsync("Charpenti");
+            Pokemon = await _pokemonService.GetByNameAsync(Constantes.Charpenti);
             await base.Initialize();
         }
 
-        #region COMMAND
+        #region Command
         public IMvxAsyncCommand NavigationBackCommandAsync => new MvxAsyncCommand(NavigationBackAsync);
         public IMvxAsyncCommand TestCommandAsync => new MvxAsyncCommand(TestAsync);
 
@@ -71,7 +72,7 @@ namespace QuizzPokedex.ViewModels
         }
         #endregion
 
-        #region PROPERTIES
+        #region Properties
         private Quizz _quizz;
         public Quizz Quizz
         {

@@ -16,7 +16,7 @@ namespace QuizzPokedex.ViewModels
 {
     public class ProfileViewModel : MvxViewModel<Profile>
     {
-        #region Field
+        #region Fields
         private readonly IMvxNavigationService _navigation;
         private readonly IMvxIoCProvider _logger;
         private readonly IProfileService _profileService;
@@ -65,7 +65,7 @@ namespace QuizzPokedex.ViewModels
         }
         #endregion
 
-        #region COMMAND
+        #region Command
         public IMvxAsyncCommand NavigationBackCommandAsync => new MvxAsyncCommand(NavigationBackAsync);
         public IMvxAsyncCommand SelectedStarterGrassCommandAsync => new MvxAsyncCommand(SelectedStarterGrassAsync);
         public IMvxAsyncCommand SelectedStarterFireCommandAsync => new MvxAsyncCommand(SelectedStarterFireAsync);
@@ -160,7 +160,7 @@ namespace QuizzPokedex.ViewModels
         }
         #endregion
 
-        #region PROPERTIES
+        #region Properties
         public MvxNotifyTask LoadPokemonTask { get; private set; }
 
         private Profile _profile;

@@ -24,6 +24,7 @@ namespace QuizzPokedex.Resources
         public const string Ninjask = "Ninjask";
         public const string Munja = "Munja";
         public const string Prismillon = "Prismillon";
+        public const string Charpenti = "Charpenti";
         #endregion
 
         #region Color Hexa
@@ -95,10 +96,21 @@ namespace QuizzPokedex.Resources
         public const string Icon_Flying_BW = "Icon_Flying_BW" + ExtensionImage;
         #endregion
 
+        #region Other Image Assets
+        public const string Pokedex_Welcome = "Pokedex_Welcome" + ExtensionImage;
+        public const string Pokedex_Up = "Pokedex_Up" + ExtensionImage;
+        public const string Pokedex_Down = "Pokedex_Down" + ExtensionImage;
+        #endregion
+
         #region Difficulty
         public const string EasyTQ = "Facile";
         public const string NormalTQ = "Normal";
         public const string HardTQ = "Difficile";
+        #endregion
+
+        #region Code Type Question
+        public const string QTypPok = "Pokemon";
+        public const string QTypTyp = "Type";
         #endregion
     }
 }

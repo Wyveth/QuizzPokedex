@@ -10,14 +10,21 @@ namespace QuizzPokedex.Services
 {
     public class DifficultyService : IDifficultyService
     {
+        #region Fields
         private readonly ISqliteConnectionService _connectionService;
         private SQLite.SQLiteAsyncConnection _database => _connectionService.GetAsyncConnection();
+        #endregion
 
+        #region Constructor
         public DifficultyService(ISqliteConnectionService connectionService)
         {
             _connectionService = connectionService;
         }
+        #endregion
 
+        #region Public Methods
+        #region CRUD
+        #region Get Data
         public async Task<List<Difficulty>> GetAllAsync()
         {
             var result = await _database.Table<Difficulty>().ToListAsync();
@@ -35,6 +42,7 @@ namespace QuizzPokedex.Services
             var result = await _database.Table<Difficulty>().ToListAsync();
             return result.Find(m => m.Libelle.Equals(libelle));
         }
+        #endregion
 
         public async Task<int> CreateAsync(Difficulty difficulty)
         {
@@ -52,7 +60,9 @@ namespace QuizzPokedex.Services
             var result = await _database.InsertOrReplaceAsync(difficulty);
             return result;
         }
+        #endregion
 
+        #region Populate Database
         public async Task Populate()
         {
             Difficulty difficulty = new Difficulty()
@@ -73,5 +83,7 @@ namespace QuizzPokedex.Services
             };
             await CreateAsync(difficulty);
         }
+        #endregion
+        #endregion
     }
 }

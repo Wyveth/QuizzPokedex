@@ -1,11 +1,14 @@
-﻿using MvvmCross.Commands;
+﻿using Android.Content.Res;
+using MvvmCross.Commands;
 using MvvmCross.Navigation;
 using MvvmCross.Plugin.Messenger;
 using MvvmCross.ViewModels;
 using QuizzPokedex.Interfaces;
 using QuizzPokedex.Models;
+using QuizzPokedex.Resources;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,7 +16,7 @@ namespace QuizzPokedex.ViewModels
 {
     public class WelcomeViewModel : MvxViewModel
     {
-        #region Field
+        #region Fields
         private readonly IMvxNavigationService _navigation;
         private readonly IPokemonService _pokemonService;
         private readonly ITypePokService _typePokService;
@@ -115,6 +118,9 @@ namespace QuizzPokedex.ViewModels
 
         private async Task ProfileAsync()
         {
+            ImgPokedexUp = await getByteAssetImage(Constantes.Pokedex_Up);
+            ImgPokedexDown = await getByteAssetImage(Constantes.Pokedex_Down);
+
             List<Profile> profiles = await _profileService.GetAllAsync();
             ActivatedProfile = profiles.Find(m => m.Activated.Equals(true));
 
@@ -141,6 +147,19 @@ namespace QuizzPokedex.ViewModels
         {
             if (msg.Refresh)
                 await ProfileAsync();
+        }
+
+        private async Task<byte[]> getByteAssetImage(string fileName)
+        {
+            AssetManager assets = Android.App.Application.Context.Assets;
+            const int maxReadSize = 256 * 1024;
+            byte[] imgByte;
+            using (BinaryReader br = new BinaryReader(assets.Open(fileName)))
+            {
+                imgByte = br.ReadBytes(maxReadSize);
+            }
+
+            return await Task.FromResult(imgByte);
         }
         #endregion
 
@@ -390,6 +409,22 @@ namespace QuizzPokedex.ViewModels
             set { SetProperty(ref _isVisibleModalChangeProfile, value); }
         }
         #endregion
+
+        private byte[] _imgPokedexUp;
+
+        public byte[] ImgPokedexUp
+        {
+            get { return _imgPokedexUp; }
+            set { SetProperty(ref _imgPokedexUp, value); }
+        }
+
+        private byte[] _imgPokedexDown;
+
+        public byte[] ImgPokedexDown
+        {
+            get { return _imgPokedexDown; }
+            set { SetProperty(ref _imgPokedexDown, value); }
+        }
         #endregion
     }
 }

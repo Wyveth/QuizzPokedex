@@ -27,7 +27,7 @@ namespace QuizzPokedex.Interfaces
         Task<int> GetNumberPokJsonAsync();
         Task<int> GetNumberInDbAsync();
         Task<int> GetNumberPokUpdateAsync();
+        Task<Pokemon> GetPokemonRandom(bool gen1, bool gen2, bool gen3, bool gen4, bool gen5, bool gen6, bool gen7, bool gen8, bool genArceus);
         Task<byte[]> DownloadImageAsync(string UrlImg);
-        Task<Pokemon> getPokemonRandom(bool gen1, bool gen2, bool gen3, bool gen4, bool gen5, bool gen6, bool gen7, bool gen8, bool genArceus);
     }
 }

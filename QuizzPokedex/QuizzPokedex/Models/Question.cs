@@ -13,6 +13,7 @@ namespace QuizzPokedex.Models
         //Numéro d'ordre du Quizz
         public int Order { get; set; }
 
+        //ID des réponses
         public string AnswersID { get; set; }
 
         //Identifiant Type Question

@@ -22,11 +22,19 @@
         </ResourceDictionary>
     </views:MvxContentPage.Resources>
     <ContentPage.Content>
-        <AbsoluteLayout>
+        <AbsoluteLayout BackgroundColor="White">
+            <!--  #C4F0F8  -->
+            <StackLayout AbsoluteLayout.LayoutBounds="0,-0.02,1,0.25" AbsoluteLayout.LayoutFlags="All">
+                <Image Source="{Binding ImgPokedexUp, Converter={StaticResource ByteToImageSourceConverter}}" />
+            </StackLayout>
+            <StackLayout AbsoluteLayout.LayoutBounds="0.5,1,1,0.2" AbsoluteLayout.LayoutFlags="All">
+                <!--<StackLayout AbsoluteLayout.LayoutBounds="0.5,0.965,1,0.2" AbsoluteLayout.LayoutFlags="All">-->
+                <Image Source="{Binding ImgPokedexDown, Converter={StaticResource ByteToImageSourceConverter}}" />
+            </StackLayout>
             <StackLayout
                 AbsoluteLayout.LayoutBounds="0,0,1,1"
                 AbsoluteLayout.LayoutFlags="All"
-                BackgroundColor="White">
+                BackgroundColor="Transparent">
                 <Grid
                     Margin="20,20,20,20"
                     ColumnSpacing="0"
@@ -65,6 +73,7 @@
                         Grid.Row="2"
                         Grid.Column="1"
                         Grid.ColumnSpan="2"
+                        Margin="25,-20,25,60"
                         AbsoluteLayout.LayoutBounds="0,0,0,0"
                         AbsoluteLayout.LayoutFlags="All"
                         Animation="Resources.96855-pokeball-loading-animation.json"
@@ -214,7 +223,6 @@
                         <ImageButton
                             Margin="-20"
                             Padding="12"
-                            ef:AddCommand.LongCommand="{Binding}"
                             BackgroundColor="White"
                             Command="{Binding ShowHideOtherProfileCommandAsync}"
                             Source="{Binding ActivatedPokemonProfile.DataImg, Converter={StaticResource ByteToImageSourceConverter}}" />

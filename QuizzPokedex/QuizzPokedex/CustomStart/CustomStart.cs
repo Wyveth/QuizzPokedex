@@ -11,12 +11,15 @@ namespace QuizzPokedex.CustomStart
 {
     public class AppStart : MvxAppStart
     {
+        #region Field
         private readonly ISqliteConnectionService _connectionService;
         private readonly IPokemonService _pokemonService;
         private readonly ITypePokService _typePokService;
         private readonly IDifficultyService _difficultyService;
         private readonly IQuestionTypeService _questionTypeService;
+        #endregion
 
+        #region Constructor
         public AppStart(IMvxApplication app, IMvxNavigationService mvxNavigationService, ISqliteConnectionService connectionService, IPokemonService pokemonService, ITypePokService typePokService, IDifficultyService difficultyService, IQuestionTypeService questionTypeService)
             : base(app, mvxNavigationService)
         {
@@ -26,7 +29,9 @@ namespace QuizzPokedex.CustomStart
             _difficultyService = difficultyService;
             _questionTypeService = questionTypeService;
         }
+        #endregion
 
+        #region Protected Methods
         protected override Task NavigateToFirstViewModel(object hint = null)
         {
             //initialisation des tables par défaut
@@ -63,7 +68,9 @@ namespace QuizzPokedex.CustomStart
                 await PopulateQuestionType();
             });
         }
+        #endregion
 
+        #region Private Methods
         private async Task PopulateTypePok()
         {
             List<TypeJson> typesJson = await _typePokService.GetListTypeScrapJson();
@@ -96,5 +103,6 @@ namespace QuizzPokedex.CustomStart
                 await _questionTypeService.Populate();
             });
         }
+        #endregion
     }
 }
