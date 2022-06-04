@@ -93,183 +93,170 @@ namespace QuizzPokedex.ViewModels
                 {
                     case Constantes.Steel:
                         if (ImgTypeSteelFilter == null)
-                            ImgTypeSteelFilter = await getByteTypeIcon(Constantes.Icon_Steel_BW);
+                            ImgTypeSteelFilter = await Utils.getByteAssetImage(Constantes.Icon_Steel_BW);
                         break;
                     case Constantes.Fighting:
                         if (ImgTypeFightingFilter == null)
-                            ImgTypeFightingFilter = await getByteTypeIcon(Constantes.Icon_Fighting_BW);
+                            ImgTypeFightingFilter = await Utils.getByteAssetImage(Constantes.Icon_Fighting_BW);
                         break;
                     case Constantes.Dragon:
                         if (ImgTypeDragonFilter == null)
-                            ImgTypeDragonFilter = await getByteTypeIcon(Constantes.Icon_Dragon_BW);
+                            ImgTypeDragonFilter = await Utils.getByteAssetImage(Constantes.Icon_Dragon_BW);
                         break;
                     case Constantes.Water:
                         if (ImgTypeWaterFilter == null)
-                            ImgTypeWaterFilter = await getByteTypeIcon(Constantes.Icon_Water_BW);
+                            ImgTypeWaterFilter = await Utils.getByteAssetImage(Constantes.Icon_Water_BW);
                         break;
                     case Constantes.Electric:
                         if (ImgTypeElectricFilter == null)
-                            ImgTypeElectricFilter = await getByteTypeIcon(Constantes.Icon_Electric_BW);
+                            ImgTypeElectricFilter = await Utils.getByteAssetImage(Constantes.Icon_Electric_BW);
                         break;
                     case Constantes.Fairy:
                         if (ImgTypeFairyFilter == null)
-                            ImgTypeFairyFilter = await getByteTypeIcon(Constantes.Icon_Fairy_BW);
+                            ImgTypeFairyFilter = await Utils.getByteAssetImage(Constantes.Icon_Fairy_BW);
                         break;
                     case Constantes.Fire:
                         if (ImgTypeFireFilter == null)
-                            ImgTypeFireFilter = await getByteTypeIcon(Constantes.Icon_Fire_BW);
+                            ImgTypeFireFilter = await Utils.getByteAssetImage(Constantes.Icon_Fire_BW);
                         break;
                     case Constantes.Ice:
                         if (ImgTypeIceFilter == null)
-                            ImgTypeIceFilter = await getByteTypeIcon(Constantes.Icon_Ice_BW);
+                            ImgTypeIceFilter = await Utils.getByteAssetImage(Constantes.Icon_Ice_BW);
                         break;
                     case Constantes.Bug:
                         if (ImgTypeBugFilter == null)
-                            ImgTypeBugFilter = await getByteTypeIcon(Constantes.Icon_Bug_BW);
+                            ImgTypeBugFilter = await Utils.getByteAssetImage(Constantes.Icon_Bug_BW);
                         break;
                     case Constantes.Normal:
                         if (ImgTypeNormalFilter == null)
-                            ImgTypeNormalFilter = await getByteTypeIcon(Constantes.Icon_Normal_BW);
+                            ImgTypeNormalFilter = await Utils.getByteAssetImage(Constantes.Icon_Normal_BW);
                         break;
                     case Constantes.Grass:
                         if (ImgTypeGrassFilter == null)
-                            ImgTypeGrassFilter = await getByteTypeIcon(Constantes.Icon_Grass_BW);
+                            ImgTypeGrassFilter = await Utils.getByteAssetImage(Constantes.Icon_Grass_BW);
                         break;
                     case Constantes.Poison:
                         if (ImgTypePoisonFilter == null)
-                            ImgTypePoisonFilter = await getByteTypeIcon(Constantes.Icon_Poison_BW);
+                            ImgTypePoisonFilter = await Utils.getByteAssetImage(Constantes.Icon_Poison_BW);
                         break;
                     case Constantes.Psychic:
                         if (ImgTypePsychicFilter == null)
-                            ImgTypePsychicFilter = await getByteTypeIcon(Constantes.Icon_Psychic_BW);
+                            ImgTypePsychicFilter = await Utils.getByteAssetImage(Constantes.Icon_Psychic_BW);
                         break;
                     case Constantes.Rock:
                         if (ImgTypeRockFilter == null)
-                            ImgTypeRockFilter = await getByteTypeIcon(Constantes.Icon_Rock_BW);
+                            ImgTypeRockFilter = await Utils.getByteAssetImage(Constantes.Icon_Rock_BW);
                         break;
                     case Constantes.Ground:
                         if (ImgTypeGroundFilter == null)
-                            ImgTypeGroundFilter = await getByteTypeIcon(Constantes.Icon_Ground_BW);
+                            ImgTypeGroundFilter = await Utils.getByteAssetImage(Constantes.Icon_Ground_BW);
                         break;
                     case Constantes.Ghost:
                         if (ImgTypeGhostFilter == null)
-                            ImgTypeGhostFilter = await getByteTypeIcon(Constantes.Icon_Ghost_BW);
+                            ImgTypeGhostFilter = await Utils.getByteAssetImage(Constantes.Icon_Ghost_BW);
                         break;
                     case Constantes.Dark:
                         if (ImgTypeDarkFilter == null)
-                            ImgTypeDarkFilter = await getByteTypeIcon(Constantes.Icon_Dark_BW);
+                            ImgTypeDarkFilter = await Utils.getByteAssetImage(Constantes.Icon_Dark_BW);
                         break;
                     case Constantes.Flying:
                         if (ImgTypeFlyingFilter == null)
-                            ImgTypeFlyingFilter = await getByteTypeIcon(Constantes.Icon_Flying_BW);
+                            ImgTypeFlyingFilter = await Utils.getByteAssetImage(Constantes.Icon_Flying_BW);
                         break;
                 }
             }
             #endregion
         }
 
-        private async Task<byte[]> getByteTypeIcon(string fileName)
-        {
-            AssetManager assets = Android.App.Application.Context.Assets;
-            const int maxReadSize = 256 * 1024;
-            byte[] imgByte;
-            using (BinaryReader br = new BinaryReader(assets.Open(fileName)))
-            {
-                imgByte = br.ReadBytes(maxReadSize);
-            }
-
-            return await Task.FromResult(imgByte);
-        }
-
         private async Task<bool> resetFiltreType()
         {
             FiltreActiveTypeSteel = false;
-            ImgTypeSteelFilter = await getByteTypeIcon(Constantes.Icon_Steel_BW);
+            ImgTypeSteelFilter = await Utils.getByteAssetImage(Constantes.Icon_Steel_BW);
             BackgroundColorSteel = Constantes.WhiteHexa;
             TextColorSteel = Constantes.BlackHexa;
 
             FiltreActiveTypeDragon = false;
-            ImgTypeDragonFilter = await getByteTypeIcon(Constantes.Icon_Dragon_BW);
+            ImgTypeDragonFilter = await Utils.getByteAssetImage(Constantes.Icon_Dragon_BW);
             BackgroundColorDragon = Constantes.WhiteHexa;
             TextColorDragon = Constantes.BlackHexa;
 
             FiltreActiveTypeElectric = false;
-            ImgTypeElectricFilter = await getByteTypeIcon(Constantes.Icon_Electric_BW);
+            ImgTypeElectricFilter = await Utils.getByteAssetImage(Constantes.Icon_Electric_BW);
             BackgroundColorElectric = Constantes.WhiteHexa;
             TextColorElectric = Constantes.BlackHexa;
 
             FiltreActiveTypeFire = false;
-            ImgTypeFireFilter = await getByteTypeIcon(Constantes.Icon_Fire_BW);
+            ImgTypeFireFilter = await Utils.getByteAssetImage(Constantes.Icon_Fire_BW);
             BackgroundColorFire = Constantes.WhiteHexa;
             TextColorFire = Constantes.BlackHexa;
 
             FiltreActiveTypeBug = false;
-            ImgTypeBugFilter = await getByteTypeIcon(Constantes.Icon_Bug_BW);
+            ImgTypeBugFilter = await Utils.getByteAssetImage(Constantes.Icon_Bug_BW);
             BackgroundColorBug = Constantes.WhiteHexa;
             TextColorBug = Constantes.BlackHexa;
 
             FiltreActiveTypeGrass = false;
-            ImgTypeGrassFilter = await getByteTypeIcon(Constantes.Icon_Grass_BW);
+            ImgTypeGrassFilter = await Utils.getByteAssetImage(Constantes.Icon_Grass_BW);
             BackgroundColorGrass = Constantes.WhiteHexa;
             TextColorGrass = Constantes.BlackHexa;
 
             FiltreActiveTypePsychic = false;
-            ImgTypePsychicFilter = await getByteTypeIcon(Constantes.Icon_Psychic_BW);
+            ImgTypePsychicFilter = await Utils.getByteAssetImage(Constantes.Icon_Psychic_BW);
             BackgroundColorPsychic = Constantes.WhiteHexa;
             TextColorPsychic = Constantes.BlackHexa;
 
             FiltreActiveTypeGround = false;
-            ImgTypeGroundFilter = await getByteTypeIcon(Constantes.Icon_Ground_BW);
+            ImgTypeGroundFilter = await Utils.getByteAssetImage(Constantes.Icon_Ground_BW);
             BackgroundColorGround = Constantes.WhiteHexa;
             TextColorGround = Constantes.BlackHexa;
 
             FiltreActiveTypeDark = false;
-            ImgTypeDarkFilter = await getByteTypeIcon(Constantes.Icon_Dark_BW);
+            ImgTypeDarkFilter = await Utils.getByteAssetImage(Constantes.Icon_Dark_BW);
             BackgroundColorDark = Constantes.WhiteHexa;
             TextColorDark = Constantes.BlackHexa;
 
             FiltreActiveTypeFighting = false;
-            ImgTypeFightingFilter = await getByteTypeIcon(Constantes.Icon_Fighting_BW);
+            ImgTypeFightingFilter = await Utils.getByteAssetImage(Constantes.Icon_Fighting_BW);
             BackgroundColorFighting = Constantes.WhiteHexa;
             TextColorFighting = Constantes.BlackHexa;
 
             FiltreActiveTypeWater = false;
-            ImgTypeWaterFilter = await getByteTypeIcon(Constantes.Icon_Water_BW);
+            ImgTypeWaterFilter = await Utils.getByteAssetImage(Constantes.Icon_Water_BW);
             BackgroundColorWater = Constantes.WhiteHexa;
             TextColorWater = Constantes.BlackHexa;
 
             FiltreActiveTypeFairy = false;
-            ImgTypeFairyFilter = await getByteTypeIcon(Constantes.Icon_Fairy_BW);
+            ImgTypeFairyFilter = await Utils.getByteAssetImage(Constantes.Icon_Fairy_BW);
             BackgroundColorFairy = Constantes.WhiteHexa;
             TextColorFairy = Constantes.BlackHexa;
 
             FiltreActiveTypeIce = false;
-            ImgTypeIceFilter = await getByteTypeIcon(Constantes.Icon_Ice_BW);
+            ImgTypeIceFilter = await Utils.getByteAssetImage(Constantes.Icon_Ice_BW);
             BackgroundColorIce = Constantes.WhiteHexa;
             TextColorIce = Constantes.BlackHexa;
 
             FiltreActiveTypeNormal = false;
-            ImgTypeNormalFilter = await getByteTypeIcon(Constantes.Icon_Normal_BW);
+            ImgTypeNormalFilter = await Utils.getByteAssetImage(Constantes.Icon_Normal_BW);
             BackgroundColorNormal = Constantes.WhiteHexa;
             TextColorNormal = Constantes.BlackHexa;
 
             FiltreActiveTypePoison = false;
-            ImgTypePoisonFilter = await getByteTypeIcon(Constantes.Icon_Poison_BW);
+            ImgTypePoisonFilter = await Utils.getByteAssetImage(Constantes.Icon_Poison_BW);
             BackgroundColorPoison = Constantes.WhiteHexa;
             TextColorPoison = Constantes.BlackHexa;
 
             FiltreActiveTypeRock = false;
-            ImgTypeRockFilter = await getByteTypeIcon(Constantes.Icon_Rock_BW);
+            ImgTypeRockFilter = await Utils.getByteAssetImage(Constantes.Icon_Rock_BW);
             BackgroundColorRock = Constantes.WhiteHexa;
             TextColorRock = Constantes.BlackHexa;
 
             FiltreActiveTypeGhost = false;
-            ImgTypeGhostFilter = await getByteTypeIcon(Constantes.Icon_Ghost_BW);
+            ImgTypeGhostFilter = await Utils.getByteAssetImage(Constantes.Icon_Ghost_BW);
             BackgroundColorGhost = Constantes.WhiteHexa;
             TextColorGhost = Constantes.BlackHexa;
 
             FiltreActiveTypeFlying = false;
-            ImgTypeFlyingFilter = await getByteTypeIcon(Constantes.Icon_Flying_BW);
+            ImgTypeFlyingFilter = await Utils.getByteAssetImage(Constantes.Icon_Flying_BW);
             BackgroundColorFlying = Constantes.WhiteHexa;
             TextColorFlying = Constantes.BlackHexa;
 
@@ -466,14 +453,14 @@ namespace QuizzPokedex.ViewModels
             if (FiltreActiveTypeSteel)
             {
                 FiltreActiveTypeSteel = false;
-                ImgTypeSteelFilter = await getByteTypeIcon(Constantes.Icon_Steel_BW);
+                ImgTypeSteelFilter = await Utils.getByteAssetImage(Constantes.Icon_Steel_BW);
                 BackgroundColorSteel = Constantes.WhiteHexa;
                 TextColorSteel = Constantes.BlackHexa;
             }
             else
             {
                 FiltreActiveTypeSteel = true;
-                ImgTypeSteelFilter = await getByteTypeIcon(Constantes.Icon_Steel);
+                ImgTypeSteelFilter = await Utils.getByteAssetImage(Constantes.Icon_Steel);
                 BackgroundColorSteel = await _typePokService.GetBackgroundColorType(Constantes.Steel);
                 TextColorSteel = Constantes.WhiteHexa;
             }
@@ -486,14 +473,14 @@ namespace QuizzPokedex.ViewModels
             if (FiltreActiveTypeFighting)
             {
                 FiltreActiveTypeFighting = false;
-                ImgTypeFightingFilter = await getByteTypeIcon(Constantes.Icon_Fighting_BW);
+                ImgTypeFightingFilter = await Utils.getByteAssetImage(Constantes.Icon_Fighting_BW);
                 BackgroundColorFighting = Constantes.WhiteHexa;
                 TextColorFighting = Constantes.BlackHexa;
             }
             else
             {
                 FiltreActiveTypeFighting = true;
-                ImgTypeFightingFilter = await getByteTypeIcon(Constantes.Icon_Fighting);
+                ImgTypeFightingFilter = await Utils.getByteAssetImage(Constantes.Icon_Fighting);
                 BackgroundColorFighting = await _typePokService.GetBackgroundColorType(Constantes.Fighting);
                 TextColorFighting = Constantes.WhiteHexa;
             }
@@ -506,14 +493,14 @@ namespace QuizzPokedex.ViewModels
             if (FiltreActiveTypeDragon)
             {
                 FiltreActiveTypeDragon = false;
-                ImgTypeDragonFilter = await getByteTypeIcon(Constantes.Icon_Dragon_BW);
+                ImgTypeDragonFilter = await Utils.getByteAssetImage(Constantes.Icon_Dragon_BW);
                 BackgroundColorDragon = Constantes.WhiteHexa;
                 TextColorDragon = Constantes.BlackHexa;
             }
             else
             {
                 FiltreActiveTypeDragon = true;
-                ImgTypeDragonFilter = await getByteTypeIcon(Constantes.Icon_Dragon);
+                ImgTypeDragonFilter = await Utils.getByteAssetImage(Constantes.Icon_Dragon);
                 BackgroundColorDragon = await _typePokService.GetBackgroundColorType(Constantes.Dragon);
                 TextColorDragon = Constantes.WhiteHexa;
             }
@@ -526,14 +513,14 @@ namespace QuizzPokedex.ViewModels
             if (FiltreActiveTypeWater)
             {
                 FiltreActiveTypeWater = false;
-                ImgTypeWaterFilter = await getByteTypeIcon(Constantes.Icon_Water_BW);
+                ImgTypeWaterFilter = await Utils.getByteAssetImage(Constantes.Icon_Water_BW);
                 BackgroundColorWater = Constantes.WhiteHexa;
                 TextColorWater = Constantes.BlackHexa;
             }
             else
             {
                 FiltreActiveTypeWater = true;
-                ImgTypeWaterFilter = await getByteTypeIcon(Constantes.Icon_Water);
+                ImgTypeWaterFilter = await Utils.getByteAssetImage(Constantes.Icon_Water);
                 BackgroundColorWater = await _typePokService.GetBackgroundColorType(Constantes.Water);
                 TextColorWater = Constantes.WhiteHexa;
             }
@@ -546,14 +533,14 @@ namespace QuizzPokedex.ViewModels
             if (FiltreActiveTypeElectric)
             {
                 FiltreActiveTypeElectric = false;
-                ImgTypeElectricFilter = await getByteTypeIcon(Constantes.Icon_Electric_BW);
+                ImgTypeElectricFilter = await Utils.getByteAssetImage(Constantes.Icon_Electric_BW);
                 BackgroundColorElectric = Constantes.WhiteHexa;
                 TextColorElectric = Constantes.BlackHexa;
             }
             else
             {
                 FiltreActiveTypeElectric = true;
-                ImgTypeElectricFilter = await getByteTypeIcon(Constantes.Icon_Electric);
+                ImgTypeElectricFilter = await Utils.getByteAssetImage(Constantes.Icon_Electric);
                 BackgroundColorElectric = await _typePokService.GetBackgroundColorType(Constantes.Electric);
                 TextColorElectric = Constantes.WhiteHexa;
             }
@@ -566,14 +553,14 @@ namespace QuizzPokedex.ViewModels
             if (FiltreActiveTypeFairy)
             {
                 FiltreActiveTypeFairy = false;
-                ImgTypeFairyFilter = await getByteTypeIcon(Constantes.Icon_Fairy_BW);
+                ImgTypeFairyFilter = await Utils.getByteAssetImage(Constantes.Icon_Fairy_BW);
                 BackgroundColorFairy = Constantes.WhiteHexa;
                 TextColorFairy = Constantes.BlackHexa;
             }
             else
             {
                 FiltreActiveTypeFairy = true;
-                ImgTypeFairyFilter = await getByteTypeIcon(Constantes.Icon_Fairy);
+                ImgTypeFairyFilter = await Utils.getByteAssetImage(Constantes.Icon_Fairy);
                 BackgroundColorFairy = await _typePokService.GetBackgroundColorType(Constantes.Fairy);
                 TextColorFairy = Constantes.WhiteHexa;
             }
@@ -586,14 +573,14 @@ namespace QuizzPokedex.ViewModels
             if (FiltreActiveTypeFire)
             {
                 FiltreActiveTypeFire = false;
-                ImgTypeFireFilter = await getByteTypeIcon(Constantes.Icon_Fire_BW);
+                ImgTypeFireFilter = await Utils.getByteAssetImage(Constantes.Icon_Fire_BW);
                 BackgroundColorFire = Constantes.WhiteHexa;
                 TextColorFire = Constantes.BlackHexa;
             }
             else
             {
                 FiltreActiveTypeFire = true;
-                ImgTypeFireFilter = await getByteTypeIcon(Constantes.Icon_Fire);
+                ImgTypeFireFilter = await Utils.getByteAssetImage(Constantes.Icon_Fire);
                 BackgroundColorFire = await _typePokService.GetBackgroundColorType(Constantes.Fire);
                 TextColorFire = Constantes.WhiteHexa;
             }
@@ -606,14 +593,14 @@ namespace QuizzPokedex.ViewModels
             if (FiltreActiveTypeIce)
             {
                 FiltreActiveTypeIce = false;
-                ImgTypeIceFilter = await getByteTypeIcon(Constantes.Icon_Ice_BW);
+                ImgTypeIceFilter = await Utils.getByteAssetImage(Constantes.Icon_Ice_BW);
                 BackgroundColorIce = Constantes.WhiteHexa;
                 TextColorIce = Constantes.BlackHexa;
             }
             else
             {
                 FiltreActiveTypeIce = true;
-                ImgTypeIceFilter = await getByteTypeIcon(Constantes.Icon_Ice);
+                ImgTypeIceFilter = await Utils.getByteAssetImage(Constantes.Icon_Ice);
                 BackgroundColorIce = await _typePokService.GetBackgroundColorType(Constantes.Ice);
                 TextColorIce = Constantes.WhiteHexa;
             }
@@ -626,14 +613,14 @@ namespace QuizzPokedex.ViewModels
             if (FiltreActiveTypeBug)
             {
                 FiltreActiveTypeBug = false;
-                ImgTypeBugFilter = await getByteTypeIcon(Constantes.Icon_Bug_BW);
+                ImgTypeBugFilter = await Utils.getByteAssetImage(Constantes.Icon_Bug_BW);
                 BackgroundColorBug = Constantes.WhiteHexa;
                 TextColorBug = Constantes.BlackHexa;
             }
             else
             {
                 FiltreActiveTypeBug = true;
-                ImgTypeBugFilter = await getByteTypeIcon(Constantes.Icon_Bug);
+                ImgTypeBugFilter = await Utils.getByteAssetImage(Constantes.Icon_Bug);
                 BackgroundColorBug = await _typePokService.GetBackgroundColorType(Constantes.Bug);
                 TextColorBug = Constantes.WhiteHexa;
             }
@@ -646,14 +633,14 @@ namespace QuizzPokedex.ViewModels
             if (FiltreActiveTypeNormal)
             {
                 FiltreActiveTypeNormal = false;
-                ImgTypeNormalFilter = await getByteTypeIcon(Constantes.Icon_Normal_BW);
+                ImgTypeNormalFilter = await Utils.getByteAssetImage(Constantes.Icon_Normal_BW);
                 BackgroundColorNormal = Constantes.WhiteHexa;
                 TextColorNormal = Constantes.BlackHexa;
             }
             else
             {
                 FiltreActiveTypeNormal = true;
-                ImgTypeNormalFilter = await getByteTypeIcon(Constantes.Icon_Normal);
+                ImgTypeNormalFilter = await Utils.getByteAssetImage(Constantes.Icon_Normal);
                 BackgroundColorNormal = await _typePokService.GetBackgroundColorType(Constantes.Normal);
                 TextColorNormal = Constantes.WhiteHexa;
             }
@@ -666,14 +653,14 @@ namespace QuizzPokedex.ViewModels
             if (FiltreActiveTypeGrass)
             {
                 FiltreActiveTypeGrass = false;
-                ImgTypeGrassFilter = await getByteTypeIcon(Constantes.Icon_Grass_BW);
+                ImgTypeGrassFilter = await Utils.getByteAssetImage(Constantes.Icon_Grass_BW);
                 BackgroundColorGrass = Constantes.WhiteHexa;
                 TextColorGrass = Constantes.BlackHexa;
             }
             else
             {
                 FiltreActiveTypeGrass = true;
-                ImgTypeGrassFilter = await getByteTypeIcon(Constantes.Icon_Grass);
+                ImgTypeGrassFilter = await Utils.getByteAssetImage(Constantes.Icon_Grass);
                 BackgroundColorGrass = await _typePokService.GetBackgroundColorType(Constantes.Grass);
                 TextColorGrass = Constantes.WhiteHexa;
             }
@@ -686,14 +673,14 @@ namespace QuizzPokedex.ViewModels
             if (FiltreActiveTypePoison)
             {
                 FiltreActiveTypePoison = false;
-                ImgTypePoisonFilter = await getByteTypeIcon(Constantes.Icon_Poison_BW);
+                ImgTypePoisonFilter = await Utils.getByteAssetImage(Constantes.Icon_Poison_BW);
                 BackgroundColorPoison = Constantes.WhiteHexa;
                 TextColorPoison = Constantes.BlackHexa;
             }
             else
             {
                 FiltreActiveTypePoison = true;
-                ImgTypePoisonFilter = await getByteTypeIcon(Constantes.Icon_Poison);
+                ImgTypePoisonFilter = await Utils.getByteAssetImage(Constantes.Icon_Poison);
                 BackgroundColorPoison = await _typePokService.GetBackgroundColorType(Constantes.Poison);
                 TextColorPoison = Constantes.WhiteHexa;
             }
@@ -706,14 +693,14 @@ namespace QuizzPokedex.ViewModels
             if (FiltreActiveTypePsychic)
             {
                 FiltreActiveTypePsychic = false;
-                ImgTypePsychicFilter = await getByteTypeIcon(Constantes.Icon_Psychic_BW);
+                ImgTypePsychicFilter = await Utils.getByteAssetImage(Constantes.Icon_Psychic_BW);
                 BackgroundColorPsychic = Constantes.WhiteHexa;
                 TextColorPsychic = Constantes.BlackHexa;
             }
             else
             {
                 FiltreActiveTypePsychic = true;
-                ImgTypePsychicFilter = await getByteTypeIcon(Constantes.Icon_Psychic);
+                ImgTypePsychicFilter = await Utils.getByteAssetImage(Constantes.Icon_Psychic);
                 BackgroundColorPsychic = await _typePokService.GetBackgroundColorType(Constantes.Psychic);
                 TextColorPsychic = Constantes.WhiteHexa;
             }
@@ -726,14 +713,14 @@ namespace QuizzPokedex.ViewModels
             if (FiltreActiveTypeRock)
             {
                 FiltreActiveTypeRock = false;
-                ImgTypeRockFilter = await getByteTypeIcon(Constantes.Icon_Rock_BW);
+                ImgTypeRockFilter = await Utils.getByteAssetImage(Constantes.Icon_Rock_BW);
                 BackgroundColorRock = Constantes.WhiteHexa;
                 TextColorRock = Constantes.BlackHexa;
             }
             else
             {
                 FiltreActiveTypeRock = true;
-                ImgTypeRockFilter = await getByteTypeIcon(Constantes.Icon_Rock);
+                ImgTypeRockFilter = await Utils.getByteAssetImage(Constantes.Icon_Rock);
                 BackgroundColorRock = await _typePokService.GetBackgroundColorType(Constantes.Rock);
                 TextColorRock = Constantes.WhiteHexa;
             }
@@ -746,14 +733,14 @@ namespace QuizzPokedex.ViewModels
             if (FiltreActiveTypeGround)
             {
                 FiltreActiveTypeGround = false;
-                ImgTypeGroundFilter = await getByteTypeIcon(Constantes.Icon_Ground_BW);
+                ImgTypeGroundFilter = await Utils.getByteAssetImage(Constantes.Icon_Ground_BW);
                 BackgroundColorGround = Constantes.WhiteHexa;
                 TextColorGround = Constantes.BlackHexa;
             }
             else
             {
                 FiltreActiveTypeGround = true;
-                ImgTypeGroundFilter = await getByteTypeIcon(Constantes.Icon_Ground);
+                ImgTypeGroundFilter = await Utils.getByteAssetImage(Constantes.Icon_Ground);
                 BackgroundColorGround = await _typePokService.GetBackgroundColorType(Constantes.Ground);
                 TextColorGround = Constantes.WhiteHexa;
             }
@@ -766,14 +753,14 @@ namespace QuizzPokedex.ViewModels
             if (FiltreActiveTypeGhost)
             {
                 FiltreActiveTypeGhost = false;
-                ImgTypeGhostFilter = await getByteTypeIcon(Constantes.Icon_Ghost_BW);
+                ImgTypeGhostFilter = await Utils.getByteAssetImage(Constantes.Icon_Ghost_BW);
                 BackgroundColorGhost = Constantes.WhiteHexa;
                 TextColorGhost = Constantes.BlackHexa;
             }
             else
             {
                 FiltreActiveTypeGhost = true;
-                ImgTypeGhostFilter = await getByteTypeIcon(Constantes.Icon_Ghost);
+                ImgTypeGhostFilter = await Utils.getByteAssetImage(Constantes.Icon_Ghost);
                 BackgroundColorGhost = await _typePokService.GetBackgroundColorType(Constantes.Ghost);
                 TextColorGhost = Constantes.WhiteHexa;
             }
@@ -786,14 +773,14 @@ namespace QuizzPokedex.ViewModels
             if (FiltreActiveTypeDark)
             {
                 FiltreActiveTypeDark = false;
-                ImgTypeDarkFilter = await getByteTypeIcon(Constantes.Icon_Dark_BW);
+                ImgTypeDarkFilter = await Utils.getByteAssetImage(Constantes.Icon_Dark_BW);
                 BackgroundColorDark = Constantes.WhiteHexa;
                 TextColorDark = Constantes.BlackHexa;
             }
             else
             {
                 FiltreActiveTypeDark = true;
-                ImgTypeDarkFilter = await getByteTypeIcon(Constantes.Icon_Dark);
+                ImgTypeDarkFilter = await Utils.getByteAssetImage(Constantes.Icon_Dark);
                 BackgroundColorDark = await _typePokService.GetBackgroundColorType(Constantes.Dark);
                 TextColorDark = Constantes.WhiteHexa;
             }
@@ -806,14 +793,14 @@ namespace QuizzPokedex.ViewModels
             if (FiltreActiveTypeFlying)
             {
                 FiltreActiveTypeFlying = false;
-                ImgTypeFlyingFilter = await getByteTypeIcon(Constantes.Icon_Flying_BW);
+                ImgTypeFlyingFilter = await Utils.getByteAssetImage(Constantes.Icon_Flying_BW);
                 BackgroundColorFlying = Constantes.WhiteHexa;
                 TextColorFlying = Constantes.BlackHexa;
             }
             else
             {
                 FiltreActiveTypeFlying = true;
-                ImgTypeFlyingFilter = await getByteTypeIcon(Constantes.Icon_Flying);
+                ImgTypeFlyingFilter = await Utils.getByteAssetImage(Constantes.Icon_Flying);
                 BackgroundColorFlying = await _typePokService.GetBackgroundColorType(Constantes.Flying);
                 TextColorFlying = Constantes.WhiteHexa;
             }

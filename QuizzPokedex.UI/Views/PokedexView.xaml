@@ -4,8 +4,8 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:converters="clr-namespace:QuizzPokedex.UI.Converters"
-    xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
     xmlns:ef="clr-namespace:AiForms.Effects;assembly=AiForms.Effects"
+    xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
     xmlns:shadows="http://sharpnado.com"
     xmlns:viewmodel="clr-namespace:QuizzPokedex.ViewModels;assembly=QuizzPokedex"
     xmlns:views="clr-namespace:MvvmCross.Forms.Views;assembly=MvvmCross.Forms"
@@ -117,7 +117,7 @@
                     <pv:PancakeView
                         BackgroundColor="White"
                         Border="{pv:BorderMarkup Color=Gray,
-                                                           Thickness=0}"
+                                                 Thickness=0}"
                         CornerRadius="100,100,100,100">
                         <ImageButton
                             Padding="10,5,12,5"
@@ -152,7 +152,7 @@
                     <pv:PancakeView
                         BackgroundColor="White"
                         Border="{pv:BorderMarkup Color=Gray,
-                                                           Thickness=0}"
+                                                 Thickness=0}"
                         CornerRadius="100,100,100,100">
                         <SearchBar
                             x:Name="SearchBar"
@@ -188,7 +188,7 @@
                     <pv:PancakeView
                         BackgroundColor="White"
                         Border="{pv:BorderMarkup Color=Gray,
-                                                           Thickness=0}"
+                                                 Thickness=0}"
                         CornerRadius="100,100,100,100">
                         <Grid>
                             <Grid.RowDefinitions>
@@ -242,7 +242,7 @@
                     <pv:PancakeView
                         BackgroundColor="White"
                         Border="{pv:BorderMarkup Color=Gray,
-                                                           Thickness=0}"
+                                                 Thickness=0}"
                         CornerRadius="20"
                         HeightRequest="110"
                         WidthRequest="180">
@@ -304,7 +304,7 @@
                                 <pv:PancakeView
                                     BackgroundColor="White"
                                     Border="{pv:BorderMarkup Color=Gray,
-                                                                       Thickness=0}"
+                                                             Thickness=0}"
                                     CornerRadius="10">
                                     <Button
                                         Padding="6"
@@ -339,7 +339,7 @@
                                 <pv:PancakeView
                                     BackgroundColor="White"
                                     Border="{pv:BorderMarkup Color=Gray,
-                                                                       Thickness=0}"
+                                                             Thickness=0}"
                                     CornerRadius="10">
                                     <Button
                                         x:Name="GenFilterButton"
@@ -381,7 +381,7 @@
                     <pv:PancakeView
                         BackgroundColor="White"
                         Border="{pv:BorderMarkup Color=Gray,
-                                                           Thickness=0}"
+                                                 Thickness=0}"
                         CornerRadius="10"
                         HeightRequest="80"
                         WidthRequest="40">
@@ -415,7 +415,7 @@
                                 <pv:PancakeView
                                     BackgroundColor="White"
                                     Border="{pv:BorderMarkup Color=Gray,
-                                                                       Thickness=0}"
+                                                             Thickness=0}"
                                     CornerRadius="10">
                                     <ImageButton
                                         Padding="5"
@@ -448,7 +448,7 @@
                                 <pv:PancakeView
                                     BackgroundColor="White"
                                     Border="{pv:BorderMarkup Color=Gray,
-                                                                       Thickness=0}"
+                                                             Thickness=0}"
                                     CornerRadius="10">
                                     <ImageButton
                                         Padding="5"
@@ -529,7 +529,7 @@
                         <pv:PancakeView
                             BackgroundColor="White"
                             Border="{pv:BorderMarkup Color=Gray,
-                                                               Thickness=0}"
+                                                     Thickness=0}"
                             CornerRadius="10">
                             <Button
                                 Padding="6"
@@ -564,7 +564,7 @@
                         <pv:PancakeView
                             BackgroundColor="White"
                             Border="{pv:BorderMarkup Color=Gray,
-                                                               Thickness=0}"
+                                                     Thickness=0}"
                             CornerRadius="10">
                             <Button
                                 Padding="6"
@@ -599,7 +599,7 @@
                         <pv:PancakeView
                             BackgroundColor="White"
                             Border="{pv:BorderMarkup Color=Gray,
-                                                               Thickness=0}"
+                                                     Thickness=0}"
                             CornerRadius="10">
                             <Button
                                 Padding="6"
@@ -634,7 +634,7 @@
                         <pv:PancakeView
                             BackgroundColor="White"
                             Border="{pv:BorderMarkup Color=Gray,
-                                                               Thickness=0}"
+                                                     Thickness=0}"
                             CornerRadius="10">
                             <Button
                                 Padding="6"
@@ -669,7 +669,7 @@
                         <pv:PancakeView
                             BackgroundColor="White"
                             Border="{pv:BorderMarkup Color=Gray,
-                                                               Thickness=0}"
+                                                     Thickness=0}"
                             CornerRadius="10">
                             <Button
                                 Padding="6"
@@ -704,7 +704,7 @@
                         <pv:PancakeView
                             BackgroundColor="White"
                             Border="{pv:BorderMarkup Color=Gray,
-                                                               Thickness=0}"
+                                                     Thickness=0}"
                             CornerRadius="10">
                             <Button
                                 Padding="6"
@@ -739,7 +739,7 @@
                         <pv:PancakeView
                             BackgroundColor="White"
                             Border="{pv:BorderMarkup Color=Gray,
-                                                               Thickness=0}"
+                                                     Thickness=0}"
                             CornerRadius="10">
                             <Button
                                 Padding="6"
@@ -774,7 +774,7 @@
                         <pv:PancakeView
                             BackgroundColor="White"
                             Border="{pv:BorderMarkup Color=Gray,
-                                                               Thickness=0}"
+                                                     Thickness=0}"
                             CornerRadius="10">
                             <Button
                                 Padding="6"
@@ -810,7 +810,7 @@
                         <pv:PancakeView
                             BackgroundColor="White"
                             Border="{pv:BorderMarkup Color=Gray,
-                                                               Thickness=0}"
+                                                     Thickness=0}"
                             CornerRadius="10">
                             <Button
                                 Padding="6"
@@ -845,7 +845,7 @@
                         <pv:PancakeView
                             BackgroundColor="Black"
                             Border="{pv:BorderMarkup Color=Gray,
-                                                               Thickness=0}"
+                                                     Thickness=0}"
                             CornerRadius="10">
                             <Button
                                 Padding="6"
@@ -880,7 +880,7 @@
                         <pv:PancakeView
                             BackgroundColor="Black"
                             Border="{pv:BorderMarkup Color=Gray,
-                                                               Thickness=0}"
+                                                     Thickness=0}"
                             CornerRadius="10">
                             <Button
                                 Padding="6"
@@ -958,7 +958,7 @@
                         <pv:PancakeView
                             BackgroundColor="White"
                             Border="{pv:BorderMarkup Color=Gray,
-                                                               Thickness=0}"
+                                                     Thickness=0}"
                             CornerRadius="10">
                             <Button
                                 Padding="5,5,5,5"
@@ -994,7 +994,7 @@
                         <pv:PancakeView
                             BackgroundColor="White"
                             Border="{pv:BorderMarkup Color=Gray,
-                                                               Thickness=0}"
+                                                     Thickness=0}"
                             CornerRadius="10">
                             <Button
                                 Padding="5,5,5,5"
@@ -1030,7 +1030,7 @@
                         <pv:PancakeView
                             BackgroundColor="White"
                             Border="{pv:BorderMarkup Color=Gray,
-                                                               Thickness=0}"
+                                                     Thickness=0}"
                             CornerRadius="10">
                             <Button
                                 Padding="5,5,5,5"
@@ -1066,7 +1066,7 @@
                         <pv:PancakeView
                             BackgroundColor="White"
                             Border="{pv:BorderMarkup Color=Gray,
-                                                               Thickness=0}"
+                                                     Thickness=0}"
                             CornerRadius="10">
                             <Button
                                 Padding="5,5,5,5"
@@ -1102,7 +1102,7 @@
                         <pv:PancakeView
                             BackgroundColor="White"
                             Border="{pv:BorderMarkup Color=Gray,
-                                                               Thickness=0}"
+                                                     Thickness=0}"
                             CornerRadius="10">
                             <Button
                                 Padding="5,5,5,5"
@@ -1138,7 +1138,7 @@
                         <pv:PancakeView
                             BackgroundColor="White"
                             Border="{pv:BorderMarkup Color=Gray,
-                                                               Thickness=0}"
+                                                     Thickness=0}"
                             CornerRadius="10">
                             <Button
                                 Padding="5,5,5,5"
@@ -1174,7 +1174,7 @@
                         <pv:PancakeView
                             BackgroundColor="White"
                             Border="{pv:BorderMarkup Color=Gray,
-                                                               Thickness=0}"
+                                                     Thickness=0}"
                             CornerRadius="10">
                             <Button
                                 Padding="5,5,5,5"
@@ -1210,7 +1210,7 @@
                         <pv:PancakeView
                             BackgroundColor="White"
                             Border="{pv:BorderMarkup Color=Gray,
-                                                               Thickness=0}"
+                                                     Thickness=0}"
                             CornerRadius="10">
                             <Button
                                 Padding="5,5,5,5"
@@ -1246,7 +1246,7 @@
                         <pv:PancakeView
                             BackgroundColor="White"
                             Border="{pv:BorderMarkup Color=Gray,
-                                                               Thickness=0}"
+                                                     Thickness=0}"
                             CornerRadius="10">
                             <Button
                                 Padding="5,5,5,5"
@@ -1282,7 +1282,7 @@
                         <pv:PancakeView
                             BackgroundColor="White"
                             Border="{pv:BorderMarkup Color=Gray,
-                                                               Thickness=0}"
+                                                     Thickness=0}"
                             CornerRadius="10">
                             <Button
                                 Padding="5,5,5,5"
@@ -1318,7 +1318,7 @@
                         <pv:PancakeView
                             BackgroundColor="White"
                             Border="{pv:BorderMarkup Color=Gray,
-                                                               Thickness=0}"
+                                                     Thickness=0}"
                             CornerRadius="10">
                             <Button
                                 Padding="5,5,5,5"
@@ -1354,7 +1354,7 @@
                         <pv:PancakeView
                             BackgroundColor="White"
                             Border="{pv:BorderMarkup Color=Gray,
-                                                               Thickness=0}"
+                                                     Thickness=0}"
                             CornerRadius="10">
                             <Button
                                 Padding="5,5,5,5"
@@ -1390,7 +1390,7 @@
                         <pv:PancakeView
                             BackgroundColor="White"
                             Border="{pv:BorderMarkup Color=Gray,
-                                                               Thickness=0}"
+                                                     Thickness=0}"
                             CornerRadius="10">
                             <Button
                                 Padding="5,5,5,5"
@@ -1426,7 +1426,7 @@
                         <pv:PancakeView
                             BackgroundColor="White"
                             Border="{pv:BorderMarkup Color=Gray,
-                                                               Thickness=0}"
+                                                     Thickness=0}"
                             CornerRadius="10">
                             <Button
                                 Padding="5,5,5,5"
@@ -1462,7 +1462,7 @@
                         <pv:PancakeView
                             BackgroundColor="White"
                             Border="{pv:BorderMarkup Color=Gray,
-                                                               Thickness=0}"
+                                                     Thickness=0}"
                             CornerRadius="10">
                             <Button
                                 Padding="5,5,5,5"
@@ -1498,7 +1498,7 @@
                         <pv:PancakeView
                             BackgroundColor="White"
                             Border="{pv:BorderMarkup Color=Gray,
-                                                               Thickness=0}"
+                                                     Thickness=0}"
                             CornerRadius="10">
                             <Button
                                 Padding="5,5,5,5"
@@ -1534,7 +1534,7 @@
                         <pv:PancakeView
                             BackgroundColor="White"
                             Border="{pv:BorderMarkup Color=Gray,
-                                                               Thickness=0}"
+                                                     Thickness=0}"
                             CornerRadius="10">
                             <Button
                                 Margin="-1,0,0,0"
@@ -1571,7 +1571,7 @@
                         <pv:PancakeView
                             BackgroundColor="White"
                             Border="{pv:BorderMarkup Color=Gray,
-                                                               Thickness=0}"
+                                                     Thickness=0}"
                             CornerRadius="10">
                             <Button
                                 Padding="5,5,5,5"
@@ -1607,7 +1607,7 @@
                         <pv:PancakeView
                             BackgroundColor="Black"
                             Border="{pv:BorderMarkup Color=Gray,
-                                                               Thickness=0}"
+                                                     Thickness=0}"
                             CornerRadius="10">
                             <Button
                                 Padding="6"
@@ -1642,7 +1642,7 @@
                         <pv:PancakeView
                             BackgroundColor="Black"
                             Border="{pv:BorderMarkup Color=Gray,
-                                                               Thickness=0}"
+                                                     Thickness=0}"
                             CornerRadius="10">
                             <Button
                                 Padding="6"

@@ -28,7 +28,6 @@
                 <Image Source="{Binding ImgPokedexUp, Converter={StaticResource ByteToImageSourceConverter}}" />
             </StackLayout>
             <StackLayout AbsoluteLayout.LayoutBounds="0.5,1,1,0.2" AbsoluteLayout.LayoutFlags="All">
-                <!--<StackLayout AbsoluteLayout.LayoutBounds="0.5,0.965,1,0.2" AbsoluteLayout.LayoutFlags="All">-->
                 <Image Source="{Binding ImgPokedexDown, Converter={StaticResource ByteToImageSourceConverter}}" />
             </StackLayout>
             <StackLayout

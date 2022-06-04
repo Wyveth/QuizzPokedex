@@ -40,6 +40,7 @@ namespace QuizzPokedex.ViewModels
         #region Public Methods
         public override async Task Initialize()
         {
+            BackGroundTask = MvxNotifyTask.Create(BackGroundAsync);
             ProgressBarTask = MvxNotifyTask.Create(ProgressBarAsync);
             ProfileTask = MvxNotifyTask.Create(ProfileAsync);
             await base.Initialize();
@@ -47,6 +48,11 @@ namespace QuizzPokedex.ViewModels
         #endregion
 
         #region Private Methods
+        private async Task BackGroundAsync()
+        {
+            ImgPokedexUp = await Utils.getByteAssetImage(Constantes.Pokedex_Up);
+            ImgPokedexDown = await Utils.getByteAssetImage(Constantes.Pokedex_Down);
+        }
         private async Task ProgressBarAsync()
         {
             int nbTypeMax = await _typePokService.GetNumberTypeJsonAsync();
@@ -118,9 +124,6 @@ namespace QuizzPokedex.ViewModels
 
         private async Task ProfileAsync()
         {
-            ImgPokedexUp = await getByteAssetImage(Constantes.Pokedex_Up);
-            ImgPokedexDown = await getByteAssetImage(Constantes.Pokedex_Down);
-
             List<Profile> profiles = await _profileService.GetAllAsync();
             ActivatedProfile = profiles.Find(m => m.Activated.Equals(true));
 
@@ -263,6 +266,7 @@ namespace QuizzPokedex.ViewModels
 
         #region Properties
         #region Collection
+        public MvxNotifyTask BackGroundTask { get; private set; }
         public MvxNotifyTask ProgressBarTask { get; private set; }
         public MvxNotifyTask ProfileTask { get; private set; }
         #endregion

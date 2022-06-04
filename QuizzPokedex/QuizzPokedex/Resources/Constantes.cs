@@ -97,9 +97,14 @@ namespace QuizzPokedex.Resources
         #endregion
 
         #region Other Image Assets
-        public const string Pokedex_Welcome = "Pokedex_Welcome" + ExtensionImage;
         public const string Pokedex_Up = "Pokedex_Up" + ExtensionImage;
         public const string Pokedex_Down = "Pokedex_Down" + ExtensionImage;
+        public const string Easy_White = "OneStarWhite_Medium" + ExtensionImage;
+        public const string Easy_Color = "OneStarFull_Medium" + ExtensionImage;
+        public const string Normal_White = "TwoStarWhite_Medium" + ExtensionImage;
+        public const string Normal_Color = "TwoStarFull_Medium" + ExtensionImage;
+        public const string Hard_White = "ThreeStarWhite_Medium" + ExtensionImage;
+        public const string Hard_Color = "ThreeStarFull_Medium" + ExtensionImage;
         #endregion
 
         #region Difficulty

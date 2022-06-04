@@ -9,6 +9,7 @@
     xmlns:shadows="http://sharpnado.com"
     xmlns:viewmodel="clr-namespace:QuizzPokedex.ViewModels;assembly=QuizzPokedex"
     xmlns:views="clr-namespace:MvvmCross.Forms.Views;assembly=MvvmCross.Forms"
+    xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
     x:TypeArguments="viewmodel:QuizzViewModel"
     BackgroundColor="#FFFFFF"
     NavigationPage.HasNavigationBar="False">
@@ -20,18 +21,224 @@
     </views:MvxContentPage.Resources>
 
     <ContentPage.Content>
-        <StackLayout>
-            <AbsoluteLayout>
-                <StackLayout
-                    x:Name="backButton"
-                    AbsoluteLayout.LayoutBounds="0,0.075,0.23,0.07"
-                    AbsoluteLayout.LayoutFlags="All">
-                    <shadows:Shadows Margin="30,0,30,50" CornerRadius="20">
+        <AbsoluteLayout>
+            <StackLayout AbsoluteLayout.LayoutBounds="0,-0.02,1,0.25" AbsoluteLayout.LayoutFlags="All">
+                <Image Source="{Binding ImgPokedexUp, Converter={StaticResource ByteToImageSourceConverter}}" />
+            </StackLayout>
+            <StackLayout AbsoluteLayout.LayoutBounds="0.5,1,1,0.2" AbsoluteLayout.LayoutFlags="All">
+                <Image Source="{Binding ImgPokedexDown, Converter={StaticResource ByteToImageSourceConverter}}" />
+            </StackLayout>
+            <StackLayout
+                x:Name="backButton"
+                AbsoluteLayout.LayoutBounds="0,0.02,0.23,0.07"
+                AbsoluteLayout.LayoutFlags="All">
+                <shadows:Shadows Margin="30,0,30,50" CornerRadius="20">
+                    <shadows:Shadows.Shades>
+                        <shadows:ImmutableShades>
+                            <shadows:Shade
+                                BlurRadius="10"
+                                Opacity="0.5"
+                                Offset="-1,-1"
+                                Color="#464C56" />
+                            <shadows:Shade
+                                BlurRadius="10"
+                                Opacity="0.5"
+                                Offset="1,1"
+                                Color="#464C56" />
+                        </shadows:ImmutableShades>
+                    </shadows:Shadows.Shades>
+                    <pv:PancakeView
+                        BackgroundColor="White"
+                        Border="{pv:BorderMarkup Color=Gray,
+                                                 Thickness=0}"
+                        CornerRadius="100,100,100,100">
+                        <ImageButton
+                            Padding="4,9,5,9"
+                            BackgroundColor="White"
+                            Command="{Binding NavigationBackCommandAsync}"
+                            HeightRequest="35"
+                            Source="@mipmap/left"
+                            WidthRequest="35" />
+                    </pv:PancakeView>
+                </shadows:Shadows>
+            </StackLayout>
+            <StackLayout
+                AbsoluteLayout.LayoutBounds="0,0.55,1,0.785"
+                AbsoluteLayout.LayoutFlags="All"
+                BackgroundColor="Transparent">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="25*" />
+                        <RowDefinition Height="25*" />
+                        <RowDefinition Height="25*" />
+                        <RowDefinition Height="25*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="20*" />
+                        <ColumnDefinition Width="20*" />
+                        <ColumnDefinition Width="20*" />
+                        <ColumnDefinition Width="20*" />
+                        <ColumnDefinition Width="20*" />
+                    </Grid.ColumnDefinitions>
+                    <StackLayout
+                        Grid.Row="0"
+                        Grid.ColumnSpan="5"
+                        Margin="0,40,0,0">
+                        <Label
+                            FontAttributes="Bold,Italic"
+                            FontSize="30"
+                            HorizontalOptions="CenterAndExpand"
+                            Text="Quizz"
+                            TextColor="Black"
+                            TextDecorations="Underline" />
+                    </StackLayout>
+                    <StackLayout
+                        Grid.Row="1"
+                        Grid.ColumnSpan="5"
+                        HorizontalOptions="CenterAndExpand"
+                        Orientation="Horizontal"
+                        VerticalOptions="CenterAndExpand">
+
+                        <ImageButton
+                            xct:TouchEffect.PressedBackgroundColor="Transparent"
+                            BackgroundColor="Transparent"
+                            Command="{Binding EasyQuizzCommandAsync}"
+                            HeightRequest="60"
+                            Source="{Binding ImgEasy, Converter={StaticResource ByteToImageSourceConverter}}"
+                            WidthRequest="60" />
+                        <ImageButton
+                            xct:TouchEffect.PressedBackgroundColor="Transparent"
+                            BackgroundColor="Transparent"
+                            Command="{Binding NormalQuizzCommandAsync}"
+                            HeightRequest="60"
+                            Source="{Binding ImgNormal, Converter={StaticResource ByteToImageSourceConverter}}"
+                            WidthRequest="60" />
+                        <ImageButton
+                            xct:TouchEffect.PressedBackgroundColor="Transparent"
+                            BackgroundColor="Transparent"
+                            Command="{Binding HardQuizzCommandAsync}"
+                            HeightRequest="60"
+                            Source="{Binding ImgHard, Converter={StaticResource ByteToImageSourceConverter}}"
+                            WidthRequest="60" />
+                    </StackLayout>
+                    <StackLayout
+                        Grid.Row="1"
+                        Grid.Column="4"
+                        HorizontalOptions="CenterAndExpand"
+                        VerticalOptions="CenterAndExpand">
+                        <ImageButton
+                            BackgroundColor="White"
+                            Command="{Binding ModalFilterCommandAsync}"
+                            HeightRequest="30"
+                            Source="@mipmap/filter"
+                            WidthRequest="30" />
+                    </StackLayout>
+
+                    <StackLayout
+                        Grid.Row="2"
+                        Grid.ColumnSpan="5"
+                        HorizontalOptions="CenterAndExpand"
+                        Orientation="Horizontal"
+                        VerticalOptions="CenterAndExpand">
+                        <shadows:Shadows
+                            Grid.Row="4"
+                            Grid.Column="2"
+                            CornerRadius="20"
+                            HorizontalOptions="CenterAndExpand"
+                            VerticalOptions="CenterAndExpand">
+                            <shadows:Shadows.Shades>
+                                <shadows:ImmutableShades>
+                                    <shadows:Shade
+                                        BlurRadius="10"
+                                        Opacity="0.5"
+                                        Offset="-10,-10"
+                                        Color="#F75E6D" />
+                                    <shadows:Shade
+                                        BlurRadius="10"
+                                        Opacity="0.5"
+                                        Offset="10,10"
+                                        Color="#464C56" />
+                                </shadows:ImmutableShades>
+                            </shadows:Shadows.Shades>
+                            <pv:PancakeView
+                                BackgroundColor="White"
+                                Border="{pv:BorderMarkup Color=Gray,
+                                                         Thickness=1}"
+                                CornerRadius="20,20,20,20">
+                                <Button
+                                    BackgroundColor="Transparent"
+                                    Command="{Binding TestCommandAsync}"
+                                    FontFamily="Montserrat-SemiBold"
+                                    FontSize="20"
+                                    Text="Quizz"
+                                    TextColor="#F75E6D"
+                                    TextTransform="None" />
+                            </pv:PancakeView>
+                        </shadows:Shadows>
+                    </StackLayout>
+
+                    <!--<StackLayout
+                        Grid.Row="3"
+                        Grid.ColumnSpan="5"
+                        BackgroundColor="Yellow">
+                        <Label Text="test" />
+                    </StackLayout>-->
+                </Grid>
+            </StackLayout>
+            <StackLayout
+                x:Name="BackgroundModalFilter"
+                AbsoluteLayout.LayoutBounds="1,1,1,1"
+                AbsoluteLayout.LayoutFlags="All"
+                BackgroundColor="Black"
+                IsVisible="{Binding IsVisibleBackgroundModalFilter}"
+                Opacity="0.3" />
+            <StackLayout
+                x:Name="ModalFilterGen"
+                xct:CornerRadiusEffect.CornerRadius="30"
+                AbsoluteLayout.LayoutBounds="0.5,0.5,0.6,0.5"
+                AbsoluteLayout.LayoutFlags="All"
+                BackgroundColor="white"
+                IsVisible="{Binding IsVisibleModalFilter}"
+                Opacity="1">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="10*" />
+                        <RowDefinition Height="15*" />
+                        <RowDefinition Height="15*" />
+                        <RowDefinition Height="15*" />
+                        <RowDefinition Height="15*" />
+                        <RowDefinition Height="15*" />
+                        <RowDefinition Height="15*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50*" />
+                        <ColumnDefinition Width="50*" />
+                    </Grid.ColumnDefinitions>
+                    <Label
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        Margin="15,15,0,0"
+                        xct:ShadowEffect.Color="black"
+                        xct:ShadowEffect.OffsetX="5"
+                        xct:ShadowEffect.OffsetY="10"
+                        xct:ShadowEffect.Opacity="0.5"
+                        xct:ShadowEffect.Radius="20"
+                        FontAttributes="Bold"
+                        FontSize="12"
+                        HorizontalOptions="CenterAndExpand"
+                        Text="Filtrer part:"
+                        TextColor="black" />
+                    <shadows:Shadows
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Margin="30,5,10,10"
+                        CornerRadius="15">
                         <shadows:Shadows.Shades>
                             <shadows:ImmutableShades>
                                 <shadows:Shade
                                     BlurRadius="10"
-                                    Opacity="0.5"
+                                    Opacity="0.3"
                                     Offset="-1,-1"
                                     Color="#464C56" />
                                 <shadows:Shade
@@ -45,27 +252,28 @@
                             BackgroundColor="White"
                             Border="{pv:BorderMarkup Color=Gray,
                                                      Thickness=0}"
-                            CornerRadius="100,100,100,100">
-                            <ImageButton
-                                Padding="4,9,5,9"
-                                BackgroundColor="White"
-                                Command="{Binding NavigationBackCommandAsync}"
-                                HeightRequest="35"
-                                Source="@mipmap/left"
-                                WidthRequest="35" />
+                            CornerRadius="10">
+                            <Button
+                                Padding="6"
+                                BackgroundColor="{Binding BackgroundColorGen1}"
+                                Command="{Binding FilterByGen1CommandAsync}"
+                                FontAttributes="Bold"
+                                FontSize="11"
+                                Text="Gen 1"
+                                TextColor="{Binding TextColorGen1}"
+                                TextTransform="None" />
                         </pv:PancakeView>
                     </shadows:Shadows>
-                </StackLayout>
-                <StackLayout
-                    x:Name="testButton"
-                    AbsoluteLayout.LayoutBounds="0,0.275,0.23,0.07"
-                    AbsoluteLayout.LayoutFlags="All">
-                    <shadows:Shadows Margin="30,0,30,50" CornerRadius="20">
+                    <shadows:Shadows
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Margin="10,5,30,10"
+                        CornerRadius="15">
                         <shadows:Shadows.Shades>
                             <shadows:ImmutableShades>
                                 <shadows:Shade
                                     BlurRadius="10"
-                                    Opacity="0.5"
+                                    Opacity="0.3"
                                     Offset="-1,-1"
                                     Color="#464C56" />
                                 <shadows:Shade
@@ -79,19 +287,338 @@
                             BackgroundColor="White"
                             Border="{pv:BorderMarkup Color=Gray,
                                                      Thickness=0}"
-                            CornerRadius="100,100,100,100">
-                            <ImageButton
-                                Padding="4,9,5,9"
-                                BackgroundColor="White"
-                                Command="{Binding TestCommandAsync}"
-                                HeightRequest="35"
-                                Source="@mipmap/left"
-                                WidthRequest="35" />
+                            CornerRadius="10">
+                            <Button
+                                Padding="6"
+                                BackgroundColor="{Binding BackgroundColorGen2}"
+                                Command="{Binding FilterByGen2CommandAsync}"
+                                FontAttributes="Bold"
+                                FontSize="11"
+                                Text="Gen 2"
+                                TextColor="{Binding TextColorGen2}"
+                                TextTransform="None" />
                         </pv:PancakeView>
                     </shadows:Shadows>
-                </StackLayout>
-            </AbsoluteLayout>
-            <RelativeLayout HorizontalOptions="Center" VerticalOptions="CenterAndExpand">
+                    <shadows:Shadows
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        Margin="30,5,10,10"
+                        CornerRadius="15">
+                        <shadows:Shadows.Shades>
+                            <shadows:ImmutableShades>
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.3"
+                                    Offset="-1,-1"
+                                    Color="#464C56" />
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.5"
+                                    Offset="1,1"
+                                    Color="#464C56" />
+                            </shadows:ImmutableShades>
+                        </shadows:Shadows.Shades>
+                        <pv:PancakeView
+                            BackgroundColor="White"
+                            Border="{pv:BorderMarkup Color=Gray,
+                                                     Thickness=0}"
+                            CornerRadius="10">
+                            <Button
+                                Padding="6"
+                                BackgroundColor="{Binding BackgroundColorGen3}"
+                                Command="{Binding FilterByGen3CommandAsync}"
+                                FontAttributes="Bold"
+                                FontSize="11"
+                                Text="Gen 3"
+                                TextColor="{Binding TextColorGen3}"
+                                TextTransform="None" />
+                        </pv:PancakeView>
+                    </shadows:Shadows>
+                    <shadows:Shadows
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        Margin="10,5,30,10"
+                        CornerRadius="15">
+                        <shadows:Shadows.Shades>
+                            <shadows:ImmutableShades>
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.3"
+                                    Offset="-1,-1"
+                                    Color="#464C56" />
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.5"
+                                    Offset="1,1"
+                                    Color="#464C56" />
+                            </shadows:ImmutableShades>
+                        </shadows:Shadows.Shades>
+                        <pv:PancakeView
+                            BackgroundColor="White"
+                            Border="{pv:BorderMarkup Color=Gray,
+                                                     Thickness=0}"
+                            CornerRadius="10">
+                            <Button
+                                Padding="6"
+                                BackgroundColor="{Binding BackgroundColorGen4}"
+                                Command="{Binding FilterByGen4CommandAsync}"
+                                FontAttributes="Bold"
+                                FontSize="11"
+                                Text="Gen 4"
+                                TextColor="{Binding TextColorGen4}"
+                                TextTransform="None" />
+                        </pv:PancakeView>
+                    </shadows:Shadows>
+                    <shadows:Shadows
+                        Grid.Row="3"
+                        Grid.Column="0"
+                        Margin="30,5,10,10"
+                        CornerRadius="15">
+                        <shadows:Shadows.Shades>
+                            <shadows:ImmutableShades>
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.3"
+                                    Offset="-1,-1"
+                                    Color="#464C56" />
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.5"
+                                    Offset="1,1"
+                                    Color="#464C56" />
+                            </shadows:ImmutableShades>
+                        </shadows:Shadows.Shades>
+                        <pv:PancakeView
+                            BackgroundColor="White"
+                            Border="{pv:BorderMarkup Color=Gray,
+                                                     Thickness=0}"
+                            CornerRadius="10">
+                            <Button
+                                Padding="6"
+                                BackgroundColor="{Binding BackgroundColorGen5}"
+                                Command="{Binding FilterByGen5CommandAsync}"
+                                FontAttributes="Bold"
+                                FontSize="11"
+                                Text="Gen 5"
+                                TextColor="{Binding TextColorGen5}"
+                                TextTransform="None" />
+                        </pv:PancakeView>
+                    </shadows:Shadows>
+                    <shadows:Shadows
+                        Grid.Row="3"
+                        Grid.Column="1"
+                        Margin="10,5,30,10"
+                        CornerRadius="15">
+                        <shadows:Shadows.Shades>
+                            <shadows:ImmutableShades>
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.3"
+                                    Offset="-1,-1"
+                                    Color="#464C56" />
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.5"
+                                    Offset="1,1"
+                                    Color="#464C56" />
+                            </shadows:ImmutableShades>
+                        </shadows:Shadows.Shades>
+                        <pv:PancakeView
+                            BackgroundColor="White"
+                            Border="{pv:BorderMarkup Color=Gray,
+                                                     Thickness=0}"
+                            CornerRadius="10">
+                            <Button
+                                Padding="6"
+                                BackgroundColor="{Binding BackgroundColorGen6}"
+                                Command="{Binding FilterByGen6CommandAsync}"
+                                FontAttributes="Bold"
+                                FontSize="11"
+                                Text="Gen 6"
+                                TextColor="{Binding TextColorGen6}"
+                                TextTransform="None" />
+                        </pv:PancakeView>
+                    </shadows:Shadows>
+                    <shadows:Shadows
+                        Grid.Row="4"
+                        Grid.Column="0"
+                        Margin="30,5,10,10"
+                        CornerRadius="15">
+                        <shadows:Shadows.Shades>
+                            <shadows:ImmutableShades>
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.3"
+                                    Offset="-1,-1"
+                                    Color="#464C56" />
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.5"
+                                    Offset="1,1"
+                                    Color="#464C56" />
+                            </shadows:ImmutableShades>
+                        </shadows:Shadows.Shades>
+                        <pv:PancakeView
+                            BackgroundColor="White"
+                            Border="{pv:BorderMarkup Color=Gray,
+                                                     Thickness=0}"
+                            CornerRadius="10">
+                            <Button
+                                Padding="6"
+                                BackgroundColor="{Binding BackgroundColorGen7}"
+                                Command="{Binding FilterByGen7CommandAsync}"
+                                FontAttributes="Bold"
+                                FontSize="11"
+                                Text="Gen 7"
+                                TextColor="{Binding TextColorGen7}"
+                                TextTransform="None" />
+                        </pv:PancakeView>
+                    </shadows:Shadows>
+                    <shadows:Shadows
+                        Grid.Row="4"
+                        Grid.Column="1"
+                        Margin="10,5,30,10"
+                        CornerRadius="15">
+                        <shadows:Shadows.Shades>
+                            <shadows:ImmutableShades>
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.3"
+                                    Offset="-1,-1"
+                                    Color="#464C56" />
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.5"
+                                    Offset="1,1"
+                                    Color="#464C56" />
+                            </shadows:ImmutableShades>
+                        </shadows:Shadows.Shades>
+                        <pv:PancakeView
+                            BackgroundColor="White"
+                            Border="{pv:BorderMarkup Color=Gray,
+                                                     Thickness=0}"
+                            CornerRadius="10">
+                            <Button
+                                Padding="6"
+                                BackgroundColor="{Binding BackgroundColorGen8}"
+                                Command="{Binding FilterByGen8CommandAsync}"
+                                FontAttributes="Bold"
+                                FontSize="11"
+                                Text="Gen 8"
+                                TextColor="{Binding TextColorGen8}"
+                                TextTransform="None" />
+                        </pv:PancakeView>
+                    </shadows:Shadows>
+                    <shadows:Shadows
+                        Grid.Row="5"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        Margin="60,0,60,10"
+                        CornerRadius="15">
+                        <shadows:Shadows.Shades>
+                            <shadows:ImmutableShades>
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.3"
+                                    Offset="-1,-1"
+                                    Color="#464C56" />
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.5"
+                                    Offset="1,1"
+                                    Color="#464C56" />
+                            </shadows:ImmutableShades>
+                        </shadows:Shadows.Shades>
+                        <pv:PancakeView
+                            BackgroundColor="White"
+                            Border="{pv:BorderMarkup Color=Gray,
+                                                     Thickness=0}"
+                            CornerRadius="10">
+                            <Button
+                                Padding="6"
+                                BackgroundColor="{Binding BackgroundColorGenArceus}"
+                                Command="{Binding FilterByGenArceusCommandAsync}"
+                                FontAttributes="Bold"
+                                FontSize="11"
+                                Text="Gen Arceus"
+                                TextColor="{Binding TextColorGenArceus}"
+                                TextTransform="None" />
+                        </pv:PancakeView>
+                    </shadows:Shadows>
+                    <shadows:Shadows
+                        Grid.Row="6"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        Margin="30,0,10,15"
+                        CornerRadius="20">
+                        <shadows:Shadows.Shades>
+                            <shadows:ImmutableShades>
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.3"
+                                    Offset="-1,-1"
+                                    Color="#464C56" />
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.5"
+                                    Offset="1,1"
+                                    Color="#464C56" />
+                            </shadows:ImmutableShades>
+                        </shadows:Shadows.Shades>
+                        <pv:PancakeView
+                            BackgroundColor="Black"
+                            Border="{pv:BorderMarkup Color=Gray,
+                                                     Thickness=0}"
+                            CornerRadius="10">
+                            <Button
+                                Padding="6"
+                                BackgroundColor="Black"
+                                Command="{Binding BackModalGenFilterCommandAsync}"
+                                FontAttributes="Bold"
+                                FontSize="11"
+                                Text="Valider"
+                                TextColor="White"
+                                TextTransform="None" />
+                        </pv:PancakeView>
+                    </shadows:Shadows>
+                </Grid>
+            </StackLayout>
+            <!--<StackLayout
+                x:Name="testButton"
+                AbsoluteLayout.LayoutBounds="0,0.275,0.23,0.07"
+                AbsoluteLayout.LayoutFlags="All">
+                <shadows:Shadows Margin="30,0,30,50" CornerRadius="20">
+                    <shadows:Shadows.Shades>
+                        <shadows:ImmutableShades>
+                            <shadows:Shade
+                                BlurRadius="10"
+                                Opacity="0.5"
+                                Offset="-1,-1"
+                                Color="#464C56" />
+                            <shadows:Shade
+                                BlurRadius="10"
+                                Opacity="0.5"
+                                Offset="1,1"
+                                Color="#464C56" />
+                        </shadows:ImmutableShades>
+                    </shadows:Shadows.Shades>
+                    <pv:PancakeView
+                        BackgroundColor="White"
+                        Border="{pv:BorderMarkup Color=Gray,
+                                                 Thickness=0}"
+                        CornerRadius="100,100,100,100">
+                        <ImageButton
+                            Padding="4,9,5,9"
+                            BackgroundColor="White"
+                            Command="{Binding TestCommandAsync}"
+                            HeightRequest="35"
+                            Source="@mipmap/left"
+                            WidthRequest="35" />
+                    </pv:PancakeView>
+                </shadows:Shadows>
+            </StackLayout>-->
+        </AbsoluteLayout>
+        <!--<RelativeLayout HorizontalOptions="Center" VerticalOptions="CenterAndExpand">
                 <StackLayout>
                     <Image
                         HeightRequest="300"
@@ -114,8 +641,7 @@
                         RepeatMode="Infinite"
                         WidthRequest="200" />
                 </StackLayout>
-            </RelativeLayout>
-        </StackLayout>
+            </RelativeLayout>-->
     </ContentPage.Content>
 </views:MvxContentPage>
 
