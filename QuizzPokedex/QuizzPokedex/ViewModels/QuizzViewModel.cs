@@ -163,146 +163,173 @@ namespace QuizzPokedex.ViewModels
         #region Filter By Gen
         private async Task FilterByGen1Async()
         {
-            if (FiltreActiveGen1)
+            await Task.Run(() =>
             {
-                FiltreActiveGen1 = false;
-                BackgroundColorGen1 = Constantes.WhiteHexa;
-                TextColorGen1 = Constantes.BlackHexa;
-            }
-            else
-            {
-                FiltreActiveGen1 = true;
-                BackgroundColorGen1 = Constantes.BlackHexa;
-                TextColorGen1 = Constantes.WhiteHexa;
-            }
+                if (FiltreActiveGen1)
+                {
+                    FiltreActiveGen1 = false;
+                    BackgroundColorGen1 = Constantes.WhiteHexa;
+                    TextColorGen1 = Constantes.BlackHexa;
+                }
+                else
+                {
+                    FiltreActiveGen1 = true;
+                    BackgroundColorGen1 = Constantes.BlackHexa;
+                    TextColorGen1 = Constantes.WhiteHexa;
+                }
+            });
         }
 
         private async Task FilterByGen2Async()
         {
-            if (FiltreActiveGen2)
+            await Task.Run(() =>
             {
-                FiltreActiveGen2 = false;
-                BackgroundColorGen2 = Constantes.WhiteHexa;
-                TextColorGen2 = Constantes.BlackHexa;
-            }
-            else
-            {
-                FiltreActiveGen2 = true;
-                BackgroundColorGen2 = Constantes.BlackHexa;
-                TextColorGen2 = Constantes.WhiteHexa;
-            }
+                if (FiltreActiveGen2)
+                {
+                    FiltreActiveGen2 = false;
+                    BackgroundColorGen2 = Constantes.WhiteHexa;
+                    TextColorGen2 = Constantes.BlackHexa;
+                }
+                else
+                {
+                    FiltreActiveGen2 = true;
+                    BackgroundColorGen2 = Constantes.BlackHexa;
+                    TextColorGen2 = Constantes.WhiteHexa;
+                }
+            });
         }
 
         private async Task FilterByGen3Async()
         {
-            if (FiltreActiveGen3)
+            await Task.Run(() =>
             {
-                FiltreActiveGen3 = false;
-                BackgroundColorGen3 = Constantes.WhiteHexa;
-                TextColorGen3 = Constantes.BlackHexa;
-            }
-            else
-            {
-                FiltreActiveGen3 = true;
-                BackgroundColorGen3 = Constantes.BlackHexa;
-                TextColorGen3 = Constantes.WhiteHexa;
-            }
+                if (FiltreActiveGen3)
+                {
+                    FiltreActiveGen3 = false;
+                    BackgroundColorGen3 = Constantes.WhiteHexa;
+                    TextColorGen3 = Constantes.BlackHexa;
+                }
+                else
+                {
+                    FiltreActiveGen3 = true;
+                    BackgroundColorGen3 = Constantes.BlackHexa;
+                    TextColorGen3 = Constantes.WhiteHexa;
+                }
+            });
         }
 
         private async Task FilterByGen4Async()
         {
-            if (FiltreActiveGen4)
+            await Task.Run(() =>
             {
-                FiltreActiveGen4 = false;
-                BackgroundColorGen4 = Constantes.WhiteHexa;
-                TextColorGen4 = Constantes.BlackHexa;
-            }
-            else
-            {
-                FiltreActiveGen4 = true;
-                BackgroundColorGen4 = Constantes.BlackHexa;
-                TextColorGen4 = Constantes.WhiteHexa;
-            }
+                if (FiltreActiveGen4)
+                {
+                    FiltreActiveGen4 = false;
+                    BackgroundColorGen4 = Constantes.WhiteHexa;
+                    TextColorGen4 = Constantes.BlackHexa;
+                }
+                else
+                {
+                    FiltreActiveGen4 = true;
+                    BackgroundColorGen4 = Constantes.BlackHexa;
+                    TextColorGen4 = Constantes.WhiteHexa;
+                }
+            });
         }
 
         private async Task FilterByGen5Async()
         {
-            if (FiltreActiveGen5)
+            await Task.Run(() =>
             {
-                FiltreActiveGen5 = false;
-                BackgroundColorGen5 = Constantes.WhiteHexa;
-                TextColorGen5 = Constantes.BlackHexa;
-            }
-            else
-            {
-                FiltreActiveGen5 = true;
-                BackgroundColorGen5 = Constantes.BlackHexa;
-                TextColorGen5 = Constantes.WhiteHexa;
-            }
+                if (FiltreActiveGen5)
+                {
+                    FiltreActiveGen5 = false;
+                    BackgroundColorGen5 = Constantes.WhiteHexa;
+                    TextColorGen5 = Constantes.BlackHexa;
+                }
+                else
+                {
+                    FiltreActiveGen5 = true;
+                    BackgroundColorGen5 = Constantes.BlackHexa;
+                    TextColorGen5 = Constantes.WhiteHexa;
+                }
+            });
         }
 
         private async Task FilterByGen6Async()
         {
-            if (FiltreActiveGen6)
+            await Task.Run(() =>
             {
-                FiltreActiveGen6 = false;
-                BackgroundColorGen6 = Constantes.WhiteHexa;
-                TextColorGen6 = Constantes.BlackHexa;
-            }
-            else
-            {
-                FiltreActiveGen6 = true;
-                BackgroundColorGen6 = Constantes.BlackHexa;
-                TextColorGen6 = Constantes.WhiteHexa;
-            }
+                if (FiltreActiveGen6)
+                {
+                    FiltreActiveGen6 = false;
+                    BackgroundColorGen6 = Constantes.WhiteHexa;
+                    TextColorGen6 = Constantes.BlackHexa;
+                }
+                else
+                {
+                    FiltreActiveGen6 = true;
+                    BackgroundColorGen6 = Constantes.BlackHexa;
+                    TextColorGen6 = Constantes.WhiteHexa;
+                }
+            });
         }
 
         private async Task FilterByGen7Async()
         {
-            if (FiltreActiveGen7)
+            await Task.Run(() =>
             {
-                FiltreActiveGen7 = false;
-                BackgroundColorGen7 = Constantes.WhiteHexa;
-                TextColorGen7 = Constantes.BlackHexa;
-            }
-            else
-            {
-                FiltreActiveGen7 = true;
-                BackgroundColorGen7 = Constantes.BlackHexa;
-                TextColorGen7 = Constantes.WhiteHexa;
-            }
+                if (FiltreActiveGen7)
+                {
+                    FiltreActiveGen7 = false;
+                    BackgroundColorGen7 = Constantes.WhiteHexa;
+                    TextColorGen7 = Constantes.BlackHexa;
+                }
+                else
+                {
+                    FiltreActiveGen7 = true;
+                    BackgroundColorGen7 = Constantes.BlackHexa;
+                    TextColorGen7 = Constantes.WhiteHexa;
+                }
+            });
         }
 
         private async Task FilterByGen8Async()
         {
-            if (FiltreActiveGen8)
+            await Task.Run(() =>
             {
-                FiltreActiveGen8 = false;
-                BackgroundColorGen8 = Constantes.WhiteHexa;
-                TextColorGen8 = Constantes.BlackHexa;
-            }
-            else
-            {
-                FiltreActiveGen8 = true;
-                BackgroundColorGen8 = Constantes.BlackHexa;
-                TextColorGen8 = Constantes.WhiteHexa;
-            }
+                if (FiltreActiveGen8)
+                {
+                    FiltreActiveGen8 = false;
+                    BackgroundColorGen8 = Constantes.WhiteHexa;
+                    TextColorGen8 = Constantes.BlackHexa;
+                }
+                else
+                {
+                    FiltreActiveGen8 = true;
+                    BackgroundColorGen8 = Constantes.BlackHexa;
+                    TextColorGen8 = Constantes.WhiteHexa;
+                }
+            });
         }
 
         private async Task FilterByGenArceusAsync()
         {
-            if (FiltreActiveGenArceus)
+            await Task.Run(() =>
             {
-                FiltreActiveGenArceus = false;
-                BackgroundColorGenArceus = Constantes.WhiteHexa;
-                TextColorGenArceus = Constantes.BlackHexa;
-            }
-            else
-            {
-                FiltreActiveGenArceus = true;
-                BackgroundColorGenArceus = Constantes.BlackHexa;
-                TextColorGenArceus = Constantes.WhiteHexa;
-            }
+                if (FiltreActiveGenArceus)
+                {
+                    FiltreActiveGenArceus = false;
+                    BackgroundColorGenArceus = Constantes.WhiteHexa;
+                    TextColorGenArceus = Constantes.BlackHexa;
+                }
+                else
+                {
+                    FiltreActiveGenArceus = true;
+                    BackgroundColorGenArceus = Constantes.BlackHexa;
+                    TextColorGenArceus = Constantes.WhiteHexa;
+                }
+            });
         }
         #endregion
 

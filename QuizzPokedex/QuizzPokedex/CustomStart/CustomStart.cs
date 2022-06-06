@@ -38,6 +38,7 @@ namespace QuizzPokedex.CustomStart
             //_connectionService.GetAsyncConnection().DropTableAsync<TypePok>().Wait();
             //_connectionService.GetAsyncConnection().DropTableAsync<Pokemon>().Wait();
             //_connectionService.GetAsyncConnection().DropTableAsync<Profile>().Wait();
+            //_connectionService.GetAsyncConnection().DropTableAsync<Favorite>().Wait();
             _connectionService.GetAsyncConnection().DropTableAsync<Difficulty>().Wait();
             _connectionService.GetAsyncConnection().DropTableAsync<QuestionType>().Wait();
             _connectionService.GetAsyncConnection().DropTableAsync<Answer>().Wait();
@@ -47,6 +48,7 @@ namespace QuizzPokedex.CustomStart
             _connectionService.GetAsyncConnection().CreateTableAsync<TypePok>().Wait();
             _connectionService.GetAsyncConnection().CreateTableAsync<Pokemon>().Wait();
             _connectionService.GetAsyncConnection().CreateTableAsync<Profile>().Wait();
+            _connectionService.GetAsyncConnection().CreateTableAsync<Favorite>().Wait();
             _connectionService.GetAsyncConnection().CreateTableAsync<Difficulty>().Wait();
             _connectionService.GetAsyncConnection().CreateTableAsync<QuestionType>().Wait();
             _connectionService.GetAsyncConnection().CreateTableAsync<Answer>().Wait();

@@ -105,6 +105,9 @@ namespace QuizzPokedex.Resources
         public const string Normal_Color = "TwoStarFull_Medium" + ExtensionImage;
         public const string Hard_White = "ThreeStarWhite_Medium" + ExtensionImage;
         public const string Hard_Color = "ThreeStarFull_Medium" + ExtensionImage;
+        public const string Filter = "Filter" + ExtensionImage;
+        public const string Love = "Love" + ExtensionImage;
+        public const string LoveFull = "Lovefull" + ExtensionImage;
         #endregion
 
         #region Difficulty

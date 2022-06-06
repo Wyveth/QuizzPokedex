@@ -19,15 +19,17 @@ namespace QuizzPokedex.ViewModels
         private readonly IMvxIoCProvider _logger;
         private readonly IPokemonService _pokemonService;
         private readonly ITypePokService _typePokService;
+        private readonly IFavoriteService _favoriteService;
         #endregion
 
         #region Constructor
-        public PokemonViewModel(IMvxNavigationService navigation, IMvxIoCProvider logger, IPokemonService pokemonService, ITypePokService typeService)
+        public PokemonViewModel(IMvxNavigationService navigation, IMvxIoCProvider logger, IPokemonService pokemonService, ITypePokService typeService, IFavoriteService favoriteService)
         {
             _navigation = navigation;
             _logger = logger;
             _pokemonService = pokemonService;
             _typePokService = typeService;
+            _favoriteService = favoriteService;
         }
         #endregion
 
@@ -81,6 +83,14 @@ namespace QuizzPokedex.ViewModels
         {
             if (!Pokemon.Updated)
                 await _pokemonService.UpdateEvolutionWithJson(Pokemon);
+
+            #region Favorite
+            IsFavorite = await _favoriteService.CheckIfFavoriteExist(Pokemon);
+            if(IsFavorite)
+                ImgFavorite = await Utils.getByteAssetImage(Constantes.LoveFull);
+            else
+                ImgFavorite = await Utils.getByteAssetImage(Constantes.Love);
+            #endregion
 
             #region Type
             int typeID = int.Parse(Pokemon.TypesID.Split(',')[0]);
@@ -275,11 +285,34 @@ namespace QuizzPokedex.ViewModels
 
         #region Command
         public IMvxAsyncCommand NavigationBackCommandAsync => new MvxAsyncCommand(NavigationBackAsync);
+        public IMvxAsyncCommand FavoriteCommandAsync => new MvxAsyncCommand(FavoriteAsync);
         public IMvxAsyncCommand<Pokemon> DetailsPokemonCommandAsync => new MvxAsyncCommand<Pokemon>(DetailsPokemonAsync);
 
         private async Task NavigationBackAsync()
         {
             await _navigation.Close(this);
+        }
+
+        private async Task FavoriteAsync()
+        {
+            if (IsFavorite)
+            {
+                IsFavorite = false;
+                ImgFavorite = await Utils.getByteAssetImage(Constantes.Love);
+
+                Favorite favorite = await _favoriteService.GetFavorite(Pokemon);
+                await _favoriteService.DeleteAsync(favorite);
+            }
+            else
+            {
+                IsFavorite = true;
+                ImgFavorite = await Utils.getByteAssetImage(Constantes.LoveFull);
+                Favorite favorite = new Favorite()
+                {
+                    PokemonID = Pokemon.Id
+                };
+                await _favoriteService.CreateAsync(favorite);
+            }
         }
 
         private async Task DetailsPokemonAsync(Pokemon Pokemon)
@@ -580,6 +613,24 @@ namespace QuizzPokedex.ViewModels
         {
             get { return _chartEntry; }
             set { SetProperty(ref _chartEntry, value); }
+        }
+        #endregion
+
+        #region Favorite
+        private bool _isFavorite = false;
+
+        public bool IsFavorite
+        {
+            get { return _isFavorite; }
+            set { SetProperty(ref _isFavorite, value); }
+        }
+
+        private byte[] _imgFavorite;
+
+        public byte[] ImgFavorite
+        {
+            get { return _imgFavorite; }
+            set { SetProperty(ref _imgFavorite, value); }
         }
         #endregion
         #endregion

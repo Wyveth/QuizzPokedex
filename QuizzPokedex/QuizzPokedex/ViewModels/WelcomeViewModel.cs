@@ -151,19 +151,6 @@ namespace QuizzPokedex.ViewModels
             if (msg.Refresh)
                 await ProfileAsync();
         }
-
-        private async Task<byte[]> getByteAssetImage(string fileName)
-        {
-            AssetManager assets = Android.App.Application.Context.Assets;
-            const int maxReadSize = 256 * 1024;
-            byte[] imgByte;
-            using (BinaryReader br = new BinaryReader(assets.Open(fileName)))
-            {
-                imgByte = br.ReadBytes(maxReadSize);
-            }
-
-            return await Task.FromResult(imgByte);
-        }
         #endregion
 
         #region Command

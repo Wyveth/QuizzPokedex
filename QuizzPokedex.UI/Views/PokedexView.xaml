@@ -206,14 +206,15 @@
                                 Margin="20,0,0,0"
                                 BackgroundColor="White"
                                 Command="{Binding ModalFilterCommandAsync}"
-                                ImageSource="@mipmap/filter" />
+                                ImageSource="{Binding ImgFilter, Converter={StaticResource ByteToImageSourceConverter}}" />
                             <Button
                                 x:Name="likeButton"
                                 Grid.Row="0"
                                 Grid.Column="1"
                                 Margin="0,0,20,0"
                                 BackgroundColor="White"
-                                ImageSource="@mipmap/love" />
+                                Command="{Binding FilterFavoriteCommandAsync}"
+                                ImageSource="{Binding ImgFavorite, Converter={StaticResource ByteToImageSourceConverter}}" />
                         </Grid>
                     </pv:PancakeView>
                 </shadows:Shadows>
@@ -274,7 +275,7 @@
                                 Margin="40,0,0,30"
                                 BackgroundColor="white"
                                 Command="{Binding ModalFilterCommandAsync}"
-                                ImageSource="@mipmap/close" />
+                                ImageSource="@drawable/close" />
                             <Button
                                 Grid.Row="0"
                                 Grid.Column="1"

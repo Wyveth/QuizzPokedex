@@ -11,6 +11,7 @@ using QuizzPokedex.Interfaces;
 using QuizzPokedex.Models;
 using QuizzPokedex.Resources;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
@@ -25,15 +26,17 @@ namespace QuizzPokedex.ViewModels
         private readonly IMvxIoCProvider _logger;
         private readonly IPokemonService _pokemonService;
         private readonly ITypePokService _typePokService;
+        private readonly IFavoriteService _favoriteService;
         #endregion
 
         #region Constructor
-        public PokedexViewModel(IMvxNavigationService navigation, IMvxIoCProvider logger, IPokemonService pokemonService, ITypePokService typePokService)
+        public PokedexViewModel(IMvxNavigationService navigation, IMvxIoCProvider logger, IPokemonService pokemonService, ITypePokService typePokService, IFavoriteService favoriteService)
         {
             _navigation = navigation;
             _logger = logger;
             _pokemonService = pokemonService;
             _typePokService = typePokService;
+            _favoriteService = favoriteService;
         }
         #endregion
 
@@ -46,39 +49,82 @@ namespace QuizzPokedex.ViewModels
         #endregion
 
         #region Private Method
+
         private async Task LoadPokemonAsync()
         {
-            var resultPokemon = await _pokemonService.GetAllWithoutVariantAsync(SearchText
-                , FiltreActiveGen1
-                , FiltreActiveGen2
-                , FiltreActiveGen3
-                , FiltreActiveGen4
-                , FiltreActiveGen5
-                , FiltreActiveGen6
-                , FiltreActiveGen7
-                , FiltreActiveGen8
-                , FiltreActiveGenArceus
-                , FiltreActiveTypeSteel
-                , FiltreActiveTypeFighting
-                , FiltreActiveTypeDragon
-                , FiltreActiveTypeWater
-                , FiltreActiveTypeElectric
-                , FiltreActiveTypeFairy
-                , FiltreActiveTypeFire
-                , FiltreActiveTypeIce
-                , FiltreActiveTypeBug
-                , FiltreActiveTypeNormal
-                , FiltreActiveTypeGrass
-                , FiltreActiveTypePoison
-                , FiltreActiveTypePsychic
-                , FiltreActiveTypeRock
-                , FiltreActiveTypeGround
-                , FiltreActiveTypeGhost
-                , FiltreActiveTypeDark
-                , FiltreActiveTypeFlying
-                , Descending);
+            IEnumerable<Pokemon> resultPokemon;
+            if (IsFavorite)
+                resultPokemon = await _favoriteService.GetAllByProfileAsync(SearchText
+                    , FiltreActiveGen1
+                    , FiltreActiveGen2
+                    , FiltreActiveGen3
+                    , FiltreActiveGen4
+                    , FiltreActiveGen5
+                    , FiltreActiveGen6
+                    , FiltreActiveGen7
+                    , FiltreActiveGen8
+                    , FiltreActiveGenArceus
+                    , FiltreActiveTypeSteel
+                    , FiltreActiveTypeFighting
+                    , FiltreActiveTypeDragon
+                    , FiltreActiveTypeWater
+                    , FiltreActiveTypeElectric
+                    , FiltreActiveTypeFairy
+                    , FiltreActiveTypeFire
+                    , FiltreActiveTypeIce
+                    , FiltreActiveTypeBug
+                    , FiltreActiveTypeNormal
+                    , FiltreActiveTypeGrass
+                    , FiltreActiveTypePoison
+                    , FiltreActiveTypePsychic
+                    , FiltreActiveTypeRock
+                    , FiltreActiveTypeGround
+                    , FiltreActiveTypeGhost
+                    , FiltreActiveTypeDark
+                    , FiltreActiveTypeFlying
+                    , IsDescending);
+            else
+                resultPokemon = await _pokemonService.GetAllWithoutVariantAsync(SearchText
+                    , FiltreActiveGen1
+                    , FiltreActiveGen2
+                    , FiltreActiveGen3
+                    , FiltreActiveGen4
+                    , FiltreActiveGen5
+                    , FiltreActiveGen6
+                    , FiltreActiveGen7
+                    , FiltreActiveGen8
+                    , FiltreActiveGenArceus
+                    , FiltreActiveTypeSteel
+                    , FiltreActiveTypeFighting
+                    , FiltreActiveTypeDragon
+                    , FiltreActiveTypeWater
+                    , FiltreActiveTypeElectric
+                    , FiltreActiveTypeFairy
+                    , FiltreActiveTypeFire
+                    , FiltreActiveTypeIce
+                    , FiltreActiveTypeBug
+                    , FiltreActiveTypeNormal
+                    , FiltreActiveTypeGrass
+                    , FiltreActiveTypePoison
+                    , FiltreActiveTypePsychic
+                    , FiltreActiveTypeRock
+                    , FiltreActiveTypeGround
+                    , FiltreActiveTypeGhost
+                    , FiltreActiveTypeDark
+                    , FiltreActiveTypeFlying
+                    , IsDescending);
             Pokemons = new MvxObservableCollection<Pokemon>(resultPokemon);
             await GetBytesTypesFilter();
+            await GetBytesLoveFilter();
+        }
+
+        private async Task GetBytesLoveFilter()
+        {
+            if (ImgFilter == null)
+                ImgFilter = await Utils.getByteAssetImage(Constantes.Filter);
+
+            if (ImgFavorite == null)
+                ImgFavorite = await Utils.getByteAssetImage(Constantes.Love);
         }
 
         private async Task GetBytesTypesFilter()
@@ -168,7 +214,7 @@ namespace QuizzPokedex.ViewModels
             #endregion
         }
 
-        private async Task<bool> resetFiltreType()
+        private async Task<bool> ResetFiltreType()
         {
             FiltreActiveTypeSteel = false;
             ImgTypeSteelFilter = await Utils.getByteAssetImage(Constantes.Icon_Steel_BW);
@@ -263,7 +309,7 @@ namespace QuizzPokedex.ViewModels
             return await Task.FromResult(true);
         }
 
-        private async Task<bool> resetFiltreGen()
+        private async Task<bool> ResetFiltreGen()
         {
             FiltreActiveGen1 = false;
             BackgroundColorGen1 = Constantes.WhiteHexa;
@@ -299,6 +345,7 @@ namespace QuizzPokedex.ViewModels
 
         #region Command
         public IMvxAsyncCommand NavigationBackCommandAsync => new MvxAsyncCommand(NavigationBackAsync);
+        public IMvxAsyncCommand FilterFavoriteCommandAsync => new MvxAsyncCommand(FilterFavoriteAsync);
         public IMvxAsyncCommand ModalFilterCommandAsync => new MvxAsyncCommand(ModalFilterAsync);
         public IMvxAsyncCommand ModalTypeFilterCommandAsync => new MvxAsyncCommand(ModalTypeFilterAsync);
         public IMvxAsyncCommand ResetFilterCommandAsync => new MvxAsyncCommand(ResetFilterAsync);
@@ -307,8 +354,8 @@ namespace QuizzPokedex.ViewModels
         public IMvxAsyncCommand CloseModalTypeFilterCommandAsync => new MvxAsyncCommand(CloseModalTypeFilterAsync);
         public IMvxAsyncCommand BackModalGenFilterCommandAsync => new MvxAsyncCommand(BackModalGenFilterAsync);
         public IMvxAsyncCommand CloseModalGenFilterCommandAsync => new MvxAsyncCommand(CloseModalGenFilterAsync);
-        public IMvxAsyncCommand OrdererModalAscendingCommandAsync => new MvxAsyncCommand(ordererModalAscendingAsync);
-        public IMvxAsyncCommand OrdererModalDescendingCommandAsync => new MvxAsyncCommand(ordererModalDescendingAsync);
+        public IMvxAsyncCommand OrdererModalAscendingCommandAsync => new MvxAsyncCommand(OrdererModalAscendingAsync);
+        public IMvxAsyncCommand OrdererModalDescendingCommandAsync => new MvxAsyncCommand(OrdererModalDescendingAsync);
         public IMvxAsyncCommand<Pokemon> DetailsPokemonCommandAsync => new MvxAsyncCommand<Pokemon>(DetailsPokemonAsync);
 
         #region Command Filter
@@ -352,6 +399,22 @@ namespace QuizzPokedex.ViewModels
             await _navigation.Close(this);
         }
 
+        private async Task FilterFavoriteAsync()
+        {
+            if (IsFavorite)
+            {
+                IsFavorite = false;
+                ImgFavorite = await Utils.getByteAssetImage(Constantes.Love);
+            }
+            else
+            {
+                IsFavorite = true;
+                ImgFavorite = await Utils.getByteAssetImage(Constantes.LoveFull);
+            }
+
+            await ResetFilterAsync();
+        }
+
         private async Task ModalFilterAsync()
         {
             await Task.Run(() =>
@@ -371,14 +434,14 @@ namespace QuizzPokedex.ViewModels
         private async Task ResetFilterAsync()
         {
             #region Filtre
-            await resetFiltreType();
+            await ResetFiltreType();
             #endregion
 
             #region Generation
-            await resetFiltreGen();
+            await ResetFiltreGen();
             #endregion
 
-            Descending = false;
+            IsDescending = false;
 
             await LoadPokemonAsync();
         }
@@ -428,15 +491,15 @@ namespace QuizzPokedex.ViewModels
             });
         }
 
-        private async Task ordererModalAscendingAsync()
+        private async Task OrdererModalAscendingAsync()
         {
-            Descending = false;
+            IsDescending = false;
             await LoadPokemonAsync();
         }
 
-        private async Task ordererModalDescendingAsync()
+        private async Task OrdererModalDescendingAsync()
         {
-            Descending = true;
+            IsDescending = true;
             await LoadPokemonAsync();
         }
         #endregion
@@ -1045,7 +1108,6 @@ namespace QuizzPokedex.ViewModels
             get { return _isVisibleModalFilter; }
             set { SetProperty(ref _isVisibleModalFilter, value); }
         }
-
 
         private bool _isVisibleBackgroundModalFilter;
 
@@ -1918,13 +1980,43 @@ namespace QuizzPokedex.ViewModels
         #endregion
         #endregion
 
-        private bool _descending = false;
+        #region Filter
+        private byte[] _imgFilter;
 
-        public bool Descending
+        public byte[] ImgFilter
         {
-            get { return _descending; }
-            set { SetProperty(ref _descending, value); }
+            get { return _imgFilter; }
+            set { SetProperty(ref _imgFilter, value); }
         }
+        #endregion
+
+        #region Favorite
+        private bool _isFavorite = false;
+
+        public bool IsFavorite
+        {
+            get { return _isFavorite; }
+            set { SetProperty(ref _isFavorite, value); }
+        }
+
+        private byte[] _imgFavorite;
+
+        public byte[] ImgFavorite
+        {
+            get { return _imgFavorite; }
+            set { SetProperty(ref _imgFavorite, value); }
+        }
+        #endregion
+
+        #region Descending
+        private bool _isDescending = false;
+
+        public bool IsDescending
+        {
+            get { return _isDescending; }
+            set { SetProperty(ref _isDescending, value); }
+        }
+        #endregion
         #endregion
     }
 }
