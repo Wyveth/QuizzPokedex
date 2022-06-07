@@ -88,6 +88,12 @@ namespace QuizzPokedex.Services
             else
                 return true;
         }
+
+        public async Task<int> CountGetAllAsync()
+        {
+            var profiles = await _database.Table<Profile>().ToListAsync();
+            return profiles.Count;
+        }
         #endregion
     }
 }

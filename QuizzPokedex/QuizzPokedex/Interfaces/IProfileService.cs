@@ -11,6 +11,7 @@ namespace QuizzPokedex.Interfaces
         Task<Profile> GetProfileActivatedAsync();
         Task<List<Profile>> GetProfileNotActivatedAsync();
         Task<List<Profile>> GetAllAsync();
+        Task<int> CountGetAllAsync();
         Task<bool> CheckIfProfilPokemonExist(Pokemon pokemon);
         Task<int> CreateAsync(Profile profile);
         Task<int> DeleteAsync(Profile profile);

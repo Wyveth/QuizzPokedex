@@ -169,7 +169,12 @@ namespace QuizzPokedex.ViewModels
 
         private async Task NavigationQuizzAsync()
         {
-            await _navigation.Navigate<QuizzViewModel>();
+            int countProfile = await _profileService.CountGetAllAsync();
+
+            if (countProfile > 0)
+                await _navigation.Navigate<QuizzViewModel>();
+            else
+                await _navigation.Navigate<ProfileViewModel, Profile>(new Profile());
         }
 
         private async Task NavigationProfileAsync()
@@ -179,7 +184,12 @@ namespace QuizzPokedex.ViewModels
 
         private async Task NavigationPokedexAsync()
         {
-            await _navigation.Navigate<PokedexViewModel>();
+            int countProfile = await _profileService.CountGetAllAsync();
+
+            if(countProfile > 0)
+                await _navigation.Navigate<PokedexViewModel>();
+            else
+                await _navigation.Navigate<ProfileViewModel, Profile>(new Profile());
         }
 
         private async Task ShowHideOtherProfileAsync()

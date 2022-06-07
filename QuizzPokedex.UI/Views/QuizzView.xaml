@@ -68,10 +68,11 @@
                 BackgroundColor="Transparent">
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="25*" />
-                        <RowDefinition Height="25*" />
-                        <RowDefinition Height="25*" />
-                        <RowDefinition Height="25*" />
+                        <RowDefinition Height="10*" />
+                        <RowDefinition Height="10*" />
+                        <RowDefinition Height="5*" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="20*" />
@@ -89,38 +90,69 @@
                             FontSize="30"
                             HorizontalOptions="CenterAndExpand"
                             Text="Quizz"
-                            TextColor="Black"
+                            TextColor="#BB1A2B"
                             TextDecorations="Underline" />
                     </StackLayout>
-                    <StackLayout
+                    <ImageButton
                         Grid.Row="1"
-                        Grid.ColumnSpan="5"
+                        Grid.Column="1"
+                        Padding="10"
+                        xct:TouchEffect.PressedBackgroundColor="Transparent"
+                        BackgroundColor="Transparent"
+                        Command="{Binding EasyQuizzCommandAsync}"
+                        Source="{Binding ImgEasy, Converter={StaticResource ByteToImageSourceConverter}}" />
+                    <Label
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        xct:ShadowEffect.Color="black"
+                        xct:ShadowEffect.OffsetX="5"
+                        xct:ShadowEffect.OffsetY="10"
+                        xct:ShadowEffect.Opacity="0.3"
+                        xct:ShadowEffect.Radius="20"
+                        FontAttributes="Bold"
                         HorizontalOptions="CenterAndExpand"
-                        Orientation="Horizontal"
-                        VerticalOptions="CenterAndExpand">
-
-                        <ImageButton
-                            xct:TouchEffect.PressedBackgroundColor="Transparent"
-                            BackgroundColor="Transparent"
-                            Command="{Binding EasyQuizzCommandAsync}"
-                            HeightRequest="60"
-                            Source="{Binding ImgEasy, Converter={StaticResource ByteToImageSourceConverter}}"
-                            WidthRequest="60" />
-                        <ImageButton
-                            xct:TouchEffect.PressedBackgroundColor="Transparent"
-                            BackgroundColor="Transparent"
-                            Command="{Binding NormalQuizzCommandAsync}"
-                            HeightRequest="60"
-                            Source="{Binding ImgNormal, Converter={StaticResource ByteToImageSourceConverter}}"
-                            WidthRequest="60" />
-                        <ImageButton
-                            xct:TouchEffect.PressedBackgroundColor="Transparent"
-                            BackgroundColor="Transparent"
-                            Command="{Binding HardQuizzCommandAsync}"
-                            HeightRequest="60"
-                            Source="{Binding ImgHard, Converter={StaticResource ByteToImageSourceConverter}}"
-                            WidthRequest="60" />
-                    </StackLayout>
+                        Text="Facile"
+                        TextColor="Black" />
+                    <ImageButton
+                        Grid.Row="1"
+                        Grid.Column="2"
+                        Padding="10"
+                        xct:TouchEffect.PressedBackgroundColor="Transparent"
+                        BackgroundColor="Transparent"
+                        Command="{Binding NormalQuizzCommandAsync}"
+                        Source="{Binding ImgNormal, Converter={StaticResource ByteToImageSourceConverter}}" />
+                    <Label
+                        Grid.Row="2"
+                        Grid.Column="2"
+                        xct:ShadowEffect.Color="black"
+                        xct:ShadowEffect.OffsetX="5"
+                        xct:ShadowEffect.OffsetY="10"
+                        xct:ShadowEffect.Opacity="0.3"
+                        xct:ShadowEffect.Radius="20"
+                        FontAttributes="Bold"
+                        HorizontalOptions="CenterAndExpand"
+                        Text="Normal"
+                        TextColor="Black" />
+                    <ImageButton
+                        Grid.Row="1"
+                        Grid.Column="3"
+                        Padding="10"
+                        xct:TouchEffect.PressedBackgroundColor="Transparent"
+                        BackgroundColor="Transparent"
+                        Command="{Binding HardQuizzCommandAsync}"
+                        Source="{Binding ImgHard, Converter={StaticResource ByteToImageSourceConverter}}" />
+                    <Label
+                        Grid.Row="2"
+                        Grid.Column="3"
+                        xct:ShadowEffect.Color="black"
+                        xct:ShadowEffect.OffsetX="5"
+                        xct:ShadowEffect.OffsetY="10"
+                        xct:ShadowEffect.Opacity="0.3"
+                        xct:ShadowEffect.Radius="20"
+                        FontAttributes="Bold"
+                        HorizontalOptions="CenterAndExpand"
+                        Text="Difficile"
+                        TextColor="Black" />
                     <StackLayout
                         Grid.Row="1"
                         Grid.Column="4"
@@ -133,9 +165,8 @@
                             Source="@mipmap/filter"
                             WidthRequest="30" />
                     </StackLayout>
-
                     <StackLayout
-                        Grid.Row="2"
+                        Grid.Row="3 "
                         Grid.ColumnSpan="5"
                         HorizontalOptions="CenterAndExpand"
                         Orientation="Horizontal"
@@ -170,6 +201,7 @@
                                     Command="{Binding TestCommandAsync}"
                                     FontFamily="Montserrat-SemiBold"
                                     FontSize="20"
+                                    IsEnabled="False"
                                     Text="Quizz"
                                     TextColor="#F75E6D"
                                     TextTransform="None" />
