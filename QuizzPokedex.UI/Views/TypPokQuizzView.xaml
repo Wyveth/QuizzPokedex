@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<views:MvxContentPage
+    x:Class="QuizzPokedex.UI.Views.TypPokQuizzView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:QuizzPokedex.UI.Converters"
+    xmlns:ef="clr-namespace:AiForms.Effects;assembly=AiForms.Effects"
+    xmlns:microcharts="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
+    xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+    xmlns:shadows="http://sharpnado.com"
+    xmlns:viewmodel="clr-namespace:QuizzPokedex.ViewModels;assembly=QuizzPokedex"
+    xmlns:views="clr-namespace:MvvmCross.Forms.Views;assembly=MvvmCross.Forms"
+    xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+    x:TypeArguments="viewmodel:TypPokQuizzViewModel"
+    NavigationPage.HasNavigationBar="False">
+
+    <views:MvxContentPage.Resources>
+        <ResourceDictionary>
+            <converters:ByteToImageSourceConverter x:Key="ByteToImageSourceConverter" />
+        </ResourceDictionary>
+    </views:MvxContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="{Binding QuestionLibelle}" />
+            <Image Source="{Binding Pokemon.DataImg, Converter={StaticResource ByteToImageSourceConverter}}" />
+            <Label Text="{Binding AnswerOne.libelle}" />
+            <Label Text="{Binding AnswerTwo.libelle}" />
+            <Label Text="{Binding AnswerThree.libelle}" />
+            <Label Text="{Binding AnswerFour.libelle}" />
+        </StackLayout>
+    </ContentPage.Content>
+</views:MvxContentPage>

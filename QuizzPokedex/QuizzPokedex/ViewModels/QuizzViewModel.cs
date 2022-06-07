@@ -151,13 +151,32 @@ namespace QuizzPokedex.ViewModels
 
             List<Question> questions = await _questionService.GetAllByQuestionsIDAsync(quizz.QuestionsID);
 
-            Dictionary<Question, List<Answer>> result = new Dictionary<Question, List<Answer>>();
+            Dictionary<Question, List<Answer>> results = new Dictionary<Question, List<Answer>>();
             foreach (Question question in questions)
             {
                 List<Answer> answers = new List<Answer>();
                 answers.AddRange(await _answerService.GetAllByAnswersIDAsync(question.AnswersID));
-                result.Add(question, answers);
+                results.Add(question, answers);
             }
+
+            Question questionOne = new Question();
+            List<Answer> answersOne = new List<Answer>();
+            foreach (KeyValuePair<Question, List<Answer>> result in results)
+            {
+                if(result.Key.Order == 1)
+                {
+                    questionOne = result.Key;
+                    answersOne = result.Value;
+                }
+            }
+
+            QuestionAnswers questionAnswers = new QuestionAnswers() {
+                Quizz = quizz,
+                Question = questionOne,
+                Answers = answersOne
+            };
+
+            await _navigation.Navigate<TypPokQuizzViewModel, QuestionAnswers>(questionAnswers);
         }
 
         #region Filter By Gen

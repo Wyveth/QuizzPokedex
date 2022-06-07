@@ -130,7 +130,7 @@ namespace QuizzPokedex.Services
         private async Task<string> GetAnswersID(QuestionType questionType, bool gen1, bool gen2, bool gen3, bool gen4, bool gen5, bool gen6, bool gen7, bool gen8, bool genArceus)
         {
             string AnswersID = string.Empty;
-            if (questionType.Code.Equals(Constantes.QTypPok))
+            if (questionType.Code.Equals(Constantes.QTypTyp))
             {
                 List<TypePok> typesAnswer = new List<TypePok>();
                 for (int nbAnswer = 0; nbAnswer < questionType.NbAnswers; nbAnswer++)

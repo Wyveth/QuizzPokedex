@@ -19,6 +19,9 @@ namespace QuizzPokedex.Models
         //Si la réponse est sélectionnée
         public bool IsSelected { get; set; }
 
+        //ID Correct
+        public int IsCorrectID { get; set; }
+
         //Si réponse correcte
         public bool IsCorrect { get; set; }
     }

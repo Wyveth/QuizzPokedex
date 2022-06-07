@@ -39,8 +39,8 @@ namespace QuizzPokedex.CustomStart
             //_connectionService.GetAsyncConnection().DropTableAsync<Pokemon>().Wait();
             //_connectionService.GetAsyncConnection().DropTableAsync<Profile>().Wait();
             //_connectionService.GetAsyncConnection().DropTableAsync<Favorite>().Wait();
-            _connectionService.GetAsyncConnection().DropTableAsync<Difficulty>().Wait();
-            _connectionService.GetAsyncConnection().DropTableAsync<QuestionType>().Wait();
+            //_connectionService.GetAsyncConnection().DropTableAsync<Difficulty>().Wait();
+            //_connectionService.GetAsyncConnection().DropTableAsync<QuestionType>().Wait();
             _connectionService.GetAsyncConnection().DropTableAsync<Answer>().Wait();
             _connectionService.GetAsyncConnection().DropTableAsync<Question>().Wait();
             _connectionService.GetAsyncConnection().DropTableAsync<Quizz>().Wait();

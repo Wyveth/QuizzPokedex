@@ -58,11 +58,12 @@
                         HorizontalOptions="CenterAndExpand"
                         IsVisible="{Binding ProgressBarIsVisible}"
                         Text="{Binding TextProgressBar}"
-                        TextColor="#464C56" />
+                        TextColor="#FFFFFF" />
                     <ProgressBar
                         Grid.Row="0"
                         Grid.Column="1"
                         Grid.ColumnSpan="2"
+                        ef:Border.Color="White"
                         IsVisible="{Binding ProgressBarIsVisible}"
                         Progress="{Binding ValueProgressBar}"
                         ProgressColor="#F75E6D"

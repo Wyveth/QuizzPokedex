@@ -92,10 +92,12 @@ namespace QuizzPokedex.Services
 
             foreach (KeyValuePair<int, Pokemon> pair in dic)
             {
+                int IsCorrectId = -1;
                 bool IsCorrectAnswer = false;
 
                 if (dic[selectedPokemonAnswer].Id.Equals(pair.Value.Id))
                 {
+                    IsCorrectId = pair.Value.Id;
                     IsCorrectAnswer = true;
                 }
 
@@ -103,6 +105,7 @@ namespace QuizzPokedex.Services
                 {
                     IsSelected = false,
                     IsCorrect = IsCorrectAnswer,
+                    IsCorrectID = IsCorrectId,
                     libelle = pair.Value.Name,
                     Order = pair.Key + 1
                 };
