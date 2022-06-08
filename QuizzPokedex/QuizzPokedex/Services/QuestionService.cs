@@ -135,7 +135,7 @@ namespace QuizzPokedex.Services
                 List<TypePok> typesAnswer = new List<TypePok>();
                 for (int nbAnswer = 0; nbAnswer < questionType.NbAnswers; nbAnswer++)
                 {
-                    typesAnswer.Add(await _typePokService.GetTypeRandom());
+                    typesAnswer.Add(await _typePokService.GetTypeRandom(typesAnswer));
                 }
                 AnswersID = await _answerService.GenerateAnswers(typesAnswer);
             }
@@ -144,7 +144,7 @@ namespace QuizzPokedex.Services
                 List<Pokemon> pokemonsAnswer = new List<Pokemon>();
                 for (int nbAnswer = 0; nbAnswer < questionType.NbAnswers; nbAnswer++)
                 {
-                    pokemonsAnswer.Add(await _pokemonService.GetPokemonRandom(gen1, gen2, gen3, gen4, gen5, gen6, gen7, gen8, genArceus));
+                    pokemonsAnswer.Add(await _pokemonService.GetPokemonRandom(gen1, gen2, gen3, gen4, gen5, gen6, gen7, gen8, genArceus, pokemonsAnswer));
                 }
                 AnswersID = await _answerService.GenerateAnswers(pokemonsAnswer);
             }

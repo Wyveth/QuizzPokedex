@@ -20,17 +20,19 @@ namespace QuizzPokedex.ViewModels
         private readonly IMvxIoCProvider _logger;
         private readonly IQuizzService _quizzService;
         private readonly IQuestionService _questionService;
+        private readonly IQuestionTypeService _questionTypeService;
         private readonly IAnswerService _answerService;
         private readonly IPokemonService _pokemonService;
         #endregion
 
         #region Constructor
-        public QuizzViewModel(IMvxNavigationService navigation, IMvxIoCProvider logger, IQuizzService quizzService, IPokemonService pokemonService, IQuestionService questionService, IAnswerService answerService)
+        public QuizzViewModel(IMvxNavigationService navigation, IMvxIoCProvider logger, IQuizzService quizzService, IPokemonService pokemonService, IQuestionService questionService, IQuestionTypeService questionTypeService, IAnswerService answerService)
         {
             _navigation = navigation;
             _logger = logger;
             _quizzService = quizzService;
             _questionService = questionService;
+            _questionTypeService = questionTypeService;
             _answerService = answerService;
             _pokemonService = pokemonService;
         }
@@ -150,32 +152,17 @@ namespace QuizzPokedex.ViewModels
             Quizz quizz = await _quizzService.GenerateQuizz(1, FiltreActiveGen1, FiltreActiveGen2, FiltreActiveGen3, FiltreActiveGen4, FiltreActiveGen5, FiltreActiveGen6, FiltreActiveGen7, FiltreActiveGen8, FiltreActiveGenArceus, Easy, Normal, Hard);
 
             List<Question> questions = await _questionService.GetAllByQuestionsIDAsync(quizz.QuestionsID);
-
-            Dictionary<Question, List<Answer>> results = new Dictionary<Question, List<Answer>>();
-            foreach (Question question in questions)
-            {
-                List<Answer> answers = new List<Answer>();
-                answers.AddRange(await _answerService.GetAllByAnswersIDAsync(question.AnswersID));
-                results.Add(question, answers);
-            }
-
-            Question questionOne = new Question();
-            List<Answer> answersOne = new List<Answer>();
-            foreach (KeyValuePair<Question, List<Answer>> result in results)
-            {
-                if(result.Key.Order == 1)
-                {
-                    questionOne = result.Key;
-                    answersOne = result.Value;
-                }
-            }
+            Question question = questions.Find(m => m.Order.Equals(1));
+            QuestionType questionType = await _questionTypeService.GetByIdAsync(question.QuestionTypeID);
+            List<Answer> answers = new List<Answer>();
+            answers.AddRange(await _answerService.GetAllByAnswersIDAsync(question.AnswersID));
 
             QuestionAnswers questionAnswers = new QuestionAnswers() {
                 Quizz = quizz,
-                Question = questionOne,
-                Answers = answersOne
+                Question = question,
+                Answers = answers
             };
-
+           
             await _navigation.Navigate<TypPokQuizzViewModel, QuestionAnswers>(questionAnswers);
         }
 

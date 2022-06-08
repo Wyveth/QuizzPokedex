@@ -48,7 +48,7 @@ namespace QuizzPokedex.Services
             {
                 int id = int.Parse(item);
                 TypePok typePok = await GetByIdAsync(id);
-                if(typePok != null)
+                if (typePok != null)
                     result.Add(typePok);
             }
 
@@ -98,12 +98,19 @@ namespace QuizzPokedex.Services
         }
         #endregion
 
-        public async Task<TypePok> GetTypeRandom()
+        public async Task<TypePok> GetTypeRandom(List<TypePok> alreadySelected)
         {
             List<TypePok> result = await GetAllAsync();
 
             Random random = new Random();
             int numberRandom = random.Next(result.Count);
+            TypePok typePok = alreadySelected.Find(m => m.Id.Equals(result[numberRandom].Id));
+
+            while (typePok != null)
+            {
+                numberRandom = random.Next(result.Count);
+                typePok = alreadySelected.Find(m => m.Id.Equals(result[numberRandom].Id));
+            }
 
             return await Task.FromResult(result[numberRandom]);
         }

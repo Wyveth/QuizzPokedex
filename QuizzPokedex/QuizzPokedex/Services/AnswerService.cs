@@ -106,7 +106,7 @@ namespace QuizzPokedex.Services
                     IsSelected = false,
                     IsCorrect = IsCorrectAnswer,
                     IsCorrectID = IsCorrectId,
-                    libelle = pair.Value.Name,
+                    Libelle = pair.Value.Name,
                     Order = pair.Key + 1
                 };
 
@@ -165,7 +165,7 @@ namespace QuizzPokedex.Services
                 {
                     IsSelected = false,
                     IsCorrect = IsCorrectAnswer,
-                    libelle = pair.Value.Name,
+                    Libelle = pair.Value.Name,
                     Order = pair.Key + 1
                 };
 

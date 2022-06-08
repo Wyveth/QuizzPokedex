@@ -14,7 +14,7 @@ namespace QuizzPokedex.Models
         public int Order { get; set; }
 
         //Libellé des réponses
-        public string libelle { get; set; }
+        public string Libelle { get; set; }
 
         //Si la réponse est sélectionnée
         public bool IsSelected { get; set; }

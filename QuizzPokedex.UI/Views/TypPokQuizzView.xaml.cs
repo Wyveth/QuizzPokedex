@@ -18,5 +18,5 @@ namespace QuizzPokedex.UI.Views
 		{
 			InitializeComponent ();
 		}
-	}
+    }
 }

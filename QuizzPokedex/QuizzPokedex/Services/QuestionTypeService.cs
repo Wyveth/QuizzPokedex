@@ -77,7 +77,7 @@ namespace QuizzPokedex.Services
                 Code = Constantes.QTypTyp,
                 Libelle = "Quel est le type principal de ce pokémon?",
                 DifficultyID = difficultyEasy.Id,
-                NbAnswers = 4
+                NbAnswers = 6
             };
             await CreateAsync(questionType);
 
@@ -86,9 +86,65 @@ namespace QuizzPokedex.Services
                 Code = Constantes.QTypTyp,
                 Libelle = "Quel est-ce type?",
                 DifficultyID = difficultyEasy.Id,
-                NbAnswers = 4
+                NbAnswers = 6
             };
             await CreateAsync(questionType);
+
+            Difficulty difficultyNormal = await _difficultyService.GetByLibelleAsync(Constantes.NormalTQ);
+            questionType = new QuestionType()
+            {
+                Code = Constantes.QTypPok,
+                Libelle = "Qui est ce pokémon?",
+                DifficultyID = difficultyNormal.Id,
+                NbAnswers = 8
+            };
+            await CreateAsync(questionType);
+
+            //questionType = new QuestionType()
+            //{
+            //    Code = Constantes.QTypTyp,
+            //    Libelle = "Quel est le type principal de ce pokémon?",
+            //    DifficultyID = difficultyNormal.Id,
+            //    NbAnswers = 12
+            //};
+            //await CreateAsync(questionType);
+
+            //questionType = new QuestionType()
+            //{
+            //    Code = Constantes.QTypTyp,
+            //    Libelle = "Quel est-ce type?",
+            //    DifficultyID = difficultyNormal.Id,
+            //    NbAnswers = 12
+            //};
+            //await CreateAsync(questionType);
+
+            Difficulty difficultyHard = await _difficultyService.GetByLibelleAsync(Constantes.HardTQ);
+            questionType = new QuestionType()
+            {
+                Code = Constantes.QTypPok,
+                Libelle = "Qui est ce pokémon?",
+                DifficultyID = difficultyHard.Id,
+                NbAnswers = 12
+            };
+            await CreateAsync(questionType);
+
+            //questionType = new QuestionType()
+            //{
+            //    Code = Constantes.QTypTyp,
+            //    Libelle = "Quel est le type principal de ce pokémon?",
+            //    DifficultyID = difficultyHard.Id,
+            //    NbAnswers = 18
+            //};
+            //await CreateAsync(questionType);
+
+            //questionType = new QuestionType()
+            //{
+            //    Code = Constantes.QTypTyp,
+            //    Libelle = "Quel est-ce type?",
+            //    DifficultyID = difficultyHard.Id,
+            //    NbAnswers = 18
+            //};
+            //await CreateAsync(questionType);
         }
         #endregion
 
