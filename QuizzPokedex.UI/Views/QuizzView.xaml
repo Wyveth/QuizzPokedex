@@ -241,7 +241,7 @@
                 Opacity="0.3" />
             <StackLayout
                 x:Name="LoadingQuizz"
-                AbsoluteLayout.LayoutBounds="0,0,1,1"
+                AbsoluteLayout.LayoutBounds="0,0,1,0.6"
                 AbsoluteLayout.LayoutFlags="All"
                 BackgroundColor="Transparent"
                 IsVisible="{Binding IsVisibleLoadingQuizz}"
@@ -251,7 +251,22 @@
                     AnimationSource="EmbeddedResource"
                     HeightRequest="250"
                     RepeatMode="Infinite"
-                    VerticalOptions="CenterAndExpand" />
+                    VerticalOptions="EndAndExpand" />
+            </StackLayout>
+            <StackLayout
+                x:Name="ProgressGenerateQuizz"
+                AbsoluteLayout.LayoutBounds="0.5,1,1,0.5"
+                AbsoluteLayout.LayoutFlags="All"
+                BackgroundColor="Transparent"
+                IsVisible="{Binding IsVisibleLoadingQuizz}"
+                Opacity="1">
+                <Label
+                    FontSize="Medium"
+                    HorizontalOptions="CenterAndExpand"
+                    HorizontalTextAlignment="Center"
+                    Text="{Binding ProgressGenerate}"
+                    TextColor="White"
+                    VerticalOptions="StartAndExpand" />
             </StackLayout>
             <StackLayout
                 x:Name="ModalFilterGen"

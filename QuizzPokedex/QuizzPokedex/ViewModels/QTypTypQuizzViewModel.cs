@@ -71,9 +71,20 @@ namespace QuizzPokedex.ViewModels
             TypePok = await _typePokService.GetByIdAsync(QuestionAnswers.Answers.Find(m => m.IsCorrect.Equals(true)).IsCorrectID);
             TypePokBackGround = await _typePokService.GetTypeRandom();
             Difficulty difficulty = await _difficultyService.GetByIdAsync(QuestionType.DifficultyID);
+            await GetBytesDifficulty(difficulty);
             await GetBytesTypesFilter(TypePok.Name);
             await LoadDataDifficulty(difficulty);
             await LoadUIDifficulty(difficulty);
+        }
+
+        private async Task GetBytesDifficulty(Difficulty difficulty)
+        {
+            if (difficulty.Libelle.Equals(Constantes.EasyTQ))
+                DifficultyByte = await Utils.GetByteAssetImage(Constantes.Easy_Color);
+            else if (difficulty.Libelle.Equals(Constantes.NormalTQ))
+                DifficultyByte = await Utils.GetByteAssetImage(Constantes.Normal_Color);
+            else if (difficulty.Libelle.Equals(Constantes.HardTQ))
+                DifficultyByte = await Utils.GetByteAssetImage(Constantes.Hard_Color);
         }
 
         private async Task LoadDataDifficulty(Difficulty difficulty)
@@ -544,6 +555,14 @@ namespace QuizzPokedex.ViewModels
         {
             get { return _typeByte; }
             set { SetProperty(ref _typeByte, value); }
+        }
+
+        private byte[] _difficultyByte;
+
+        public byte[] DifficultyByte
+        {
+            get { return _difficultyByte; }
+            set { SetProperty(ref _difficultyByte, value); }
         }
 
         #endregion

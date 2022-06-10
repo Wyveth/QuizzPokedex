@@ -28,6 +28,21 @@
             <StackLayout AbsoluteLayout.LayoutBounds="0.5,1,1,0.2" AbsoluteLayout.LayoutFlags="All">
                 <Image Source="{Binding ImgPokedexDown, Converter={StaticResource ByteToImageSourceConverter}}" />
             </StackLayout>
+            <StackLayout AbsoluteLayout.LayoutBounds="0,0,1,0.5" AbsoluteLayout.LayoutFlags="All">
+                <Label
+                    Margin="10"
+                    FontAttributes="Bold,Italic"
+                    FontSize="20"
+                    HorizontalOptions="CenterAndExpand"
+                    Text="{Binding Order, StringFormat='Question N°{0}'}"
+                    TextColor="White" />
+            </StackLayout>
+            <StackLayout AbsoluteLayout.LayoutBounds="0.95,0,0.2,0.1" AbsoluteLayout.LayoutFlags="All">
+                <Image
+                    Margin="10"
+                    HeightRequest="50"
+                    Source="{Binding DifficultyByte, Converter={StaticResource ByteToImageSourceConverter}}" />
+            </StackLayout>
             <StackLayout AbsoluteLayout.LayoutBounds="0,0.54,1,0.75" AbsoluteLayout.LayoutFlags="All">
                 <Grid>
                     <Grid.RowDefinitions>

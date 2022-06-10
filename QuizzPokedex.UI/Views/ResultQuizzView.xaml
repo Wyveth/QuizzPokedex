@@ -79,7 +79,7 @@
                         xct:ShadowEffect.Opacity="0.5"
                         xct:ShadowEffect.Radius="200"
                         BackgroundColor="White"
-                        Command="{Binding NavigationValidationAsync}"
+                        Command="{Binding NavigationValidationCommandAsync}"
                         FontAttributes="Bold,Italic"
                         FontFamily="Montserrat-SemiBold"
                         FontSize="20"

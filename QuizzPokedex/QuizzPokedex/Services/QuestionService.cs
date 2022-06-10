@@ -3,6 +3,7 @@ using QuizzPokedex.Models;
 using QuizzPokedex.Resources;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -75,6 +76,12 @@ namespace QuizzPokedex.Services
             var result = await _database.InsertOrReplaceAsync(question);
             return result;
         }
+
+        public async Task<int> GetCountAsync()
+        {
+            var result = await _database.Table<Question>().CountAsync();
+            return result;
+        }
         #endregion
 
         #region Generate Quizz
@@ -116,15 +123,13 @@ namespace QuizzPokedex.Services
 
                 await CreateAsync(question);
                 questions.Add(question);
+                Debug.Write("Creation Question:" + questions.Count + "/" + nbQuestionMax);
             }
 
             return await Task.FromResult(await GetQuestionsID(questions));
         }
-        #endregion
-        #endregion
 
-        #region Private Methods
-        private async Task<int> GetNbQuestionByDifficulty(bool easy, bool normal, bool hard)
+        public async Task<int> GetNbQuestionByDifficulty(bool easy, bool normal, bool hard)
         {
             int nbQuestionMax = 0;
             if (easy)
@@ -136,6 +141,10 @@ namespace QuizzPokedex.Services
 
             return await Task.FromResult(nbQuestionMax);
         }
+        #endregion
+        #endregion
+
+        #region Private Methods
         private async Task<string> GetQuestionsID(List<Question> questions)
         {
             string result = string.Empty;
@@ -155,6 +164,7 @@ namespace QuizzPokedex.Services
 
             return await Task.FromResult(result);
         }
+
         private async Task<string> GetAnswersID_QTypPok(QuestionType questionType, bool gen1, bool gen2, bool gen3, bool gen4, bool gen5, bool gen6, bool gen7, bool gen8, bool genArceus)
         {
             string AnswersID = string.Empty;

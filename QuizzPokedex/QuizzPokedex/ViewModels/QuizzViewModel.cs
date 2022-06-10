@@ -152,8 +152,10 @@ namespace QuizzPokedex.ViewModels
         {
             await UpdateUIGenerateAsync();
 
-            Quizz quizz = await _quizzService.GenerateQuizz(1, FiltreActiveGen1, FiltreActiveGen2, FiltreActiveGen3, FiltreActiveGen4, FiltreActiveGen5, FiltreActiveGen6, FiltreActiveGen7, FiltreActiveGen8, FiltreActiveGenArceus, Easy, Normal, Hard);
+            Task<Quizz> TaskQuizz = _quizzService.GenerateQuizz(1, FiltreActiveGen1, FiltreActiveGen2, FiltreActiveGen3, FiltreActiveGen4, FiltreActiveGen5, FiltreActiveGen6, FiltreActiveGen7, FiltreActiveGen8, FiltreActiveGenArceus, Easy, Normal, Hard);
+            await ProgressCreation();
 
+            Quizz quizz = await TaskQuizz;
             List<Question> questions = await _questionService.GetAllByQuestionsIDAsync(quizz.QuestionsID);
             Question question = questions.Find(m => m.Order.Equals(1));
             QuestionType questionType = await _questionTypeService.GetByIdAsync(question.QuestionTypeID);
@@ -169,6 +171,21 @@ namespace QuizzPokedex.ViewModels
             await Utils.RedirectQuizz(_navigation, questionAnswers, question, questionType);
 
             await UpdateUIGenerateAsync();
+        }
+
+        private async Task ProgressCreation()
+        {
+            int nbMaxQuestion = await _questionService.GetNbQuestionByDifficulty(Easy, Normal, Hard);
+            int nbQuestionBefore = await _questionService.GetCountAsync();
+            int nbQuestionAfter = nbQuestionBefore + nbMaxQuestion;
+            int dif = 0;
+            ProgressGenerate = "Création en cours: " + dif + "/" + nbMaxQuestion;
+            while (dif != nbMaxQuestion)
+            {
+                nbQuestionAfter = await _questionService.GetCountAsync();
+                dif = nbQuestionAfter - nbQuestionBefore;
+                ProgressGenerate = "Création en cours: " + dif + "/" + nbMaxQuestion;
+            }
         }
 
         #region Filter By Gen
@@ -393,6 +410,14 @@ namespace QuizzPokedex.ViewModels
         {
             get { return _pokemon; }
             set { SetProperty(ref _pokemon, value); }
+        }
+
+        private string _progressGenerate;
+
+        public string ProgressGenerate
+        {
+            get { return _progressGenerate; }
+            set { SetProperty(ref _progressGenerate, value); }
         }
 
         #region Image Background
