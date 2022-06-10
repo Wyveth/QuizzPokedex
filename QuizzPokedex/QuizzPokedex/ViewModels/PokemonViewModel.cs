@@ -87,9 +87,9 @@ namespace QuizzPokedex.ViewModels
             #region Favorite
             IsFavorite = await _favoriteService.CheckIfFavoriteExist(Pokemon);
             if(IsFavorite)
-                ImgFavorite = await Utils.getByteAssetImage(Constantes.LoveFull);
+                ImgFavorite = await Utils.GetByteAssetImage(Constantes.LoveFull);
             else
-                ImgFavorite = await Utils.getByteAssetImage(Constantes.Love);
+                ImgFavorite = await Utils.GetByteAssetImage(Constantes.Love);
             #endregion
 
             #region Type
@@ -298,7 +298,7 @@ namespace QuizzPokedex.ViewModels
             if (IsFavorite)
             {
                 IsFavorite = false;
-                ImgFavorite = await Utils.getByteAssetImage(Constantes.Love);
+                ImgFavorite = await Utils.GetByteAssetImage(Constantes.Love);
 
                 Favorite favorite = await _favoriteService.GetFavorite(Pokemon);
                 await _favoriteService.DeleteAsync(favorite);
@@ -306,7 +306,7 @@ namespace QuizzPokedex.ViewModels
             else
             {
                 IsFavorite = true;
-                ImgFavorite = await Utils.getByteAssetImage(Constantes.LoveFull);
+                ImgFavorite = await Utils.GetByteAssetImage(Constantes.LoveFull);
                 Favorite favorite = new Favorite()
                 {
                     PokemonID = Pokemon.Id

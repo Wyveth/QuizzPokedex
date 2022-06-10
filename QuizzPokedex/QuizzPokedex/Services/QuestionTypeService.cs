@@ -74,7 +74,7 @@ namespace QuizzPokedex.Services
 
             questionType = new QuestionType()
             {
-                Code = Constantes.QTypTyp,
+                Code = Constantes.QTypTypPok,
                 Libelle = "Quel est le type principal de ce pokémon?",
                 DifficultyID = difficultyEasy.Id,
                 NbAnswers = 6
@@ -100,23 +100,23 @@ namespace QuizzPokedex.Services
             };
             await CreateAsync(questionType);
 
-            //questionType = new QuestionType()
-            //{
-            //    Code = Constantes.QTypTyp,
-            //    Libelle = "Quel est le type principal de ce pokémon?",
-            //    DifficultyID = difficultyNormal.Id,
-            //    NbAnswers = 12
-            //};
-            //await CreateAsync(questionType);
+            questionType = new QuestionType()
+            {
+                Code = Constantes.QTypTypPok,
+                Libelle = "Quel est le type principal de ce pokémon?",
+                DifficultyID = difficultyNormal.Id,
+                NbAnswers = 12
+            };
+            await CreateAsync(questionType);
 
-            //questionType = new QuestionType()
-            //{
-            //    Code = Constantes.QTypTyp,
-            //    Libelle = "Quel est-ce type?",
-            //    DifficultyID = difficultyNormal.Id,
-            //    NbAnswers = 12
-            //};
-            //await CreateAsync(questionType);
+            questionType = new QuestionType()
+            {
+                Code = Constantes.QTypTyp,
+                Libelle = "Quel est-ce type?",
+                DifficultyID = difficultyNormal.Id,
+                NbAnswers = 12
+            };
+            await CreateAsync(questionType);
 
             Difficulty difficultyHard = await _difficultyService.GetByLibelleAsync(Constantes.HardTQ);
             questionType = new QuestionType()
@@ -128,23 +128,23 @@ namespace QuizzPokedex.Services
             };
             await CreateAsync(questionType);
 
-            //questionType = new QuestionType()
-            //{
-            //    Code = Constantes.QTypTyp,
-            //    Libelle = "Quel est le type principal de ce pokémon?",
-            //    DifficultyID = difficultyHard.Id,
-            //    NbAnswers = 18
-            //};
-            //await CreateAsync(questionType);
+            questionType = new QuestionType()
+            {
+                Code = Constantes.QTypTypPok,
+                Libelle = "Quel est le type principal de ce pokémon?",
+                DifficultyID = difficultyHard.Id,
+                NbAnswers = 18
+            };
+            await CreateAsync(questionType);
 
-            //questionType = new QuestionType()
-            //{
-            //    Code = Constantes.QTypTyp,
-            //    Libelle = "Quel est-ce type?",
-            //    DifficultyID = difficultyHard.Id,
-            //    NbAnswers = 18
-            //};
-            //await CreateAsync(questionType);
+            questionType = new QuestionType()
+            {
+                Code = Constantes.QTypTyp,
+                Libelle = "Quel est-ce type?",
+                DifficultyID = difficultyHard.Id,
+                NbAnswers = 18
+            };
+            await CreateAsync(questionType);
         }
         #endregion
 
@@ -199,8 +199,10 @@ namespace QuizzPokedex.Services
             int numberRandom = random.Next(100);
 
             //If Question Type => Type // 10%
-            if (numberRandom <= 20)
+            if (numberRandom <= 5)
                 questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypTyp));
+            else if (numberRandom <= 15)
+                questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypTypPok));
             else
                 questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypPok));
 

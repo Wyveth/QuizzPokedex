@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<views:MvxContentPage
+    x:Class="QuizzPokedex.UI.Views.ResultQuizzView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:QuizzPokedex.UI.Converters"
+    xmlns:ef="clr-namespace:AiForms.Effects;assembly=AiForms.Effects"
+    xmlns:microcharts="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
+    xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+    xmlns:shadows="http://sharpnado.com"
+    xmlns:viewmodel="clr-namespace:QuizzPokedex.ViewModels;assembly=QuizzPokedex"
+    xmlns:views="clr-namespace:MvvmCross.Forms.Views;assembly=MvvmCross.Forms"
+    xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+    x:TypeArguments="viewmodel:ResultQuizzViewModel"
+    BackgroundColor="White"
+    NavigationPage.HasNavigationBar="False">
+    <views:MvxContentPage.Resources>
+        <ResourceDictionary>
+            <converters:ByteToImageSourceConverter x:Key="ByteToImageSourceConverter" />
+        </ResourceDictionary>
+    </views:MvxContentPage.Resources>
+    <ContentPage.Content>
+        <AbsoluteLayout>
+            <StackLayout AbsoluteLayout.LayoutBounds="0,-0.02,1,0.25" AbsoluteLayout.LayoutFlags="All">
+                <Image Source="{Binding ImgPokedexUp, Converter={StaticResource ByteToImageSourceConverter}}" />
+            </StackLayout>
+            <StackLayout AbsoluteLayout.LayoutBounds="0.5,1,1,0.2" AbsoluteLayout.LayoutFlags="All">
+                <Image Source="{Binding ImgPokedexDown, Converter={StaticResource ByteToImageSourceConverter}}" />
+            </StackLayout>
+            <StackLayout AbsoluteLayout.LayoutBounds="0,0.54,1,0.75" AbsoluteLayout.LayoutFlags="All">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1.5*" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="3.5*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <StackLayout Grid.Row="0" Grid.ColumnSpan="4">
+                        <Image HeightRequest="100" Source="{Binding TypeByte, Converter={StaticResource ByteToImageSourceConverter}}" />
+                    </StackLayout>
+                </Grid>
+            </StackLayout>
+            <StackLayout AbsoluteLayout.LayoutBounds="0.5,1,0.34,0.2" AbsoluteLayout.LayoutFlags="All">
+                <pv:PancakeView BackgroundColor="transparent" CornerRadius="0,0,100,100">
+                    <Button
+                        Margin="0,2,0,0"
+                        Padding="0,10,0,20"
+                        xct:ShadowEffect.Color="#464C56"
+                        xct:ShadowEffect.OffsetY="10"
+                        xct:ShadowEffect.Opacity="0.5"
+                        xct:ShadowEffect.Radius="200"
+                        BackgroundColor="{Binding TypePokBackGround.InfoColor}"
+                        Command="{Binding NavigationNextCommandAsync}"
+                        FontFamily="Montserrat-SemiBold"
+                        FontSize="20"
+                        HeightRequest="80"
+                        Text="Suivant"
+                        TextColor="White"
+                        TextTransform="None"
+                        WidthRequest="142" />
+                </pv:PancakeView>
+            </StackLayout>
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</views:MvxContentPage>

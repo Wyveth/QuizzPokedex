@@ -40,7 +40,6 @@ namespace QuizzPokedex.Services
         public async Task<List<Pokemon>> GetAllAsync()
         {
             var result = await _database.Table<Pokemon>().OrderBy(m => m.Number).ToListAsync();
-
             return result;
         }
 
@@ -392,6 +391,16 @@ namespace QuizzPokedex.Services
         #endregion
 
         #region Generate Quizz
+        public async Task<Pokemon> GetPokemonRandom(bool gen1, bool gen2, bool gen3, bool gen4, bool gen5, bool gen6, bool gen7, bool gen8, bool genArceus)
+        {
+            List<Pokemon> result = await GetAllAsync();
+            List<Pokemon> resultFilterGen = await GetPokemonsWithFilterGen(result, gen1, gen2, gen3, gen4, gen5, gen6, gen7, gen8, genArceus);
+
+            Random random = new Random();
+            int numberRandom = random.Next(resultFilterGen.Count);
+
+            return await Task.FromResult(resultFilterGen[numberRandom]);
+        }
         public async Task<Pokemon> GetPokemonRandom(bool gen1, bool gen2, bool gen3, bool gen4, bool gen5, bool gen6, bool gen7, bool gen8, bool genArceus, List<Pokemon> alreadySelected)
         {
             List<Pokemon> result = await GetAllAsync();

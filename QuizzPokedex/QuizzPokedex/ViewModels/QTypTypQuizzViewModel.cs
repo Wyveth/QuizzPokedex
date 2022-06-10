@@ -12,31 +12,25 @@ using System.Threading.Tasks;
 
 namespace QuizzPokedex.ViewModels
 {
-    public class TypPokQuizzViewModel : MvxViewModel<QuestionAnswers>
+    public class QTypTypQuizzViewModel : MvxViewModel<QuestionAnswers>
     {
         #region Field
         private readonly IMvxNavigationService _navigation;
-        private readonly IMvxIoCProvider _logger;
-        private readonly IQuizzService _quizzService;
         private readonly IQuestionService _questionService;
         private readonly IQuestionTypeService _questionTypeService;
         private readonly IDifficultyService _difficultyService;
         private readonly IAnswerService _answerService;
-        private readonly IPokemonService _pokemonService;
         private readonly ITypePokService _typePokService;
         #endregion
 
         #region Constructor
-        public TypPokQuizzViewModel(IMvxNavigationService navigation, IMvxIoCProvider logger, IQuizzService quizzService, IPokemonService pokemonService, IQuestionService questionService, IDifficultyService difficultyService, IAnswerService answerService, IQuestionTypeService questionTypeService, ITypePokService typePokService)
+        public QTypTypQuizzViewModel(IMvxNavigationService navigation, IQuestionService questionService, IDifficultyService difficultyService, IAnswerService answerService, IQuestionTypeService questionTypeService, ITypePokService typePokService)
         {
             _navigation = navigation;
-            _logger = logger;
-            _quizzService = quizzService;
             _questionService = questionService;
             _questionTypeService = questionTypeService;
             _difficultyService = difficultyService;
             _answerService = answerService;
-            _pokemonService = pokemonService;
             _typePokService = typePokService;
         }
         #endregion
@@ -60,8 +54,8 @@ namespace QuizzPokedex.ViewModels
         #region Private Methods
         private async Task BackGroundAsync()
         {
-            ImgPokedexUp = await Utils.getByteAssetImage(Constantes.Pokedex_Up);
-            ImgPokedexDown = await Utils.getByteAssetImage(Constantes.Pokedex_Down);
+            ImgPokedexUp = await Utils.GetByteAssetImage(Constantes.Pokedex_Up);
+            ImgPokedexDown = await Utils.GetByteAssetImage(Constantes.Pokedex_Down);
         }
 
         private async Task LoadQuestionAnswersAsync()
@@ -72,83 +66,390 @@ namespace QuizzPokedex.ViewModels
         private async Task LoadData()
         {
             QuestionType = await _questionTypeService.GetByIdAsync(QuestionAnswers.Question.QuestionTypeID);
-            Pokemon = await _pokemonService.GetByIdAsync(QuestionAnswers.Answers.Find(m => m.IsCorrect.Equals(true)).IsCorrectID);
-            int typeID = int.Parse(Pokemon.TypesID.Split(',')[0]);
-            TypePok = await _typePokService.GetByIdAsync(typeID);
-
+            TypePok = await _typePokService.GetByIdAsync(QuestionAnswers.Answers.Find(m => m.IsCorrect.Equals(true)).IsCorrectID);
+            TypePokBackGround = await _typePokService.GetTypeRandom();
+            await GetBytesTypesFilter(TypePok.Name);
             await LoadDataDifficulty();
         }
 
         private async Task LoadDataDifficulty()
         {
-            //A revoir
             Difficulty difficulty = await _difficultyService.GetByIdAsync(QuestionType.DifficultyID);
-            if (difficulty.Libelle.Equals(Constantes.EasyTQ))
+            if (difficulty.Libelle.Equals(Constantes.EasyTQ)
+                || difficulty.Libelle.Equals(Constantes.NormalTQ)
+                || difficulty.Libelle.Equals(Constantes.HardTQ))
             {
                 EasyQ = true;
-                Answer1 = QuestionAnswers.Answers[0];
-                Answer2 = QuestionAnswers.Answers[1];
-                Answer3 = QuestionAnswers.Answers[2];
-                Answer4 = QuestionAnswers.Answers[3];
+                Answer1 = QuestionAnswers.Answers.Find(m => m.Order.Equals(1));
+                Answer2 = QuestionAnswers.Answers.Find(m => m.Order.Equals(2));
+                Answer3 = QuestionAnswers.Answers.Find(m => m.Order.Equals(3));
+                Answer4 = QuestionAnswers.Answers.Find(m => m.Order.Equals(4));
+                Answer5 = QuestionAnswers.Answers.Find(m => m.Order.Equals(5));
+                Answer6 = QuestionAnswers.Answers.Find(m => m.Order.Equals(6));
             }
-            else if (difficulty.Libelle.Equals(Constantes.NormalTQ))
+
+            if (difficulty.Libelle.Equals(Constantes.NormalTQ)
+                || difficulty.Libelle.Equals(Constantes.HardTQ))
             {
                 NormalQ = true;
-                Answer1 = QuestionAnswers.Answers[0];
-                Answer2 = QuestionAnswers.Answers[1];
-                Answer3 = QuestionAnswers.Answers[2];
-                Answer4 = QuestionAnswers.Answers[3];
-                Answer5 = QuestionAnswers.Answers[4];
-                Answer6 = QuestionAnswers.Answers[5];
-                Answer7 = QuestionAnswers.Answers[6];
-                Answer8 = QuestionAnswers.Answers[7];
+                Answer7 = QuestionAnswers.Answers.Find(m => m.Order.Equals(7));
+                Answer8 = QuestionAnswers.Answers.Find(m => m.Order.Equals(8));
+                Answer9 = QuestionAnswers.Answers.Find(m => m.Order.Equals(9));
+                Answer10 = QuestionAnswers.Answers.Find(m => m.Order.Equals(10));
+                Answer11 = QuestionAnswers.Answers.Find(m => m.Order.Equals(11));
+                Answer12 = QuestionAnswers.Answers.Find(m => m.Order.Equals(12));
             }
-            else if (difficulty.Libelle.Equals(Constantes.HardTQ))
+
+            if (difficulty.Libelle.Equals(Constantes.HardTQ))
             {
                 HardQ = true;
-                Answer1 = QuestionAnswers.Answers[0];
-                Answer2 = QuestionAnswers.Answers[1];
-                Answer3 = QuestionAnswers.Answers[2];
-                Answer4 = QuestionAnswers.Answers[3];
-                Answer5 = QuestionAnswers.Answers[4];
-                Answer6 = QuestionAnswers.Answers[5];
-                Answer7 = QuestionAnswers.Answers[6];
-                Answer8 = QuestionAnswers.Answers[7];
-                Answer9 = QuestionAnswers.Answers[8];
-                Answer10 = QuestionAnswers.Answers[9];
-                Answer11 = QuestionAnswers.Answers[10];
-                Answer12 = QuestionAnswers.Answers[11];
+                Answer13 = QuestionAnswers.Answers.Find(m => m.Order.Equals(13));
+                Answer14 = QuestionAnswers.Answers.Find(m => m.Order.Equals(14));
+                Answer15 = QuestionAnswers.Answers.Find(m => m.Order.Equals(15));
+                Answer16 = QuestionAnswers.Answers.Find(m => m.Order.Equals(16));
+                Answer17 = QuestionAnswers.Answers.Find(m => m.Order.Equals(17));
+                Answer18 = QuestionAnswers.Answers.Find(m => m.Order.Equals(18));
             }
+        }
+
+        private async Task GetBytesTypesFilter(string Name)
+        {
+            #region Type Filter
+                switch (Name)
+                {
+                    case Constantes.Steel:
+                        TypeByte = await Utils.GetByteAssetImage(Constantes.Icon_Steel_BW);
+                        break;
+                    case Constantes.Fighting:
+                        TypeByte = await Utils.GetByteAssetImage(Constantes.Icon_Fighting_BW);
+                        break;
+                    case Constantes.Dragon:
+                        TypeByte = await Utils.GetByteAssetImage(Constantes.Icon_Dragon_BW);
+                        break;
+                    case Constantes.Water:
+                        TypeByte = await Utils.GetByteAssetImage(Constantes.Icon_Water_BW);
+                        break;
+                    case Constantes.Electric:
+                        TypeByte = await Utils.GetByteAssetImage(Constantes.Icon_Electric_BW);
+                        break;
+                    case Constantes.Fairy:
+                        TypeByte = await Utils.GetByteAssetImage(Constantes.Icon_Fairy_BW);
+                        break;
+                    case Constantes.Fire:
+                        TypeByte = await Utils.GetByteAssetImage(Constantes.Icon_Fire_BW);
+                        break;
+                    case Constantes.Ice:
+                        TypeByte = await Utils.GetByteAssetImage(Constantes.Icon_Ice_BW);
+                        break;
+                    case Constantes.Bug:
+                        TypeByte = await Utils.GetByteAssetImage(Constantes.Icon_Bug_BW);
+                        break;
+                    case Constantes.Normal:
+                        TypeByte = await Utils.GetByteAssetImage(Constantes.Icon_Normal_BW);
+                        break;
+                    case Constantes.Grass:
+                        TypeByte = await Utils.GetByteAssetImage(Constantes.Icon_Grass_BW);
+                        break;
+                    case Constantes.Poison:
+                        TypeByte = await Utils.GetByteAssetImage(Constantes.Icon_Poison_BW);
+                        break;
+                    case Constantes.Psychic:
+                        TypeByte = await Utils.GetByteAssetImage(Constantes.Icon_Psychic_BW);
+                        break;
+                    case Constantes.Rock:
+                        TypeByte = await Utils.GetByteAssetImage(Constantes.Icon_Rock_BW);
+                        break;
+                    case Constantes.Ground:
+                        TypeByte = await Utils.GetByteAssetImage(Constantes.Icon_Ground_BW);
+                        break;
+                    case Constantes.Ghost:
+                        TypeByte = await Utils.GetByteAssetImage(Constantes.Icon_Ghost_BW);
+                        break;
+                    case Constantes.Dark:
+                        TypeByte = await Utils.GetByteAssetImage(Constantes.Icon_Dark_BW);
+                        break;
+                    case Constantes.Flying:
+                        TypeByte = await Utils.GetByteAssetImage(Constantes.Icon_Flying_BW);
+                        break;
+            }
+            #endregion
+        }
+
+        private async Task ResetData()
+        {
+            SelectedAnswer.IsSelected = false;
+            await UpdateUIByOrder(SelectedAnswer);
+        }
+
+        private async Task<bool> UpdateUIByOrder(Answer answer)
+        {
+            bool update = false;
+            switch (answer.Order)
+            {
+                case 1:
+                    if (answer.IsSelected)
+                    {
+                        BackgroundColorAnswer1 = TypePokBackGround.InfoColor;
+                        TextColorAnswer1 = Constantes.WhiteHexa;
+                    }
+                    else
+                    {
+                        BackgroundColorAnswer1 = Constantes.WhiteHexa;
+                        TextColorAnswer1 = Constantes.BlackHexa;
+                    }
+                    break;
+                case 2:
+                    if (answer.IsSelected)
+                    {
+                        BackgroundColorAnswer2 = TypePokBackGround.InfoColor;
+                        TextColorAnswer2 = Constantes.WhiteHexa;
+                    }
+                    else
+                    {
+                        BackgroundColorAnswer2 = Constantes.WhiteHexa;
+                        TextColorAnswer2 = Constantes.BlackHexa;
+                    }
+                    break;
+                case 3:
+                    if (answer.IsSelected)
+                    {
+                        BackgroundColorAnswer3 = TypePokBackGround.InfoColor;
+                        TextColorAnswer3 = Constantes.WhiteHexa;
+                    }
+                    else
+                    {
+                        BackgroundColorAnswer3 = Constantes.WhiteHexa;
+                        TextColorAnswer3 = Constantes.BlackHexa;
+                    }
+                    break;
+                case 4:
+                    if (answer.IsSelected)
+                    {
+                        BackgroundColorAnswer4 = TypePokBackGround.InfoColor;
+                        TextColorAnswer4 = Constantes.WhiteHexa;
+                    }
+                    else
+                    {
+                        BackgroundColorAnswer4 = Constantes.WhiteHexa;
+                        TextColorAnswer4 = Constantes.BlackHexa;
+                    }
+                    break;
+                case 5:
+                    if (answer.IsSelected)
+                    {
+                        BackgroundColorAnswer5 = TypePokBackGround.InfoColor;
+                        TextColorAnswer5 = Constantes.WhiteHexa;
+                    }
+                    else
+                    {
+                        BackgroundColorAnswer5 = Constantes.WhiteHexa;
+                        TextColorAnswer5 = Constantes.BlackHexa;
+                    }
+                    break;
+                case 6:
+                    if (answer.IsSelected)
+                    {
+                        BackgroundColorAnswer6 = TypePokBackGround.InfoColor;
+                        TextColorAnswer6 = Constantes.WhiteHexa;
+                    }
+                    else
+                    {
+                        BackgroundColorAnswer6 = Constantes.WhiteHexa;
+                        TextColorAnswer6 = Constantes.BlackHexa;
+                    }
+                    break;
+                case 7:
+                    if (answer.IsSelected)
+                    {
+                        BackgroundColorAnswer7 = TypePokBackGround.InfoColor;
+                        TextColorAnswer7 = Constantes.WhiteHexa;
+                    }
+                    else
+                    {
+                        BackgroundColorAnswer7 = Constantes.WhiteHexa;
+                        TextColorAnswer7 = Constantes.BlackHexa;
+                    }
+                    break;
+                case 8:
+                    if (answer.IsSelected)
+                    {
+                        BackgroundColorAnswer8 = TypePokBackGround.InfoColor;
+                        TextColorAnswer8 = Constantes.WhiteHexa;
+                    }
+                    else
+                    {
+                        BackgroundColorAnswer8 = Constantes.WhiteHexa;
+                        TextColorAnswer8 = Constantes.BlackHexa;
+                    }
+                    break;
+                case 9:
+                    if (answer.IsSelected)
+                    {
+                        BackgroundColorAnswer9 = TypePokBackGround.InfoColor;
+                        TextColorAnswer9 = Constantes.WhiteHexa;
+                    }
+                    else
+                    {
+                        BackgroundColorAnswer9 = Constantes.WhiteHexa;
+                        TextColorAnswer9 = Constantes.BlackHexa;
+                    }
+                    break;
+                case 10:
+                    if (answer.IsSelected)
+                    {
+                        BackgroundColorAnswer10 = TypePokBackGround.InfoColor;
+                        TextColorAnswer10 = Constantes.WhiteHexa;
+                    }
+                    else
+                    {
+                        BackgroundColorAnswer10 = Constantes.WhiteHexa;
+                        TextColorAnswer10 = Constantes.BlackHexa;
+                    }
+                    break;
+                case 11:
+                    if (answer.IsSelected)
+                    {
+                        BackgroundColorAnswer11 = TypePokBackGround.InfoColor;
+                        TextColorAnswer11 = Constantes.WhiteHexa;
+                    }
+                    else
+                    {
+                        BackgroundColorAnswer11 = Constantes.WhiteHexa;
+                        TextColorAnswer11 = Constantes.BlackHexa;
+                    }
+                    break;
+                case 12:
+                    if (answer.IsSelected)
+                    {
+                        BackgroundColorAnswer12 = TypePokBackGround.InfoColor;
+                        TextColorAnswer12 = Constantes.WhiteHexa;
+                    }
+                    else
+                    {
+                        BackgroundColorAnswer12 = Constantes.WhiteHexa;
+                        TextColorAnswer12 = Constantes.BlackHexa;
+                    }
+                    break;
+                case 13:
+                    if (answer.IsSelected)
+                    {
+                        BackgroundColorAnswer13 = TypePokBackGround.InfoColor;
+                        TextColorAnswer13 = Constantes.WhiteHexa;
+                    }
+                    else
+                    {
+                        BackgroundColorAnswer13 = Constantes.WhiteHexa;
+                        TextColorAnswer13 = Constantes.BlackHexa;
+                    }
+                    break;
+                case 14:
+                    if (answer.IsSelected)
+                    {
+                        BackgroundColorAnswer14 = TypePokBackGround.InfoColor;
+                        TextColorAnswer14 = Constantes.WhiteHexa;
+                    }
+                    else
+                    {
+                        BackgroundColorAnswer14 = Constantes.WhiteHexa;
+                        TextColorAnswer14 = Constantes.BlackHexa;
+                    }
+                    break;
+                case 15:
+                    if (answer.IsSelected)
+                    {
+                        BackgroundColorAnswer15 = TypePokBackGround.InfoColor;
+                        TextColorAnswer15 = Constantes.WhiteHexa;
+                    }
+                    else
+                    {
+                        BackgroundColorAnswer15 = Constantes.WhiteHexa;
+                        TextColorAnswer15 = Constantes.BlackHexa;
+                    }
+                    break;
+                case 16:
+                    if (answer.IsSelected)
+                    {
+                        BackgroundColorAnswer16 = TypePokBackGround.InfoColor;
+                        TextColorAnswer16 = Constantes.WhiteHexa;
+                    }
+                    else
+                    {
+                        BackgroundColorAnswer16 = Constantes.WhiteHexa;
+                        TextColorAnswer16 = Constantes.BlackHexa;
+                    }
+                    break;
+                case 17:
+                    if (answer.IsSelected)
+                    {
+                        BackgroundColorAnswer17 = TypePokBackGround.InfoColor;
+                        TextColorAnswer17 = Constantes.WhiteHexa;
+                    }
+                    else
+                    {
+                        BackgroundColorAnswer17 = Constantes.WhiteHexa;
+                        TextColorAnswer17 = Constantes.BlackHexa;
+                    }
+                    break;
+                case 18:
+                    if (answer.IsSelected)
+                    {
+                        BackgroundColorAnswer18 = TypePokBackGround.InfoColor;
+                        TextColorAnswer18 = Constantes.WhiteHexa;
+                    }
+                    else
+                    {
+                        BackgroundColorAnswer18 = Constantes.WhiteHexa;
+                        TextColorAnswer18 = Constantes.BlackHexa;
+                    }
+                    break;
+                default:
+                    break;
+            }
+            update = true;
+            return await Task.FromResult(update);
         }
         #endregion
 
         #region Command
-        public IMvxAsyncCommand NavigationValidationCommandAsync => new MvxAsyncCommand(NavigationValidationAsync);
-
         public IMvxAsyncCommand NavigationNextCommandAsync => new MvxAsyncCommand(NavigationNextAsync);
-
-        private async Task NavigationValidationAsync()
-        {
-            await _navigation.Close(this);
-        }
-
+        public IMvxAsyncCommand<Answer> SelectedAnswerCommandAsync => new MvxAsyncCommand<Answer>(SelectedAnswerAsync);
         private async Task NavigationNextAsync()
         {
             List<Question> questions = await _questionService.GetAllByQuestionsIDAsync(QuestionAnswers.Quizz.QuestionsID);
             Question question = questions.Find(m => m.Order.Equals(Order + 1));
-            QuestionType questionType = await _questionTypeService.GetByIdAsync(question.QuestionTypeID);
-            List<Answer> answers = new List<Answer>();
-            answers.AddRange(await _answerService.GetAllByAnswersIDAsync(question.AnswersID));
-
-            QuestionAnswers questionAnswers = new QuestionAnswers()
+            if (question != null)
             {
-                Quizz = QuestionAnswers.Quizz,
-                Question = question,
-                Answers = answers
-            };
+                QuestionType questionType = await _questionTypeService.GetByIdAsync(question.QuestionTypeID);
+                List<Answer> answers = new List<Answer>();
+                answers.AddRange(await _answerService.GetAllByAnswersIDAsync(question.AnswersID));
 
+                QuestionAnswers questionAnswers = new QuestionAnswers()
+                {
+                    Quizz = QuestionAnswers.Quizz,
+                    Question = question,
+                    Answers = answers
+                };
+
+                await Utils.RedirectQuizz(_navigation, questionAnswers, question, questionType);
+            }
+            else
+                await Utils.RedirectQuizz(_navigation, QuestionAnswers);
+
+            await _answerService.UpdateAsync(SelectedAnswer);
             await _navigation.Close(this);
-            await _navigation.Navigate<TypPokQuizzViewModel, QuestionAnswers>(questionAnswers);
+        }
+
+        private async Task SelectedAnswerAsync(Answer answer)
+        {
+            if (SelectedAnswer != null)
+                await ResetData();
+
+            //Update Data
+            answer.IsSelected = !answer.IsSelected;
+            SelectedAnswer = answer;
+
+            //Update UI
+            await UpdateUIByOrder(answer);
         }
         #endregion
 
@@ -158,6 +459,7 @@ namespace QuizzPokedex.ViewModels
         public MvxNotifyTask LoadQuestionAnswersTask { get; private set; }
         #endregion
 
+        #region Data
         private QuestionAnswers _questionAnswers;
 
         public QuestionAnswers QuestionAnswers
@@ -174,20 +476,20 @@ namespace QuizzPokedex.ViewModels
             set { SetProperty(ref _order, value); }
         }
 
-        private Pokemon _pokemon;
-
-        public Pokemon Pokemon
-        {
-            get { return _pokemon; }
-            set { SetProperty(ref _pokemon, value); }
-        }
-
         private TypePok _typePok;
 
         public TypePok TypePok
         {
             get { return _typePok; }
             set { SetProperty(ref _typePok, value); }
+        }
+
+        private TypePok _typePokBackGround;
+
+        public TypePok TypePokBackGround
+        {
+            get { return _typePokBackGround; }
+            set { SetProperty(ref _typePokBackGround, value); }
         }
 
         private Question _question;
@@ -205,6 +507,24 @@ namespace QuizzPokedex.ViewModels
             get { return _questionType; }
             set { SetProperty(ref _questionType, value); }
         }
+
+        private Answer _selectedAnswer;
+
+        public Answer SelectedAnswer
+        {
+            get { return _selectedAnswer; }
+            set { SetProperty(ref _selectedAnswer, value); }
+        }
+
+        private byte[] _typeByte;
+
+        public byte[] TypeByte
+        {
+            get { return _typeByte; }
+            set { SetProperty(ref _typeByte, value); }
+        }
+
+        #endregion
 
         #region Difficulty
         private bool _easyQ = false;
@@ -528,7 +848,7 @@ namespace QuizzPokedex.ViewModels
             set { SetProperty(ref _textColorAnswer7, value); }
         }
 
-        private bool _isEnabledAnswer7;
+        private bool _isEnabledAnswer7 = true;
 
         public bool IsEnabledAnswer7
         {
@@ -536,7 +856,7 @@ namespace QuizzPokedex.ViewModels
             set { SetProperty(ref _isEnabledAnswer7, value); }
         }
 
-        private bool _isVisibleAnswer7;
+        private bool _isVisibleAnswer7 = true;
 
         public bool IsVisibleAnswer7
         {
@@ -570,7 +890,7 @@ namespace QuizzPokedex.ViewModels
             set { SetProperty(ref _textColorAnswer8, value); }
         }
 
-        private bool _isEnabledAnswer8;
+        private bool _isEnabledAnswer8 = true;
 
         public bool IsEnabledAnswer8
         {
@@ -578,7 +898,7 @@ namespace QuizzPokedex.ViewModels
             set { SetProperty(ref _isEnabledAnswer8, value); }
         }
 
-        private bool _isVisibleAnswer8;
+        private bool _isVisibleAnswer8 = true;
 
         public bool IsVisibleAnswer8
         {

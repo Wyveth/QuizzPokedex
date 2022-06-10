@@ -58,15 +58,15 @@ namespace QuizzPokedex.ViewModels
         #region Private Methods
         private async Task BackGroundAsync()
         {
-            ImgPokedexUp = await Utils.getByteAssetImage(Constantes.Pokedex_Up);
-            ImgPokedexDown = await Utils.getByteAssetImage(Constantes.Pokedex_Down);
+            ImgPokedexUp = await Utils.GetByteAssetImage(Constantes.Pokedex_Up);
+            ImgPokedexDown = await Utils.GetByteAssetImage(Constantes.Pokedex_Down);
         }
 
         private async Task LoadQuizzAsync()
         {
-            ImgEasy = await Utils.getByteAssetImage(Constantes.Easy_Color);
-            ImgNormal = await Utils.getByteAssetImage(Constantes.Normal_White);
-            ImgHard = await Utils.getByteAssetImage(Constantes.Hard_White);
+            ImgEasy = await Utils.GetByteAssetImage(Constantes.Easy_Color);
+            ImgNormal = await Utils.GetByteAssetImage(Constantes.Normal_White);
+            ImgHard = await Utils.GetByteAssetImage(Constantes.Hard_White);
         }
 
         private async Task InDevelopmentAsync()
@@ -110,12 +110,12 @@ namespace QuizzPokedex.ViewModels
             if (Easy)
             {
                 Easy = !Easy;
-                ImgEasy = await Utils.getByteAssetImage(Constantes.Easy_White);
+                ImgEasy = await Utils.GetByteAssetImage(Constantes.Easy_White);
             }
             else
             {
                 Easy = !Easy;
-                ImgEasy = await Utils.getByteAssetImage(Constantes.Easy_Color);
+                ImgEasy = await Utils.GetByteAssetImage(Constantes.Easy_Color);
             }
         }
 
@@ -124,12 +124,12 @@ namespace QuizzPokedex.ViewModels
             if (Normal)
             {
                 Normal = !Normal;
-                ImgNormal = await Utils.getByteAssetImage(Constantes.Normal_White);
+                ImgNormal = await Utils.GetByteAssetImage(Constantes.Normal_White);
             }
             else
             {
                 Normal = !Normal;
-                ImgNormal = await Utils.getByteAssetImage(Constantes.Normal_Color);
+                ImgNormal = await Utils.GetByteAssetImage(Constantes.Normal_Color);
             }
         }
 
@@ -138,12 +138,12 @@ namespace QuizzPokedex.ViewModels
             if (Hard)
             {
                 Hard = !Hard;
-                ImgHard = await Utils.getByteAssetImage(Constantes.Hard_White);
+                ImgHard = await Utils.GetByteAssetImage(Constantes.Hard_White);
             }
             else
             {
                 Hard = !Hard;
-                ImgHard = await Utils.getByteAssetImage(Constantes.Hard_Color);
+                ImgHard = await Utils.GetByteAssetImage(Constantes.Hard_Color);
             }
         }
 
@@ -162,8 +162,8 @@ namespace QuizzPokedex.ViewModels
                 Question = question,
                 Answers = answers
             };
-           
-            await _navigation.Navigate<TypPokQuizzViewModel, QuestionAnswers>(questionAnswers);
+
+            await Utils.RedirectQuizz(_navigation, questionAnswers, question, questionType);
         }
 
         #region Filter By Gen

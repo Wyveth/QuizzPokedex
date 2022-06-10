@@ -50,8 +50,8 @@ namespace QuizzPokedex.ViewModels
         #region Private Methods
         private async Task BackGroundAsync()
         {
-            ImgPokedexUp = await Utils.getByteAssetImage(Constantes.Pokedex_Up);
-            ImgPokedexDown = await Utils.getByteAssetImage(Constantes.Pokedex_Down);
+            ImgPokedexUp = await Utils.GetByteAssetImage(Constantes.Pokedex_Up);
+            ImgPokedexDown = await Utils.GetByteAssetImage(Constantes.Pokedex_Down);
         }
         private async Task ProgressBarAsync()
         {

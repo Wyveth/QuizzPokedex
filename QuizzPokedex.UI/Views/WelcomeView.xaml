@@ -13,7 +13,7 @@
     xmlns:views="clr-namespace:MvvmCross.Forms.Views;assembly=MvvmCross.Forms"
     xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
     x:TypeArguments="viewmodel:WelcomeViewModel"
-    BackgroundColor="#White"
+    BackgroundColor="White"
     NavigationPage.HasNavigationBar="False">
     <views:MvxContentPage.Resources>
         <ResourceDictionary>

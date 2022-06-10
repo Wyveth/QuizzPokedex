@@ -98,6 +98,16 @@ namespace QuizzPokedex.Services
         }
         #endregion
 
+        public async Task<TypePok> GetTypeRandom()
+        {
+            List<TypePok> result = await GetAllAsync();
+
+            Random random = new Random();
+            int numberRandom = random.Next(result.Count);
+
+            return await Task.FromResult(result[numberRandom]);
+        }
+
         public async Task<TypePok> GetTypeRandom(List<TypePok> alreadySelected)
         {
             List<TypePok> result = await GetAllAsync();

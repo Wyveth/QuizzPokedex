@@ -118,6 +118,7 @@ namespace QuizzPokedex.Resources
 
         #region Code Type Question
         public const string QTypPok = "Pokemon";
+        public const string QTypTypPok = "TypePokemon";
         public const string QTypTyp = "Type";
         #endregion
     }
