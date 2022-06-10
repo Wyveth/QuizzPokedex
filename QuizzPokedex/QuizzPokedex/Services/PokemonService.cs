@@ -427,23 +427,23 @@ namespace QuizzPokedex.Services
             List<Pokemon> resultFilterGen = new List<Pokemon>();
 
             if (gen1)
-                resultFilterGen.AddRange(result.FindAll(m => m.Generation.Equals(1)));
+                resultFilterGen.AddRange(result.FindAll(m => m.Generation.Equals(1) && m.TypeEvolution.Equals(Constantes.NormalEvolution)));
             if (gen2)
-                resultFilterGen.AddRange(result.FindAll(m => m.Generation.Equals(2)));
+                resultFilterGen.AddRange(result.FindAll(m => m.Generation.Equals(2) && m.TypeEvolution.Equals(Constantes.NormalEvolution)));
             if (gen3)
-                resultFilterGen.AddRange(result.FindAll(m => m.Generation.Equals(3)));
+                resultFilterGen.AddRange(result.FindAll(m => m.Generation.Equals(3) && m.TypeEvolution.Equals(Constantes.NormalEvolution)));
             if (gen4)
-                resultFilterGen.AddRange(result.FindAll(m => m.Generation.Equals(4)));
+                resultFilterGen.AddRange(result.FindAll(m => m.Generation.Equals(4) && m.TypeEvolution.Equals(Constantes.NormalEvolution)));
             if (gen5)
-                resultFilterGen.AddRange(result.FindAll(m => m.Generation.Equals(5)));
+                resultFilterGen.AddRange(result.FindAll(m => m.Generation.Equals(5) && m.TypeEvolution.Equals(Constantes.NormalEvolution)));
             if (gen6)
-                resultFilterGen.AddRange(result.FindAll(m => m.Generation.Equals(6)));
+                resultFilterGen.AddRange(result.FindAll(m => m.Generation.Equals(6) || m.TypeEvolution.Equals(Constantes.MegaEvolution)).Distinct());
             if (gen7)
-                resultFilterGen.AddRange(result.FindAll(m => m.Generation.Equals(7)));
+                resultFilterGen.AddRange(result.FindAll(m => m.Generation.Equals(7) || m.TypeEvolution.Equals(Constantes.Alola)).Distinct());
             if (gen8)
-                resultFilterGen.AddRange(result.FindAll(m => m.Generation.Equals(8)));
+                resultFilterGen.AddRange(result.FindAll(m => m.Generation.Equals(8) || m.TypeEvolution.Equals(Constantes.Galar) || m.TypeEvolution.Equals(Constantes.GigaEvolution)).Distinct());
             if (genArceus)
-                resultFilterGen.AddRange(result.FindAll(m => m.Generation.Equals(0)));
+                resultFilterGen.AddRange(result.FindAll(m => m.Generation.Equals(0) || m.TypeEvolution.Equals(Constantes.Hisui)).Distinct());
 
             if (resultFilterGen.Count.Equals(0))
                 resultFilterGen = result;

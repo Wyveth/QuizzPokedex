@@ -6,6 +6,7 @@
 
 	<ItemGroup>
 		<None Remove="FormsApp.xaml" />
+		<None Remove="Resources\107408-pokemon-loading.json" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -52,6 +53,7 @@
 
 	<ItemGroup>
 		<EmbeddedResource Include="Resources\104865-loading.json" />
+		<EmbeddedResource Include="Resources\107408-pokemon-loading.json" />
 		<EmbeddedResource Include="Resources\96855-pokeball-loading-animation.json" />
 	</ItemGroup>
 	

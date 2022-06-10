@@ -71,7 +71,7 @@ namespace QuizzPokedex.Services
             Quizz quizz = new Quizz()
             {
                 QuestionsID = await _questionService.GenerateQuestions(gen1, gen2, gen3, gen4, gen5, gen6, gen7, gen8, genArceus, easy, normal, hard),
-                Terminate = false,
+                Done = false,
                 ProfileID = profileId
             };
 

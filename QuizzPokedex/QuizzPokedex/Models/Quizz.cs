@@ -14,7 +14,7 @@ namespace QuizzPokedex.Models
         public string QuestionsID { get; set; }
 
         //Savoir si le questionnaire est terminé
-        public bool Terminate { get; set; }
+        public bool Done { get; set; }
 
         //Identifiant du Profil
         public int ProfileID { get; set; }

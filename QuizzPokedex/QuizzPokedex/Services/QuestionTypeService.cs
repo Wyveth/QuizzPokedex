@@ -154,9 +154,6 @@ namespace QuizzPokedex.Services
             List<QuestionType> result = await GetAllAsync();
             List<QuestionType> resultFilterDifficulty = await GetQuestionTypesWithFilterDifficulty(result, easy, normal, hard);
 
-            //Random random = new Random();
-            //int numberRandom = random.Next(resultFilterDifficulty.Count);
-            //int resultRandom = resultFilterDifficulty[numberRandom].Id;
             return await Task.FromResult(await GetNumberRandomWithPercentage(resultFilterDifficulty));
         }
         #endregion

@@ -80,9 +80,8 @@ namespace QuizzPokedex.Services
         #region Generate Quizz
         public async Task<string> GenerateQuestions(bool gen1, bool gen2, bool gen3, bool gen4, bool gen5, bool gen6, bool gen7, bool gen8, bool genArceus, bool easy, bool normal, bool hard)
         {
-            int nbQuestionMax = 10;
+            int nbQuestionMax = await GetNbQuestionByDifficulty(easy, normal, hard);
 
-            string result = string.Empty;
             string AnswersID = string.Empty;
             int DataObjectID = 0;
             List<Question> questions = new List<Question>();
@@ -111,7 +110,8 @@ namespace QuizzPokedex.Services
                     Order = nbQuestion + 1,
                     AnswersID = AnswersID,
                     DataObjectID = DataObjectID,
-                    QuestionTypeID = questionType.Id
+                    QuestionTypeID = questionType.Id,
+                    Done = false
                 };
 
                 await CreateAsync(question);
@@ -124,6 +124,18 @@ namespace QuizzPokedex.Services
         #endregion
 
         #region Private Methods
+        private async Task<int> GetNbQuestionByDifficulty(bool easy, bool normal, bool hard)
+        {
+            int nbQuestionMax = 0;
+            if (easy)
+                nbQuestionMax = 10;
+            else if (normal)
+                nbQuestionMax = 15;
+            else if (hard)
+                nbQuestionMax = 20;
+
+            return await Task.FromResult(nbQuestionMax);
+        }
         private async Task<string> GetQuestionsID(List<Question> questions)
         {
             string result = string.Empty;

@@ -77,41 +77,55 @@ namespace QuizzPokedex.ViewModels
             int typeID = int.Parse(Pokemon.TypesID.Split(',')[0]);
             TypePok = await _typePokService.GetByIdAsync(typeID);
 
-            await LoadDataDifficulty();
+            Difficulty difficulty = await _difficultyService.GetByIdAsync(QuestionType.DifficultyID);
+            await LoadDataDifficulty(difficulty);
+            await LoadUIDifficulty(difficulty);
         }
 
-        private async Task LoadDataDifficulty()
+        private async Task LoadDataDifficulty(Difficulty difficulty)
         {
-            Difficulty difficulty = await _difficultyService.GetByIdAsync(QuestionType.DifficultyID);
-            if (difficulty.Libelle.Equals(Constantes.EasyTQ) 
-                || difficulty.Libelle.Equals(Constantes.NormalTQ) 
-                || difficulty.Libelle.Equals(Constantes.HardTQ))
+            await Task.Run(() =>
             {
-                EasyQ = true;
-                Answer1 = QuestionAnswers.Answers.Find(m => m.Order.Equals(1));
-                Answer2 = QuestionAnswers.Answers.Find(m => m.Order.Equals(2));
-                Answer3 = QuestionAnswers.Answers.Find(m => m.Order.Equals(3));
-                Answer4 = QuestionAnswers.Answers.Find(m => m.Order.Equals(4));
-            }
+                if (difficulty.Libelle.Equals(Constantes.EasyTQ)
+                || difficulty.Libelle.Equals(Constantes.NormalTQ)
+                || difficulty.Libelle.Equals(Constantes.HardTQ))
+                {
+                    Answer1 = QuestionAnswers.Answers.Find(m => m.Order.Equals(1));
+                    Answer2 = QuestionAnswers.Answers.Find(m => m.Order.Equals(2));
+                    Answer3 = QuestionAnswers.Answers.Find(m => m.Order.Equals(3));
+                    Answer4 = QuestionAnswers.Answers.Find(m => m.Order.Equals(4));
+                }
 
-            if (difficulty.Libelle.Equals(Constantes.NormalTQ) 
-                || difficulty.Libelle.Equals(Constantes.HardTQ))
+                if (difficulty.Libelle.Equals(Constantes.NormalTQ)
+                    || difficulty.Libelle.Equals(Constantes.HardTQ))
+                {
+                    Answer5 = QuestionAnswers.Answers.Find(m => m.Order.Equals(5));
+                    Answer6 = QuestionAnswers.Answers.Find(m => m.Order.Equals(6));
+                    Answer7 = QuestionAnswers.Answers.Find(m => m.Order.Equals(7));
+                    Answer8 = QuestionAnswers.Answers.Find(m => m.Order.Equals(8));
+                }
+
+                if (difficulty.Libelle.Equals(Constantes.HardTQ))
+                {
+                    Answer9 = QuestionAnswers.Answers.Find(m => m.Order.Equals(9));
+                    Answer10 = QuestionAnswers.Answers.Find(m => m.Order.Equals(10));
+                    Answer11 = QuestionAnswers.Answers.Find(m => m.Order.Equals(11));
+                    Answer12 = QuestionAnswers.Answers.Find(m => m.Order.Equals(12));
+                }
+            });
+        }
+
+        private async Task LoadUIDifficulty(Difficulty difficulty)
+        {
+            await Task.Run(() =>
             {
-                NormalQ = true;
-                Answer5 = QuestionAnswers.Answers.Find(m => m.Order.Equals(5));
-                Answer6 = QuestionAnswers.Answers.Find(m => m.Order.Equals(6));
-                Answer7 = QuestionAnswers.Answers.Find(m => m.Order.Equals(7));
-                Answer8 = QuestionAnswers.Answers.Find(m => m.Order.Equals(8));
-            }
-            
-            if (difficulty.Libelle.Equals(Constantes.HardTQ))
-            {
-                HardQ = true;
-                Answer9 = QuestionAnswers.Answers.Find(m => m.Order.Equals(9));
-                Answer10 = QuestionAnswers.Answers.Find(m => m.Order.Equals(10));
-                Answer11 = QuestionAnswers.Answers.Find(m => m.Order.Equals(11));
-                Answer12 = QuestionAnswers.Answers.Find(m => m.Order.Equals(12));
-            }
+                if (difficulty.Libelle.Equals(Constantes.EasyTQ))
+                    EasyQ = true;
+                else if (difficulty.Libelle.Equals(Constantes.NormalTQ))
+                    NormalQ = true;
+                else if (difficulty.Libelle.Equals(Constantes.HardTQ))
+                    HardQ = true;
+            });
         }
 
         private async Task ResetData()
@@ -372,8 +386,14 @@ namespace QuizzPokedex.ViewModels
                 await Utils.RedirectQuizz(_navigation, questionAnswers, question, questionType);
             }
             else
+            {
+                QuestionAnswers.Quizz.Done = true;
+                await _quizzService.UpdateAsync(QuestionAnswers.Quizz);
                 await Utils.RedirectQuizz(_navigation, QuestionAnswers);
+            }
 
+            QuestionAnswers.Question.Done = true;
+            await _questionService.UpdateAsync(Question);
             await _answerService.UpdateAsync(SelectedAnswer);
             await _navigation.Close(this);
         }

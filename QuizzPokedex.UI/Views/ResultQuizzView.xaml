@@ -27,6 +27,24 @@
             <StackLayout AbsoluteLayout.LayoutBounds="0.5,1,1,0.2" AbsoluteLayout.LayoutFlags="All">
                 <Image Source="{Binding ImgPokedexDown, Converter={StaticResource ByteToImageSourceConverter}}" />
             </StackLayout>
+            <StackLayout AbsoluteLayout.LayoutBounds="0.5,0.15,0.34,0.2" AbsoluteLayout.LayoutFlags="All">
+                <pv:PancakeView
+                    Margin="0,2,0,0"
+                    BackgroundColor="transparent"
+                    CornerRadius="100,100,0,0">
+                    <Label
+                        FontAttributes="Bold,Italic"
+                        FontSize="30"
+                        HeightRequest="74"
+                        HorizontalOptions="CenterAndExpand"
+                        HorizontalTextAlignment="Center"
+                        Text="Résultat"
+                        TextColor="#BB1A2B"
+                        TextDecorations="Underline"
+                        VerticalTextAlignment="end"
+                        WidthRequest="142" />
+                </pv:PancakeView>
+            </StackLayout>
             <StackLayout AbsoluteLayout.LayoutBounds="0,0.54,1,0.75" AbsoluteLayout.LayoutFlags="All">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -47,7 +65,12 @@
                 </Grid>
             </StackLayout>
             <StackLayout AbsoluteLayout.LayoutBounds="0.5,1,0.34,0.2" AbsoluteLayout.LayoutFlags="All">
-                <pv:PancakeView BackgroundColor="transparent" CornerRadius="0,0,100,100">
+                <pv:PancakeView
+                    Margin="0,2,0,0"
+                    BackgroundColor="transparent"
+                    Border="{pv:BorderMarkup Color=#C91B2E,
+                                             Thickness=2}"
+                    CornerRadius="0,0,100,100">
                     <Button
                         Margin="0,2,0,0"
                         Padding="0,10,0,20"
@@ -55,13 +78,14 @@
                         xct:ShadowEffect.OffsetY="10"
                         xct:ShadowEffect.Opacity="0.5"
                         xct:ShadowEffect.Radius="200"
-                        BackgroundColor="{Binding TypePokBackGround.InfoColor}"
-                        Command="{Binding NavigationNextCommandAsync}"
+                        BackgroundColor="White"
+                        Command="{Binding NavigationValidationAsync}"
+                        FontAttributes="Bold,Italic"
                         FontFamily="Montserrat-SemiBold"
                         FontSize="20"
                         HeightRequest="80"
-                        Text="Suivant"
-                        TextColor="White"
+                        Text="Fermer"
+                        TextColor="#C91B2E"
                         TextTransform="None"
                         WidthRequest="142" />
                 </pv:PancakeView>

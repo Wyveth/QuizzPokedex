@@ -64,6 +64,7 @@ namespace QuizzPokedex.ViewModels
 
         private async Task LoadQuizzAsync()
         {
+            ImgFilter = await Utils.GetByteAssetImage(Constantes.Filter);
             ImgEasy = await Utils.GetByteAssetImage(Constantes.Easy_Color);
             ImgNormal = await Utils.GetByteAssetImage(Constantes.Normal_White);
             ImgHard = await Utils.GetByteAssetImage(Constantes.Hard_White);
@@ -86,7 +87,7 @@ namespace QuizzPokedex.ViewModels
 
         public IMvxAsyncCommand HardQuizzCommandAsync => new MvxAsyncCommand(HardQuizzAsync);
 
-        public IMvxAsyncCommand TestCommandAsync => new MvxAsyncCommand(TestAsync);
+        public IMvxAsyncCommand GenerateQuizzCommandAsync => new MvxAsyncCommand(GenerateQuizzAsync);
 
         #region Command Gen Filter
         public IMvxAsyncCommand FilterByGen1CommandAsync => new MvxAsyncCommand(FilterByGen1Async);
@@ -147,8 +148,10 @@ namespace QuizzPokedex.ViewModels
             }
         }
 
-        private async Task TestAsync()
+        private async Task GenerateQuizzAsync()
         {
+            await UpdateUIGenerateAsync();
+
             Quizz quizz = await _quizzService.GenerateQuizz(1, FiltreActiveGen1, FiltreActiveGen2, FiltreActiveGen3, FiltreActiveGen4, FiltreActiveGen5, FiltreActiveGen6, FiltreActiveGen7, FiltreActiveGen8, FiltreActiveGenArceus, Easy, Normal, Hard);
 
             List<Question> questions = await _questionService.GetAllByQuestionsIDAsync(quizz.QuestionsID);
@@ -164,6 +167,8 @@ namespace QuizzPokedex.ViewModels
             };
 
             await Utils.RedirectQuizz(_navigation, questionAnswers, question, questionType);
+
+            await UpdateUIGenerateAsync();
         }
 
         #region Filter By Gen
@@ -339,6 +344,16 @@ namespace QuizzPokedex.ViewModels
         }
         #endregion
 
+        private async Task UpdateUIGenerateAsync()
+        {
+            await Task.Run(() =>
+            {
+                IsVisibleBackgroundModalFilter = !IsVisibleBackgroundModalFilter;
+                IsVisibleLoadingQuizz = !IsVisibleLoadingQuizz;
+                IsEnabledGenerate = !IsEnabledGenerate;
+            });
+        }
+
         private async Task BackModalGenFilterAsync()
         {
             await Task.Run(() =>
@@ -449,6 +464,14 @@ namespace QuizzPokedex.ViewModels
         #endregion
 
         #region Visibility Filter
+        private bool _isEnabledGenerate = true;
+
+        public bool IsEnabledGenerate
+        {
+            get { return _isEnabledGenerate; }
+            set { SetProperty(ref _isEnabledGenerate, value); }
+        }
+
         private bool _isVisibleBackgroundModalFilter = false;
 
         public bool IsVisibleBackgroundModalFilter
@@ -463,6 +486,24 @@ namespace QuizzPokedex.ViewModels
         {
             get { return _isVisibleModalFilter; }
             set { SetProperty(ref _isVisibleModalFilter, value); }
+        }
+
+        private bool _isVisibleLoadingQuizz = false;
+
+        public bool IsVisibleLoadingQuizz
+        {
+            get { return _isVisibleLoadingQuizz; }
+            set { SetProperty(ref _isVisibleLoadingQuizz, value); }
+        }
+        #endregion
+
+        #region Filter
+        private byte[] _imgFilter;
+
+        public byte[] ImgFilter
+        {
+            get { return _imgFilter; }
+            set { SetProperty(ref _imgFilter, value); }
         }
         #endregion
 

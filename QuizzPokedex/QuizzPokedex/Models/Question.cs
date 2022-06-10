@@ -21,5 +21,8 @@ namespace QuizzPokedex.Models
 
         //Identifiant Type Question
         public int QuestionTypeID {get;set;}
+
+        //Savoir si la question est terminé
+        public bool Done { get; set; }
     }
 }
