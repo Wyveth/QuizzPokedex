@@ -32,17 +32,22 @@ namespace QuizzPokedex.Services
             return result;
         }
 
-        public async Task<List<Quizz>> GetAllByProfileAsync(string profileId)
+        public async Task<List<Quizz>> GetAllByProfileAsync(int profileId)
         {
-            int id = int.Parse(profileId);
             var result = await _database.Table<Quizz>().ToListAsync();
-            return result.FindAll(m => m.ProfileID.Equals(id));
+            return result.FindAll(m => m.ProfileID.Equals(profileId));
         }
 
         public async Task<Quizz> GetByIdAsync(int id)
         {
             var result = await _database.Table<Quizz>().ToListAsync();
             return result.Find(m => m.Id.Equals(id));
+        }
+
+        public async Task<List<Quizz>> GetUnfinishedQuizzByProfile(int profileId)
+        {
+            var result = await _database.Table<Quizz>().ToListAsync();
+            return result.FindAll(m => m.ProfileID.Equals(profileId) && m.Done.Equals(false));
         }
         #endregion
 
@@ -71,6 +76,9 @@ namespace QuizzPokedex.Services
             Quizz quizz = new Quizz()
             {
                 QuestionsID = await _questionService.GenerateQuestions(gen1, gen2, gen3, gen4, gen5, gen6, gen7, gen8, genArceus, easy, normal, hard),
+                Easy = easy,
+                Normal = normal,
+                Hard = hard,
                 Done = false,
                 ProfileID = profileId
             };

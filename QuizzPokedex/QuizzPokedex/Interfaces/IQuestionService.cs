@@ -10,6 +10,7 @@ namespace QuizzPokedex.Interfaces
     {
         Task<List<Question>> GetAllAsync();
         Task<List<Question>> GetAllByQuestionsIDAsync(string questionsID);
+        Task<int> GetAllByQuestionsIDResumeAsync(string[] questionsID);
         Task<Question> GetByIdAsync(int id);
         Task<int> GetCountAsync();
         Task<int> CreateAsync(Question question);

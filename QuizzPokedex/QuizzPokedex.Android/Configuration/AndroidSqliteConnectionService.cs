@@ -9,7 +9,6 @@ namespace QuizzPokedex.Droid.Configuration
 {
     public class AndroidSqliteConnectionService : ISqliteConnectionService
     {
-        //private const string FileName = "SQlite.QuizzPokedex";
         private const string FileName = "SQlite.QuizzPokedex.db";
         private SQLiteAsyncConnection _connection;
 
@@ -31,6 +30,7 @@ namespace QuizzPokedex.Droid.Configuration
                     embeddedDatabaseStream.CopyTo(fileStreamToWrite);
                     fileStreamToWrite.Close();
                 }
+                //https://1drv.ms/u/s!AuC6m7Y-ssAPh3v0Km9kRzrmnzNA?e=IX6hu4
 
                 _connection = new SQLiteAsyncConnection(databaseFilePath);
             }

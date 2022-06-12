@@ -19,6 +19,7 @@ namespace QuizzPokedex.ViewModels
         private readonly IMvxNavigationService _navigation;
         private readonly IMvxIoCProvider _logger;
         private readonly IQuizzService _quizzService;
+        private readonly IProfileService _profileService;
         private readonly IQuestionService _questionService;
         private readonly IQuestionTypeService _questionTypeService;
         private readonly IAnswerService _answerService;
@@ -26,11 +27,12 @@ namespace QuizzPokedex.ViewModels
         #endregion
 
         #region Constructor
-        public QuizzViewModel(IMvxNavigationService navigation, IMvxIoCProvider logger, IQuizzService quizzService, IPokemonService pokemonService, IQuestionService questionService, IQuestionTypeService questionTypeService, IAnswerService answerService)
+        public QuizzViewModel(IMvxNavigationService navigation, IMvxIoCProvider logger, IQuizzService quizzService, IProfileService profileService, IPokemonService pokemonService, IQuestionService questionService, IQuestionTypeService questionTypeService, IAnswerService answerService)
         {
             _navigation = navigation;
             _logger = logger;
             _quizzService = quizzService;
+            _profileService = profileService;
             _questionService = questionService;
             _questionTypeService = questionTypeService;
             _answerService = answerService;
@@ -42,7 +44,6 @@ namespace QuizzPokedex.ViewModels
         public override void Prepare(Quizz quizz)
         {
             Quizz = quizz;
-
             base.Prepare();
         }
 
@@ -65,9 +66,41 @@ namespace QuizzPokedex.ViewModels
         private async Task LoadQuizzAsync()
         {
             ImgFilter = await Utils.GetByteAssetImage(Constantes.Filter);
+            ImgResume = await Utils.GetByteAssetImage(Constantes.Resume);
             ImgEasy = await Utils.GetByteAssetImage(Constantes.Easy_Color);
             ImgNormal = await Utils.GetByteAssetImage(Constantes.Normal_White);
             ImgHard = await Utils.GetByteAssetImage(Constantes.Hard_White);
+            await UpdateQuizzUnfinished();
+        }
+
+        private async Task UpdateQuizzUnfinished()
+        {
+            Profile profile = await _profileService.GetProfileActivatedAsync();
+            List<Quizz> quizzs = await _quizzService.GetUnfinishedQuizzByProfile(profile.Id);
+
+            List<QuizzDifficulty> quizzDifficulties = new List<QuizzDifficulty>();
+            foreach (Quizz item in quizzs)
+            {
+                QuizzDifficulty quizzDifficulty = new QuizzDifficulty()
+                {
+                    Quizz = item,
+                    ImgEasy = ImgEasy,
+                    ImgNormal = await Utils.GetByteAssetImage(Constantes.Normal_Color),
+                    ImgHard = await Utils.GetByteAssetImage(Constantes.Hard_Color),
+                    ImgResume = ImgResume,
+                    ResumeQuestion = await GetResume(item)
+                };
+                quizzDifficulties.Add(quizzDifficulty);
+            }
+            QuizzUnfinished = quizzDifficulties;
+        }
+
+        private async Task<string> GetResume(Quizz quizz)
+        {
+            string[] questionsID = quizz.QuestionsID.Split(',');
+            int questionsDone = await _questionService.GetAllByQuestionsIDResumeAsync(questionsID);
+
+            return await Task.FromResult(questionsDone.ToString() + "/" + questionsID.Length.ToString());
         }
 
         private async Task InDevelopmentAsync()
@@ -182,6 +215,7 @@ namespace QuizzPokedex.ViewModels
             ProgressGenerate = "Création en cours: " + dif + "/" + nbMaxQuestion;
             while (dif != nbMaxQuestion)
             {
+                await Task.Delay(1000);
                 nbQuestionAfter = await _questionService.GetCountAsync();
                 dif = nbQuestionAfter - nbQuestionBefore;
                 ProgressGenerate = "Création en cours: " + dif + "/" + nbMaxQuestion;
@@ -404,6 +438,13 @@ namespace QuizzPokedex.ViewModels
             set { SetProperty(ref _quizz, value); }
         }
 
+        private List<QuizzDifficulty> _quizzUnfinished;
+        public List<QuizzDifficulty> QuizzUnfinished
+        {
+            get { return _quizzUnfinished; }
+            set { SetProperty(ref _quizzUnfinished, value); }
+        }
+
         private Pokemon _pokemon;
 
         public Pokemon Pokemon
@@ -529,6 +570,14 @@ namespace QuizzPokedex.ViewModels
         {
             get { return _imgFilter; }
             set { SetProperty(ref _imgFilter, value); }
+        }
+
+        private byte[] _imgResume;
+
+        public byte[] ImgResume
+        {
+            get { return _imgResume; }
+            set { SetProperty(ref _imgResume, value); }
         }
         #endregion
 

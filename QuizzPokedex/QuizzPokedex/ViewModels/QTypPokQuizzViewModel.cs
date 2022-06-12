@@ -404,7 +404,7 @@ namespace QuizzPokedex.ViewModels
             }
 
             QuestionAnswers.Question.Done = true;
-            await _questionService.UpdateAsync(Question);
+            await _questionService.UpdateAsync(QuestionAnswers.Question);
             await _answerService.UpdateAsync(SelectedAnswer);
             await _navigation.Close(this);
         }

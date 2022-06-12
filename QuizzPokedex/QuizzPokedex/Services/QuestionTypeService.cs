@@ -66,7 +66,7 @@ namespace QuizzPokedex.Services
             QuestionType questionType = new QuestionType()
             {
                 Code = Constantes.QTypPok,
-                Libelle = "Qui est ce pokémon?",
+                Libelle = "Quel est ce pokémon?",
                 DifficultyID = difficultyEasy.Id,
                 NbAnswers = 4
             };
@@ -94,7 +94,7 @@ namespace QuizzPokedex.Services
             questionType = new QuestionType()
             {
                 Code = Constantes.QTypPok,
-                Libelle = "Qui est ce pokémon?",
+                Libelle = "Quel est ce pokémon?",
                 DifficultyID = difficultyNormal.Id,
                 NbAnswers = 8
             };
@@ -122,7 +122,7 @@ namespace QuizzPokedex.Services
             questionType = new QuestionType()
             {
                 Code = Constantes.QTypPok,
-                Libelle = "Qui est ce pokémon?",
+                Libelle = "Quel est ce pokémon?",
                 DifficultyID = difficultyHard.Id,
                 NbAnswers = 12
             };

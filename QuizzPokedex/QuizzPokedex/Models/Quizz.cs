@@ -13,6 +13,15 @@ namespace QuizzPokedex.Models
         //Identifiant des questions
         public string QuestionsID { get; set; }
 
+        //Si Question Facile
+        public bool Easy { get; set; }
+
+        //Si Question Normal
+        public bool Normal { get; set; }
+
+        //Si Question Hard
+        public bool Hard { get; set; }
+
         //Savoir si le questionnaire est terminé
         public bool Done { get; set; }
 
