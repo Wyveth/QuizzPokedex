@@ -1,6 +1,7 @@
 ﻿using SQLite;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
@@ -104,5 +105,12 @@ namespace QuizzPokedex.Models
 
         //Update Bool
         public bool Updated { get; set; }
+
+        //Favorite Profile
+        [NotMapped]
+        public bool Favorite { get; set; }
+
+        [NotMapped]
+        public byte[] ImgFavorite { get; set; }
     }
 }

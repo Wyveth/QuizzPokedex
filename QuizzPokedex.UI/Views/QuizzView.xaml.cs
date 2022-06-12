@@ -22,5 +22,11 @@ namespace QuizzPokedex.UI.Views
             //ITransformation ImageTransformation = new GrayscaleTransformation();
             //ts.Add(ImageTransformation);
         }
+
+        private void QuizzUnfinishedList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (QuizzUnfinishedList.SelectedItem != null)
+                QuizzUnfinishedList.SelectedItem = null;
+        }
     }
 }

@@ -209,7 +209,13 @@
                         Grid.RowSpan="2"
                         Grid.Column="0"
                         Grid.ColumnSpan="5">
-                        <CollectionView Margin="10" ItemsSource="{Binding QuizzUnfinished}">
+                        <CollectionView
+                            x:Name="QuizzUnfinishedList"
+                            Margin="10"
+                            ItemsSource="{Binding QuizzUnfinished}"
+                            SelectedItem="{Binding SelectedQuizzUnfinished}"
+                            SelectionChanged="QuizzUnfinishedList_SelectionChanged"
+                            SelectionMode="Single">
                             <CollectionView.ItemsLayout>
                                 <GridItemsLayout Orientation="Vertical" Span="4" />
                             </CollectionView.ItemsLayout>
@@ -245,6 +251,7 @@
                                                         <ColumnDefinition Width="*" />
                                                         <ColumnDefinition Width="*" />
                                                     </Grid.ColumnDefinitions>
+
                                                     <StackLayout Grid.Column="0" VerticalOptions="CenterAndExpand">
                                                         <Image
                                                             HeightRequest="20"

@@ -68,7 +68,8 @@ namespace QuizzPokedex.Services
                 Code = Constantes.QTypPok,
                 Libelle = "Quel est ce pokémon?",
                 DifficultyID = difficultyEasy.Id,
-                NbAnswers = 4
+                NbAnswers = 4,
+                NbAnswersPossible = 1
             };
             await CreateAsync(questionType);
 
@@ -77,7 +78,8 @@ namespace QuizzPokedex.Services
                 Code = Constantes.QTypTypPok,
                 Libelle = "Quel est le type principal de ce pokémon?",
                 DifficultyID = difficultyEasy.Id,
-                NbAnswers = 6
+                NbAnswers = 6,
+                NbAnswersPossible = 1
             };
             await CreateAsync(questionType);
 
@@ -86,7 +88,8 @@ namespace QuizzPokedex.Services
                 Code = Constantes.QTypTyp,
                 Libelle = "Quel est-ce type?",
                 DifficultyID = difficultyEasy.Id,
-                NbAnswers = 6
+                NbAnswers = 6,
+                NbAnswersPossible = 1
             };
             await CreateAsync(questionType);
 
@@ -96,7 +99,8 @@ namespace QuizzPokedex.Services
                 Code = Constantes.QTypPok,
                 Libelle = "Quel est ce pokémon?",
                 DifficultyID = difficultyNormal.Id,
-                NbAnswers = 8
+                NbAnswers = 8,
+                NbAnswersPossible = 1
             };
             await CreateAsync(questionType);
 
@@ -105,7 +109,8 @@ namespace QuizzPokedex.Services
                 Code = Constantes.QTypTypPok,
                 Libelle = "Quel est le type principal de ce pokémon?",
                 DifficultyID = difficultyNormal.Id,
-                NbAnswers = 12
+                NbAnswers = 12,
+                NbAnswersPossible = 1
             };
             await CreateAsync(questionType);
 
@@ -114,7 +119,8 @@ namespace QuizzPokedex.Services
                 Code = Constantes.QTypTyp,
                 Libelle = "Quel est-ce type?",
                 DifficultyID = difficultyNormal.Id,
-                NbAnswers = 12
+                NbAnswers = 12,
+                NbAnswersPossible = 1
             };
             await CreateAsync(questionType);
 
@@ -124,7 +130,8 @@ namespace QuizzPokedex.Services
                 Code = Constantes.QTypPok,
                 Libelle = "Quel est ce pokémon?",
                 DifficultyID = difficultyHard.Id,
-                NbAnswers = 12
+                NbAnswers = 12,
+                NbAnswersPossible = 1
             };
             await CreateAsync(questionType);
 
@@ -133,7 +140,8 @@ namespace QuizzPokedex.Services
                 Code = Constantes.QTypTypPok,
                 Libelle = "Quel est le type principal de ce pokémon?",
                 DifficultyID = difficultyHard.Id,
-                NbAnswers = 18
+                NbAnswers = 18,
+                NbAnswersPossible = 1
             };
             await CreateAsync(questionType);
 
@@ -142,7 +150,8 @@ namespace QuizzPokedex.Services
                 Code = Constantes.QTypTyp,
                 Libelle = "Quel est-ce type?",
                 DifficultyID = difficultyHard.Id,
-                NbAnswers = 18
+                NbAnswers = 18,
+                NbAnswersPossible = 1
             };
             await CreateAsync(questionType);
         }

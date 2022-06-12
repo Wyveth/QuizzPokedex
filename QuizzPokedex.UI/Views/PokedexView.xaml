@@ -51,7 +51,15 @@
                                     HeightRequest="65"
                                     Source="{Binding DataImg, Converter={StaticResource ByteToImageSourceConverter}}"
                                     WidthRequest="65" />
-
+                                <Image
+                                    Grid.Row="0"
+                                    Margin="5,5,10,5"
+                                    HeightRequest="15"
+                                    HorizontalOptions="EndAndExpand"
+                                    IsVisible="{Binding Favorite}"
+                                    Source="{Binding ImgFavorite, Converter={StaticResource ByteToImageSourceConverter}}"
+                                    VerticalOptions="StartAndExpand"
+                                    WidthRequest="15" />
                                 <StackLayout Grid.Row="1">
                                     <Label
                                         Grid.Column="1"

@@ -107,6 +107,24 @@ namespace QuizzPokedex.ViewModels
         {
             Pokemon = await _pokemonService.GetByNameAsync(Constantes.Charpenti);
         }
+
+        private async Task ResumeQuizzAsync(QuizzDifficulty quizzDifficulty)
+        {
+            List<Question> questions = await _questionService.GetAllByQuestionsIDAsync(quizzDifficulty.Quizz.QuestionsID);
+            Question question = questions.Find(m => m.Done.Equals(false));
+            QuestionType questionType = await _questionTypeService.GetByIdAsync(question.QuestionTypeID);
+            List<Answer> answers = new List<Answer>();
+            answers.AddRange(await _answerService.GetAllByAnswersIDAsync(question.AnswersID));
+
+            QuestionAnswers questionAnswers = new QuestionAnswers()
+            {
+                Quizz = quizzDifficulty.Quizz,
+                Question = question,
+                Answers = answers
+            };
+
+            await Utils.RedirectQuizz(_navigation, questionAnswers, question, questionType);
+        }
         #endregion
 
         #region Command
@@ -431,6 +449,7 @@ namespace QuizzPokedex.ViewModels
         public MvxNotifyTask InDevelopmentTask { get; private set; }
         #endregion
 
+        #region Data
         private Quizz _quizz;
         public Quizz Quizz
         {
@@ -460,6 +479,20 @@ namespace QuizzPokedex.ViewModels
             get { return _progressGenerate; }
             set { SetProperty(ref _progressGenerate, value); }
         }
+
+        #region Data
+        private QuizzDifficulty _selectedQuizzUnfinished;
+        public QuizzDifficulty SelectedQuizzUnfinished
+        {
+            get { return _selectedQuizzUnfinished; }
+            set
+            {
+                _selectedQuizzUnfinished = value;
+                _ = ResumeQuizzAsync(_selectedQuizzUnfinished);
+            }
+        }
+        #endregion
+        #endregion
 
         #region Image Background
         private byte[] _imgPokedexUp;

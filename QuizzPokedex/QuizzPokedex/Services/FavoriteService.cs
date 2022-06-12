@@ -43,9 +43,7 @@ namespace QuizzPokedex.Services
             List<Pokemon> result = new List<Pokemon>();
 
             foreach (Favorite favorite in favorites)
-            {
                 result.Add(await _pokemonService.GetByIdAsync(favorite.PokemonID));
-            }
 
             List<Pokemon> resultFilter = new List<Pokemon>();
             List<Pokemon> resultFilterGen = new List<Pokemon>();

@@ -21,16 +21,18 @@ namespace QuizzPokedex.Services
 
         private readonly ISqliteConnectionService _connectionService;
         private readonly ITypePokService _typePokService;
+        private readonly IProfileService _profileService;
         private readonly HttpClient _httpClient = new HttpClient { Timeout = TimeSpan.FromSeconds(_downloadImageTimeoutInSeconds) };
 
         private SQLite.SQLiteAsyncConnection _database => _connectionService.GetAsyncConnection();
         #endregion
 
         #region Constructor
-        public PokemonService(ISqliteConnectionService connectionService, ITypePokService typePokService)
+        public PokemonService(ISqliteConnectionService connectionService, ITypePokService typePokService, IProfileService profileService)
         {
             _connectionService = connectionService;
             _typePokService = typePokService;
+            _profileService = profileService;
         }
         #endregion
 
@@ -78,7 +80,21 @@ namespace QuizzPokedex.Services
             else if (string.IsNullOrEmpty(filter) && resultFilterType.Count == 0)
                 resultFilter = result;
 
-            if(!descending)
+            Profile profile = await _profileService.GetProfileActivatedAsync();
+            IEnumerable<Favorite> favorites = await _database.Table<Favorite>().Where(m => m.ProfileID.Equals(profile.Id)).ToListAsync();
+
+            byte[] ImgFavorite = null;
+            if (favorites.Count() > 0)
+                ImgFavorite = await Utils.GetByteAssetImage(Constantes.LoveFull);
+
+            foreach (Favorite favorite in favorites)
+            {
+                Pokemon pokemon = resultFilter.Find(m => m.Id.Equals(favorite.PokemonID));
+                pokemon.Favorite = true;
+                pokemon.ImgFavorite = ImgFavorite;
+            }
+
+            if (!descending)
                 return resultFilter.Distinct()
             .OrderBy(x => int.Parse(x.Number))
             .ThenBy(x => x.Number)
