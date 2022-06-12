@@ -31,6 +31,12 @@ namespace QuizzPokedex.Services
             return result;
         }
 
+        public async Task<int> GetAllCountAsync()
+        {
+            var result = await _database.Table<Difficulty>().ToListAsync();
+            return result.Count;
+        }
+
         public async Task<Difficulty> GetByIdAsync(int id)
         {
             var result = await _database.Table<Difficulty>().ToListAsync();

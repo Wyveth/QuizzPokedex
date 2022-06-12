@@ -41,9 +41,9 @@ namespace QuizzPokedex.CustomStart
             //_connectionService.GetAsyncConnection().DropTableAsync<Favorite>().Wait();
             //_connectionService.GetAsyncConnection().DropTableAsync<Difficulty>().Wait();
             //_connectionService.GetAsyncConnection().DropTableAsync<QuestionType>().Wait();
-            //_connectionService.GetAsyncConnection().DropTableAsync<Answer>().Wait();
-            //_connectionService.GetAsyncConnection().DropTableAsync<Question>().Wait();
-            //_connectionService.GetAsyncConnection().DropTableAsync<Quizz>().Wait();
+            _connectionService.GetAsyncConnection().DropTableAsync<Answer>().Wait();
+            _connectionService.GetAsyncConnection().DropTableAsync<Question>().Wait();
+            _connectionService.GetAsyncConnection().DropTableAsync<Quizz>().Wait();
 
             _connectionService.GetAsyncConnection().CreateTableAsync<TypePok>().Wait();
             _connectionService.GetAsyncConnection().CreateTableAsync<Pokemon>().Wait();
@@ -92,18 +92,16 @@ namespace QuizzPokedex.CustomStart
 
         private async Task PopulateDifficulty()
         {
-            await Task.Run(async () =>
-            {
+            int countD = await _difficultyService.GetAllCountAsync();
+            if (countD.Equals(0))
                 await _difficultyService.Populate();
-            });
         }
 
         private async Task PopulateQuestionType()
         {
-            await Task.Run(async () =>
-            {
+            int countQT = await _questionTypeService.GetAllCountAsync();
+            if (countQT.Equals(0))
                 await _questionTypeService.Populate();
-            });
         }
         #endregion
     }

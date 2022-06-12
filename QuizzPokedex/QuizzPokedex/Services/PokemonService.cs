@@ -63,6 +63,20 @@ namespace QuizzPokedex.Services
         {
             List<Pokemon> result = await _database.Table<Pokemon>().Where(m => m.TypeEvolution.Equals(Constantes.NormalEvolution)).OrderBy(m => m.Number).ToListAsync();
 
+            Profile profile = await _profileService.GetProfileActivatedAsync();
+            IEnumerable<Favorite> favorites = await _database.Table<Favorite>().Where(m => m.ProfileID.Equals(profile.Id)).ToListAsync();
+
+            byte[] ImgFavorite = null;
+            if (favorites.Count() > 0)
+                ImgFavorite = await Utils.GetByteAssetImage(Constantes.LoveFull);
+
+            foreach (Favorite favorite in favorites)
+            {
+                Pokemon pokemon = result.Find(m => m.Id.Equals(favorite.PokemonID));
+                pokemon.Favorite = true;
+                pokemon.ImgFavorite = ImgFavorite;
+            }
+
             List<Pokemon> resultFilter = new List<Pokemon>();
             List<Pokemon> resultFilterGen = new List<Pokemon>();
             List<Pokemon> resultFilterType = new List<Pokemon>();
@@ -79,20 +93,6 @@ namespace QuizzPokedex.Services
                 resultFilter = resultFilterType;
             else if (string.IsNullOrEmpty(filter) && resultFilterType.Count == 0)
                 resultFilter = result;
-
-            Profile profile = await _profileService.GetProfileActivatedAsync();
-            IEnumerable<Favorite> favorites = await _database.Table<Favorite>().Where(m => m.ProfileID.Equals(profile.Id)).ToListAsync();
-
-            byte[] ImgFavorite = null;
-            if (favorites.Count() > 0)
-                ImgFavorite = await Utils.GetByteAssetImage(Constantes.LoveFull);
-
-            foreach (Favorite favorite in favorites)
-            {
-                Pokemon pokemon = resultFilter.Find(m => m.Id.Equals(favorite.PokemonID));
-                pokemon.Favorite = true;
-                pokemon.ImgFavorite = ImgFavorite;
-            }
 
             if (!descending)
                 return resultFilter.Distinct()

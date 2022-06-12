@@ -10,6 +10,7 @@ namespace QuizzPokedex.Interfaces
     {
         Task Populate();
         Task<List<Difficulty>> GetAllAsync();
+        Task<int> GetAllCountAsync();
         Task<Difficulty> GetByIdAsync(int id);
         Task<Difficulty> GetByLibelleAsync(string libelle);
         Task<int> CreateAsync(Difficulty difficulty);

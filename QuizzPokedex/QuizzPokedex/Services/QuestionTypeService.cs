@@ -33,6 +33,12 @@ namespace QuizzPokedex.Services
             return result;
         }
 
+        public async Task<int> GetAllCountAsync()
+        {
+            var result = await _database.Table<QuestionType>().ToListAsync();
+            return result.Count;
+        }
+
         public async Task<QuestionType> GetByIdAsync(int id)
         {
             var result = await _database.Table<QuestionType>().ToListAsync();
