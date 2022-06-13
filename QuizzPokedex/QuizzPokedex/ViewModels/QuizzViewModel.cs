@@ -594,8 +594,6 @@ namespace QuizzPokedex.ViewModels
             get { return _isVisibleModalFilter; }
             set { SetProperty(ref _isVisibleModalFilter, value); }
         }
-
-        
         #endregion
 
         #region Filter

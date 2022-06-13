@@ -173,24 +173,16 @@ namespace QuizzPokedex.Services
 
             string result = string.Empty;
             Dictionary<int, Pokemon> dic = new Dictionary<int, Pokemon>();
-            //foreach(Answer answer in answers)
-            //{
-            //    dic.Add(answer.Order-1, await _pokemonService.GetByIdAsync(answer.IsCorrectID));
-            //}
 
             foreach (var pokemon in pokemons)
             {
-                //Answer answerExist = answers.Find(m => m.IsCorrectID.Equals(pokemon.Id));
-                //if (answerExist == null)
-                //{
-                    while (!dic.ContainsValue(pokemon))
-                    {
-                        int numberRandom = random.Next(questionType.NbAnswers);
+                while (!dic.ContainsValue(pokemon))
+                {
+                    int numberRandom = random.Next(questionType.NbAnswers);
 
-                        if (!dic.ContainsKey(numberRandom))
-                            dic.Add(numberRandom, pokemon);
-                    }
-                //}
+                    if (!dic.ContainsKey(numberRandom))
+                        dic.Add(numberRandom, pokemon);
+                }
             }
 
             foreach (KeyValuePair<int, Pokemon> pair in dic)
@@ -277,16 +269,9 @@ namespace QuizzPokedex.Services
 
             string result = string.Empty;
             Dictionary<int, TypePok> dic = new Dictionary<int, TypePok>();
-            //foreach(Answer answer in answers)
-            //{
-            //    dic.Add(answer.Order-1, await _pokemonService.GetByIdAsync(answer.IsCorrectID));
-            //}
 
             foreach (var type in typePoks)
             {
-                //Answer answerExist = answers.Find(m => m.IsCorrectID.Equals(pokemon.Id));
-                //if (answerExist == null)
-                //{
                 while (!dic.ContainsValue(type))
                 {
                     int numberRandom = random.Next(questionType.NbAnswers);
@@ -294,7 +279,6 @@ namespace QuizzPokedex.Services
                     if (!dic.ContainsKey(numberRandom))
                         dic.Add(numberRandom, type);
                 }
-                //}
             }
 
             foreach (KeyValuePair<int, TypePok> pair in dic)
