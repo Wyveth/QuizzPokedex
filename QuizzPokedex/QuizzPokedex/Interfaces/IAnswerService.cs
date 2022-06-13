@@ -14,7 +14,8 @@ namespace QuizzPokedex.Interfaces
         Task<int> CreateAsync(Answer answer);
         Task<int> DeleteAsync(Answer answer);
         Task<int> UpdateAsync(Answer answer);
-        Task<string> GenerateAnswers(List<Pokemon> pokemonsAnswer);
-        Task<string> GenerateAnswers(List<TypePok> typesAnswer);
+        Task<string> GenerateCorrectAnswers(QuestionType questionType, List<Pokemon> pokemonsAnswer);
+        Task<string> GenerateCorrectAnswers(QuestionType questionType, List<TypePok> typesAnswer);
+        Task<List<Answer>> GenerateAnswers(Quizz quizz, QuestionType questionType, List<Answer> answers);
     }
 }

@@ -113,8 +113,7 @@ namespace QuizzPokedex.ViewModels
             List<Question> questions = await _questionService.GetAllByQuestionsIDAsync(quizzDifficulty.Quizz.QuestionsID);
             Question question = questions.Find(m => m.Done.Equals(false));
             QuestionType questionType = await _questionTypeService.GetByIdAsync(question.QuestionTypeID);
-            List<Answer> answers = new List<Answer>();
-            answers.AddRange(await _answerService.GetAllByAnswersIDAsync(question.AnswersID));
+            List<Answer> answers = await _answerService.GenerateAnswers(quizzDifficulty.Quizz, questionType, await _answerService.GetAllByAnswersIDAsync(question.AnswersID));
 
             QuestionAnswers questionAnswers = new QuestionAnswers()
             {
@@ -203,15 +202,16 @@ namespace QuizzPokedex.ViewModels
         {
             await UpdateUIGenerateAsync();
 
-            Task<Quizz> TaskQuizz = _quizzService.GenerateQuizz(1, FiltreActiveGen1, FiltreActiveGen2, FiltreActiveGen3, FiltreActiveGen4, FiltreActiveGen5, FiltreActiveGen6, FiltreActiveGen7, FiltreActiveGen8, FiltreActiveGenArceus, Easy, Normal, Hard);
+            Profile profile = await _profileService.GetProfileActivatedAsync();
+
+            Task<Quizz> TaskQuizz = _quizzService.GenerateQuizz(profile, FiltreActiveGen1, FiltreActiveGen2, FiltreActiveGen3, FiltreActiveGen4, FiltreActiveGen5, FiltreActiveGen6, FiltreActiveGen7, FiltreActiveGen8, FiltreActiveGenArceus, Easy, Normal, Hard);
             await ProgressCreation();
 
             Quizz quizz = await TaskQuizz;
             List<Question> questions = await _questionService.GetAllByQuestionsIDAsync(quizz.QuestionsID);
             Question question = questions.Find(m => m.Order.Equals(1));
             QuestionType questionType = await _questionTypeService.GetByIdAsync(question.QuestionTypeID);
-            List<Answer> answers = new List<Answer>();
-            answers.AddRange(await _answerService.GetAllByAnswersIDAsync(question.AnswersID));
+            List<Answer> answers = await _answerService.GenerateAnswers(quizz, questionType, await _answerService.GetAllByAnswersIDAsync(question.AnswersID));
 
             QuestionAnswers questionAnswers = new QuestionAnswers() {
                 Quizz = quizz,
@@ -579,6 +579,14 @@ namespace QuizzPokedex.ViewModels
             set { SetProperty(ref _isVisibleBackgroundModalFilter, value); }
         }
 
+        private bool _isVisibleLoadingQuizz = false;
+
+        public bool IsVisibleLoadingQuizz
+        {
+            get { return _isVisibleLoadingQuizz; }
+            set { SetProperty(ref _isVisibleLoadingQuizz, value); }
+        }
+
         private bool _isVisibleModalFilter = false;
 
         public bool IsVisibleModalFilter
@@ -587,13 +595,7 @@ namespace QuizzPokedex.ViewModels
             set { SetProperty(ref _isVisibleModalFilter, value); }
         }
 
-        private bool _isVisibleLoadingQuizz = false;
-
-        public bool IsVisibleLoadingQuizz
-        {
-            get { return _isVisibleLoadingQuizz; }
-            set { SetProperty(ref _isVisibleLoadingQuizz, value); }
-        }
+        
         #endregion
 
         #region Filter

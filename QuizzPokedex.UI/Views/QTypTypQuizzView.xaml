@@ -3,6 +3,7 @@
     x:Class="QuizzPokedex.UI.Views.QTypTypQuizzView"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:animation="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
     xmlns:converters="clr-namespace:QuizzPokedex.UI.Converters"
     xmlns:ef="clr-namespace:AiForms.Effects;assembly=AiForms.Effects"
     xmlns:microcharts="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
@@ -1582,6 +1583,27 @@
                         TextTransform="None"
                         WidthRequest="142" />
                 </pv:PancakeView>
+            </StackLayout>
+            <StackLayout
+                x:Name="BackgroundModalFilter"
+                AbsoluteLayout.LayoutBounds="1,1,1,1"
+                AbsoluteLayout.LayoutFlags="All"
+                BackgroundColor="Black"
+                IsVisible="{Binding IsVisibleBackgroundModalFilter}"
+                Opacity="0.3" />
+            <StackLayout
+                x:Name="LoadingQuizz"
+                AbsoluteLayout.LayoutBounds="0,0,1,0.6"
+                AbsoluteLayout.LayoutFlags="All"
+                BackgroundColor="Transparent"
+                IsVisible="{Binding IsVisibleLoadingQuizz}"
+                Opacity="1">
+                <animation:AnimationView
+                    Animation="Resources.107408-pokemon-loading.json"
+                    AnimationSource="EmbeddedResource"
+                    HeightRequest="250"
+                    RepeatMode="Infinite"
+                    VerticalOptions="EndAndExpand" />
             </StackLayout>
         </AbsoluteLayout>
     </ContentPage.Content>

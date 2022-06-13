@@ -377,6 +377,15 @@ namespace QuizzPokedex.ViewModels
             update = true;
             return await Task.FromResult(update);
         }
+
+        private async Task UpdateUIGenerateAsync()
+        {
+            await Task.Run(() =>
+            {
+                IsVisibleBackgroundModalFilter = !IsVisibleBackgroundModalFilter;
+                IsVisibleLoadingQuizz = !IsVisibleLoadingQuizz;
+            });
+        }
         #endregion
 
         #region Command
@@ -384,13 +393,14 @@ namespace QuizzPokedex.ViewModels
         public IMvxAsyncCommand<Answer> SelectedAnswerCommandAsync => new MvxAsyncCommand<Answer>(SelectedAnswerAsync);
         private async Task NavigationNextAsync()
         {
+            await UpdateUIGenerateAsync();
+
             List<Question> questions = await _questionService.GetAllByQuestionsIDAsync(QuestionAnswers.Quizz.QuestionsID);
             Question question = questions.Find(m => m.Order.Equals(Order + 1));
             if (question != null)
             {
                 QuestionType questionType = await _questionTypeService.GetByIdAsync(question.QuestionTypeID);
-                List<Answer> answers = new List<Answer>();
-                answers.AddRange(await _answerService.GetAllByAnswersIDAsync(question.AnswersID));
+                List<Answer> answers = await _answerService.GenerateAnswers(QuestionAnswers.Quizz, questionType, await _answerService.GetAllByAnswersIDAsync(question.AnswersID));
 
                 QuestionAnswers questionAnswers = new QuestionAnswers()
                 {
@@ -409,9 +419,34 @@ namespace QuizzPokedex.ViewModels
             }
 
             QuestionAnswers.Question.Done = true;
+            if (SelectedAnswer != null)
+            {
+                if (SelectedAnswer.IsCorrect)
+                    await _answerService.UpdateAsync(SelectedAnswer);
+                else
+                    await _answerService.CreateAsync(SelectedAnswer);
+
+                string IDs = "";
+
+                int i = 0;
+                foreach (Answer answer in QuestionAnswers.Answers.FindAll(m => !m.Id.Equals(0)))
+                {
+                    if (i == 0)
+                    {
+                        IDs = answer.Id.ToString();
+                        i++;
+                    }
+                    else
+                    {
+                        IDs += ',' + answer.Id.ToString();
+                    }
+                }
+                QuestionAnswers.Question.AnswersID = IDs;
+            }
             await _questionService.UpdateAsync(QuestionAnswers.Question);
-            await _answerService.UpdateAsync(SelectedAnswer);
             await _navigation.Close(this);
+
+            await UpdateUIGenerateAsync();
         }
 
         private async Task SelectedAnswerAsync(Answer answer)
@@ -541,6 +576,24 @@ namespace QuizzPokedex.ViewModels
         {
             get { return _imgPokedexDown; }
             set { SetProperty(ref _imgPokedexDown, value); }
+        }
+        #endregion
+
+        #region IsVisible
+        private bool _isVisibleBackgroundModalFilter = false;
+
+        public bool IsVisibleBackgroundModalFilter
+        {
+            get { return _isVisibleBackgroundModalFilter; }
+            set { SetProperty(ref _isVisibleBackgroundModalFilter, value); }
+        }
+
+        private bool _isVisibleLoadingQuizz = false;
+
+        public bool IsVisibleLoadingQuizz
+        {
+            get { return _isVisibleLoadingQuizz; }
+            set { SetProperty(ref _isVisibleLoadingQuizz, value); }
         }
         #endregion
 

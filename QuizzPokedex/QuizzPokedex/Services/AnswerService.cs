@@ -1,5 +1,6 @@
 ﻿using QuizzPokedex.Interfaces;
 using QuizzPokedex.Models;
+using QuizzPokedex.Resources;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,13 +12,17 @@ namespace QuizzPokedex.Services
     {
         #region Fields
         private readonly ISqliteConnectionService _connectionService;
+        private readonly IPokemonService _pokemonService;
+        private readonly ITypePokService _typePokService;
         private SQLite.SQLiteAsyncConnection _database => _connectionService.GetAsyncConnection();
         #endregion
 
         #region Constructor
-        public AnswerService(ISqliteConnectionService connectionService)
+        public AnswerService(ISqliteConnectionService connectionService, IPokemonService pokemonService, ITypePokService typePokService)
         {
             _connectionService = connectionService;
+            _pokemonService = pokemonService;
+            _typePokService = typePokService;
         }
         #endregion
 
@@ -69,43 +74,74 @@ namespace QuizzPokedex.Services
         #endregion
 
         #region Generate Quizz
-        public async Task<string> GenerateAnswers(List<Pokemon> pokemonsAnswer)
+        #region Quizz
+        public async Task<List<Answer>> GenerateAnswers(Quizz quizz, QuestionType questionType, List<Answer> answers)
+        {
+            if (questionType.Code.Equals(Constantes.QTypPok))
+            {
+                List<Pokemon> pokemons = new List<Pokemon>();
+                foreach (Answer item in answers)
+                {
+                    pokemons.Add(await _pokemonService.GetByIdAsync(item.IsCorrectID));
+                }
+
+                int qMissing = questionType.NbAnswers - answers.Count;
+
+                for (int i = 0; i < qMissing; i++)
+                {
+                    pokemons.Add(await _pokemonService.GetPokemonRandom(quizz.Gen1, quizz.Gen2, quizz.Gen3, quizz.Gen4, quizz.Gen5, quizz.Gen6, quizz.Gen7, quizz.Gen8, quizz.GenArceus, pokemons));
+                }
+
+                answers = await GenerateAnswers(questionType, pokemons, answers);
+            }
+            else if (questionType.Code.Equals(Constantes.QTypTypPok) || questionType.Code.Equals(Constantes.QTypTyp))
+            {
+                List<TypePok> typePoks = new List<TypePok>();
+                foreach (Answer item in answers)
+                {
+                    typePoks.Add(await _typePokService.GetByIdAsync(item.IsCorrectID));
+                }
+
+                int qMissing = questionType.NbAnswers - answers.Count;
+
+                for (int i = 0; i < qMissing; i++)
+                {
+                    typePoks.Add(await _typePokService.GetTypeRandom(typePoks));
+                }
+
+                answers = await GenerateAnswers(questionType, typePoks, answers);
+            }
+
+            return await Task.FromResult(answers);
+        }
+        #endregion
+
+        #region Quizz Pokemon
+        public async Task<string> GenerateCorrectAnswers(QuestionType questionType, List<Pokemon> pokemonsAnswer)
         {
             List<Answer> answers = new List<Answer>();
             Random random = new Random();
 
             string result = string.Empty;
-            int selectedPokemonAnswer = 0;
             Dictionary<int, Pokemon> dic = new Dictionary<int, Pokemon>();
             foreach (var pokemon in pokemonsAnswer)
             {
                 while (!dic.ContainsValue(pokemon))
                 {
-                    int numberRandom = random.Next(pokemonsAnswer.Count);
+                    int numberRandom = random.Next(questionType.NbAnswers);
 
                     if (!dic.ContainsKey(numberRandom))
                         dic.Add(numberRandom, pokemon);
                 }
             }
 
-            selectedPokemonAnswer = random.Next(pokemonsAnswer.Count);
-
             foreach (KeyValuePair<int, Pokemon> pair in dic)
             {
-                int IsCorrectId = -1;
-                bool IsCorrectAnswer = false;
-
-                if (dic[selectedPokemonAnswer].Id.Equals(pair.Value.Id))
-                {
-                    IsCorrectId = pair.Value.Id;
-                    IsCorrectAnswer = true;
-                }
-
                 Answer answer = new Answer()
                 {
                     IsSelected = false,
-                    IsCorrect = IsCorrectAnswer,
-                    IsCorrectID = IsCorrectId,
+                    IsCorrect = true,
+                    IsCorrectID = pair.Value.Id,
                     Libelle = pair.Value.Name,
                     Order = pair.Key + 1
                 };
@@ -131,43 +167,85 @@ namespace QuizzPokedex.Services
             return await Task.FromResult(result);
         }
 
-        public async Task<string> GenerateAnswers(List<TypePok> typesAnswer)
+        private async Task<List<Answer>> GenerateAnswers(QuestionType questionType, List<Pokemon> pokemons, List<Answer> pokemonsAnswer)
+        {
+            Random random = new Random();
+
+            string result = string.Empty;
+            Dictionary<int, Pokemon> dic = new Dictionary<int, Pokemon>();
+            //foreach(Answer answer in answers)
+            //{
+            //    dic.Add(answer.Order-1, await _pokemonService.GetByIdAsync(answer.IsCorrectID));
+            //}
+
+            foreach (var pokemon in pokemons)
+            {
+                //Answer answerExist = answers.Find(m => m.IsCorrectID.Equals(pokemon.Id));
+                //if (answerExist == null)
+                //{
+                    while (!dic.ContainsValue(pokemon))
+                    {
+                        int numberRandom = random.Next(questionType.NbAnswers);
+
+                        if (!dic.ContainsKey(numberRandom))
+                            dic.Add(numberRandom, pokemon);
+                    }
+                //}
+            }
+
+            foreach (KeyValuePair<int, Pokemon> pair in dic)
+            {
+                Answer answerExist = pokemonsAnswer.Find(m => m.IsCorrectID.Equals(pair.Value.Id));
+                if (answerExist == null)
+                {
+                    Answer answer = new Answer()
+                    {
+                        IsSelected = false,
+                        IsCorrect = false,
+                        IsCorrectID = -1,
+                        Libelle = pair.Value.Name,
+                        Order = pair.Key + 1
+                    };
+
+                    pokemonsAnswer.Add(answer);
+                }
+                else
+                {
+                    answerExist.Order = pair.Key + 1;
+                    await UpdateAsync(answerExist);
+                }
+            }
+
+            return await Task.FromResult(pokemonsAnswer);
+        }
+        #endregion
+
+        #region Quizz Type
+        public async Task<string> GenerateCorrectAnswers(QuestionType questionType, List<TypePok> typesAnswer)
         {
             List<Answer> answers = new List<Answer>();
             Random random = new Random();
 
             string result = string.Empty;
-            int selectedTypeAnswer = 0;
             Dictionary<int, TypePok> dic = new Dictionary<int, TypePok>();
             foreach (var type in typesAnswer)
             {
                 while (!dic.ContainsValue(type))
                 {
-                    int numberRandom = random.Next(typesAnswer.Count);
+                    int numberRandom = random.Next(questionType.NbAnswers);
 
                     if (!dic.ContainsKey(numberRandom))
                         dic.Add(numberRandom, type);
                 }
             }
 
-            selectedTypeAnswer = random.Next(typesAnswer.Count);
-
             foreach (KeyValuePair<int, TypePok> pair in dic)
             {
-                int IsCorrectId = -1;
-                bool IsCorrectAnswer = false;
-
-                if (dic[selectedTypeAnswer].Id.Equals(pair.Value.Id))
-                {
-                    IsCorrectId = pair.Value.Id;
-                    IsCorrectAnswer = true;
-                }
-
                 Answer answer = new Answer()
                 {
                     IsSelected = false,
-                    IsCorrect = IsCorrectAnswer,
-                    IsCorrectID = IsCorrectId,
+                    IsCorrect = true,
+                    IsCorrectID = pair.Value.Id,
                     Libelle = pair.Value.Name,
                     Order = pair.Key + 1
                 };
@@ -192,6 +270,59 @@ namespace QuizzPokedex.Services
 
             return await Task.FromResult(result);
         }
+
+        private async Task<List<Answer>> GenerateAnswers(QuestionType questionType, List<TypePok> typePoks, List<Answer> typesAnswer)
+        {
+            Random random = new Random();
+
+            string result = string.Empty;
+            Dictionary<int, TypePok> dic = new Dictionary<int, TypePok>();
+            //foreach(Answer answer in answers)
+            //{
+            //    dic.Add(answer.Order-1, await _pokemonService.GetByIdAsync(answer.IsCorrectID));
+            //}
+
+            foreach (var type in typePoks)
+            {
+                //Answer answerExist = answers.Find(m => m.IsCorrectID.Equals(pokemon.Id));
+                //if (answerExist == null)
+                //{
+                while (!dic.ContainsValue(type))
+                {
+                    int numberRandom = random.Next(questionType.NbAnswers);
+
+                    if (!dic.ContainsKey(numberRandom))
+                        dic.Add(numberRandom, type);
+                }
+                //}
+            }
+
+            foreach (KeyValuePair<int, TypePok> pair in dic)
+            {
+                Answer answerExist = typesAnswer.Find(m => m.IsCorrectID.Equals(pair.Value.Id));
+                if (answerExist == null)
+                {
+                    Answer answer = new Answer()
+                    {
+                        IsSelected = false,
+                        IsCorrect = false,
+                        IsCorrectID = -1,
+                        Libelle = pair.Value.Name,
+                        Order = pair.Key + 1
+                    };
+
+                    typesAnswer.Add(answer);
+                }
+                else
+                {
+                    answerExist.Order = pair.Key + 1;
+                    await UpdateAsync(answerExist);
+                }
+            }
+
+            return await Task.FromResult(typesAnswer);
+        }
+        #endregion
         #endregion
         #endregion
     }

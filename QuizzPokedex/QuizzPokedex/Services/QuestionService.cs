@@ -185,7 +185,7 @@ namespace QuizzPokedex.Services
 
             List<Pokemon> pokemonsAnswer = new List<Pokemon>();
 
-            for (int nbAnswer = 0; nbAnswer < questionType.NbAnswers; nbAnswer++)
+            for (int nbAnswer = 0; nbAnswer < questionType.NbAnswersPossible; nbAnswer++)
             {
                 await Task.Run(async () =>
                 {
@@ -193,7 +193,7 @@ namespace QuizzPokedex.Services
                 });
             }
 
-            AnswersID = await _answerService.GenerateAnswers(pokemonsAnswer);
+            AnswersID = await _answerService.GenerateCorrectAnswers(questionType, pokemonsAnswer); ;
 
             return await Task.FromResult(AnswersID);
         }
@@ -207,7 +207,7 @@ namespace QuizzPokedex.Services
 
             typesAnswer.Add(await _typePokService.GetByIdAsync(int.Parse(pokemon.TypesID.Split(',')[0])));
 
-            for (int nbAnswer = 1; nbAnswer < questionType.NbAnswers; nbAnswer++)
+            for (int nbAnswer = 1; nbAnswer < questionType.NbAnswersPossible; nbAnswer++)
             {
                 tasks.Add(
                     Task.Run(async () =>
@@ -218,7 +218,7 @@ namespace QuizzPokedex.Services
             }
 
             Task.WaitAll(tasks.ToArray());
-            AnswersID = await _answerService.GenerateAnswers(typesAnswer);
+            AnswersID = await _answerService.GenerateCorrectAnswers(questionType, typesAnswer);
 
             return await Task.FromResult(AnswersID);
         }
@@ -230,7 +230,7 @@ namespace QuizzPokedex.Services
             List<Task> tasks = new List<Task>();
             List<TypePok> typesAnswer = new List<TypePok>();
 
-            for (int nbAnswer = 0; nbAnswer < questionType.NbAnswers; nbAnswer++)
+            for (int nbAnswer = 0; nbAnswer < questionType.NbAnswersPossible; nbAnswer++)
             {
                 tasks.Add(
                     Task.Run(async () =>
@@ -241,7 +241,7 @@ namespace QuizzPokedex.Services
             }
 
             Task.WaitAll(tasks.ToArray());
-            AnswersID = await _answerService.GenerateAnswers(typesAnswer);
+            AnswersID = await _answerService.GenerateCorrectAnswers(questionType, typesAnswer);
 
             return await Task.FromResult(AnswersID);
         }

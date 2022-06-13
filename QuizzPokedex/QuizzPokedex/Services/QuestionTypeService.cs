@@ -218,6 +218,8 @@ namespace QuizzPokedex.Services
             else
                 questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypPok));
 
+            questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypPok));
+
             int numberTypeQuestion = random.Next(questionTypes.Count);
             return await Task.FromResult(questionTypes[numberTypeQuestion]);
         }
