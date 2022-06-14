@@ -19,6 +19,7 @@
     <views:MvxContentPage.Resources>
         <ResourceDictionary>
             <converters:ByteToImageSourceConverter x:Key="ByteToImageSourceConverter" />
+            <converters:StringArrayConverter x:Key="stringArrayConverter" />
         </ResourceDictionary>
     </views:MvxContentPage.Resources>
     <ContentPage.Content>
@@ -35,7 +36,7 @@
                     FontAttributes="Bold,Italic"
                     FontSize="20"
                     HorizontalOptions="CenterAndExpand"
-                    Text="{Binding Order, StringFormat='Question N°{0}'}"
+                    Text="{Binding FormatQuestion, Converter={StaticResource stringArrayConverter}, ConverterParameter='Question N°{0}/{1}'}"
                     TextColor="White" />
             </StackLayout>
             <StackLayout AbsoluteLayout.LayoutBounds="0.95,0,0.2,0.1" AbsoluteLayout.LayoutFlags="All">

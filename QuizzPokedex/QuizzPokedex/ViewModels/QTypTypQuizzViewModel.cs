@@ -42,6 +42,9 @@ namespace QuizzPokedex.ViewModels
         {
             QuestionAnswers = questionAnswers;
             Order = questionAnswers.Question.Order;
+
+            FormatQuestion = new string[] { Order.ToString(), questionAnswers.Quizz.QuestionsID.Split(',').Length.ToString() };
+
             base.Prepare();
         }
 
@@ -542,6 +545,14 @@ namespace QuizzPokedex.ViewModels
         {
             get { return _order; }
             set { SetProperty(ref _order, value); }
+        }
+
+        private string[] _formatQuestion;
+
+        public string[] FormatQuestion
+        {
+            get { return _formatQuestion; }
+            set { SetProperty(ref _formatQuestion, value); }
         }
 
         private TypePok _typePok;

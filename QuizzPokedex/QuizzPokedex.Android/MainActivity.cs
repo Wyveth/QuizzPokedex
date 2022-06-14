@@ -8,6 +8,7 @@ using QuizzPokedex.UI;
 using MvvmCross.Forms.Platforms.Android.Views;
 using PanCardView.Droid;
 using FFImageLoading.Forms.Platform;
+using Android.Views;
 
 namespace QuizzPokedex.Droid
 {
@@ -18,6 +19,9 @@ namespace QuizzPokedex.Droid
         {
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
+
+            Window.AddFlags(WindowManagerFlags.Fullscreen);
+            Window.ClearFlags(WindowManagerFlags.ForceNotFullscreen);
 
             base.OnCreate(savedInstanceState);
 
