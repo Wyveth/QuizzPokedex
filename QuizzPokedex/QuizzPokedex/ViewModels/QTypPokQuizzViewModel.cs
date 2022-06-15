@@ -7,6 +7,7 @@ using QuizzPokedex.Models;
 using QuizzPokedex.Resources;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -379,67 +380,79 @@ namespace QuizzPokedex.ViewModels
         #region Command
         public IMvxAsyncCommand NavigationNextCommandAsync => new MvxAsyncCommand(NavigationNextAsync);
         public IMvxAsyncCommand<Answer> SelectedAnswerCommandAsync => new MvxAsyncCommand<Answer>(SelectedAnswerAsync);
+
         private async Task NavigationNextAsync()
         {
             await UpdateUIGenerateAsync();
 
-            List<Question> questions = await _questionService.GetAllByQuestionsIDAsync(QuestionAnswers.Quizz.QuestionsID);
-            Question question = questions.Find(m => m.Order.Equals(Order + 1));
-            if (question != null)
+            try
             {
-                QuestionType questionType = await _questionTypeService.GetByIdAsync(question.QuestionTypeID);
-                List<Answer> answers = await _answerService.GenerateAnswers(QuestionAnswers.Quizz, questionType, await _answerService.GetAllByAnswersIDAsync(question.AnswersID));
-
-                QuestionAnswers questionAnswers = new QuestionAnswers()
+                #region Update
+                QuestionAnswers.Question.Done = true;
+                if (SelectedAnswer != null)
                 {
-                    Quizz = QuestionAnswers.Quizz,
-                    Question = question,
-                    Answers = answers
-                };
-
-                await Utils.RedirectQuizz(_navigation, questionAnswers, question, questionType);
-            }
-            else
-            {
-                QuestionAnswers.Quizz.Done = true;
-                await _quizzService.UpdateAsync(QuestionAnswers.Quizz);
-                await Utils.RedirectQuizz(_navigation, QuestionAnswers);
-            }
-
-            QuestionAnswers.Question.Done = true;
-            if (SelectedAnswer != null)
-            {
-                if (SelectedAnswer.IsCorrect)
-                    await _answerService.UpdateAsync(SelectedAnswer);
-                else
-                    await _answerService.CreateAsync(SelectedAnswer);
-
-                string IDs = "";
-
-                int i = 0;
-                foreach (Answer answer in QuestionAnswers.Answers.FindAll(m => !m.Id.Equals(0)))
-                {
-                    if (i == 0)
-                    {
-                        IDs = answer.Id.ToString();
-                        i++;
-                    }
+                    if (SelectedAnswer.IsCorrect)
+                        await _answerService.UpdateAsync(SelectedAnswer);
                     else
+                        await _answerService.CreateAsync(SelectedAnswer);
+
+                    string IDs = "";
+
+                    int i = 0;
+                    foreach (Answer answer in QuestionAnswers.Answers.FindAll(m => !m.Id.Equals(0)))
                     {
-                        IDs += ',' + answer.Id.ToString();
+                        if (i == 0)
+                        {
+                            IDs = answer.Id.ToString();
+                            i++;
+                        }
+                        else
+                        {
+                            IDs += ',' + answer.Id.ToString();
+                        }
                     }
+                    QuestionAnswers.Question.AnswersID = IDs;
                 }
-                QuestionAnswers.Question.AnswersID = IDs;
+                await _questionService.UpdateAsync(QuestionAnswers.Question);
+                #endregion
+
+                List<Question> questions = await _questionService.GetAllByQuestionsIDAsync(QuestionAnswers.Quizz.QuestionsID);
+                Question question = questions.Find(m => m.Order.Equals(Order + 1));
+                if (question != null)
+                {
+                    QuestionType questionType = await _questionTypeService.GetByIdAsync(question.QuestionTypeID);
+                    List<Answer> answersCorrect = await _answerService.GetAllByAnswersIDAsync(question.AnswersID);
+                    List<Answer> answers = await _answerService.GenerateAnswers(QuestionAnswers.Quizz, questionType, answersCorrect);
+
+                    QuestionAnswers questionAnswers = new QuestionAnswers()
+                    {
+                        Quizz = QuestionAnswers.Quizz,
+                        Question = question,
+                        Answers = answers
+                    };
+
+                    await Utils.RedirectQuizz(_navigation, questionAnswers, question, questionType);
+                }
+                else
+                {
+                    QuestionAnswers.Quizz.Done = true;
+                    await _quizzService.UpdateAsync(QuestionAnswers.Quizz);
+                    await Utils.RedirectQuizz(_navigation, QuestionAnswers);
+                }
+
+                await _navigation.Close(this);
             }
-            await _questionService.UpdateAsync(QuestionAnswers.Question);
-            await _navigation.Close(this);
+            catch (Exception ex)
+            {
+                throw new Exception(ex.InnerException.Message);
+            }
 
             await UpdateUIGenerateAsync();
         }
 
         private async Task SelectedAnswerAsync(Answer answer)
         {
-            if(SelectedAnswer != null)
+            if (SelectedAnswer != null)
                 await ResetData();
 
             //Update Data
