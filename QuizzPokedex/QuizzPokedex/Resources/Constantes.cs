@@ -109,6 +109,8 @@ namespace QuizzPokedex.Resources
         public const string Resume = "Resume" + ExtensionImage;
         public const string Love = "Love" + ExtensionImage;
         public const string LoveFull = "Lovefull" + ExtensionImage;
+        public const string StarSuccess = "StarSuccess" + ExtensionImage;
+        public const string StarWrong = "StarWrong" + ExtensionImage;
         #endregion
 
         #region Difficulty

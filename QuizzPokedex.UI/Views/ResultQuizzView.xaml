@@ -48,9 +48,9 @@
             <StackLayout AbsoluteLayout.LayoutBounds="0,0.53,1,0.58" AbsoluteLayout.LayoutFlags="All">
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="1.5*" />
-                        <RowDefinition Height="auto" />
-                        <RowDefinition Height="3.5*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
@@ -63,29 +63,18 @@
                 <StackLayout
                     Grid.Row="0"
                     Grid.ColumnSpan="4"
-                    HeightRequest="20">
-                    <Label
-                        FontAttributes="Bold"
-                        FontSize="30"
-                        HeightRequest="74"
-                        HorizontalOptions="CenterAndExpand"
-                        HorizontalTextAlignment="Center"
-                        Text="{Binding Result}"
-                        TextColor="#BB1A2B"
-                        VerticalTextAlignment="end"
-                        WidthRequest="142" />
-                </StackLayout>
-                <StackLayout
-                    Grid.Row="1"
-                    Grid.ColumnSpan="4"
-                    Margin="10"
-                    BackgroundColor="Blue">
+                    Margin="10">
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="3*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="3*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="3*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="3*" />
+                            <RowDefinition Height="3*" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
@@ -94,30 +83,364 @@
                             <ColumnDefinition />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
-                        <!--<Button Grid.Row="0" Grid.Column="0" />
-                        <Button Grid.Row="0" Grid.Column="1" />
-                        <Button Grid.Row="0" Grid.Column="2" />
-                        <Button Grid.Row="0" Grid.Column="3" />
-                        <Button Grid.Row="0" Grid.Column="4" />
-                        <Button Grid.Row="1" Grid.Column="0" />
-                        <Button Grid.Row="1" Grid.Column="1" />
-                        <Button Grid.Row="1" Grid.Column="2" />
-                        <Button Grid.Row="1" Grid.Column="3" />
-                        <Button Grid.Row="1" Grid.Column="4" />
-                        <Button Grid.Row="2" Grid.Column="0" />
-                        <Button Grid.Row="2" Grid.Column="1" />
-                        <Button Grid.Row="2" Grid.Column="2" />
-                        <Button Grid.Row="2" Grid.Column="3" />
-                        <Button Grid.Row="2" Grid.Column="4" />
-                        <Button Grid.Row="3" Grid.Column="0" />
-                        <Button Grid.Row="3" Grid.Column="1" />
-                        <Button Grid.Row="3" Grid.Column="2" />
-                        <Button Grid.Row="3" Grid.Column="3" />
-                        <Button Grid.Row="3" Grid.Column="4" />-->
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            FontAttributes="Bold"
+                            FontSize="11"
+                            HorizontalOptions="CenterAndExpand"
+                            HorizontalTextAlignment="Center"
+                            IsVisible="{Binding IsVisibleQuestion1}"
+                            Text="Question 1"
+                            TextColor="#BB1A2B"
+                            TextDecorations="Underline" />
+                        <ImageButton
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            BackgroundColor="Transparent"
+                            IsVisible="{Binding IsVisibleQuestion1}"
+                            Source="{Binding ByteResult1, Converter={StaticResource ByteToImageSourceConverter}}" />
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            FontAttributes="Bold"
+                            FontSize="11"
+                            HorizontalOptions="CenterAndExpand"
+                            HorizontalTextAlignment="Center"
+                            IsVisible="{Binding IsVisibleQuestion2}"
+                            Text="Question 2"
+                            TextColor="#BB1A2B"
+                            TextDecorations="Underline" />
+                        <ImageButton
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            BackgroundColor="Transparent"
+                            IsVisible="{Binding IsVisibleQuestion2}"
+                            Source="{Binding ByteResult2, Converter={StaticResource ByteToImageSourceConverter}}" />
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="2"
+                            FontAttributes="Bold"
+                            FontSize="11"
+                            HorizontalOptions="CenterAndExpand"
+                            HorizontalTextAlignment="Center"
+                            IsVisible="{Binding IsVisibleQuestion3}"
+                            Text="Question 3"
+                            TextColor="#BB1A2B"
+                            TextDecorations="Underline" />
+                        <ImageButton
+                            Grid.Row="1"
+                            Grid.Column="2"
+                            BackgroundColor="Transparent"
+                            IsVisible="{Binding IsVisibleQuestion3}"
+                            Source="{Binding ByteResult3, Converter={StaticResource ByteToImageSourceConverter}}" />
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="3"
+                            FontAttributes="Bold"
+                            FontSize="11"
+                            HorizontalOptions="CenterAndExpand"
+                            HorizontalTextAlignment="Center"
+                            IsVisible="{Binding IsVisibleQuestion4}"
+                            Text="Question 4"
+                            TextColor="#BB1A2B"
+                            TextDecorations="Underline" />
+                        <ImageButton
+                            Grid.Row="1"
+                            Grid.Column="3"
+                            BackgroundColor="Transparent"
+                            IsVisible="{Binding IsVisibleQuestion4}"
+                            Source="{Binding ByteResult4, Converter={StaticResource ByteToImageSourceConverter}}" />
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="4"
+                            FontAttributes="Bold"
+                            FontSize="11"
+                            HorizontalOptions="CenterAndExpand"
+                            HorizontalTextAlignment="Center"
+                            IsVisible="{Binding IsVisibleQuestion5}"
+                            Text="Question 5"
+                            TextColor="#BB1A2B"
+                            TextDecorations="Underline" />
+                        <ImageButton
+                            Grid.Row="1"
+                            Grid.Column="4"
+                            BackgroundColor="Transparent"
+                            IsVisible="{Binding IsVisibleQuestion5}"
+                            Source="{Binding ByteResult5, Converter={StaticResource ByteToImageSourceConverter}}" />
+                        <Label
+                            Grid.Row="2"
+                            Grid.Column="0"
+                            FontAttributes="Bold"
+                            FontSize="11"
+                            HorizontalOptions="CenterAndExpand"
+                            HorizontalTextAlignment="Center"
+                            IsVisible="{Binding IsVisibleQuestion6}"
+                            Text="Question 6"
+                            TextColor="#BB1A2B"
+                            TextDecorations="Underline" />
+                        <ImageButton
+                            Grid.Row="3"
+                            Grid.Column="0"
+                            BackgroundColor="Transparent"
+                            IsVisible="{Binding IsVisibleQuestion6}"
+                            Source="{Binding ByteResult6, Converter={StaticResource ByteToImageSourceConverter}}" />
+                        <Label
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            FontAttributes="Bold"
+                            FontSize="11"
+                            HorizontalOptions="CenterAndExpand"
+                            HorizontalTextAlignment="Center"
+                            IsVisible="{Binding IsVisibleQuestion7}"
+                            Text="Question 7"
+                            TextColor="#BB1A2B"
+                            TextDecorations="Underline" />
+                        <ImageButton
+                            Grid.Row="3"
+                            Grid.Column="1"
+                            BackgroundColor="Transparent"
+                            IsVisible="{Binding IsVisibleQuestion7}"
+                            Source="{Binding ByteResult7, Converter={StaticResource ByteToImageSourceConverter}}" />
+                        <Label
+                            Grid.Row="2"
+                            Grid.Column="2"
+                            FontAttributes="Bold"
+                            FontSize="11"
+                            HorizontalOptions="CenterAndExpand"
+                            HorizontalTextAlignment="Center"
+                            IsVisible="{Binding IsVisibleQuestion8}"
+                            Text="Question 8"
+                            TextColor="#BB1A2B"
+                            TextDecorations="Underline" />
+                        <ImageButton
+                            Grid.Row="3"
+                            Grid.Column="2"
+                            BackgroundColor="Transparent"
+                            IsVisible="{Binding IsVisibleQuestion8}"
+                            Source="{Binding ByteResult8, Converter={StaticResource ByteToImageSourceConverter}}" />
+                        <Label
+                            Grid.Row="2"
+                            Grid.Column="3"
+                            FontAttributes="Bold"
+                            FontSize="11"
+                            HorizontalOptions="CenterAndExpand"
+                            HorizontalTextAlignment="Center"
+                            IsVisible="{Binding IsVisibleQuestion9}"
+                            Text="Question 9"
+                            TextColor="#BB1A2B"
+                            TextDecorations="Underline" />
+                        <ImageButton
+                            Grid.Row="3"
+                            Grid.Column="3"
+                            BackgroundColor="Transparent"
+                            IsVisible="{Binding IsVisibleQuestion9}"
+                            Source="{Binding ByteResult9, Converter={StaticResource ByteToImageSourceConverter}}" />
+                        <Label
+                            Grid.Row="2"
+                            Grid.Column="4"
+                            FontAttributes="Bold"
+                            FontSize="11"
+                            HorizontalOptions="CenterAndExpand"
+                            HorizontalTextAlignment="Center"
+                            IsVisible="{Binding IsVisibleQuestion10}"
+                            Text="Question 10"
+                            TextColor="#BB1A2B"
+                            TextDecorations="Underline" />
+                        <ImageButton
+                            Grid.Row="3"
+                            Grid.Column="4"
+                            BackgroundColor="Transparent"
+                            IsVisible="{Binding IsVisibleQuestion10}"
+                            Source="{Binding ByteResult10, Converter={StaticResource ByteToImageSourceConverter}}" />
+                        <Label
+                            Grid.Row="4"
+                            Grid.Column="0"
+                            FontAttributes="Bold"
+                            FontSize="11"
+                            HorizontalOptions="CenterAndExpand"
+                            HorizontalTextAlignment="Center"
+                            IsVisible="{Binding IsVisibleQuestion11}"
+                            Text="Question 11"
+                            TextColor="#BB1A2B"
+                            TextDecorations="Underline" />
+                        <ImageButton
+                            Grid.Row="5"
+                            Grid.Column="0"
+                            BackgroundColor="Transparent"
+                            IsVisible="{Binding IsVisibleQuestion11}"
+                            Source="{Binding ByteResult11, Converter={StaticResource ByteToImageSourceConverter}}" />
+                        <Label
+                            Grid.Row="4"
+                            Grid.Column="1"
+                            FontAttributes="Bold"
+                            FontSize="11"
+                            HorizontalOptions="CenterAndExpand"
+                            HorizontalTextAlignment="Center"
+                            IsVisible="{Binding IsVisibleQuestion12}"
+                            Text="Question 12"
+                            TextColor="#BB1A2B"
+                            TextDecorations="Underline" />
+                        <ImageButton
+                            Grid.Row="5"
+                            Grid.Column="1"
+                            BackgroundColor="Transparent"
+                            IsVisible="{Binding IsVisibleQuestion12}"
+                            Source="{Binding ByteResult12, Converter={StaticResource ByteToImageSourceConverter}}" />
+                        <Label
+                            Grid.Row="4"
+                            Grid.Column="2"
+                            FontAttributes="Bold"
+                            FontSize="11"
+                            HorizontalOptions="CenterAndExpand"
+                            HorizontalTextAlignment="Center"
+                            IsVisible="{Binding IsVisibleQuestion13}"
+                            Text="Question 13"
+                            TextColor="#BB1A2B"
+                            TextDecorations="Underline" />
+                        <ImageButton
+                            Grid.Row="5"
+                            Grid.Column="2"
+                            BackgroundColor="Transparent"
+                            IsVisible="{Binding IsVisibleQuestion13}"
+                            Source="{Binding ByteResult13, Converter={StaticResource ByteToImageSourceConverter}}" />
+                        <Label
+                            Grid.Row="4"
+                            Grid.Column="3"
+                            FontAttributes="Bold"
+                            FontSize="11"
+                            HorizontalOptions="CenterAndExpand"
+                            HorizontalTextAlignment="Center"
+                            IsVisible="{Binding IsVisibleQuestion14}"
+                            Text="Question 14"
+                            TextColor="#BB1A2B"
+                            TextDecorations="Underline" />
+                        <ImageButton
+                            Grid.Row="5"
+                            Grid.Column="3"
+                            BackgroundColor="Transparent"
+                            IsVisible="{Binding IsVisibleQuestion14}"
+                            Source="{Binding ByteResult14, Converter={StaticResource ByteToImageSourceConverter}}" />
+                        <Label
+                            Grid.Row="4"
+                            Grid.Column="4"
+                            FontAttributes="Bold"
+                            FontSize="11"
+                            HorizontalOptions="CenterAndExpand"
+                            HorizontalTextAlignment="Center"
+                            IsVisible="{Binding IsVisibleQuestion15}"
+                            Text="Question 15"
+                            TextColor="#BB1A2B"
+                            TextDecorations="Underline" />
+                        <ImageButton
+                            Grid.Row="5"
+                            Grid.Column="4"
+                            BackgroundColor="Transparent"
+                            IsVisible="{Binding IsVisibleQuestion15}"
+                            Source="{Binding ByteResult15, Converter={StaticResource ByteToImageSourceConverter}}" />
+                        <Label
+                            Grid.Row="6"
+                            Grid.Column="0"
+                            FontAttributes="Bold"
+                            FontSize="11"
+                            HorizontalOptions="CenterAndExpand"
+                            HorizontalTextAlignment="Center"
+                            IsVisible="{Binding IsVisibleQuestion16}"
+                            Text="Question 16"
+                            TextColor="#BB1A2B"
+                            TextDecorations="Underline" />
+                        <ImageButton
+                            Grid.Row="7"
+                            Grid.Column="0"
+                            BackgroundColor="Transparent"
+                            IsVisible="{Binding IsVisibleQuestion16}"
+                            Source="{Binding ByteResult16, Converter={StaticResource ByteToImageSourceConverter}}" />
+                        <Label
+                            Grid.Row="6"
+                            Grid.Column="1"
+                            FontAttributes="Bold"
+                            FontSize="11"
+                            HorizontalOptions="CenterAndExpand"
+                            HorizontalTextAlignment="Center"
+                            IsVisible="{Binding IsVisibleQuestion17}"
+                            Text="Question 17"
+                            TextColor="#BB1A2B"
+                            TextDecorations="Underline" />
+                        <ImageButton
+                            Grid.Row="7"
+                            Grid.Column="1"
+                            BackgroundColor="Transparent"
+                            IsVisible="{Binding IsVisibleQuestion17}"
+                            Source="{Binding ByteResult17, Converter={StaticResource ByteToImageSourceConverter}}" />
+                        <Label
+                            Grid.Row="6"
+                            Grid.Column="2"
+                            FontAttributes="Bold"
+                            FontSize="11"
+                            HorizontalOptions="CenterAndExpand"
+                            HorizontalTextAlignment="Center"
+                            IsVisible="{Binding IsVisibleQuestion18}"
+                            Text="Question 18"
+                            TextColor="#BB1A2B"
+                            TextDecorations="Underline" />
+                        <ImageButton
+                            Grid.Row="7"
+                            Grid.Column="2"
+                            BackgroundColor="Transparent"
+                            IsVisible="{Binding IsVisibleQuestion18}"
+                            Source="{Binding ByteResult18, Converter={StaticResource ByteToImageSourceConverter}}" />
+                        <Label
+                            Grid.Row="6"
+                            Grid.Column="3"
+                            FontAttributes="Bold"
+                            FontSize="11"
+                            HorizontalOptions="CenterAndExpand"
+                            HorizontalTextAlignment="Center"
+                            IsVisible="{Binding IsVisibleQuestion19}"
+                            Text="Question 19"
+                            TextColor="#BB1A2B"
+                            TextDecorations="Underline" />
+                        <ImageButton
+                            Grid.Row="7"
+                            Grid.Column="3"
+                            BackgroundColor="Transparent"
+                            IsVisible="{Binding IsVisibleQuestion19}"
+                            Source="{Binding ByteResult19, Converter={StaticResource ByteToImageSourceConverter}}" />
+                        <Label
+                            Grid.Row="6"
+                            Grid.Column="4"
+                            FontAttributes="Bold"
+                            FontSize="11"
+                            HorizontalOptions="CenterAndExpand"
+                            HorizontalTextAlignment="Center"
+                            IsVisible="{Binding IsVisibleQuestion20}"
+                            Text="Question 20"
+                            TextColor="#BB1A2B"
+                            TextDecorations="Underline" />
+                        <ImageButton
+                            Grid.Row="7"
+                            Grid.Column="4"
+                            BackgroundColor="Transparent"
+                            IsVisible="{Binding IsVisibleQuestion20}"
+                            Source="{Binding ByteResult20, Converter={StaticResource ByteToImageSourceConverter}}" />
+
+                        <StackLayout
+                            Grid.Row="8"
+                            Grid.RowSpan="2"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="5">
+                            <Label
+                                FontAttributes="Bold"
+                                FontSize="30"
+                                HeightRequest="74"
+                                HorizontalOptions="CenterAndExpand"
+                                HorizontalTextAlignment="Center"
+                                Text="{Binding Result}"
+                                TextColor="#BB1A2B"
+                                VerticalTextAlignment="Start" />
+                        </StackLayout>
                     </Grid>
                 </StackLayout>
-                <StackLayout Grid.Column="2" HeightRequest="20" />
-                <StackLayout Grid.Column="3" HeightRequest="20" />
             </StackLayout>
             <StackLayout AbsoluteLayout.LayoutBounds="0.5,1,0.34,0.2" AbsoluteLayout.LayoutFlags="All">
                 <pv:PancakeView

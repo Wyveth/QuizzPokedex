@@ -77,12 +77,108 @@ namespace QuizzPokedex.ViewModels
                 {
                     List<Answer> answers = await _answerService.GetAllByAnswersIDAsync(question.AnswersID);
                     Answer answerCorrect = answers.Find(m => m.IsCorrect.Equals(true) && m.IsSelected.Equals(true));
+                    await LoadImgAnswsers(question, answerCorrect);
                     if (answerCorrect != null)
                         answersCorrect.Add(answerCorrect);
                 }
                 Result = answersCorrect.Count + "/" + questions.Count;
             });
             
+        }
+
+        private async Task LoadImgAnswsers(Question question, Answer answer)
+        {
+            switch (question.Order)
+            {
+                case 1:
+                    ByteResult1 = await GetByteImgAnswer(answer);
+                    break;
+                case 2:
+                    ByteResult2 = await GetByteImgAnswer(answer);
+                    break;
+                case 3:
+                    ByteResult3 = await GetByteImgAnswer(answer);
+                    break;
+                case 4:
+                    ByteResult4 = await GetByteImgAnswer(answer);
+                    break;
+                case 5:
+                    ByteResult5 = await GetByteImgAnswer(answer);
+                    break;
+                case 6:
+                    ByteResult6 = await GetByteImgAnswer(answer);
+                    break;
+                case 7:
+                    ByteResult7 = await GetByteImgAnswer(answer);
+                    break;
+                case 8:
+                    ByteResult8 = await GetByteImgAnswer(answer);
+                    break;
+                case 9:
+                    ByteResult9 = await GetByteImgAnswer(answer);
+                    break;
+                case 10:
+                    ByteResult10 = await GetByteImgAnswer(answer);
+                    break;
+                case 11:
+                    ByteResult11 = await GetByteImgAnswer(answer);
+                    IsVisibleQuestion11 = await GetVisibleQuestion(question);
+                    break;
+                case 12:
+                    ByteResult12 = await GetByteImgAnswer(answer);
+                    IsVisibleQuestion12 = await GetVisibleQuestion(question);
+                    break;
+                case 13:
+                    ByteResult13 = await GetByteImgAnswer(answer);
+                    IsVisibleQuestion13 = await GetVisibleQuestion(question);
+                    break;
+                case 14:
+                    ByteResult14 = await GetByteImgAnswer(answer);
+                    IsVisibleQuestion14 = await GetVisibleQuestion(question);
+                    break;
+                case 15:
+                    ByteResult15 = await GetByteImgAnswer(answer);
+                    IsVisibleQuestion15 = await GetVisibleQuestion(question);
+                    break;
+                case 16:
+                    ByteResult16 = await GetByteImgAnswer(answer);
+                    IsVisibleQuestion16 = await GetVisibleQuestion(question);
+                    break;
+                case 17:
+                    ByteResult17 = await GetByteImgAnswer(answer);
+                    IsVisibleQuestion17 = await GetVisibleQuestion(question);
+                    break;
+                case 18:
+                    ByteResult18 = await GetByteImgAnswer(answer);
+                    IsVisibleQuestion18 = await GetVisibleQuestion(question);
+                    break;
+                case 19:
+                    ByteResult19 = await GetByteImgAnswer(answer);
+                    IsVisibleQuestion19 = await GetVisibleQuestion(question);
+                    break;
+                case 20:
+                    ByteResult20 = await GetByteImgAnswer(answer);
+                    IsVisibleQuestion20 = await GetVisibleQuestion(question);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private Task<bool> GetVisibleQuestion(Question question)
+        {
+            if (question != null)
+                return Task.FromResult(true);
+            else
+                return Task.FromResult(false);
+        }
+
+        private async Task<byte[]> GetByteImgAnswer(Answer answer)
+        {
+            if(answer != null)
+                return await Utils.GetByteAssetImage(Constantes.StarSuccess);
+            else
+                return await Utils.GetByteAssetImage(Constantes.StarWrong);
         }
 
         private async Task<Chart> CreateChartStats(Quizz quizz)
@@ -189,6 +285,14 @@ namespace QuizzPokedex.ViewModels
             get { return _isVisibleQuestion1; }
             set { SetProperty(ref _isVisibleQuestion1, value); }
         }
+
+        private byte[] _byteResult1;
+
+        public byte[] ByteResult1
+        {
+            get { return _byteResult1; }
+            set { SetProperty(ref _byteResult1, value); }
+        }
         #endregion
 
         #region Question 2
@@ -206,6 +310,14 @@ namespace QuizzPokedex.ViewModels
         {
             get { return _isVisibleQuestion2; }
             set { SetProperty(ref _isVisibleQuestion2, value); }
+        }
+
+        private byte[] _byteResult2;
+
+        public byte[] ByteResult2
+        {
+            get { return _byteResult2; }
+            set { SetProperty(ref _byteResult2, value); }
         }
         #endregion
 
@@ -225,6 +337,14 @@ namespace QuizzPokedex.ViewModels
             get { return _isVisibleQuestion3; }
             set { SetProperty(ref _isVisibleQuestion3, value); }
         }
+
+        private byte[] _byteResult3;
+
+        public byte[] ByteResult3
+        {
+            get { return _byteResult3; }
+            set { SetProperty(ref _byteResult3, value); }
+        }
         #endregion
 
         #region Question 4
@@ -242,6 +362,14 @@ namespace QuizzPokedex.ViewModels
         {
             get { return _isVisibleQuestion4; }
             set { SetProperty(ref _isVisibleQuestion4, value); }
+        }
+
+        private byte[] _byteResult4;
+
+        public byte[] ByteResult4
+        {
+            get { return _byteResult4; }
+            set { SetProperty(ref _byteResult4, value); }
         }
         #endregion
 
@@ -261,6 +389,14 @@ namespace QuizzPokedex.ViewModels
             get { return _isVisibleQuestion5; }
             set { SetProperty(ref _isVisibleQuestion5, value); }
         }
+
+        private byte[] _byteResult5;
+
+        public byte[] ByteResult5
+        {
+            get { return _byteResult5; }
+            set { SetProperty(ref _byteResult5, value); }
+        }
         #endregion
 
         #region Question 6
@@ -278,6 +414,14 @@ namespace QuizzPokedex.ViewModels
         {
             get { return _isVisibleQuestion6; }
             set { SetProperty(ref _isVisibleQuestion6, value); }
+        }
+
+        private byte[] _byteResult6;
+
+        public byte[] ByteResult6
+        {
+            get { return _byteResult6; }
+            set { SetProperty(ref _byteResult6, value); }
         }
         #endregion
 
@@ -297,6 +441,14 @@ namespace QuizzPokedex.ViewModels
             get { return _isVisibleQuestion7; }
             set { SetProperty(ref _isVisibleQuestion7, value); }
         }
+
+        private byte[] _byteResult7;
+
+        public byte[] ByteResult7
+        {
+            get { return _byteResult7; }
+            set { SetProperty(ref _byteResult7, value); }
+        }
         #endregion
 
         #region Question 8
@@ -314,6 +466,14 @@ namespace QuizzPokedex.ViewModels
         {
             get { return _isVisibleQuestion8; }
             set { SetProperty(ref _isVisibleQuestion8, value); }
+        }
+
+        private byte[] _byteResult8;
+
+        public byte[] ByteResult8
+        {
+            get { return _byteResult8; }
+            set { SetProperty(ref _byteResult8, value); }
         }
         #endregion
 
@@ -333,6 +493,14 @@ namespace QuizzPokedex.ViewModels
             get { return _isVisibleQuestion9; }
             set { SetProperty(ref _isVisibleQuestion9, value); }
         }
+
+        private byte[] _byteResult9;
+
+        public byte[] ByteResult9
+        {
+            get { return _byteResult9; }
+            set { SetProperty(ref _byteResult9, value); }
+        }
         #endregion
 
         #region Question 10
@@ -351,6 +519,14 @@ namespace QuizzPokedex.ViewModels
             get { return _isVisibleQuestion10; }
             set { SetProperty(ref _isVisibleQuestion10, value); }
         }
+
+        private byte[] _byteResult10;
+
+        public byte[] ByteResult10
+        {
+            get { return _byteResult10; }
+            set { SetProperty(ref _byteResult10, value); }
+        }
         #endregion
 
         #region Question 11
@@ -362,12 +538,20 @@ namespace QuizzPokedex.ViewModels
             set { SetProperty(ref question11, value); }
         }
 
-        private bool _isVisibleQuestion11 = true;
+        private bool _isVisibleQuestion11 = false;
 
         public bool IsVisibleQuestion11
         {
             get { return _isVisibleQuestion11; }
             set { SetProperty(ref _isVisibleQuestion11, value); }
+        }
+
+        private byte[] _byteResult11;
+
+        public byte[] ByteResult11
+        {
+            get { return _byteResult11; }
+            set { SetProperty(ref _byteResult11, value); }
         }
         #endregion
 
@@ -380,12 +564,20 @@ namespace QuizzPokedex.ViewModels
             set { SetProperty(ref question12, value); }
         }
 
-        private bool _isVisibleQuestion12 = true;
+        private bool _isVisibleQuestion12 = false;
 
         public bool IsVisibleQuestion12
         {
             get { return _isVisibleQuestion12; }
             set { SetProperty(ref _isVisibleQuestion12, value); }
+        }
+
+        private byte[] _byteResult12;
+
+        public byte[] ByteResult12
+        {
+            get { return _byteResult12; }
+            set { SetProperty(ref _byteResult12, value); }
         }
         #endregion
 
@@ -398,12 +590,20 @@ namespace QuizzPokedex.ViewModels
             set { SetProperty(ref question13, value); }
         }
 
-        private bool _isVisibleQuestion13 = true;
+        private bool _isVisibleQuestion13 = false;
 
         public bool IsVisibleQuestion13
         {
             get { return _isVisibleQuestion13; }
             set { SetProperty(ref _isVisibleQuestion13, value); }
+        }
+
+        private byte[] _byteResult13;
+
+        public byte[] ByteResult13
+        {
+            get { return _byteResult13; }
+            set { SetProperty(ref _byteResult13, value); }
         }
         #endregion
 
@@ -416,12 +616,20 @@ namespace QuizzPokedex.ViewModels
             set { SetProperty(ref question14, value); }
         }
 
-        private bool _isVisibleQuestion14 = true;
+        private bool _isVisibleQuestion14 = false;
 
         public bool IsVisibleQuestion14
         {
             get { return _isVisibleQuestion14; }
             set { SetProperty(ref _isVisibleQuestion14, value); }
+        }
+
+        private byte[] _byteResult14;
+
+        public byte[] ByteResult14
+        {
+            get { return _byteResult14; }
+            set { SetProperty(ref _byteResult14, value); }
         }
         #endregion
 
@@ -434,12 +642,20 @@ namespace QuizzPokedex.ViewModels
             set { SetProperty(ref question15, value); }
         }
 
-        private bool _isVisibleQuestion15 = true;
+        private bool _isVisibleQuestion15 = false;
 
         public bool IsVisibleQuestion15
         {
             get { return _isVisibleQuestion15; }
             set { SetProperty(ref _isVisibleQuestion15, value); }
+        }
+
+        private byte[] _byteResult15;
+
+        public byte[] ByteResult15
+        {
+            get { return _byteResult15; }
+            set { SetProperty(ref _byteResult15, value); }
         }
         #endregion
 
@@ -452,12 +668,20 @@ namespace QuizzPokedex.ViewModels
             set { SetProperty(ref question16, value); }
         }
 
-        private bool _isVisibleQuestion16 = true;
+        private bool _isVisibleQuestion16 = false;
 
         public bool IsVisibleQuestion16
         {
             get { return _isVisibleQuestion16; }
             set { SetProperty(ref _isVisibleQuestion16, value); }
+        }
+
+        private byte[] _byteResult16;
+
+        public byte[] ByteResult16
+        {
+            get { return _byteResult16; }
+            set { SetProperty(ref _byteResult16, value); }
         }
         #endregion
 
@@ -470,12 +694,20 @@ namespace QuizzPokedex.ViewModels
             set { SetProperty(ref question17, value); }
         }
 
-        private bool _isVisibleQuestion17 = true;
+        private bool _isVisibleQuestion17 = false;
 
         public bool IsVisibleQuestion17
         {
             get { return _isVisibleQuestion17; }
             set { SetProperty(ref _isVisibleQuestion17, value); }
+        }
+
+        private byte[] _byteResult17;
+
+        public byte[] ByteResult17
+        {
+            get { return _byteResult17; }
+            set { SetProperty(ref _byteResult17, value); }
         }
         #endregion
 
@@ -488,12 +720,20 @@ namespace QuizzPokedex.ViewModels
             set { SetProperty(ref question18, value); }
         }
 
-        private bool _isVisibleQuestion18 = true;
+        private bool _isVisibleQuestion18 = false;
 
         public bool IsVisibleQuestion18
         {
             get { return _isVisibleQuestion18; }
             set { SetProperty(ref _isVisibleQuestion18, value); }
+        }
+
+        private byte[] _byteResult18;
+
+        public byte[] ByteResult18
+        {
+            get { return _byteResult18; }
+            set { SetProperty(ref _byteResult18, value); }
         }
         #endregion
 
@@ -506,12 +746,20 @@ namespace QuizzPokedex.ViewModels
             set { SetProperty(ref question19, value); }
         }
 
-        private bool _isVisibleQuestion19 = true;
+        private bool _isVisibleQuestion19 = false;
 
         public bool IsVisibleQuestion19
         {
             get { return _isVisibleQuestion19; }
             set { SetProperty(ref _isVisibleQuestion19, value); }
+        }
+
+        private byte[] _byteResult19;
+
+        public byte[] ByteResult19
+        {
+            get { return _byteResult19; }
+            set { SetProperty(ref _byteResult19, value); }
         }
         #endregion
 
@@ -525,12 +773,20 @@ namespace QuizzPokedex.ViewModels
             set { SetProperty(ref question20, value); }
         }
 
-        private bool _isVisibleQuestion20 = true;
+        private bool _isVisibleQuestion20 = false;
 
         public bool IsVisibleQuestion20
         {
             get { return _isVisibleQuestion20; }
             set { SetProperty(ref _isVisibleQuestion20, value); }
+        }
+
+        private byte[] _byteResult20;
+
+        public byte[] ByteResult20
+        {
+            get { return _byteResult20; }
+            set { SetProperty(ref _byteResult20, value); }
         }
         #endregion
         #endregion

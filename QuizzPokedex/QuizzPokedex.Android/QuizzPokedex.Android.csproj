@@ -545,6 +545,12 @@
   <ItemGroup>
     <AndroidAsset Include="Assets\Resume.png" />
   </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\StarSuccess.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\StarWrong.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
