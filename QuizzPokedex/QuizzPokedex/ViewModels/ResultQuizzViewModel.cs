@@ -68,7 +68,7 @@ namespace QuizzPokedex.ViewModels
         private async Task LoadDataAsync()
         {
             //await CreateChartStats(QuestionAnswers.Quizz);
-
+            List<CorrectionQuizzSimple> correctionQuizz = new List<CorrectionQuizzSimple>();
             await Task.Run(async () =>
             {
                 List<Question> questions = await _questionService.GetAllByQuestionsIDAsync(QuestionAnswers.Quizz.QuestionsID);
@@ -76,93 +76,80 @@ namespace QuizzPokedex.ViewModels
                 foreach (Question question in questions)
                 {
                     List<Answer> answers = await _answerService.GetAllByAnswersIDAsync(question.AnswersID);
-                    Answer answerCorrect = answers.Find(m => m.IsCorrect.Equals(true) && m.IsSelected.Equals(true));
-                    await LoadImgAnswsers(question, answerCorrect);
-                    if (answerCorrect != null)
-                        answersCorrect.Add(answerCorrect);
+                    Answer answerIsCorrect = answers.Find(m => m.IsCorrect.Equals(true) && m.IsSelected.Equals(true));
+                    //Answer answerCorrect = answers.Find(m => m.IsCorrect.Equals(true));
+                    //Answer answerWrong = answers.Find(m => m.IsCorrect.Equals(false) && m.IsSelected.Equals(true));
+                    correctionQuizz.Add(await LoadCorrectionQuizz(question, answers, answerIsCorrect));
+                    if (answerIsCorrect != null)
+                        answersCorrect.Add(answerIsCorrect);
                 }
                 Result = answersCorrect.Count + "/" + questions.Count;
             });
-            
+
+            CorrectionQuizz = new MvxObservableCollection<CorrectionQuizzSimple>(correctionQuizz);
         }
 
-        private async Task LoadImgAnswsers(Question question, Answer answer)
+        private async Task<CorrectionQuizzSimple> LoadCorrectionQuizz(Question question, List<Answer> answers, Answer answerIsCorrect)
         {
-            switch (question.Order)
+            Answer answerCorrect = answers.Find(m => m.IsCorrect.Equals(true));
+            Answer answerWrong = answers.Find(m => m.IsCorrect.Equals(false) && m.IsSelected.Equals(true));
+            QuestionType questionType = await _questionTypeService.GetByIdAsync(question.QuestionTypeID);
+            Pokemon pokemon = null;
+            TypePok typePok = null;
+            byte[] typePokByte = null;
+
+            if (questionType.Code.Equals(Constantes.QTypPok))
             {
-                case 1:
-                    ByteResult1 = await GetByteImgAnswer(answer);
-                    break;
-                case 2:
-                    ByteResult2 = await GetByteImgAnswer(answer);
-                    break;
-                case 3:
-                    ByteResult3 = await GetByteImgAnswer(answer);
-                    break;
-                case 4:
-                    ByteResult4 = await GetByteImgAnswer(answer);
-                    break;
-                case 5:
-                    ByteResult5 = await GetByteImgAnswer(answer);
-                    break;
-                case 6:
-                    ByteResult6 = await GetByteImgAnswer(answer);
-                    break;
-                case 7:
-                    ByteResult7 = await GetByteImgAnswer(answer);
-                    break;
-                case 8:
-                    ByteResult8 = await GetByteImgAnswer(answer);
-                    break;
-                case 9:
-                    ByteResult9 = await GetByteImgAnswer(answer);
-                    break;
-                case 10:
-                    ByteResult10 = await GetByteImgAnswer(answer);
-                    break;
-                case 11:
-                    ByteResult11 = await GetByteImgAnswer(answer);
-                    IsVisibleQuestion11 = await GetVisibleQuestion(question);
-                    break;
-                case 12:
-                    ByteResult12 = await GetByteImgAnswer(answer);
-                    IsVisibleQuestion12 = await GetVisibleQuestion(question);
-                    break;
-                case 13:
-                    ByteResult13 = await GetByteImgAnswer(answer);
-                    IsVisibleQuestion13 = await GetVisibleQuestion(question);
-                    break;
-                case 14:
-                    ByteResult14 = await GetByteImgAnswer(answer);
-                    IsVisibleQuestion14 = await GetVisibleQuestion(question);
-                    break;
-                case 15:
-                    ByteResult15 = await GetByteImgAnswer(answer);
-                    IsVisibleQuestion15 = await GetVisibleQuestion(question);
-                    break;
-                case 16:
-                    ByteResult16 = await GetByteImgAnswer(answer);
-                    IsVisibleQuestion16 = await GetVisibleQuestion(question);
-                    break;
-                case 17:
-                    ByteResult17 = await GetByteImgAnswer(answer);
-                    IsVisibleQuestion17 = await GetVisibleQuestion(question);
-                    break;
-                case 18:
-                    ByteResult18 = await GetByteImgAnswer(answer);
-                    IsVisibleQuestion18 = await GetVisibleQuestion(question);
-                    break;
-                case 19:
-                    ByteResult19 = await GetByteImgAnswer(answer);
-                    IsVisibleQuestion19 = await GetVisibleQuestion(question);
-                    break;
-                case 20:
-                    ByteResult20 = await GetByteImgAnswer(answer);
-                    IsVisibleQuestion20 = await GetVisibleQuestion(question);
-                    break;
-                default:
-                    break;
+                IsVisiblePokemon = true;
+                IsVisibleTypePok = false;
+
+                if (answerCorrect != null)
+                {
+                    pokemon = await _pokemonService.GetByIdAsync(answerCorrect.IsCorrectID);
+                    typePok = await _typePokService.GetByIdAsync(int.Parse(pokemon.TypesID.Split(',')[0]));
+                    IsVisibleSelectedNull = true;
+                }
+                else
+                    IsVisibleSelectedNull = false;
             }
+            else if (questionType.Code.Equals(Constantes.QTypTypPok))
+            {
+                IsVisiblePokemon = true;
+                IsVisibleTypePok = false;
+
+                if (answerCorrect != null)
+                {
+                    pokemon = await _pokemonService.GetByIdAsync(question.DataObjectID);
+                    typePok = await _typePokService.GetByIdAsync(answerCorrect.IsCorrectID);
+                }
+            }
+            else if (questionType.Code.Equals(Constantes.QTypTyp))
+            {
+                IsVisiblePokemon = false;
+                IsVisibleTypePok = true;
+
+                if (answerCorrect != null)
+                {
+                    typePok = await _typePokService.GetByIdAsync(answerCorrect.IsCorrectID);
+                    typePokByte = await GetBytesTypesFilter(typePok.Name);
+                }
+            }
+
+            CorrectionQuizzSimple correctionQuizz = new CorrectionQuizzSimple()
+            {
+                Question = question,
+                CorrectAnswer = answerCorrect,
+                WrongAnswer = answerWrong,
+                QuestionType = questionType,
+                TypePok = typePok,
+                ByteTypePok = typePokByte,
+                Pokemon = pokemon,
+                IsQTypPok = IsVisiblePokemon,
+                IsQTypTyp = IsVisibleTypePok,
+                ByteResult = await GetByteImgAnswer(answerCorrect)
+            };
+
+            return await Task.FromResult(correctionQuizz);
         }
 
         private Task<bool> GetVisibleQuestion(Question question)
@@ -175,54 +162,139 @@ namespace QuizzPokedex.ViewModels
 
         private async Task<byte[]> GetByteImgAnswer(Answer answer)
         {
-            if(answer != null)
+            if(answer.IsSelected)
                 return await Utils.GetByteAssetImage(Constantes.StarSuccess);
             else
                 return await Utils.GetByteAssetImage(Constantes.StarWrong);
         }
 
-        private async Task<Chart> CreateChartStats(Quizz quizz)
+        private async Task<byte[]> GetBytesTypesFilter(string Name)
         {
-            ChartEntry[] entries = await GenerateEntriesChart(quizz);
-
-            return await Task.FromResult(new BarChart
+            byte[] typeByte = null;
+            #region Type Filter
+            switch (Name)
             {
-                Entries = entries,
-                LabelTextSize = 42,
-                AnimationProgress = 7,
-                AnimationDuration = TimeSpan.FromSeconds(7),
-                IsAnimated = true,
-                MaxValue = 255,
-            });
-        }
-
-        private async Task<ChartEntry[]> GenerateEntriesChart(Quizz quizz)
-        {
-            ChartEntry[] chartEntries = new ChartEntry[3];
-            List<Question> questions = await _questionService.GetAllByQuestionsIDAsync(quizz.QuestionsID);
-
-            int i = 0;
-            foreach (QuestionType questionType in await _questionTypeService.GetAllAsync())
-            {
-                List<Question> questionFilter = questions.FindAll(m => m.QuestionTypeID.Equals(questionType.Id));
-
-                chartEntries[i].Label = "Test: " + questionType.Libelle;
-                chartEntries[i].ValueLabel = questionType.Libelle.ToString();
-                chartEntries[i].Color = SKColor.Parse("#6BC563");
-                
-                i++;
+                case Constantes.Steel:
+                    typeByte = await Utils.GetByteAssetImage(Constantes.Icon_Steel_BW);
+                    break;
+                case Constantes.Fighting:
+                    typeByte = await Utils.GetByteAssetImage(Constantes.Icon_Fighting_BW);
+                    break;
+                case Constantes.Dragon:
+                    typeByte = await Utils.GetByteAssetImage(Constantes.Icon_Dragon_BW);
+                    break;
+                case Constantes.Water:
+                    typeByte = await Utils.GetByteAssetImage(Constantes.Icon_Water_BW);
+                    break;
+                case Constantes.Electric:
+                    typeByte = await Utils.GetByteAssetImage(Constantes.Icon_Electric_BW);
+                    break;
+                case Constantes.Fairy:
+                    typeByte = await Utils.GetByteAssetImage(Constantes.Icon_Fairy_BW);
+                    break;
+                case Constantes.Fire:
+                    typeByte = await Utils.GetByteAssetImage(Constantes.Icon_Fire_BW);
+                    break;
+                case Constantes.Ice:
+                    typeByte = await Utils.GetByteAssetImage(Constantes.Icon_Ice_BW);
+                    break;
+                case Constantes.Bug:
+                    typeByte = await Utils.GetByteAssetImage(Constantes.Icon_Bug_BW);
+                    break;
+                case Constantes.Normal:
+                    typeByte = await Utils.GetByteAssetImage(Constantes.Icon_Normal_BW);
+                    break;
+                case Constantes.Grass:
+                    typeByte = await Utils.GetByteAssetImage(Constantes.Icon_Grass_BW);
+                    break;
+                case Constantes.Poison:
+                    typeByte = await Utils.GetByteAssetImage(Constantes.Icon_Poison_BW);
+                    break;
+                case Constantes.Psychic:
+                    typeByte = await Utils.GetByteAssetImage(Constantes.Icon_Psychic_BW);
+                    break;
+                case Constantes.Rock:
+                    typeByte = await Utils.GetByteAssetImage(Constantes.Icon_Rock_BW);
+                    break;
+                case Constantes.Ground:
+                    typeByte = await Utils.GetByteAssetImage(Constantes.Icon_Ground_BW);
+                    break;
+                case Constantes.Ghost:
+                    typeByte = await Utils.GetByteAssetImage(Constantes.Icon_Ghost_BW);
+                    break;
+                case Constantes.Dark:
+                    typeByte = await Utils.GetByteAssetImage(Constantes.Icon_Dark_BW);
+                    break;
+                case Constantes.Flying:
+                    typeByte = await Utils.GetByteAssetImage(Constantes.Icon_Flying_BW);
+                    break;
             }
-
-            return await Task.FromResult(chartEntries);
+            #endregion
+            return await Task.FromResult(typeByte);
         }
         #endregion
 
         #region Command
         public IMvxAsyncCommand NavigationValidationCommandAsync => new MvxAsyncCommand(NavigationValidationAsync);
 
+        public IMvxAsyncCommand CloseModalCommandAsync => new MvxAsyncCommand(CloseModalAsync);
+
+        public IMvxAsyncCommand<CorrectionQuizzSimple> CorrectionQuizzCommandAsync => new MvxAsyncCommand<CorrectionQuizzSimple>(CorrectionQuizzAsync);
+
         private async Task NavigationValidationAsync()
         {
             await _navigation.Close(this);
+        }
+
+        private async Task CorrectionQuizzAsync(CorrectionQuizzSimple correctionQuizz)
+        {
+            //await BackModalGenFilterAsync();
+            //CorrectionQuizzSimple = correctionQuizz;
+            //QuestionType = await _questionTypeService.GetByIdAsync(correctionQuizz.Question.QuestionTypeID);
+
+            //if (QuestionType.Code.Equals(Constantes.QTypPok))
+            //{
+            //    IsVisiblePokemon = true;
+            //    IsVisibleTypePok = false;
+
+            //    if (correctionQuizz.CorrectAnswer != null)
+            //    {
+            //        Pokemon = await _pokemonService.GetByIdAsync(correctionQuizz.CorrectAnswer.IsCorrectID);
+            //        TypePok = await _typePokService.GetByIdAsync(int.Parse(Pokemon.TypesID.Split(',')[0]));
+            //        IsVisibleSelectedNull = true;
+            //    }
+            //    else
+            //        IsVisibleSelectedNull = false;
+            //}
+            //else if(QuestionType.Code.Equals(Constantes.QTypTypPok) 
+            //    || QuestionType.Code.Equals(Constantes.QTypTyp))
+            //{
+            //    IsVisiblePokemon = false;
+            //    IsVisibleTypePok = true;
+
+            //    if (correctionQuizz.CorrectAnswer != null)
+            //    {
+            //        TypePok = await _typePokService.GetByIdAsync(correctionQuizz.CorrectAnswer.IsCorrectID);
+            //        await GetBytesTypesFilter(TypePok.Name);
+            //        IsVisibleSelectedNull = true;
+            //    }
+            //    else
+            //        IsVisibleSelectedNull = false;
+            //}
+        }
+
+        private async Task CloseModalAsync()
+        {
+            await BackModalGenFilterAsync();
+        }
+
+        private async Task BackModalGenFilterAsync()
+        {
+            await Task.Run(() =>
+            {
+                IsVisibleBackgroundModal = !IsVisibleBackgroundModal;
+                IsVisibleModalCorrection = !IsVisibleModalCorrection;
+            });
         }
         #endregion
 
@@ -230,6 +302,19 @@ namespace QuizzPokedex.ViewModels
         #region Collection
         public MvxNotifyTask BackGroundTask { get; private set; }
         public MvxNotifyTask LoadDataTask { get; private set; }
+
+        private MvxObservableCollection<CorrectionQuizzSimple> _correctionQuizz;
+
+        public MvxObservableCollection<CorrectionQuizzSimple> CorrectionQuizz
+        {
+            get { return _correctionQuizz; }
+            set
+            {
+                SetProperty(ref _correctionQuizz, value);
+                RaisePropertyChanged(() => CorrectionQuizz);
+            }
+        }
+
         #endregion
 
         #region Data
@@ -247,6 +332,14 @@ namespace QuizzPokedex.ViewModels
         {
             get { return _result; }
             set { SetProperty(ref _result, value); }
+        }
+
+        private CorrectionQuizzSimple _correctionQuizzSimple;
+
+        public CorrectionQuizzSimple CorrectionQuizzSimple
+        {
+            get { return _correctionQuizzSimple; }
+            set { SetProperty(ref _correctionQuizzSimple, value); }
         }
         #endregion
 
@@ -269,13 +362,13 @@ namespace QuizzPokedex.ViewModels
         #endregion
 
         #region Questions
-        #region Question 1
-        private Question _Question1;
+        #region CorrectionQuizz 1
+        private CorrectionQuizzSimple _CorrectionQuizz1;
 
-        public Question Question1
+        public CorrectionQuizzSimple CorrectionQuizz1
         {
-            get { return _Question1; }
-            set { SetProperty(ref _Question1, value); }
+            get { return _CorrectionQuizz1; }
+            set { SetProperty(ref _CorrectionQuizz1, value); }
         }
 
         private bool _isVisibleQuestion1 = true;
@@ -295,13 +388,13 @@ namespace QuizzPokedex.ViewModels
         }
         #endregion
 
-        #region Question 2
-        private Question _Question2;
+        #region CorrectionQuizz 2
+        private CorrectionQuizzSimple _CorrectionQuizz2;
 
-        public Question Question2
+        public CorrectionQuizzSimple CorrectionQuizz2
         {
-            get { return _Question2; }
-            set { SetProperty(ref _Question2, value); }
+            get { return _CorrectionQuizz2; }
+            set { SetProperty(ref _CorrectionQuizz2, value); }
         }
 
         private bool _isVisibleQuestion2 = true;
@@ -321,13 +414,13 @@ namespace QuizzPokedex.ViewModels
         }
         #endregion
 
-        #region Question 3
-        private Question _Question3;
+        #region CorrectionQuizz 3
+        private CorrectionQuizzSimple _CorrectionQuizz3;
 
-        public Question Question3
+        public CorrectionQuizzSimple CorrectionQuizz3
         {
-            get { return _Question3; }
-            set { SetProperty(ref _Question3, value); }
+            get { return _CorrectionQuizz3; }
+            set { SetProperty(ref _CorrectionQuizz3, value); }
         }
 
         private bool _isVisibleQuestion3 = true;
@@ -347,13 +440,13 @@ namespace QuizzPokedex.ViewModels
         }
         #endregion
 
-        #region Question 4
-        private Question question4;
+        #region CorrectionQuizz 4
+        private CorrectionQuizzSimple correctionQuizz4;
 
-        public Question Question4
+        public CorrectionQuizzSimple CorrectionQuizz4
         {
-            get { return question4; }
-            set { SetProperty(ref question4, value); }
+            get { return correctionQuizz4; }
+            set { SetProperty(ref correctionQuizz4, value); }
         }
 
         private bool _isVisibleQuestion4 = true;
@@ -373,13 +466,13 @@ namespace QuizzPokedex.ViewModels
         }
         #endregion
 
-        #region Question 5
-        private Question question5;
+        #region CorrectionQuizz 5
+        private CorrectionQuizzSimple correctionQuizz5;
 
-        public Question Question5
+        public CorrectionQuizzSimple CorrectionQuizz5
         {
-            get { return question5; }
-            set { SetProperty(ref question5, value); }
+            get { return correctionQuizz5; }
+            set { SetProperty(ref correctionQuizz5, value); }
         }
 
         private bool _isVisibleQuestion5 = true;
@@ -399,13 +492,13 @@ namespace QuizzPokedex.ViewModels
         }
         #endregion
 
-        #region Question 6
-        private Question question6;
+        #region CorrectionQuizz 6
+        private CorrectionQuizzSimple correctionQuizz6;
 
-        public Question Question6
+        public CorrectionQuizzSimple CorrectionQuizz6
         {
-            get { return question6; }
-            set { SetProperty(ref question6, value); }
+            get { return correctionQuizz6; }
+            set { SetProperty(ref correctionQuizz6, value); }
         }
 
         private bool _isVisibleQuestion6 = true;
@@ -425,13 +518,13 @@ namespace QuizzPokedex.ViewModels
         }
         #endregion
 
-        #region Question 7
-        private Question question7;
+        #region CorrectionQuizz 7
+        private CorrectionQuizzSimple correctionQuizz7;
 
-        public Question Question7
+        public CorrectionQuizzSimple CorrectionQuizz7
         {
-            get { return question7; }
-            set { SetProperty(ref question7, value); }
+            get { return correctionQuizz7; }
+            set { SetProperty(ref correctionQuizz7, value); }
         }
 
         private bool _isVisibleQuestion7 = true;
@@ -451,13 +544,13 @@ namespace QuizzPokedex.ViewModels
         }
         #endregion
 
-        #region Question 8
-        private Question question8;
+        #region CorrectionQuizz 8
+        private CorrectionQuizzSimple correctionQuizz8;
 
-        public Question Question8
+        public CorrectionQuizzSimple CorrectionQuizz8
         {
-            get { return question8; }
-            set { SetProperty(ref question8, value); }
+            get { return correctionQuizz8; }
+            set { SetProperty(ref correctionQuizz8, value); }
         }
 
         private bool _isVisibleQuestion8 = true;
@@ -477,13 +570,13 @@ namespace QuizzPokedex.ViewModels
         }
         #endregion
 
-        #region Question 9
-        private Question question9;
+        #region CorrectionQuizz 9
+        private CorrectionQuizzSimple correctionQuizz9;
 
-        public Question Question9
+        public CorrectionQuizzSimple CorrectionQuizz9
         {
-            get { return question9; }
-            set { SetProperty(ref question9, value); }
+            get { return correctionQuizz9; }
+            set { SetProperty(ref correctionQuizz9, value); }
         }
 
         private bool _isVisibleQuestion9 = true;
@@ -503,13 +596,13 @@ namespace QuizzPokedex.ViewModels
         }
         #endregion
 
-        #region Question 10
-        private Question question10;
+        #region CorrectionQuizz 10
+        private CorrectionQuizzSimple correctionQuizz10;
 
-        public Question Question10
+        public CorrectionQuizzSimple CorrectionQuizz10
         {
-            get { return question10; }
-            set { SetProperty(ref question10, value); }
+            get { return correctionQuizz10; }
+            set { SetProperty(ref correctionQuizz10, value); }
         }
 
         private bool _isVisibleQuestion10 = true;
@@ -529,13 +622,13 @@ namespace QuizzPokedex.ViewModels
         }
         #endregion
 
-        #region Question 11
-        private Question question11;
+        #region CorrectionQuizz 11
+        private CorrectionQuizzSimple correctionQuizz11;
 
-        public Question Question11
+        public CorrectionQuizzSimple CorrectionQuizz11
         {
-            get { return question11; }
-            set { SetProperty(ref question11, value); }
+            get { return correctionQuizz11; }
+            set { SetProperty(ref correctionQuizz11, value); }
         }
 
         private bool _isVisibleQuestion11 = false;
@@ -555,13 +648,13 @@ namespace QuizzPokedex.ViewModels
         }
         #endregion
 
-        #region Question 12
-        private Question question12;
+        #region CorrectionQuizz 12
+        private CorrectionQuizzSimple correctionQuizz12;
 
-        public Question Question12
+        public CorrectionQuizzSimple CorrectionQuizz12
         {
-            get { return question12; }
-            set { SetProperty(ref question12, value); }
+            get { return correctionQuizz12; }
+            set { SetProperty(ref correctionQuizz12, value); }
         }
 
         private bool _isVisibleQuestion12 = false;
@@ -581,13 +674,13 @@ namespace QuizzPokedex.ViewModels
         }
         #endregion
 
-        #region Question 13
-        private Question question13;
+        #region CorrectionQuizz 13
+        private CorrectionQuizzSimple correctionQuizz13;
 
-        public Question Question13
+        public CorrectionQuizzSimple CorrectionQuizz13
         {
-            get { return question13; }
-            set { SetProperty(ref question13, value); }
+            get { return correctionQuizz13; }
+            set { SetProperty(ref correctionQuizz13, value); }
         }
 
         private bool _isVisibleQuestion13 = false;
@@ -607,13 +700,13 @@ namespace QuizzPokedex.ViewModels
         }
         #endregion
 
-        #region Question 14
-        private Question question14;
+        #region CorrectionQuizz 14
+        private CorrectionQuizzSimple correctionQuizz14;
 
-        public Question Question14
+        public CorrectionQuizzSimple CorrectionQuizz14
         {
-            get { return question14; }
-            set { SetProperty(ref question14, value); }
+            get { return correctionQuizz14; }
+            set { SetProperty(ref correctionQuizz14, value); }
         }
 
         private bool _isVisibleQuestion14 = false;
@@ -633,13 +726,13 @@ namespace QuizzPokedex.ViewModels
         }
         #endregion
 
-        #region Question 15
-        private Question question15;
+        #region CorrectionQuizz 15
+        private CorrectionQuizzSimple correctionQuizz15;
 
-        public Question Question15
+        public CorrectionQuizzSimple CorrectionQuizz15
         {
-            get { return question15; }
-            set { SetProperty(ref question15, value); }
+            get { return correctionQuizz15; }
+            set { SetProperty(ref correctionQuizz15, value); }
         }
 
         private bool _isVisibleQuestion15 = false;
@@ -659,13 +752,13 @@ namespace QuizzPokedex.ViewModels
         }
         #endregion
 
-        #region Question 16
-        private Question question16;
+        #region CorrectionQuizz 16
+        private CorrectionQuizzSimple correctionQuizz16;
 
-        public Question Question16
+        public CorrectionQuizzSimple CorrectionQuizz16
         {
-            get { return question16; }
-            set { SetProperty(ref question16, value); }
+            get { return correctionQuizz16; }
+            set { SetProperty(ref correctionQuizz16, value); }
         }
 
         private bool _isVisibleQuestion16 = false;
@@ -685,13 +778,13 @@ namespace QuizzPokedex.ViewModels
         }
         #endregion
 
-        #region Question 17
-        private Question question17;
+        #region CorrectionQuizz 17
+        private CorrectionQuizzSimple correctionQuizz17;
 
-        public Question Question17
+        public CorrectionQuizzSimple CorrectionQuizz17
         {
-            get { return question17; }
-            set { SetProperty(ref question17, value); }
+            get { return correctionQuizz17; }
+            set { SetProperty(ref correctionQuizz17, value); }
         }
 
         private bool _isVisibleQuestion17 = false;
@@ -711,13 +804,13 @@ namespace QuizzPokedex.ViewModels
         }
         #endregion
 
-        #region Question 18
-        private Question question18;
+        #region CorrectionQuizz 18
+        private CorrectionQuizzSimple correctionQuizz18;
 
-        public Question Question18
+        public CorrectionQuizzSimple CorrectionQuizz18
         {
-            get { return question18; }
-            set { SetProperty(ref question18, value); }
+            get { return correctionQuizz18; }
+            set { SetProperty(ref correctionQuizz18, value); }
         }
 
         private bool _isVisibleQuestion18 = false;
@@ -737,13 +830,13 @@ namespace QuizzPokedex.ViewModels
         }
         #endregion
 
-        #region Question 19
-        private Question question19;
+        #region CorrectionQuizz 19
+        private CorrectionQuizzSimple correctionQuizz19;
 
-        public Question Question19
+        public CorrectionQuizzSimple CorrectionQuizz19
         {
-            get { return question19; }
-            set { SetProperty(ref question19, value); }
+            get { return correctionQuizz19; }
+            set { SetProperty(ref correctionQuizz19, value); }
         }
 
         private bool _isVisibleQuestion19 = false;
@@ -763,14 +856,14 @@ namespace QuizzPokedex.ViewModels
         }
         #endregion
 
-        #region Question 20
+        #region CorrectionQuizz 20
 
-        private Question question20;
+        private CorrectionQuizzSimple correctionQuizz20;
 
-        public Question Question20
+        public CorrectionQuizzSimple CorrectionQuizz20
         {
-            get { return question20; }
-            set { SetProperty(ref question20, value); }
+            get { return correctionQuizz20; }
+            set { SetProperty(ref correctionQuizz20, value); }
         }
 
         private bool _isVisibleQuestion20 = false;
@@ -789,6 +882,65 @@ namespace QuizzPokedex.ViewModels
             set { SetProperty(ref _byteResult20, value); }
         }
         #endregion
+        #endregion
+
+        #region Visibility
+
+        private bool _isVisibleBackgroundModal = false;
+
+        public bool IsVisibleBackgroundModal
+        {
+            get { return _isVisibleBackgroundModal; }
+            set { SetProperty(ref _isVisibleBackgroundModal, value); }
+        }
+
+        private bool _isVisibleModalCorrection = false;
+
+        public bool IsVisibleModalCorrection
+        {
+            get { return _isVisibleModalCorrection; }
+            set { SetProperty(ref _isVisibleModalCorrection, value); }
+        }
+
+        private bool _isVisiblePokemon = false;
+
+        public bool IsVisiblePokemon
+        {
+            get { return _isVisiblePokemon; }
+            set { SetProperty(ref _isVisiblePokemon, value); }
+        }
+
+        private bool _isVisibleTypePok = false;
+
+        public bool IsVisibleTypePok
+        {
+            get { return _isVisibleTypePok; }
+            set { SetProperty(ref _isVisibleTypePok, value); }
+        }
+
+        private bool _isVisibleCorrect = false;
+
+        public bool IsVisibleCorrect
+        {
+            get { return _isVisibleCorrect; }
+            set { SetProperty(ref _isVisibleCorrect, value); }
+        }
+
+        private bool _isVisibleWrong = false;
+
+        public bool IsVisibleWrong
+        {
+            get { return _isVisibleWrong; }
+            set { SetProperty(ref _isVisibleWrong, value); }
+        }
+
+        private bool _isVisibleSelectedNull = false;
+
+        public bool IsVisibleSelectedNull
+        {
+            get { return _isVisibleSelectedNull; }
+            set { SetProperty(ref _isVisibleSelectedNull, value); }
+        }
         #endregion
         #endregion
     }

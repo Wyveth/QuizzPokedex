@@ -73,8 +73,11 @@ namespace QuizzPokedex.Services
             foreach (Favorite favorite in favorites)
             {
                 Pokemon pokemon = result.Find(m => m.Id.Equals(favorite.PokemonID));
-                pokemon.Favorite = true;
-                pokemon.ImgFavorite = ImgFavorite;
+                if (pokemon != null)
+                {
+                    pokemon.Favorite = true;
+                    pokemon.ImgFavorite = ImgFavorite;
+                }
             }
 
             List<Pokemon> resultFilter = new List<Pokemon>();
@@ -105,7 +108,7 @@ namespace QuizzPokedex.Services
             .ThenBy(x => x.Number)
             .ToList();
         }
-        
+
         public async Task<List<Pokemon>> GetFamilyWithoutVariantAsync(string family)
         {
             string[] vs = family.Split(',');
@@ -428,7 +431,7 @@ namespace QuizzPokedex.Services
 
             while (pokemon != null)
             {
-                numberRandom = random.Next(result.Count);
+                numberRandom = random.Next(resultFilterGen.Count);
                 pokemon = alreadySelected.Find(m => m.Id.Equals(resultFilterGen[numberRandom].Id));
             }
 
