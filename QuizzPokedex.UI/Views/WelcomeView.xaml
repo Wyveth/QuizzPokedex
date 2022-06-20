@@ -23,6 +23,7 @@
     </views:MvxContentPage.Resources>
     <ContentPage.Content>
         <AbsoluteLayout BackgroundColor="White">
+            <!--  #C4F0F8  -->
             <StackLayout AbsoluteLayout.LayoutBounds="0,-0.02,1,0.25" AbsoluteLayout.LayoutFlags="All">
                 <Image Source="{Binding ImgPokedexUp, Converter={StaticResource ByteToImageSourceConverter}}" />
             </StackLayout>

@@ -1609,3 +1609,8 @@
         </AbsoluteLayout>
     </ContentPage.Content>
 </views:MvxContentPage>
+
+<!--
+    AbsoluteLayout.LayoutBounds="0.5,1,0.342,0.293"
+    AbsoluteLayout.LayoutFlags="All"
+-->

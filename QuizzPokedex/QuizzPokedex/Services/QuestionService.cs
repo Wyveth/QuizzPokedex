@@ -104,9 +104,6 @@ namespace QuizzPokedex.Services
             string AnswersID = string.Empty;
             int DataObjectID = 0;
             List<Question> questions = new List<Question>();
-            List<Pokemon> alreadyExistQTypPok = new List<Pokemon>();
-            List<Pokemon> alreadyExistQTypTypPok = new List<Pokemon>();
-            List<TypePok> alreadyExistQTypTyp = new List<TypePok>();
 
             for (int nbQuestion = 0; nbQuestion < nbQuestionMax; nbQuestion++)
             {
@@ -116,29 +113,17 @@ namespace QuizzPokedex.Services
 
                     if (questionType.Code.Equals(Constantes.QTypPok))
                     {
-                        AnswersID = await GetAnswersID_QTypPok(questionType, gen1, gen2, gen3, gen4, gen5, gen6, gen7, gen8, genArceus, alreadyExistQTypPok);
-                        int answerID = int.Parse(AnswersID);
-                        Answer answer = await _answerService.GetByIdAsync(answerID);
-                        alreadyExistQTypPok.Add(await _pokemonService.GetByIdAsync(answer.IsCorrectID));
-                        DataObjectID = answer.IsCorrectID;
+                        AnswersID = await GetAnswersID_QTypPok(questionType, gen1, gen2, gen3, gen4, gen5, gen6, gen7, gen8, genArceus);
                     }
                     else if (questionType.Code.Equals(Constantes.QTypTypPok))
                     {
-                        Pokemon pokemon = await _pokemonService.GetPokemonRandom(gen1, gen2, gen3, gen4, gen5, gen6, gen7, gen8, genArceus, alreadyExistQTypTypPok);
+                        Pokemon pokemon = await _pokemonService.GetPokemonRandom(gen1, gen2, gen3, gen4, gen5, gen6, gen7, gen8, genArceus);
                         AnswersID = await GetAnswersID_QTypTypePok(questionType, pokemon);
-                        alreadyExistQTypTypPok.Add(pokemon);
                         DataObjectID = pokemon.Id;
                     }
                     else if (questionType.Code.Equals(Constantes.QTypTyp))
                     {
-                        AnswersID = await GetAnswersID_QTypTyp(questionType, alreadyExistQTypTyp);
-                        int answerID = int.Parse(AnswersID);
-                        Answer answer = await _answerService.GetByIdAsync(answerID);
-                        alreadyExistQTypTyp.Add(await _typePokService.GetByIdAsync(answer.IsCorrectID));
-                        DataObjectID = answer.IsCorrectID;
-
-                        if (alreadyExistQTypTyp.Count.Equals(18))
-                            alreadyExistQTypTyp = new List<TypePok>();
+                        AnswersID = await GetAnswersID_QTypTyp(questionType);
                     }
 
                     Question question = new Question()
@@ -194,7 +179,7 @@ namespace QuizzPokedex.Services
             return await Task.FromResult(result);
         }
 
-        private async Task<string> GetAnswersID_QTypPok(QuestionType questionType, bool gen1, bool gen2, bool gen3, bool gen4, bool gen5, bool gen6, bool gen7, bool gen8, bool genArceus, List<Pokemon> alreadyExist)
+        private async Task<string> GetAnswersID_QTypPok(QuestionType questionType, bool gen1, bool gen2, bool gen3, bool gen4, bool gen5, bool gen6, bool gen7, bool gen8, bool genArceus)
         {
             string AnswersID = string.Empty;
 
@@ -204,14 +189,7 @@ namespace QuizzPokedex.Services
             {
                 await Task.Run(async () =>
                 {
-                    Pokemon pokemon = await _pokemonService.GetPokemonRandom(gen1, gen2, gen3, gen4, gen5, gen6, gen7, gen8, genArceus, alreadyExist);
-                    Pokemon pokemonExist = alreadyExist.Find(m => m.Id.Equals(pokemon.Id));
-                    while(pokemonExist != null)
-                    {
-                        pokemon = await _pokemonService.GetPokemonRandom(gen1, gen2, gen3, gen4, gen5, gen6, gen7, gen8, genArceus, alreadyExist);
-                        pokemonExist = alreadyExist.Find(m => m.Id.Equals(pokemon.Id));
-                    }
-                    pokemonsAnswer.Add(pokemon);
+                    pokemonsAnswer.Add(await _pokemonService.GetPokemonRandom(gen1, gen2, gen3, gen4, gen5, gen6, gen7, gen8, genArceus, pokemonsAnswer));
                 });
             }
 
@@ -245,7 +223,7 @@ namespace QuizzPokedex.Services
             return await Task.FromResult(AnswersID);
         }
 
-        private async Task<string> GetAnswersID_QTypTyp(QuestionType questionType, List<TypePok> alreadySelected)
+        private async Task<string> GetAnswersID_QTypTyp(QuestionType questionType)
         {
             string AnswersID = string.Empty;
 
@@ -257,7 +235,7 @@ namespace QuizzPokedex.Services
                 tasks.Add(
                     Task.Run(async () =>
                     {
-                        typesAnswer.Add(await _typePokService.GetTypeRandom(alreadySelected));
+                        typesAnswer.Add(await _typePokService.GetTypeRandom(typesAnswer));
                     })
                 );
             }
