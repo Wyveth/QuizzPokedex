@@ -2,6 +2,7 @@
 using MvvmCross.Commands;
 using MvvmCross.IoC;
 using MvvmCross.Navigation;
+using MvvmCross.Plugin.Messenger;
 using MvvmCross.ViewModels;
 using QuizzPokedex.Interfaces;
 using QuizzPokedex.Models;
@@ -20,16 +21,18 @@ namespace QuizzPokedex.ViewModels
         private readonly IPokemonService _pokemonService;
         private readonly ITypePokService _typePokService;
         private readonly IFavoriteService _favoriteService;
+        private readonly IMvxMessenger _messenger;
         #endregion
 
         #region Constructor
-        public PokemonViewModel(IMvxNavigationService navigation, IMvxIoCProvider logger, IPokemonService pokemonService, ITypePokService typeService, IFavoriteService favoriteService)
+        public PokemonViewModel(IMvxNavigationService navigation, IMvxMessenger messenger, IMvxIoCProvider logger, IPokemonService pokemonService, ITypePokService typeService, IFavoriteService favoriteService)
         {
             _navigation = navigation;
             _logger = logger;
             _pokemonService = pokemonService;
             _typePokService = typeService;
             _favoriteService = favoriteService;
+            _messenger = messenger;
         }
         #endregion
 
@@ -313,6 +316,9 @@ namespace QuizzPokedex.ViewModels
                 };
                 await _favoriteService.CreateAsync(favorite);
             }
+
+            var refresh = new MessageRefresh(this, true);
+            _messenger.Publish(refresh);
         }
 
         private async Task DetailsPokemonAsync(Pokemon Pokemon)

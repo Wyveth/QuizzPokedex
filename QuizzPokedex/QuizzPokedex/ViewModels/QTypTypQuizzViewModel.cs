@@ -1,6 +1,7 @@
 ﻿using MvvmCross.Commands;
 using MvvmCross.IoC;
 using MvvmCross.Navigation;
+using MvvmCross.Plugin.Messenger;
 using MvvmCross.ViewModels;
 using QuizzPokedex.Interfaces;
 using QuizzPokedex.Models;
@@ -22,10 +23,11 @@ namespace QuizzPokedex.ViewModels
         private readonly IDifficultyService _difficultyService;
         private readonly IAnswerService _answerService;
         private readonly ITypePokService _typePokService;
+        private readonly IMvxMessenger _messenger;
         #endregion
 
         #region Constructor
-        public QTypTypQuizzViewModel(IMvxNavigationService navigation, IQuizzService quizzService, IQuestionService questionService, IDifficultyService difficultyService, IAnswerService answerService, IQuestionTypeService questionTypeService, ITypePokService typePokService)
+        public QTypTypQuizzViewModel(IMvxNavigationService navigation, IQuizzService quizzService, IQuestionService questionService, IDifficultyService difficultyService, IAnswerService answerService, IQuestionTypeService questionTypeService, ITypePokService typePokService, IMvxMessenger messenger)
         {
             _navigation = navigation;
             _quizzService = quizzService;
@@ -34,6 +36,7 @@ namespace QuizzPokedex.ViewModels
             _difficultyService = difficultyService;
             _answerService = answerService;
             _typePokService = typePokService;
+            _messenger = messenger;
         }
         #endregion
 
@@ -500,6 +503,9 @@ namespace QuizzPokedex.ViewModels
                 await _quizzService.UpdateAsync(QuestionAnswers.Quizz);
                 await Utils.RedirectQuizz(_navigation, QuestionAnswers);
             }
+
+            var refresh = new MessageRefresh(this, true);
+            _messenger.Publish(refresh);
 
             await _navigation.Close(this);
 

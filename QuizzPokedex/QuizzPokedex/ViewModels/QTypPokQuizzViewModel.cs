@@ -1,14 +1,12 @@
 ﻿using MvvmCross.Commands;
 using MvvmCross.IoC;
 using MvvmCross.Navigation;
+using MvvmCross.Plugin.Messenger;
 using MvvmCross.ViewModels;
 using QuizzPokedex.Interfaces;
 using QuizzPokedex.Models;
 using QuizzPokedex.Resources;
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace QuizzPokedex.ViewModels
@@ -25,10 +23,11 @@ namespace QuizzPokedex.ViewModels
         private readonly IAnswerService _answerService;
         private readonly IPokemonService _pokemonService;
         private readonly ITypePokService _typePokService;
+        private readonly IMvxMessenger _messenger;
         #endregion
 
         #region Constructor
-        public QTypPokQuizzViewModel(IMvxNavigationService navigation, IMvxIoCProvider logger, IQuizzService quizzService, IPokemonService pokemonService, IQuestionService questionService, IDifficultyService difficultyService, IAnswerService answerService, IQuestionTypeService questionTypeService, ITypePokService typePokService)
+        public QTypPokQuizzViewModel(IMvxNavigationService navigation, IMvxIoCProvider logger, IQuizzService quizzService, IPokemonService pokemonService, IQuestionService questionService, IDifficultyService difficultyService, IAnswerService answerService, IQuestionTypeService questionTypeService, ITypePokService typePokService, IMvxMessenger messenger)
         {
             _navigation = navigation;
             _logger = logger;
@@ -39,6 +38,7 @@ namespace QuizzPokedex.ViewModels
             _answerService = answerService;
             _pokemonService = pokemonService;
             _typePokService = typePokService;
+            _messenger = messenger;
         }
         #endregion
 
@@ -437,6 +437,9 @@ namespace QuizzPokedex.ViewModels
                 await _quizzService.UpdateAsync(QuestionAnswers.Quizz);
                 await Utils.RedirectQuizz(_navigation, QuestionAnswers);
             }
+
+            var refresh = new MessageRefresh(this, true);
+            _messenger.Publish(refresh);
 
             await _navigation.Close(this);
 

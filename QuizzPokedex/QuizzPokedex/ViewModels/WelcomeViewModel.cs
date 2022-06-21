@@ -21,8 +21,6 @@ namespace QuizzPokedex.ViewModels
         private readonly IPokemonService _pokemonService;
         private readonly ITypePokService _typePokService;
         private readonly IProfileService _profileService;
-
-        //Creation de l'abonnement ici (pour rafraichir via un abonné)
         private readonly MvxSubscriptionToken _token;
         #endregion
 
@@ -53,6 +51,7 @@ namespace QuizzPokedex.ViewModels
             ImgPokedexUp = await Utils.GetByteAssetImage(Constantes.Pokedex_Up);
             ImgPokedexDown = await Utils.GetByteAssetImage(Constantes.Pokedex_Down);
         }
+
         private async Task ProgressBarAsync()
         {
             int nbTypeMax = await _typePokService.GetNumberTypeJsonAsync();
@@ -159,6 +158,7 @@ namespace QuizzPokedex.ViewModels
         public IMvxAsyncCommand NavigationPokedexCommandAsync => new MvxAsyncCommand(NavigationPokedexAsync);
 
         public IMvxAsyncCommand ShowHideOtherProfileCommandAsync => new MvxAsyncCommand(ShowHideOtherProfileAsync);
+
         public IMvxAsyncCommand ActivatedProfileLongCommandAsync => new MvxAsyncCommand(ActivatedProfileLongAsync);
 
         public IMvxAsyncCommand<Profile> OpenModalChangeProfileCommandAsync => new MvxAsyncCommand<Profile>(OpenModalChangeProfileAsync);
@@ -230,6 +230,7 @@ namespace QuizzPokedex.ViewModels
         private async Task OpenModalChangeProfileAsync(Profile profile)
         {
             SelectedProfileChange = profile;
+            MsgChangeProfile = "Veux-tu activer le profil de " + profile.Name + "?";
             await ShowHideModal();
         }
 
@@ -296,6 +297,14 @@ namespace QuizzPokedex.ViewModels
         #endregion
 
         #region Profile
+        private string _msgChangeProfile;
+
+        public string MsgChangeProfile
+        {
+            get { return _msgChangeProfile; }
+            set { SetProperty(ref _msgChangeProfile, value); }
+        }
+
         private bool _firstProfileCreated = false;
 
         public bool FirstProfileCreated
@@ -411,6 +420,7 @@ namespace QuizzPokedex.ViewModels
         }
         #endregion
 
+        #region Image Background
         private byte[] _imgPokedexUp;
 
         public byte[] ImgPokedexUp
@@ -426,6 +436,7 @@ namespace QuizzPokedex.ViewModels
             get { return _imgPokedexDown; }
             set { SetProperty(ref _imgPokedexDown, value); }
         }
+        #endregion
         #endregion
     }
 }

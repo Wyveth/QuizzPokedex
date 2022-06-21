@@ -6,7 +6,6 @@
     xmlns:animation="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
     xmlns:converters="clr-namespace:QuizzPokedex.UI.Converters"
     xmlns:ef="clr-namespace:AiForms.Effects;assembly=AiForms.Effects"
-    xmlns:extensions="http://xamarin.com/schemas/2020/toolkit"
     xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
     xmlns:shadows="http://sharpnado.com"
     xmlns:viewmodel="clr-namespace:QuizzPokedex.ViewModels;assembly=QuizzPokedex"
@@ -155,7 +154,7 @@
                 </Grid>
             </StackLayout>
             <StackLayout
-                extensions:CornerRadiusEffect.CornerRadius="40"
+                xct:CornerRadiusEffect.CornerRadius="40"
                 AbsoluteLayout.LayoutBounds="0.97,0.99,0.15,0.08"
                 AbsoluteLayout.LayoutFlags="All">
                 <shadows:Shadows CornerRadius="30" IsVisible="{Binding FirstProfileCreated, Converter={StaticResource InverseBoolConverter}}">
@@ -230,7 +229,7 @@
                 </shadows:Shadows>
             </StackLayout>
             <StackLayout
-                extensions:CornerRadiusEffect.CornerRadius="40"
+                xct:CornerRadiusEffect.CornerRadius="40"
                 AbsoluteLayout.LayoutBounds="0.97,0.89,0.15,0.08"
                 AbsoluteLayout.LayoutFlags="All"
                 IsVisible="{Binding IsVisibleSecondProfile}">
@@ -307,7 +306,7 @@
                 </shadows:Shadows>
             </StackLayout>
             <StackLayout
-                extensions:CornerRadiusEffect.CornerRadius="40"
+                xct:CornerRadiusEffect.CornerRadius="40"
                 AbsoluteLayout.LayoutBounds="0.97,0.79,0.15,0.08"
                 AbsoluteLayout.LayoutFlags="All"
                 IsVisible="{Binding IsVisibleThirdProfile}">
@@ -424,7 +423,7 @@
                         xct:ShadowEffect.Radius="20"
                         FontAttributes="Bold"
                         HorizontalOptions="CenterAndExpand"
-                        Text="Veux tu changer de profil?"
+                        Text="{Binding MsgChangeProfile}"
                         TextColor="Black" />
                     <shadows:Shadows
                         Grid.Row="2"

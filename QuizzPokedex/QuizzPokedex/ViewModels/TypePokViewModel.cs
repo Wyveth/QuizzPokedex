@@ -46,12 +46,6 @@ namespace QuizzPokedex.ViewModels
             var result = await _typePokService.GetAllAsync();
             TypePoks = new MvxObservableCollection<TypePok>(result);
         }
-
-        private async void RefreshAsync(MessageRefresh msg)
-        {
-            if (msg.Refresh)
-                await LoadTypePokAsync();
-        }
         #endregion
         #endregion
 

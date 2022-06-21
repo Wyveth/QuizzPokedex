@@ -2,6 +2,7 @@
 using MvvmCross.Commands;
 using MvvmCross.IoC;
 using MvvmCross.Navigation;
+using MvvmCross.Plugin.Messenger;
 using MvvmCross.ViewModels;
 using QuizzPokedex.Interfaces;
 using QuizzPokedex.Models;
@@ -26,10 +27,11 @@ namespace QuizzPokedex.ViewModels
         private readonly IAnswerService _answerService;
         private readonly IPokemonService _pokemonService;
         private readonly ITypePokService _typePokService;
+        private readonly IMvxMessenger _messenger;
         #endregion
 
         #region Constructor
-        public ResultQuizzViewModel(IMvxNavigationService navigation, IMvxIoCProvider logger, IQuizzService quizzService, IPokemonService pokemonService, IQuestionService questionService, IDifficultyService difficultyService, IAnswerService answerService, IQuestionTypeService questionTypeService, ITypePokService typePokService)
+        public ResultQuizzViewModel(IMvxNavigationService navigation, IMvxIoCProvider logger, IQuizzService quizzService, IPokemonService pokemonService, IQuestionService questionService, IDifficultyService difficultyService, IAnswerService answerService, IQuestionTypeService questionTypeService, ITypePokService typePokService, IMvxMessenger messenger)
         {
             _navigation = navigation;
             _logger = logger;
@@ -40,6 +42,7 @@ namespace QuizzPokedex.ViewModels
             _answerService = answerService;
             _pokemonService = pokemonService;
             _typePokService = typePokService;
+            _messenger = messenger;
         }
         #endregion
 
@@ -77,8 +80,6 @@ namespace QuizzPokedex.ViewModels
                 {
                     List<Answer> answers = await _answerService.GetAllByAnswersIDAsync(question.AnswersID);
                     Answer answerIsCorrect = answers.Find(m => m.IsCorrect.Equals(true) && m.IsSelected.Equals(true));
-                    //Answer answerCorrect = answers.Find(m => m.IsCorrect.Equals(true));
-                    //Answer answerWrong = answers.Find(m => m.IsCorrect.Equals(false) && m.IsSelected.Equals(true));
                     correctionQuizz.Add(await LoadCorrectionQuizz(question, answers, answerIsCorrect));
                     if (answerIsCorrect != null)
                         answersCorrect.Add(answerIsCorrect);
@@ -150,14 +151,6 @@ namespace QuizzPokedex.ViewModels
             };
 
             return await Task.FromResult(correctionQuizz);
-        }
-
-        private Task<bool> GetVisibleQuestion(Question question)
-        {
-            if (question != null)
-                return Task.FromResult(true);
-            else
-                return Task.FromResult(false);
         }
 
         private async Task<byte[]> GetByteImgAnswer(Answer answer)
@@ -237,55 +230,12 @@ namespace QuizzPokedex.ViewModels
         #region Command
         public IMvxAsyncCommand NavigationValidationCommandAsync => new MvxAsyncCommand(NavigationValidationAsync);
 
-        public IMvxAsyncCommand CloseModalCommandAsync => new MvxAsyncCommand(CloseModalAsync);
-
-        public IMvxAsyncCommand<CorrectionQuizzSimple> CorrectionQuizzCommandAsync => new MvxAsyncCommand<CorrectionQuizzSimple>(CorrectionQuizzAsync);
-
         private async Task NavigationValidationAsync()
         {
+            var refresh = new MessageRefresh(this, true);
+            _messenger.Publish(refresh);
+
             await _navigation.Close(this);
-        }
-
-        private async Task CorrectionQuizzAsync(CorrectionQuizzSimple correctionQuizz)
-        {
-            //await BackModalGenFilterAsync();
-            //CorrectionQuizzSimple = correctionQuizz;
-            //QuestionType = await _questionTypeService.GetByIdAsync(correctionQuizz.Question.QuestionTypeID);
-
-            //if (QuestionType.Code.Equals(Constantes.QTypPok))
-            //{
-            //    IsVisiblePokemon = true;
-            //    IsVisibleTypePok = false;
-
-            //    if (correctionQuizz.CorrectAnswer != null)
-            //    {
-            //        Pokemon = await _pokemonService.GetByIdAsync(correctionQuizz.CorrectAnswer.IsCorrectID);
-            //        TypePok = await _typePokService.GetByIdAsync(int.Parse(Pokemon.TypesID.Split(',')[0]));
-            //        IsVisibleSelectedNull = true;
-            //    }
-            //    else
-            //        IsVisibleSelectedNull = false;
-            //}
-            //else if(QuestionType.Code.Equals(Constantes.QTypTypPok) 
-            //    || QuestionType.Code.Equals(Constantes.QTypTyp))
-            //{
-            //    IsVisiblePokemon = false;
-            //    IsVisibleTypePok = true;
-
-            //    if (correctionQuizz.CorrectAnswer != null)
-            //    {
-            //        TypePok = await _typePokService.GetByIdAsync(correctionQuizz.CorrectAnswer.IsCorrectID);
-            //        await GetBytesTypesFilter(TypePok.Name);
-            //        IsVisibleSelectedNull = true;
-            //    }
-            //    else
-            //        IsVisibleSelectedNull = false;
-            //}
-        }
-
-        private async Task CloseModalAsync()
-        {
-            await BackModalGenFilterAsync();
         }
 
         private async Task BackModalGenFilterAsync()

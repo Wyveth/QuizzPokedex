@@ -16,7 +16,6 @@ namespace QuizzPokedex.ViewModels
         #region Fields
         private readonly IMvxNavigationService _navigation;
         private readonly IProfileService _profileService;
-        //creation de l'abonnement ici (pour rafraichir via un abonné)
         private readonly MvxSubscriptionToken _token;
         #endregion
 

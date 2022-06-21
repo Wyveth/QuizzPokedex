@@ -1,8 +1,4 @@
-﻿using Android.App;
-using Android.Content.Res;
-using Android.Graphics;
-using Android.Graphics.Drawables;
-using MvvmCross.Commands;
+﻿using MvvmCross.Commands;
 using MvvmCross.IoC;
 using MvvmCross.Navigation;
 using MvvmCross.Plugin.Messenger;
@@ -10,12 +6,8 @@ using MvvmCross.ViewModels;
 using QuizzPokedex.Interfaces;
 using QuizzPokedex.Models;
 using QuizzPokedex.Resources;
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using System.Threading.Tasks;
-using Xamarin.Forms;
 
 namespace QuizzPokedex.ViewModels
 {
@@ -27,16 +19,18 @@ namespace QuizzPokedex.ViewModels
         private readonly IPokemonService _pokemonService;
         private readonly ITypePokService _typePokService;
         private readonly IFavoriteService _favoriteService;
+        private readonly MvxSubscriptionToken _token;
         #endregion
 
         #region Constructor
-        public PokedexViewModel(IMvxNavigationService navigation, IMvxIoCProvider logger, IPokemonService pokemonService, ITypePokService typePokService, IFavoriteService favoriteService)
+        public PokedexViewModel(IMvxNavigationService navigation, IMvxIoCProvider logger, IPokemonService pokemonService, ITypePokService typePokService, IFavoriteService favoriteService, IMvxMessenger messenger)
         {
             _navigation = navigation;
             _logger = logger;
             _pokemonService = pokemonService;
             _typePokService = typePokService;
             _favoriteService = favoriteService;
+            _token = messenger.Subscribe<MessageRefresh>(RefreshAsync);
         }
         #endregion
 
@@ -340,6 +334,12 @@ namespace QuizzPokedex.ViewModels
             TextColorGenArceus = Constantes.BlackHexa;
 
             return await Task.FromResult(true);
+        }
+
+        private async void RefreshAsync(MessageRefresh msg)
+        {
+            if (msg.Refresh)
+                await LoadPokemonAsync();
         }
         #endregion
 

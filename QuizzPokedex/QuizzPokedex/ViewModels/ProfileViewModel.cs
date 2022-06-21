@@ -61,7 +61,6 @@ namespace QuizzPokedex.ViewModels
             StarterFire = pokemonsAvailable[1];
             StarterWater = pokemonsAvailable[2];
             StarterElectrik = pokemonsAvailable[3];
-            
         }
         #endregion
 
@@ -151,7 +150,6 @@ namespace QuizzPokedex.ViewModels
                 Profile.Activated = true;
                 await _profileService.CreateAsync(Profile);
 
-                //nouvel enregistrement crée on informe par abonnement de rafraichir
                 var refresh = new MessageRefresh(this, true);
                 _messenger.Publish(refresh);
 
