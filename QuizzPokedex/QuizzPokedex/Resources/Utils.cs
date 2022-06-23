@@ -1,4 +1,6 @@
 ﻿using Android.Content.Res;
+using FFImageLoading.Transformations;
+using FFImageLoading.Work;
 using MvvmCross.Navigation;
 using QuizzPokedex.Models;
 using QuizzPokedex.ViewModels;
@@ -23,6 +25,24 @@ namespace QuizzPokedex.Resources
             }
 
             return await Task.FromResult(imgByte);
+        }
+
+        public static async Task<List<ITransformation>> GetTransformationImage(QuestionType questionType)
+        {
+            List<ITransformation> transformationList = new List<ITransformation>();
+            if (questionType.IsBlurred && questionType.IsHide)
+            {
+                transformationList.Add(new BlurredTransformation(250));
+                transformationList.Add(new TintTransformation("#000000"));
+            }
+            else if (questionType.IsBlurred)
+                transformationList.Add(new BlurredTransformation(250));
+            else if (questionType.IsHide)
+                transformationList.Add(new TintTransformation("#000000"));
+            else if (questionType.IsGrayscale)
+                transformationList.Add(new GrayscaleTransformation());
+
+            return await Task.FromResult(transformationList);
         }
 
         public static async Task RedirectQuizz(IMvxNavigationService _navigation, QuestionAnswers questionAnswers, Question question = null, QuestionType questionType = null)

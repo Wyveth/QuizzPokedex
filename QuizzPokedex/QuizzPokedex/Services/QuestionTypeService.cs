@@ -68,6 +68,7 @@ namespace QuizzPokedex.Services
         #region Populate Database
         public async Task Populate()
         {
+            #region Easy
             Difficulty difficultyEasy = await _difficultyService.GetByLibelleAsync(Constantes.EasyTQ);
             QuestionType questionType = new QuestionType()
             {
@@ -98,13 +99,37 @@ namespace QuizzPokedex.Services
                 NbAnswersPossible = 1
             };
             await CreateAsync(questionType);
+            #endregion
 
+            #region Normal
             Difficulty difficultyNormal = await _difficultyService.GetByLibelleAsync(Constantes.NormalTQ);
             questionType = new QuestionType()
             {
                 Code = Constantes.QTypPok,
                 Libelle = "Quel est ce pokémon?",
                 DifficultyID = difficultyNormal.Id,
+                NbAnswers = 8,
+                NbAnswersPossible = 1
+            };
+            await CreateAsync(questionType);
+
+            questionType = new QuestionType()
+            {
+                Code = Constantes.QTypPok,
+                Libelle = "Quel est ce pokémon?",
+                DifficultyID = difficultyNormal.Id,
+                IsBlurred = true,
+                NbAnswers = 8,
+                NbAnswersPossible = 1
+            };
+            await CreateAsync(questionType);
+
+            questionType = new QuestionType()
+            {
+                Code = Constantes.QTypPok,
+                Libelle = "Quel est ce pokémon?",
+                DifficultyID = difficultyNormal.Id,
+                IsHide = true,
                 NbAnswers = 8,
                 NbAnswersPossible = 1
             };
@@ -122,6 +147,28 @@ namespace QuizzPokedex.Services
 
             questionType = new QuestionType()
             {
+                Code = Constantes.QTypTypPok,
+                Libelle = "Quel est le type principal de ce pokémon?",
+                DifficultyID = difficultyNormal.Id,
+                IsBlurred = true,
+                NbAnswers = 12,
+                NbAnswersPossible = 1
+            };
+            await CreateAsync(questionType);
+
+            questionType = new QuestionType()
+            {
+                Code = Constantes.QTypTypPok,
+                Libelle = "Quel est le type principal de ce pokémon?",
+                DifficultyID = difficultyNormal.Id,
+                IsHide = true,
+                NbAnswers = 12,
+                NbAnswersPossible = 1
+            };
+            await CreateAsync(questionType);
+
+            questionType = new QuestionType()
+            {
                 Code = Constantes.QTypTyp,
                 Libelle = "Quel est-ce type?",
                 DifficultyID = difficultyNormal.Id,
@@ -129,13 +176,49 @@ namespace QuizzPokedex.Services
                 NbAnswersPossible = 1
             };
             await CreateAsync(questionType);
+            #endregion
 
+            #region Hard
             Difficulty difficultyHard = await _difficultyService.GetByLibelleAsync(Constantes.HardTQ);
             questionType = new QuestionType()
             {
                 Code = Constantes.QTypPok,
                 Libelle = "Quel est ce pokémon?",
                 DifficultyID = difficultyHard.Id,
+                NbAnswers = 12,
+                NbAnswersPossible = 1
+            };
+            await CreateAsync(questionType);
+
+            questionType = new QuestionType()
+            {
+                Code = Constantes.QTypPok,
+                Libelle = "Quel est ce pokémon?",
+                DifficultyID = difficultyHard.Id,
+                IsBlurred = true,
+                NbAnswers = 12,
+                NbAnswersPossible = 1
+            };
+            await CreateAsync(questionType);
+
+            questionType = new QuestionType()
+            {
+                Code = Constantes.QTypPok,
+                Libelle = "Quel est ce pokémon?",
+                DifficultyID = difficultyHard.Id,
+                NbAnswers = 12,
+                IsHide = true,
+                NbAnswersPossible = 1
+            };
+            await CreateAsync(questionType);
+
+            questionType = new QuestionType()
+            {
+                Code = Constantes.QTypPok,
+                Libelle = "Quel est ce pokémon?",
+                DifficultyID = difficultyHard.Id,
+                IsBlurred = true,
+                IsHide = true,
                 NbAnswers = 12,
                 NbAnswersPossible = 1
             };
@@ -153,6 +236,40 @@ namespace QuizzPokedex.Services
 
             questionType = new QuestionType()
             {
+                Code = Constantes.QTypTypPok,
+                Libelle = "Quel est le type principal de ce pokémon?",
+                DifficultyID = difficultyHard.Id,
+                IsBlurred = true,
+                NbAnswers = 18,
+                NbAnswersPossible = 1
+            };
+            await CreateAsync(questionType);
+
+            questionType = new QuestionType()
+            {
+                Code = Constantes.QTypTypPok,
+                Libelle = "Quel est le type principal de ce pokémon?",
+                DifficultyID = difficultyHard.Id,
+                IsHide = true,
+                NbAnswers = 18,
+                NbAnswersPossible = 1
+            };
+            await CreateAsync(questionType);
+
+            questionType = new QuestionType()
+            {
+                Code = Constantes.QTypTypPok,
+                Libelle = "Quel est le type principal de ce pokémon?",
+                DifficultyID = difficultyHard.Id,
+                IsBlurred = true,
+                IsHide = true,
+                NbAnswers = 18,
+                NbAnswersPossible = 1
+            };
+            await CreateAsync(questionType);
+
+            questionType = new QuestionType()
+            {
                 Code = Constantes.QTypTyp,
                 Libelle = "Quel est-ce type?",
                 DifficultyID = difficultyHard.Id,
@@ -160,6 +277,7 @@ namespace QuizzPokedex.Services
                 NbAnswersPossible = 1
             };
             await CreateAsync(questionType);
+            #endregion
         }
         #endregion
 

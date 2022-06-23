@@ -1,13 +1,10 @@
-﻿using FFImageLoading.Transformations;
-using FFImageLoading.Work;
-using MvvmCross.Commands;
+﻿using MvvmCross.Commands;
 using MvvmCross.IoC;
 using MvvmCross.Navigation;
 using MvvmCross.Plugin.Messenger;
 using MvvmCross.ViewModels;
 using QuizzPokedex.Interfaces;
 using QuizzPokedex.Models;
-using QuizzPokedex.Resources;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;

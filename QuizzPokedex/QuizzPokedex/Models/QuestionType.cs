@@ -28,8 +28,11 @@ namespace QuizzPokedex.Models
         //Si Image Floue
         public bool IsBlurred { get; set; }
 
-        //Si Image Noir & Blanc
-        public bool IsGrayScale { get; set; }
+        //Si Image Noir et Blanc
+        public bool IsGrayscale { get; set; }
+
+        //Si Image Noir
+        public bool IsHide { get; set; }
 
         //Si Réponse de Même Type
         public bool IsSameType { get; set; }

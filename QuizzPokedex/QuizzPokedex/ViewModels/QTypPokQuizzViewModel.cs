@@ -1,4 +1,5 @@
-﻿using MvvmCross.Commands;
+﻿using FFImageLoading.Work;
+using MvvmCross.Commands;
 using MvvmCross.IoC;
 using MvvmCross.Navigation;
 using MvvmCross.Plugin.Messenger;
@@ -7,7 +8,9 @@ using QuizzPokedex.Interfaces;
 using QuizzPokedex.Models;
 using QuizzPokedex.Resources;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
+using IS = Xamarin.Forms.ImageSource;
 
 namespace QuizzPokedex.ViewModels
 {
@@ -80,7 +83,12 @@ namespace QuizzPokedex.ViewModels
             int typeID = int.Parse(Pokemon.TypesID.Split(',')[0]);
             TypePok = await _typePokService.GetByIdAsync(typeID);
 
+            Stream stream = new MemoryStream(Pokemon.DataImg);
+            IsPok = IS.FromStream(() => { return stream; });
+
             Difficulty difficulty = await _difficultyService.GetByIdAsync(QuestionType.DifficultyID);
+
+            Transformations = await Utils.GetTransformationImage(QuestionType);
             await GetBytesDifficulty(difficulty);
             await LoadDataDifficulty(difficulty);
             await LoadUIDifficulty(difficulty);
@@ -590,6 +598,25 @@ namespace QuizzPokedex.ViewModels
         {
             get { return _imgPokedexDown; }
             set { SetProperty(ref _imgPokedexDown, value); }
+        }
+        #endregion
+
+        #region Transformation
+
+        private List<ITransformation> _iTransformations;
+
+        public List<ITransformation> Transformations
+        {
+            get { return _iTransformations; }
+            set { SetProperty(ref _iTransformations, value); }
+        }
+
+        private IS _isPok;
+
+        public IS IsPok
+        {
+            get { return _isPok; }
+            set { SetProperty(ref _isPok, value); }
         }
         #endregion
 

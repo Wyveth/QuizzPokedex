@@ -1,15 +1,11 @@
-﻿using Android.Content.Res;
-using MvvmCross.Commands;
+﻿using MvvmCross.Commands;
 using MvvmCross.Navigation;
 using MvvmCross.Plugin.Messenger;
 using MvvmCross.ViewModels;
 using QuizzPokedex.Interfaces;
 using QuizzPokedex.Models;
 using QuizzPokedex.Resources;
-using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace QuizzPokedex.ViewModels

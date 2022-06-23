@@ -1,14 +1,12 @@
-﻿using System;
-
-using Android.App;
+﻿using Android.App;
 using Android.Content.PM;
-using Android.Runtime;
 using Android.OS;
-using QuizzPokedex.UI;
+using Android.Runtime;
+using Android.Views;
+using FFImageLoading.Forms.Platform;
 using MvvmCross.Forms.Platforms.Android.Views;
 using PanCardView.Droid;
-using FFImageLoading.Forms.Platform;
-using Android.Views;
+using QuizzPokedex.UI;
 
 namespace QuizzPokedex.Droid
 {

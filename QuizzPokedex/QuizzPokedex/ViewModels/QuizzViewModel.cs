@@ -557,7 +557,6 @@ namespace QuizzPokedex.ViewModels
         {
             await _profileService.UpdateProfileActivatedAsync(SelectedProfileChange);
             SelectedProfileChange = null;
-            //await ProfileAsync();
 
             var refresh = new MessageRefresh(this, true);
             _messenger.Publish(refresh);
