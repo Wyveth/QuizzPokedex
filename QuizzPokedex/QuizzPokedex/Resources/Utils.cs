@@ -4,10 +4,8 @@ using FFImageLoading.Work;
 using MvvmCross.Navigation;
 using QuizzPokedex.Models;
 using QuizzPokedex.ViewModels;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace QuizzPokedex.Resources
@@ -30,19 +28,40 @@ namespace QuizzPokedex.Resources
         public static async Task<List<ITransformation>> GetTransformationImage(QuestionType questionType)
         {
             List<ITransformation> transformationList = new List<ITransformation>();
-            if (questionType.IsBlurred && questionType.IsHide)
-            {
-                transformationList.Add(new BlurredTransformation(250));
-                transformationList.Add(new TintTransformation("#000000"));
-            }
-            else if (questionType.IsBlurred)
-                transformationList.Add(new BlurredTransformation(250));
-            else if (questionType.IsHide)
-                transformationList.Add(new TintTransformation("#000000"));
-            else if (questionType.IsGrayscale)
+
+            if (questionType.IsBlurred)
+                transformationList.Add(new BlurredTransformation());
+
+            if (questionType.IsGrayscale)
                 transformationList.Add(new GrayscaleTransformation());
 
+            if (questionType.IsHide)
+                transformationList.Add(new TintTransformation("#000000"));
+
             return await Task.FromResult(transformationList);
+        }
+
+        public static async Task<byte[]> GetBytesDifficulty(Difficulty difficulty)
+        {
+            byte[] difficultyLogo = null;
+            if (difficulty.Libelle.Equals(Constantes.EasyTQ))
+                difficultyLogo = await Utils.GetByteAssetImage(Constantes.Easy_Color);
+            else if (difficulty.Libelle.Equals(Constantes.NormalTQ))
+                difficultyLogo = await Utils.GetByteAssetImage(Constantes.Normal_Color);
+            else if (difficulty.Libelle.Equals(Constantes.HardTQ))
+                difficultyLogo = await Utils.GetByteAssetImage(Constantes.Hard_Color);
+
+            return await Task.FromResult(difficultyLogo);
+        }
+
+        public static async Task<int> GetTransformationImageDelay(QuestionType questionType)
+        {
+            int i = 15;
+
+            if (questionType.IsBlurred)
+                i = 500;
+
+            return await Task.FromResult(i);
         }
 
         public static async Task RedirectQuizz(IMvxNavigationService _navigation, QuestionAnswers questionAnswers, Question question = null, QuestionType questionType = null)

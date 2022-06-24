@@ -70,9 +70,9 @@ namespace QuizzPokedex.ViewModels
         {
             ImgFilter = await Utils.GetByteAssetImage(Constantes.Filter);
             ImgResume = await Utils.GetByteAssetImage(Constantes.Resume);
-            ImgEasy = await Utils.GetByteAssetImage(Constantes.Easy_Color);
-            ImgNormal = await Utils.GetByteAssetImage(Constantes.Normal_White);
-            ImgHard = await Utils.GetByteAssetImage(Constantes.Hard_White);
+            ImgEasy = Easy ? await Utils.GetByteAssetImage(Constantes.Easy_Color) : await Utils.GetByteAssetImage(Constantes.Easy_White);
+            ImgNormal = Normal ? await Utils.GetByteAssetImage(Constantes.Normal_Color) : await Utils.GetByteAssetImage(Constantes.Normal_White);
+            ImgHard = Hard ? await Utils.GetByteAssetImage(Constantes.Hard_Color) : await Utils.GetByteAssetImage(Constantes.Hard_White);
             await UpdateQuizzUnfinished();
         }
 

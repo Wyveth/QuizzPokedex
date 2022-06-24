@@ -1,4 +1,5 @@
-﻿using MvvmCross.Commands;
+﻿using FFImageLoading.Work;
+using MvvmCross.Commands;
 using MvvmCross.IoC;
 using MvvmCross.Navigation;
 using MvvmCross.Plugin.Messenger;
@@ -6,9 +7,7 @@ using MvvmCross.ViewModels;
 using QuizzPokedex.Interfaces;
 using QuizzPokedex.Models;
 using QuizzPokedex.Resources;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace QuizzPokedex.ViewModels
@@ -50,6 +49,8 @@ namespace QuizzPokedex.ViewModels
             QuestionAnswers = questionAnswers;
             Order = questionAnswers.Question.Order;
 
+            Transformations = new List<ITransformation>();
+
             FormatQuestion = new string[] { Order.ToString(), questionAnswers.Quizz.QuestionsID.Split(',').Length.ToString() };
 
             base.Prepare();
@@ -78,24 +79,17 @@ namespace QuizzPokedex.ViewModels
         private async Task LoadData()
         {
             QuestionType = await _questionTypeService.GetByIdAsync(QuestionAnswers.Question.QuestionTypeID);
+            Transformations = await Utils.GetTransformationImage(QuestionType);
+            Delay = await Utils.GetTransformationImageDelay(QuestionType);
+
             Pokemon = await _pokemonService.GetByIdAsync(QuestionAnswers.Question.DataObjectID);
 
             TypePok = await _typePokService.GetTypeRandom();
 
             Difficulty difficulty = await _difficultyService.GetByIdAsync(QuestionType.DifficultyID);
-            await GetBytesDifficulty(difficulty);
+            DifficultyByte = await Utils.GetBytesDifficulty(difficulty);
             await LoadDataDifficulty(difficulty);
             await LoadUIDifficulty(difficulty);
-        }
-
-        private async Task GetBytesDifficulty(Difficulty difficulty)
-        {
-            if (difficulty.Libelle.Equals(Constantes.EasyTQ))
-                DifficultyByte = await Utils.GetByteAssetImage(Constantes.Easy_Color);
-            else if (difficulty.Libelle.Equals(Constantes.NormalTQ))
-                DifficultyByte = await Utils.GetByteAssetImage(Constantes.Normal_Color);
-            else if (difficulty.Libelle.Equals(Constantes.HardTQ))
-                DifficultyByte = await Utils.GetByteAssetImage(Constantes.Hard_Color);
         }
 
         private async Task LoadDataDifficulty(Difficulty difficulty)
@@ -599,6 +593,26 @@ namespace QuizzPokedex.ViewModels
             get { return _imgPokedexDown; }
             set { SetProperty(ref _imgPokedexDown, value); }
         }
+        #endregion
+
+        #region Transformation
+
+        private List<ITransformation> _iTransformations;
+
+        public List<ITransformation> Transformations
+        {
+            get { return _iTransformations; }
+            set { SetProperty(ref _iTransformations, value); }
+        }
+
+        private int _delay;
+
+        public int Delay
+        {
+            get { return _delay; }
+            set { SetProperty(ref _delay, value); }
+        }
+
         #endregion
 
         #region IsVisible

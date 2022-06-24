@@ -1,14 +1,11 @@
 ﻿using MvvmCross.Commands;
-using MvvmCross.IoC;
 using MvvmCross.Navigation;
 using MvvmCross.Plugin.Messenger;
 using MvvmCross.ViewModels;
 using QuizzPokedex.Interfaces;
 using QuizzPokedex.Models;
 using QuizzPokedex.Resources;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace QuizzPokedex.ViewModels
@@ -77,20 +74,10 @@ namespace QuizzPokedex.ViewModels
             TypePok = await _typePokService.GetByIdAsync(QuestionAnswers.Answers.Find(m => m.IsCorrect.Equals(true)).IsCorrectID);
             TypePokBackGround = await _typePokService.GetTypeRandom();
             Difficulty difficulty = await _difficultyService.GetByIdAsync(QuestionType.DifficultyID);
-            await GetBytesDifficulty(difficulty);
+            DifficultyByte = await Utils.GetBytesDifficulty(difficulty);
             await GetBytesTypesFilter(TypePok.Name);
             await LoadDataDifficulty(difficulty);
             await LoadUIDifficulty(difficulty);
-        }
-
-        private async Task GetBytesDifficulty(Difficulty difficulty)
-        {
-            if (difficulty.Libelle.Equals(Constantes.EasyTQ))
-                DifficultyByte = await Utils.GetByteAssetImage(Constantes.Easy_Color);
-            else if (difficulty.Libelle.Equals(Constantes.NormalTQ))
-                DifficultyByte = await Utils.GetByteAssetImage(Constantes.Normal_Color);
-            else if (difficulty.Libelle.Equals(Constantes.HardTQ))
-                DifficultyByte = await Utils.GetByteAssetImage(Constantes.Hard_Color);
         }
 
         private async Task LoadDataDifficulty(Difficulty difficulty)
