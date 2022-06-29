@@ -3,11 +3,11 @@
     x:Class="QuizzPokedex.UI.Views.ResultQuizzView"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
-    xmlns:views="clr-namespace:MvvmCross.Forms.Views;assembly=MvvmCross.Forms"
     xmlns:converters="clr-namespace:QuizzPokedex.UI.Converters"
-    xmlns:viewmodel="clr-namespace:QuizzPokedex.ViewModels;assembly=QuizzPokedex"
     xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+    xmlns:viewmodel="clr-namespace:QuizzPokedex.ViewModels;assembly=QuizzPokedex"
+    xmlns:views="clr-namespace:MvvmCross.Forms.Views;assembly=MvvmCross.Forms"
+    xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
     x:TypeArguments="viewmodel:ResultQuizzViewModel"
     BackgroundColor="White"
     NavigationPage.HasNavigationBar="False">
@@ -78,7 +78,10 @@
                         TextColor="Black"
                         VerticalTextAlignment="Start" />
                 </StackLayout>
-                <CollectionView x:Name="PokemonList" ItemsSource="{Binding CorrectionQuizz}">
+                <CollectionView
+                    x:Name="PokemonList"
+                    Margin="0,0,0,10"
+                    ItemsSource="{Binding CorrectionQuizz}">
                     <CollectionView.ItemsLayout>
                         <GridItemsLayout Orientation="Vertical" Span="2" />
                     </CollectionView.ItemsLayout>
@@ -88,7 +91,7 @@
                             <Grid Margin="10,35,0,0">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="80" />
-                                    <RowDefinition Height="40" />
+                                    <RowDefinition Height="55" />
                                 </Grid.RowDefinitions>
                                 <StackLayout Grid.Row="0">
                                     <Image
@@ -103,6 +106,26 @@
                                         IsVisible="{Binding IsQTypTyp}"
                                         Source="{Binding ByteTypePok, Converter={StaticResource ByteToImageSourceConverter}}"
                                         WidthRequest="80" />
+                                    <!--<Label
+                                        Margin="10,0,10,0"
+                                        xct:ShadowEffect.Color="black"
+                                        xct:ShadowEffect.OffsetX="5"
+                                        xct:ShadowEffect.OffsetY="10"
+                                        xct:ShadowEffect.Opacity="0.5"
+                                        xct:ShadowEffect.Radius="20"
+                                        FontAttributes="Bold,Italic"
+                                        FontSize="11"
+                                        HorizontalOptions="Center"
+                                        HorizontalTextAlignment="Center"
+                                        Text="{Binding Pokemon.DisplayName}"
+                                        TextColor="Black"
+                                        VerticalOptions="Start" />
+                                    <Image
+                                        Aspect="AspectFit"
+                                        HeightRequest="60"
+                                        IsVisible="{Binding IsQTypPok}"
+                                        Source="{Binding Pokemon.DataImg, Converter={StaticResource ByteToImageSourceConverter}}"
+                                        WidthRequest="60" />-->
                                 </StackLayout>
                                 <StackLayout Grid.Row="0">
                                     <Image
@@ -127,6 +150,7 @@
                                         TextColor="Black"
                                         VerticalOptions="Center" />
                                     <Label
+                                        Margin="10,0,10,0"
                                         xct:ShadowEffect.Color="black"
                                         xct:ShadowEffect.OffsetX="5"
                                         xct:ShadowEffect.OffsetY="10"
@@ -135,9 +159,24 @@
                                         FontAttributes="Italic"
                                         FontSize="11"
                                         HorizontalOptions="Center"
+                                        HorizontalTextAlignment="Center"
                                         Text="{Binding CorrectAnswer.Libelle}"
                                         TextColor="Black"
                                         VerticalOptions="Start" />
+                                    <!--<Label
+                                        Margin="10,0,10,0"
+                                        xct:ShadowEffect.Color="black"
+                                        xct:ShadowEffect.OffsetX="5"
+                                        xct:ShadowEffect.OffsetY="10"
+                                        xct:ShadowEffect.Opacity="0.5"
+                                        xct:ShadowEffect.Radius="20"
+                                        FontAttributes="Italic"
+                                        FontSize="11"
+                                        HorizontalOptions="Center"
+                                        HorizontalTextAlignment="Center"
+                                        Text="{Binding Pokemon.DescriptionVx}"
+                                        TextColor="Black"
+                                        VerticalOptions="Start" />-->
                                 </StackLayout>
                                 <VisualStateManager.VisualStateGroups>
                                     <VisualStateGroup Name="CommonStates">

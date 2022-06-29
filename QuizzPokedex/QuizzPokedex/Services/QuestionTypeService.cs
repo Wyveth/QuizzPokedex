@@ -82,6 +82,30 @@ namespace QuizzPokedex.Services
             await CreateAsync(questionType);
             #endregion
 
+            #region QTypPokDesc
+            questionType = new QuestionType()
+            {
+                Code = Constantes.QTypPokDesc,
+                Libelle = "Trouver la description du pokémon",
+                DifficultyID = difficultyEasy.Id,
+                NbAnswers = 4,
+                NbAnswersPossible = 1
+            };
+            await CreateAsync(questionType);
+            #endregion
+
+            #region QTypPokDescReverse
+            questionType = new QuestionType()
+            {
+                Code = Constantes.QTypPokDescReverse,
+                Libelle = "Trouver le bon pokémon",
+                DifficultyID = difficultyEasy.Id,
+                NbAnswers = 4,
+                NbAnswersPossible = 1
+            };
+            await CreateAsync(questionType);
+            #endregion
+
             #region QTypTypPok
             questionType = new QuestionType()
             {
@@ -123,7 +147,7 @@ namespace QuizzPokedex.Services
 
             questionType = new QuestionType()
             {
-                Code = Constantes.QTypPok,
+                Code = Constantes.QTypPokBlurred,
                 Libelle = "Quel est ce pokémon?",
                 DifficultyID = difficultyNormal.Id,
                 IsBlurred = true,
@@ -134,11 +158,35 @@ namespace QuizzPokedex.Services
 
             questionType = new QuestionType()
             {
-                Code = Constantes.QTypPok,
+                Code = Constantes.QTypPokBlack,
                 Libelle = "Quel est ce pokémon?",
                 DifficultyID = difficultyNormal.Id,
                 IsHide = true,
                 NbAnswers = 8,
+                NbAnswersPossible = 1
+            };
+            await CreateAsync(questionType);
+            #endregion
+
+            #region QTypPokDesc
+            questionType = new QuestionType()
+            {
+                Code = Constantes.QTypPokDesc,
+                Libelle = "Trouver la description du pokémon",
+                DifficultyID = difficultyNormal.Id,
+                NbAnswers = 6,
+                NbAnswersPossible = 1
+            };
+            await CreateAsync(questionType);
+            #endregion
+
+            #region QTypPokDescReverse
+            questionType = new QuestionType()
+            {
+                Code = Constantes.QTypPokDescReverse,
+                Libelle = "Trouver le bon pokémon",
+                DifficultyID = difficultyNormal.Id,
+                NbAnswers = 6,
                 NbAnswersPossible = 1
             };
             await CreateAsync(questionType);
@@ -207,7 +255,7 @@ namespace QuizzPokedex.Services
 
             questionType = new QuestionType()
             {
-                Code = Constantes.QTypPok,
+                Code = Constantes.QTypPokBlurred,
                 Libelle = "Quel est ce pokémon?",
                 DifficultyID = difficultyHard.Id,
                 IsBlurred = true,
@@ -219,7 +267,7 @@ namespace QuizzPokedex.Services
 
             questionType = new QuestionType()
             {
-                Code = Constantes.QTypPok,
+                Code = Constantes.QTypPokBlack,
                 Libelle = "Quel est ce pokémon?",
                 DifficultyID = difficultyHard.Id,
                 NbAnswers = 12,
@@ -230,12 +278,36 @@ namespace QuizzPokedex.Services
 
             questionType = new QuestionType()
             {
-                Code = Constantes.QTypPok,
+                Code = Constantes.QTypPokBlack,
                 Libelle = "Quel est ce pokémon?",
                 DifficultyID = difficultyHard.Id,
                 IsBlurred = true,
                 IsHide = true,
                 NbAnswers = 12,
+                NbAnswersPossible = 1
+            };
+            await CreateAsync(questionType);
+            #endregion
+
+            #region QTypPokDesc
+            questionType = new QuestionType()
+            {
+                Code = Constantes.QTypPokDesc,
+                Libelle = "Trouver la description du pokémon",
+                DifficultyID = difficultyHard.Id,
+                NbAnswers = 8,
+                NbAnswersPossible = 1
+            };
+            await CreateAsync(questionType);
+            #endregion
+
+            #region QTypPokDescReverse
+            questionType = new QuestionType()
+            {
+                Code = Constantes.QTypPokDescReverse,
+                Libelle = "Trouver le bon pokémon",
+                DifficultyID = difficultyHard.Id,
+                NbAnswers = 8,
                 NbAnswersPossible = 1
             };
             await CreateAsync(questionType);
@@ -309,7 +381,7 @@ namespace QuizzPokedex.Services
             List<QuestionType> result = await GetAllAsync();
             List<QuestionType> resultFilterDifficulty = await GetQuestionTypesWithFilterDifficulty(result, easy, normal, hard);
 
-            return await Task.FromResult(await GetNumberRandomWithPercentage(resultFilterDifficulty));
+            return await Task.FromResult(await GetQuestionTypeRandomBySelectedDifficulty(resultFilterDifficulty, easy, normal, hard));
         }
         #endregion
         #endregion
@@ -343,7 +415,7 @@ namespace QuizzPokedex.Services
             return await Task.FromResult(resultFilterDifficulty);
         }
 
-        private async Task<QuestionType> GetNumberRandomWithPercentage(List<QuestionType> resultFilterDifficulty)
+        private async Task<QuestionType> GetQuestionTypeRandomBySelectedDifficulty(List<QuestionType> resultFilterDifficulty, bool easy, bool normal, bool hard)
         {
             List<QuestionType> questionTypes = new List<QuestionType>();
 
@@ -356,7 +428,16 @@ namespace QuizzPokedex.Services
             else if (numberRandom <= 15)
                 questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypTypPok));
             else
-                questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypPok));
+                questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypPok) || m.Code.Equals(Constantes.QTypPokBlurred) || m.Code.Equals(Constantes.QTypPokBlack));
+
+            questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypPokDesc) || m.Code.Equals(Constantes.QTypPokDescReverse));
+
+            //QTypTypPokVarious = "TypePokemonVarious";
+            //QTypPokDesc = "Description";
+            //QTypPokDescRevert = "DescriptionRevert";
+            //QTypPokStat = "Statistique";
+            //QTypPokTalent = "Talent";
+            //QTypPokTalentRevert = "TalentRevert";
 
             int numberTypeQuestion = random.Next(questionTypes.Count);
             return await Task.FromResult(questionTypes[numberTypeQuestion]);

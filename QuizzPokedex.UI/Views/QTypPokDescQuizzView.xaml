@@ -1,0 +1,912 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<views:MvxContentPage
+    x:Class="QuizzPokedex.UI.Views.QTypPokDescQuizzView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:animation="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
+    xmlns:converters="clr-namespace:QuizzPokedex.UI.Converters"
+    xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+    xmlns:shadows="http://sharpnado.com"
+    xmlns:viewmodel="clr-namespace:QuizzPokedex.ViewModels;assembly=QuizzPokedex"
+    xmlns:views="clr-namespace:MvvmCross.Forms.Views;assembly=MvvmCross.Forms"
+    xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+    x:TypeArguments="viewmodel:QTypPokDescQuizzViewModel"
+    BackgroundColor="White"
+    NavigationPage.HasNavigationBar="False">
+
+    <views:MvxContentPage.Resources>
+        <ResourceDictionary>
+            <converters:ByteToImageSourceConverter x:Key="ByteToImageSourceConverter" />
+            <converters:InverseBoolConverter x:Key="InverseBoolConverter" />
+            <converters:StringArrayConverter x:Key="StringArrayConverter" />
+        </ResourceDictionary>
+    </views:MvxContentPage.Resources>
+    <ContentPage.Content>
+        <AbsoluteLayout>
+            <StackLayout AbsoluteLayout.LayoutBounds="0,-0.02,1,0.25" AbsoluteLayout.LayoutFlags="All">
+                <Image Source="{Binding ImgPokedexUp, Converter={StaticResource ByteToImageSourceConverter}}" />
+            </StackLayout>
+            <StackLayout AbsoluteLayout.LayoutBounds="0.5,1,1,0.2" AbsoluteLayout.LayoutFlags="All">
+                <Image Source="{Binding ImgPokedexDown, Converter={StaticResource ByteToImageSourceConverter}}" />
+            </StackLayout>
+            <StackLayout AbsoluteLayout.LayoutBounds="0,0,1,0.5" AbsoluteLayout.LayoutFlags="All">
+                <Label
+                    Margin="10"
+                    FontAttributes="Bold,Italic"
+                    FontSize="20"
+                    HorizontalOptions="CenterAndExpand"
+                    Text="{Binding FormatQuestion, Converter={StaticResource StringArrayConverter}, ConverterParameter='Question N°{0}/{1}'}"
+                    TextColor="White" />
+            </StackLayout>
+            <StackLayout AbsoluteLayout.LayoutBounds="0.95,0,0.2,0.1" AbsoluteLayout.LayoutFlags="All">
+                <Image
+                    Margin="10"
+                    HeightRequest="50"
+                    Source="{Binding DifficultyByte, Converter={StaticResource ByteToImageSourceConverter}}" />
+            </StackLayout>
+            <StackLayout AbsoluteLayout.LayoutBounds="0,0.54,1,0.75" AbsoluteLayout.LayoutFlags="All">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1.5*" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="3.5*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <StackLayout Grid.Row="0" Grid.ColumnSpan="4">
+                        <forms:CachedImage
+                            HorizontalOptions="Center"
+                            LoadingDelay="{Binding Delay}"
+                            LoadingPriority="Highest"
+                            Source="{Binding Pokemon.DataImg, Converter={StaticResource ByteToImageSourceConverter}}"
+                            Transformations="{Binding Transformations}"
+                            VerticalOptions="Center" />
+                    </StackLayout>
+                    <StackLayout
+                        Grid.Row="1"
+                        Grid.ColumnSpan="4"
+                        HorizontalOptions="CenterAndExpand">
+                        <shadows:Shadows CornerRadius="20">
+                            <shadows:Shadows.Shades>
+                                <shadows:ImmutableShades>
+                                    <shadows:Shade
+                                        BlurRadius="10"
+                                        Opacity="0.5"
+                                        Offset="-1,-1"
+                                        Color="#464C56" />
+                                    <shadows:Shade
+                                        BlurRadius="10"
+                                        Opacity="0.5"
+                                        Offset="1,1"
+                                        Color="#464C56" />
+                                </shadows:ImmutableShades>
+                            </shadows:Shadows.Shades>
+                            <pv:PancakeView
+                                BackgroundColor="{Binding TypePok.InfoColor}"
+                                Border="{pv:BorderMarkup Color=Black,
+                                                         Thickness=0}"
+                                CornerRadius="100">
+                                <Label
+                                    Padding="20,4,20,4"
+                                    xct:ShadowEffect.Color="#464C56"
+                                    xct:ShadowEffect.OffsetY="10"
+                                    xct:ShadowEffect.Opacity="0.5"
+                                    Text="{Binding QuestionType.Libelle}"
+                                    TextColor="White" />
+                            </pv:PancakeView>
+                        </shadows:Shadows>
+                    </StackLayout>
+                    <StackLayout
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="4"
+                        Margin="0,0,0,-25"
+                        Padding="0,3,0,0"
+                        IsVisible="{Binding EasyQ}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <shadows:Shadows
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                Margin="10,10,10,5"
+                                CornerRadius="15">
+                                <shadows:Shadows.Shades>
+                                    <shadows:ImmutableShades>
+                                        <shadows:Shade
+                                            BlurRadius="10"
+                                            Opacity="0.3"
+                                            Offset="-1,-1"
+                                            Color="#464C56" />
+                                        <shadows:Shade
+                                            BlurRadius="10"
+                                            Opacity="0.5"
+                                            Offset="1,1"
+                                            Color="#464C56" />
+                                    </shadows:ImmutableShades>
+                                </shadows:Shadows.Shades>
+                                <pv:PancakeView
+                                    BackgroundColor="White"
+                                    Border="{pv:BorderMarkup Color=Gray,
+                                                             Thickness=0}"
+                                    CornerRadius="10"
+                                    HeightRequest="145">
+                                    <Button
+                                        Padding="6"
+                                        BackgroundColor="{Binding BackgroundColorAnswer1}"
+                                        Command="{Binding SelectedAnswerCommandAsync}"
+                                        CommandParameter="{Binding Answer1}"
+                                        FontAttributes="Bold"
+                                        FontSize="11"
+                                        IsEnabled="{Binding IsEnabledAnswer1}"
+                                        IsVisible="{Binding IsVisibleAnswer1}"
+                                        Text="{Binding Answer1.Libelle}"
+                                        TextColor="{Binding TextColorAnswer1}"
+                                        TextTransform="None" />
+                                </pv:PancakeView>
+                            </shadows:Shadows>
+                            <shadows:Shadows
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                Margin="10,10,10,5"
+                                CornerRadius="15">
+                                <shadows:Shadows.Shades>
+                                    <shadows:ImmutableShades>
+                                        <shadows:Shade
+                                            BlurRadius="10"
+                                            Opacity="0.3"
+                                            Offset="-1,-1"
+                                            Color="#464C56" />
+                                        <shadows:Shade
+                                            BlurRadius="10"
+                                            Opacity="0.5"
+                                            Offset="1,1"
+                                            Color="#464C56" />
+                                    </shadows:ImmutableShades>
+                                </shadows:Shadows.Shades>
+                                <pv:PancakeView
+                                    BackgroundColor="White"
+                                    Border="{pv:BorderMarkup Color=Gray,
+                                                             Thickness=0}"
+                                    CornerRadius="10"
+                                    HeightRequest="145">
+                                    <Button
+                                        Padding="6"
+                                        BackgroundColor="{Binding BackgroundColorAnswer2}"
+                                        Command="{Binding SelectedAnswerCommandAsync}"
+                                        CommandParameter="{Binding Answer2}"
+                                        FontAttributes="Bold"
+                                        FontSize="11"
+                                        IsEnabled="{Binding IsEnabledAnswer2}"
+                                        IsVisible="{Binding IsVisibleAnswer2}"
+                                        Text="{Binding Answer2.Libelle}"
+                                        TextColor="{Binding TextColorAnswer2}"
+                                        TextTransform="None" />
+                                </pv:PancakeView>
+                            </shadows:Shadows>
+                            <shadows:Shadows
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                Margin="10,10,10,5"
+                                CornerRadius="15">
+                                <shadows:Shadows.Shades>
+                                    <shadows:ImmutableShades>
+                                        <shadows:Shade
+                                            BlurRadius="10"
+                                            Opacity="0.3"
+                                            Offset="-1,-1"
+                                            Color="#464C56" />
+                                        <shadows:Shade
+                                            BlurRadius="10"
+                                            Opacity="0.5"
+                                            Offset="1,1"
+                                            Color="#464C56" />
+                                    </shadows:ImmutableShades>
+                                </shadows:Shadows.Shades>
+                                <pv:PancakeView
+                                    BackgroundColor="White"
+                                    Border="{pv:BorderMarkup Color=Gray,
+                                                             Thickness=0}"
+                                    CornerRadius="10"
+                                    HeightRequest="145">
+                                    <Button
+                                        Padding="6"
+                                        BackgroundColor="{Binding BackgroundColorAnswer3}"
+                                        Command="{Binding SelectedAnswerCommandAsync}"
+                                        CommandParameter="{Binding Answer3}"
+                                        FontAttributes="Bold"
+                                        FontSize="11"
+                                        IsEnabled="{Binding IsEnabledAnswer3}"
+                                        IsVisible="{Binding IsVisibleAnswer3}"
+                                        Text="{Binding Answer3.Libelle}"
+                                        TextColor="{Binding TextColorAnswer3}"
+                                        TextTransform="None" />
+                                </pv:PancakeView>
+                            </shadows:Shadows>
+                            <shadows:Shadows
+                                Grid.Row="1"
+                                Grid.Column="1"
+                                Margin="10,10,10,5"
+                                CornerRadius="15">
+                                <shadows:Shadows.Shades>
+                                    <shadows:ImmutableShades>
+                                        <shadows:Shade
+                                            BlurRadius="10"
+                                            Opacity="0.3"
+                                            Offset="-1,-1"
+                                            Color="#464C56" />
+                                        <shadows:Shade
+                                            BlurRadius="10"
+                                            Opacity="0.5"
+                                            Offset="1,1"
+                                            Color="#464C56" />
+                                    </shadows:ImmutableShades>
+                                </shadows:Shadows.Shades>
+                                <pv:PancakeView
+                                    BackgroundColor="White"
+                                    Border="{pv:BorderMarkup Color=Gray,
+                                                             Thickness=0}"
+                                    CornerRadius="10"
+                                    HeightRequest="145">
+                                    <Button
+                                        Padding="6"
+                                        BackgroundColor="{Binding BackgroundColorAnswer4}"
+                                        Command="{Binding SelectedAnswerCommandAsync}"
+                                        CommandParameter="{Binding Answer4}"
+                                        FontAttributes="Bold"
+                                        FontSize="11"
+                                        IsEnabled="{Binding IsEnabledAnswer4}"
+                                        IsVisible="{Binding IsVisibleAnswer4}"
+                                        Text="{Binding Answer4.Libelle}"
+                                        TextColor="{Binding TextColorAnswer4}"
+                                        TextTransform="None" />
+                                </pv:PancakeView>
+                            </shadows:Shadows>
+                        </Grid>
+                    </StackLayout>
+                    <StackLayout
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="4"
+                        Margin="0,0,0,-25"
+                        Padding="0,3,0,0"
+                        IsVisible="{Binding NormalQ}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <shadows:Shadows
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                Margin="10,10,10,5"
+                                CornerRadius="15">
+                                <shadows:Shadows.Shades>
+                                    <shadows:ImmutableShades>
+                                        <shadows:Shade
+                                            BlurRadius="10"
+                                            Opacity="0.3"
+                                            Offset="-1,-1"
+                                            Color="#464C56" />
+                                        <shadows:Shade
+                                            BlurRadius="10"
+                                            Opacity="0.5"
+                                            Offset="1,1"
+                                            Color="#464C56" />
+                                    </shadows:ImmutableShades>
+                                </shadows:Shadows.Shades>
+                                <pv:PancakeView
+                                    BackgroundColor="White"
+                                    Border="{pv:BorderMarkup Color=Gray,
+                                                             Thickness=0}"
+                                    CornerRadius="10"
+                                    HeightRequest="145">
+                                    <Button
+                                        Padding="6"
+                                        BackgroundColor="{Binding BackgroundColorAnswer1}"
+                                        Command="{Binding SelectedAnswerCommandAsync}"
+                                        CommandParameter="{Binding Answer1}"
+                                        FontAttributes="Bold"
+                                        FontSize="11"
+                                        IsEnabled="{Binding IsEnabledAnswer1}"
+                                        IsVisible="{Binding IsVisibleAnswer1}"
+                                        Text="{Binding Answer1.Libelle}"
+                                        TextColor="{Binding TextColorAnswer1}"
+                                        TextTransform="None" />
+                                </pv:PancakeView>
+                            </shadows:Shadows>
+                            <shadows:Shadows
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                Margin="10,10,10,5"
+                                CornerRadius="15">
+                                <shadows:Shadows.Shades>
+                                    <shadows:ImmutableShades>
+                                        <shadows:Shade
+                                            BlurRadius="10"
+                                            Opacity="0.3"
+                                            Offset="-1,-1"
+                                            Color="#464C56" />
+                                        <shadows:Shade
+                                            BlurRadius="10"
+                                            Opacity="0.5"
+                                            Offset="1,1"
+                                            Color="#464C56" />
+                                    </shadows:ImmutableShades>
+                                </shadows:Shadows.Shades>
+                                <pv:PancakeView
+                                    BackgroundColor="White"
+                                    Border="{pv:BorderMarkup Color=Gray,
+                                                             Thickness=0}"
+                                    CornerRadius="10"
+                                    HeightRequest="145">
+                                    <Button
+                                        Padding="6"
+                                        BackgroundColor="{Binding BackgroundColorAnswer2}"
+                                        Command="{Binding SelectedAnswerCommandAsync}"
+                                        CommandParameter="{Binding Answer2}"
+                                        FontAttributes="Bold"
+                                        FontSize="11"
+                                        IsEnabled="{Binding IsEnabledAnswer2}"
+                                        IsVisible="{Binding IsVisibleAnswer2}"
+                                        Text="{Binding Answer2.Libelle}"
+                                        TextColor="{Binding TextColorAnswer2}"
+                                        TextTransform="None" />
+                                </pv:PancakeView>
+                            </shadows:Shadows>
+                            <shadows:Shadows
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                Margin="10,10,10,5"
+                                CornerRadius="15">
+                                <shadows:Shadows.Shades>
+                                    <shadows:ImmutableShades>
+                                        <shadows:Shade
+                                            BlurRadius="10"
+                                            Opacity="0.3"
+                                            Offset="-1,-1"
+                                            Color="#464C56" />
+                                        <shadows:Shade
+                                            BlurRadius="10"
+                                            Opacity="0.5"
+                                            Offset="1,1"
+                                            Color="#464C56" />
+                                    </shadows:ImmutableShades>
+                                </shadows:Shadows.Shades>
+                                <pv:PancakeView
+                                    BackgroundColor="White"
+                                    Border="{pv:BorderMarkup Color=Gray,
+                                                             Thickness=0}"
+                                    CornerRadius="10"
+                                    HeightRequest="145">
+                                    <Button
+                                        Padding="6"
+                                        BackgroundColor="{Binding BackgroundColorAnswer3}"
+                                        Command="{Binding SelectedAnswerCommandAsync}"
+                                        CommandParameter="{Binding Answer3}"
+                                        FontAttributes="Bold"
+                                        FontSize="11"
+                                        IsEnabled="{Binding IsEnabledAnswer3}"
+                                        IsVisible="{Binding IsVisibleAnswer3}"
+                                        Text="{Binding Answer3.Libelle}"
+                                        TextColor="{Binding TextColorAnswer3}"
+                                        TextTransform="None" />
+                                </pv:PancakeView>
+                            </shadows:Shadows>
+                            <shadows:Shadows
+                                Grid.Row="1"
+                                Grid.Column="1"
+                                Margin="10,10,10,5"
+                                CornerRadius="15">
+                                <shadows:Shadows.Shades>
+                                    <shadows:ImmutableShades>
+                                        <shadows:Shade
+                                            BlurRadius="10"
+                                            Opacity="0.3"
+                                            Offset="-1,-1"
+                                            Color="#464C56" />
+                                        <shadows:Shade
+                                            BlurRadius="10"
+                                            Opacity="0.5"
+                                            Offset="1,1"
+                                            Color="#464C56" />
+                                    </shadows:ImmutableShades>
+                                </shadows:Shadows.Shades>
+                                <pv:PancakeView
+                                    BackgroundColor="White"
+                                    Border="{pv:BorderMarkup Color=Gray,
+                                                             Thickness=0}"
+                                    CornerRadius="10"
+                                    HeightRequest="145">
+                                    <Button
+                                        Padding="6"
+                                        BackgroundColor="{Binding BackgroundColorAnswer4}"
+                                        Command="{Binding SelectedAnswerCommandAsync}"
+                                        CommandParameter="{Binding Answer4}"
+                                        FontAttributes="Bold"
+                                        FontSize="11"
+                                        IsEnabled="{Binding IsEnabledAnswer4}"
+                                        IsVisible="{Binding IsVisibleAnswer4}"
+                                        Text="{Binding Answer4.Libelle}"
+                                        TextColor="{Binding TextColorAnswer4}"
+                                        TextTransform="None" />
+                                </pv:PancakeView>
+                            </shadows:Shadows>
+                            <shadows:Shadows
+                                Grid.Row="2"
+                                Grid.Column="0"
+                                Margin="10,10,10,5"
+                                CornerRadius="15">
+                                <shadows:Shadows.Shades>
+                                    <shadows:ImmutableShades>
+                                        <shadows:Shade
+                                            BlurRadius="10"
+                                            Opacity="0.3"
+                                            Offset="-1,-1"
+                                            Color="#464C56" />
+                                        <shadows:Shade
+                                            BlurRadius="10"
+                                            Opacity="0.5"
+                                            Offset="1,1"
+                                            Color="#464C56" />
+                                    </shadows:ImmutableShades>
+                                </shadows:Shadows.Shades>
+                                <pv:PancakeView
+                                    BackgroundColor="White"
+                                    Border="{pv:BorderMarkup Color=Gray,
+                                                             Thickness=0}"
+                                    CornerRadius="10"
+                                    HeightRequest="145">
+                                    <Button
+                                        Padding="6"
+                                        BackgroundColor="{Binding BackgroundColorAnswer5}"
+                                        Command="{Binding SelectedAnswerCommandAsync}"
+                                        CommandParameter="{Binding Answer5}"
+                                        FontAttributes="Bold"
+                                        FontSize="11"
+                                        IsEnabled="{Binding IsEnabledAnswer5}"
+                                        IsVisible="{Binding IsVisibleAnswer5}"
+                                        Text="{Binding Answer5.Libelle}"
+                                        TextColor="{Binding TextColorAnswer5}"
+                                        TextTransform="None" />
+                                </pv:PancakeView>
+                            </shadows:Shadows>
+                            <shadows:Shadows
+                                Grid.Row="2"
+                                Grid.Column="1"
+                                Margin="10,10,10,5"
+                                CornerRadius="15">
+                                <shadows:Shadows.Shades>
+                                    <shadows:ImmutableShades>
+                                        <shadows:Shade
+                                            BlurRadius="10"
+                                            Opacity="0.3"
+                                            Offset="-1,-1"
+                                            Color="#464C56" />
+                                        <shadows:Shade
+                                            BlurRadius="10"
+                                            Opacity="0.5"
+                                            Offset="1,1"
+                                            Color="#464C56" />
+                                    </shadows:ImmutableShades>
+                                </shadows:Shadows.Shades>
+                                <pv:PancakeView
+                                    BackgroundColor="White"
+                                    Border="{pv:BorderMarkup Color=Gray,
+                                                             Thickness=0}"
+                                    CornerRadius="10"
+                                    HeightRequest="145">
+                                    <Button
+                                        Padding="6"
+                                        BackgroundColor="{Binding BackgroundColorAnswer6}"
+                                        Command="{Binding SelectedAnswerCommandAsync}"
+                                        CommandParameter="{Binding Answer6}"
+                                        FontAttributes="Bold"
+                                        FontSize="11"
+                                        IsEnabled="{Binding IsEnabledAnswer6}"
+                                        IsVisible="{Binding IsVisibleAnswer6}"
+                                        Text="{Binding Answer6.Libelle}"
+                                        TextColor="{Binding TextColorAnswer6}"
+                                        TextTransform="None" />
+                                </pv:PancakeView>
+                            </shadows:Shadows>
+                        </Grid>
+                    </StackLayout>
+                    <StackLayout
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="4"
+                        Margin="0,0,0,-25"
+                        Padding="0,3,0,0"
+                        IsVisible="{Binding HardQ}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <shadows:Shadows
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                Margin="5,0,5,0"
+                                CornerRadius="15">
+                                <shadows:Shadows.Shades>
+                                    <shadows:ImmutableShades>
+                                        <shadows:Shade
+                                            BlurRadius="10"
+                                            Opacity="0.3"
+                                            Offset="-1,-1"
+                                            Color="#464C56" />
+                                        <shadows:Shade
+                                            BlurRadius="10"
+                                            Opacity="0.5"
+                                            Offset="1,1"
+                                            Color="#464C56" />
+                                    </shadows:ImmutableShades>
+                                </shadows:Shadows.Shades>
+                                <pv:PancakeView
+                                    BackgroundColor="White"
+                                    Border="{pv:BorderMarkup Color=Gray,
+                                                             Thickness=0}"
+                                    CornerRadius="10"
+                                    HeightRequest="145">
+                                    <Button
+                                        Padding="6"
+                                        BackgroundColor="{Binding BackgroundColorAnswer1}"
+                                        Command="{Binding SelectedAnswerCommandAsync}"
+                                        CommandParameter="{Binding Answer1}"
+                                        FontAttributes="Bold"
+                                        FontSize="10"
+                                        IsEnabled="{Binding IsEnabledAnswer1}"
+                                        IsVisible="{Binding IsVisibleAnswer1}"
+                                        Text="{Binding Answer1.Libelle}"
+                                        TextColor="{Binding TextColorAnswer1}"
+                                        TextTransform="None" />
+                                </pv:PancakeView>
+                            </shadows:Shadows>
+                            <shadows:Shadows
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                Margin="5,0,5,0"
+                                CornerRadius="15">
+                                <shadows:Shadows.Shades>
+                                    <shadows:ImmutableShades>
+                                        <shadows:Shade
+                                            BlurRadius="10"
+                                            Opacity="0.3"
+                                            Offset="-1,-1"
+                                            Color="#464C56" />
+                                        <shadows:Shade
+                                            BlurRadius="10"
+                                            Opacity="0.5"
+                                            Offset="1,1"
+                                            Color="#464C56" />
+                                    </shadows:ImmutableShades>
+                                </shadows:Shadows.Shades>
+                                <pv:PancakeView
+                                    BackgroundColor="White"
+                                    Border="{pv:BorderMarkup Color=Gray,
+                                                             Thickness=0}"
+                                    CornerRadius="10"
+                                    HeightRequest="145">
+                                    <Button
+                                        Padding="6"
+                                        BackgroundColor="{Binding BackgroundColorAnswer2}"
+                                        Command="{Binding SelectedAnswerCommandAsync}"
+                                        CommandParameter="{Binding Answer2}"
+                                        FontAttributes="Bold"
+                                        FontSize="10"
+                                        IsEnabled="{Binding IsEnabledAnswer2}"
+                                        IsVisible="{Binding IsVisibleAnswer2}"
+                                        Text="{Binding Answer2.Libelle}"
+                                        TextColor="{Binding TextColorAnswer2}"
+                                        TextTransform="None" />
+                                </pv:PancakeView>
+                            </shadows:Shadows>
+                            <shadows:Shadows
+                                Grid.Row="2"
+                                Grid.Column="0"
+                                Margin="5,0,5,0"
+                                CornerRadius="15">
+                                <shadows:Shadows.Shades>
+                                    <shadows:ImmutableShades>
+                                        <shadows:Shade
+                                            BlurRadius="10"
+                                            Opacity="0.3"
+                                            Offset="-1,-1"
+                                            Color="#464C56" />
+                                        <shadows:Shade
+                                            BlurRadius="10"
+                                            Opacity="0.5"
+                                            Offset="1,1"
+                                            Color="#464C56" />
+                                    </shadows:ImmutableShades>
+                                </shadows:Shadows.Shades>
+                                <pv:PancakeView
+                                    BackgroundColor="White"
+                                    Border="{pv:BorderMarkup Color=Gray,
+                                                             Thickness=0}"
+                                    CornerRadius="10"
+                                    HeightRequest="145">
+                                    <Button
+                                        Padding="6"
+                                        BackgroundColor="{Binding BackgroundColorAnswer3}"
+                                        Command="{Binding SelectedAnswerCommandAsync}"
+                                        CommandParameter="{Binding Answer3}"
+                                        FontAttributes="Bold"
+                                        FontSize="10"
+                                        IsEnabled="{Binding IsEnabledAnswer3}"
+                                        IsVisible="{Binding IsVisibleAnswer3}"
+                                        Text="{Binding Answer3.Libelle}"
+                                        TextColor="{Binding TextColorAnswer3}"
+                                        TextTransform="None" />
+                                </pv:PancakeView>
+                            </shadows:Shadows>
+                            <shadows:Shadows
+                                Grid.Row="3"
+                                Grid.Column="0"
+                                Margin="5,0,5,0"
+                                CornerRadius="15">
+                                <shadows:Shadows.Shades>
+                                    <shadows:ImmutableShades>
+                                        <shadows:Shade
+                                            BlurRadius="10"
+                                            Opacity="0.3"
+                                            Offset="-1,-1"
+                                            Color="#464C56" />
+                                        <shadows:Shade
+                                            BlurRadius="10"
+                                            Opacity="0.5"
+                                            Offset="1,1"
+                                            Color="#464C56" />
+                                    </shadows:ImmutableShades>
+                                </shadows:Shadows.Shades>
+                                <pv:PancakeView
+                                    BackgroundColor="White"
+                                    Border="{pv:BorderMarkup Color=Gray,
+                                                             Thickness=0}"
+                                    CornerRadius="10"
+                                    HeightRequest="145">
+                                    <Button
+                                        Padding="6"
+                                        BackgroundColor="{Binding BackgroundColorAnswer4}"
+                                        Command="{Binding SelectedAnswerCommandAsync}"
+                                        CommandParameter="{Binding Answer4}"
+                                        FontAttributes="Bold"
+                                        FontSize="10"
+                                        IsEnabled="{Binding IsEnabledAnswer4}"
+                                        IsVisible="{Binding IsVisibleAnswer4}"
+                                        Text="{Binding Answer4.Libelle}"
+                                        TextColor="{Binding TextColorAnswer4}"
+                                        TextTransform="None" />
+                                </pv:PancakeView>
+                            </shadows:Shadows>
+                            <shadows:Shadows
+                                Grid.Row="4"
+                                Grid.Column="0"
+                                Margin="5,0,5,0"
+                                CornerRadius="15">
+                                <shadows:Shadows.Shades>
+                                    <shadows:ImmutableShades>
+                                        <shadows:Shade
+                                            BlurRadius="10"
+                                            Opacity="0.3"
+                                            Offset="-1,-1"
+                                            Color="#464C56" />
+                                        <shadows:Shade
+                                            BlurRadius="10"
+                                            Opacity="0.5"
+                                            Offset="1,1"
+                                            Color="#464C56" />
+                                    </shadows:ImmutableShades>
+                                </shadows:Shadows.Shades>
+                                <pv:PancakeView
+                                    BackgroundColor="White"
+                                    Border="{pv:BorderMarkup Color=Gray,
+                                                             Thickness=0}"
+                                    CornerRadius="10"
+                                    HeightRequest="145">
+                                    <Button
+                                        Padding="6"
+                                        BackgroundColor="{Binding BackgroundColorAnswer5}"
+                                        Command="{Binding SelectedAnswerCommandAsync}"
+                                        CommandParameter="{Binding Answer5}"
+                                        FontAttributes="Bold"
+                                        FontSize="10"
+                                        IsEnabled="{Binding IsEnabledAnswer5}"
+                                        IsVisible="{Binding IsVisibleAnswer5}"
+                                        Text="{Binding Answer5.Libelle}"
+                                        TextColor="{Binding TextColorAnswer5}"
+                                        TextTransform="None" />
+                                </pv:PancakeView>
+                            </shadows:Shadows>
+                            <shadows:Shadows
+                                Grid.Row="5"
+                                Grid.Column="0"
+                                Margin="5,0,5,0"
+                                CornerRadius="15">
+                                <shadows:Shadows.Shades>
+                                    <shadows:ImmutableShades>
+                                        <shadows:Shade
+                                            BlurRadius="10"
+                                            Opacity="0.3"
+                                            Offset="-1,-1"
+                                            Color="#464C56" />
+                                        <shadows:Shade
+                                            BlurRadius="10"
+                                            Opacity="0.5"
+                                            Offset="1,1"
+                                            Color="#464C56" />
+                                    </shadows:ImmutableShades>
+                                </shadows:Shadows.Shades>
+                                <pv:PancakeView
+                                    BackgroundColor="White"
+                                    Border="{pv:BorderMarkup Color=Gray,
+                                                             Thickness=0}"
+                                    CornerRadius="10"
+                                    HeightRequest="145">
+                                    <Button
+                                        Padding="6"
+                                        BackgroundColor="{Binding BackgroundColorAnswer6}"
+                                        Command="{Binding SelectedAnswerCommandAsync}"
+                                        CommandParameter="{Binding Answer6}"
+                                        FontAttributes="Bold"
+                                        FontSize="10"
+                                        IsEnabled="{Binding IsEnabledAnswer6}"
+                                        IsVisible="{Binding IsVisibleAnswer6}"
+                                        Text="{Binding Answer6.Libelle}"
+                                        TextColor="{Binding TextColorAnswer6}"
+                                        TextTransform="None" />
+                                </pv:PancakeView>
+                            </shadows:Shadows>
+                            <shadows:Shadows
+                                Grid.Row="6"
+                                Grid.Column="0"
+                                Margin="5,0,5,0"
+                                CornerRadius="15">
+                                <shadows:Shadows.Shades>
+                                    <shadows:ImmutableShades>
+                                        <shadows:Shade
+                                            BlurRadius="10"
+                                            Opacity="0.3"
+                                            Offset="-1,-1"
+                                            Color="#464C56" />
+                                        <shadows:Shade
+                                            BlurRadius="10"
+                                            Opacity="0.5"
+                                            Offset="1,1"
+                                            Color="#464C56" />
+                                    </shadows:ImmutableShades>
+                                </shadows:Shadows.Shades>
+                                <pv:PancakeView
+                                    BackgroundColor="White"
+                                    Border="{pv:BorderMarkup Color=Gray,
+                                                             Thickness=0}"
+                                    CornerRadius="10"
+                                    HeightRequest="145">
+                                    <Button
+                                        Padding="6"
+                                        BackgroundColor="{Binding BackgroundColorAnswer7}"
+                                        Command="{Binding SelectedAnswerCommandAsync}"
+                                        CommandParameter="{Binding Answer7}"
+                                        FontAttributes="Bold"
+                                        FontSize="10"
+                                        IsEnabled="{Binding IsEnabledAnswer7}"
+                                        IsVisible="{Binding IsVisibleAnswer7}"
+                                        Text="{Binding Answer7.Libelle}"
+                                        TextColor="{Binding TextColorAnswer7}"
+                                        TextTransform="None" />
+                                </pv:PancakeView>
+                            </shadows:Shadows>
+                            <shadows:Shadows
+                                Grid.Row="7"
+                                Grid.Column="0"
+                                Margin="5,0,5,0"
+                                CornerRadius="15">
+                                <shadows:Shadows.Shades>
+                                    <shadows:ImmutableShades>
+                                        <shadows:Shade
+                                            BlurRadius="10"
+                                            Opacity="0.3"
+                                            Offset="-1,-1"
+                                            Color="#464C56" />
+                                        <shadows:Shade
+                                            BlurRadius="10"
+                                            Opacity="0.5"
+                                            Offset="1,1"
+                                            Color="#464C56" />
+                                    </shadows:ImmutableShades>
+                                </shadows:Shadows.Shades>
+                                <pv:PancakeView
+                                    BackgroundColor="White"
+                                    Border="{pv:BorderMarkup Color=Gray,
+                                                             Thickness=0}"
+                                    CornerRadius="10"
+                                    HeightRequest="145">
+                                    <Button
+                                        Padding="6"
+                                        BackgroundColor="{Binding BackgroundColorAnswer8}"
+                                        Command="{Binding SelectedAnswerCommandAsync}"
+                                        CommandParameter="{Binding Answer8}"
+                                        FontAttributes="Bold"
+                                        FontSize="10"
+                                        IsEnabled="{Binding IsEnabledAnswer8}"
+                                        IsVisible="{Binding IsVisibleAnswer8}"
+                                        Text="{Binding Answer8.Libelle}"
+                                        TextColor="{Binding TextColorAnswer8}"
+                                        TextTransform="None" />
+                                </pv:PancakeView>
+                            </shadows:Shadows>
+                        </Grid>
+                    </StackLayout>
+                </Grid>
+            </StackLayout>
+            <StackLayout AbsoluteLayout.LayoutBounds="0.5,1,0.34,0.2" AbsoluteLayout.LayoutFlags="All">
+                <pv:PancakeView BackgroundColor="transparent" CornerRadius="0,0,100,100">
+                    <Button
+                        Margin="0,2,0,0"
+                        Padding="0,10,0,20"
+                        xct:ShadowEffect.Color="#464C56"
+                        xct:ShadowEffect.OffsetY="10"
+                        xct:ShadowEffect.Opacity="0.5"
+                        xct:ShadowEffect.Radius="200"
+                        BackgroundColor="{Binding TypePok.InfoColor}"
+                        Command="{Binding NavigationNextCommandAsync}"
+                        FontFamily="Montserrat-SemiBold"
+                        FontSize="20"
+                        HeightRequest="80"
+                        Text="Suivant"
+                        TextColor="White"
+                        TextTransform="None"
+                        WidthRequest="142" />
+                </pv:PancakeView>
+            </StackLayout>
+            <StackLayout
+                x:Name="BackgroundModalFilter"
+                AbsoluteLayout.LayoutBounds="1,1,1,1"
+                AbsoluteLayout.LayoutFlags="All"
+                BackgroundColor="Black"
+                IsVisible="{Binding IsVisibleBackgroundModalFilter}"
+                Opacity="0.3" />
+            <StackLayout
+                x:Name="LoadingQuizz"
+                AbsoluteLayout.LayoutBounds="0,0,1,0.6"
+                AbsoluteLayout.LayoutFlags="All"
+                BackgroundColor="Transparent"
+                IsVisible="{Binding IsVisibleLoadingQuizz}"
+                Opacity="1">
+                <animation:AnimationView
+                    Animation="Resources.107408-pokemon-loading.json"
+                    AnimationSource="EmbeddedResource"
+                    HeightRequest="250"
+                    RepeatMode="Infinite"
+                    VerticalOptions="EndAndExpand" />
+            </StackLayout>
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</views:MvxContentPage>

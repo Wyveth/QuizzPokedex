@@ -111,7 +111,7 @@ namespace QuizzPokedex.ViewModels
                 QuizzDifficulty quizzDifficulty = new QuizzDifficulty()
                 {
                     Quizz = item,
-                    ImgEasy = ImgEasy,
+                    ImgEasy = await Utils.GetByteAssetImage(Constantes.Easy_Color),
                     ImgNormal = await Utils.GetByteAssetImage(Constantes.Normal_Color),
                     ImgHard = await Utils.GetByteAssetImage(Constantes.Hard_Color),
                     ImgResume = ImgResume,

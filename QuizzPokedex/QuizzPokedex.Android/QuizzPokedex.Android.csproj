@@ -557,6 +557,9 @@
   <ItemGroup>
     <AndroidAsset Include="Assets\StarWrong.png" />
   </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Detective_Pikachu.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>

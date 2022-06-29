@@ -7,12 +7,14 @@ using MvvmCross.ViewModels;
 using QuizzPokedex.Interfaces;
 using QuizzPokedex.Models;
 using QuizzPokedex.Resources;
+using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace QuizzPokedex.ViewModels
 {
-    public class QTypPokQuizzViewModel : MvxViewModel<QuestionAnswers>
+    public class QTypPokDescReverseQuizzViewModel : MvxViewModel<QuestionAnswers>
     {
         #region Field
         private readonly IMvxNavigationService _navigation;
@@ -28,7 +30,7 @@ namespace QuizzPokedex.ViewModels
         #endregion
 
         #region Constructor
-        public QTypPokQuizzViewModel(IMvxNavigationService navigation, IMvxIoCProvider logger, IQuizzService quizzService, IPokemonService pokemonService, IQuestionService questionService, IDifficultyService difficultyService, IAnswerService answerService, IQuestionTypeService questionTypeService, ITypePokService typePokService, IMvxMessenger messenger)
+        public QTypPokDescReverseQuizzViewModel(IMvxNavigationService navigation, IMvxIoCProvider logger, IQuizzService quizzService, IPokemonService pokemonService, IQuestionService questionService, IDifficultyService difficultyService, IAnswerService answerService, IQuestionTypeService questionTypeService, ITypePokService typePokService, IMvxMessenger messenger)
         {
             _navigation = navigation;
             _logger = logger;
@@ -82,6 +84,7 @@ namespace QuizzPokedex.ViewModels
             Transformations = await Utils.GetTransformationImage(QuestionType);
             Delay = await Utils.GetTransformationImageDelay(QuestionType);
 
+            DetectiveP = await Utils.GetByteAssetImage(Constantes.DetectivePikachu);
             Pokemon = await _pokemonService.GetByIdAsync(QuestionAnswers.Answers.Find(m => m.IsCorrect.Equals(true)).IsCorrectID);
 
             int typeID = int.Parse(Pokemon.TypesID.Split(',')[0]);
@@ -112,16 +115,12 @@ namespace QuizzPokedex.ViewModels
                 {
                     Answer5 = QuestionAnswers.Answers.Find(m => m.Order.Equals(5));
                     Answer6 = QuestionAnswers.Answers.Find(m => m.Order.Equals(6));
-                    Answer7 = QuestionAnswers.Answers.Find(m => m.Order.Equals(7));
-                    Answer8 = QuestionAnswers.Answers.Find(m => m.Order.Equals(8));
                 }
 
                 if (difficulty.Libelle.Equals(Constantes.HardTQ))
                 {
-                    Answer9 = QuestionAnswers.Answers.Find(m => m.Order.Equals(9));
-                    Answer10 = QuestionAnswers.Answers.Find(m => m.Order.Equals(10));
-                    Answer11 = QuestionAnswers.Answers.Find(m => m.Order.Equals(11));
-                    Answer12 = QuestionAnswers.Answers.Find(m => m.Order.Equals(12));
+                    Answer7 = QuestionAnswers.Answers.Find(m => m.Order.Equals(7));
+                    Answer8 = QuestionAnswers.Answers.Find(m => m.Order.Equals(8));
                 }
             });
         }
@@ -244,54 +243,6 @@ namespace QuizzPokedex.ViewModels
                     {
                         BackgroundColorAnswer8 = Constantes.WhiteHexa;
                         TextColorAnswer8 = Constantes.BlackHexa;
-                    }
-                    break;
-                case 9:
-                    if (answer.IsSelected)
-                    {
-                        BackgroundColorAnswer9 = TypePok.InfoColor;
-                        TextColorAnswer9 = Constantes.WhiteHexa;
-                    }
-                    else
-                    {
-                        BackgroundColorAnswer9 = Constantes.WhiteHexa;
-                        TextColorAnswer9 = Constantes.BlackHexa;
-                    }
-                    break;
-                case 10:
-                    if (answer.IsSelected)
-                    {
-                        BackgroundColorAnswer10 = TypePok.InfoColor;
-                        TextColorAnswer10 = Constantes.WhiteHexa;
-                    }
-                    else
-                    {
-                        BackgroundColorAnswer10 = Constantes.WhiteHexa;
-                        TextColorAnswer10 = Constantes.BlackHexa;
-                    }
-                    break;
-                case 11:
-                    if (answer.IsSelected)
-                    {
-                        BackgroundColorAnswer11 = TypePok.InfoColor;
-                        TextColorAnswer11 = Constantes.WhiteHexa;
-                    }
-                    else
-                    {
-                        BackgroundColorAnswer11 = Constantes.WhiteHexa;
-                        TextColorAnswer11 = Constantes.BlackHexa;
-                    }
-                    break;
-                case 12:
-                    if (answer.IsSelected)
-                    {
-                        BackgroundColorAnswer12 = TypePok.InfoColor;
-                        TextColorAnswer12 = Constantes.WhiteHexa;
-                    }
-                    else
-                    {
-                        BackgroundColorAnswer12 = Constantes.WhiteHexa;
-                        TextColorAnswer12 = Constantes.BlackHexa;
                     }
                     break;
                 default:
@@ -471,6 +422,14 @@ namespace QuizzPokedex.ViewModels
         {
             get { return _difficultyByte; }
             set { SetProperty(ref _difficultyByte, value); }
+        }
+
+        private byte[] _detectiveP;
+
+        public byte[] DetectiveP
+        {
+            get { return _detectiveP; }
+            set { SetProperty(ref _detectiveP, value); }
         }
         #endregion
 
@@ -890,174 +849,6 @@ namespace QuizzPokedex.ViewModels
         {
             get { return _isVisibleAnswer8; }
             set { SetProperty(ref _isVisibleAnswer8, value); }
-        }
-        #endregion
-
-        #region Answer 9
-        private string _backgroundColorAnswer9 = "#FFFFFF";
-
-        public string BackgroundColorAnswer9
-        {
-            get { return _backgroundColorAnswer9; }
-            set { SetProperty(ref _backgroundColorAnswer9, value); }
-        }
-
-        private Answer answer9;
-
-        public Answer Answer9
-        {
-            get { return answer9; }
-            set { SetProperty(ref answer9, value); }
-        }
-
-        private string _textColorAnswer9 = "#000000";
-
-        public string TextColorAnswer9
-        {
-            get { return _textColorAnswer9; }
-            set { SetProperty(ref _textColorAnswer9, value); }
-        }
-
-        private bool _isEnabledAnswer9 = true;
-
-        public bool IsEnabledAnswer9
-        {
-            get { return _isEnabledAnswer9; }
-            set { SetProperty(ref _isEnabledAnswer9, value); }
-        }
-
-        private bool _isVisibleAnswer9 = true;
-
-        public bool IsVisibleAnswer9
-        {
-            get { return _isVisibleAnswer9; }
-            set { SetProperty(ref _isVisibleAnswer9, value); }
-        }
-        #endregion
-
-        #region Answer 10
-        private string _backgroundColorAnswer10 = "#FFFFFF";
-
-        public string BackgroundColorAnswer10
-        {
-            get { return _backgroundColorAnswer10; }
-            set { SetProperty(ref _backgroundColorAnswer10, value); }
-        }
-
-        private Answer answer10;
-
-        public Answer Answer10
-        {
-            get { return answer10; }
-            set { SetProperty(ref answer10, value); }
-        }
-
-        private string _textColorAnswer10 = "#000000";
-
-        public string TextColorAnswer10
-        {
-            get { return _textColorAnswer10; }
-            set { SetProperty(ref _textColorAnswer10, value); }
-        }
-
-        private bool _isEnabledAnswer10 = true;
-
-        public bool IsEnabledAnswer10
-        {
-            get { return _isEnabledAnswer10; }
-            set { SetProperty(ref _isEnabledAnswer10, value); }
-        }
-
-        private bool _isVisibleAnswer10 = true;
-
-        public bool IsVisibleAnswer10
-        {
-            get { return _isVisibleAnswer10; }
-            set { SetProperty(ref _isVisibleAnswer10, value); }
-        }
-        #endregion
-
-        #region Answer 11
-        private string _backgroundColorAnswer11 = "#FFFFFF";
-
-        public string BackgroundColorAnswer11
-        {
-            get { return _backgroundColorAnswer11; }
-            set { SetProperty(ref _backgroundColorAnswer11, value); }
-        }
-
-        private Answer answer11;
-
-        public Answer Answer11
-        {
-            get { return answer11; }
-            set { SetProperty(ref answer11, value); }
-        }
-
-        private string _textColorAnswer11 = "#000000";
-
-        public string TextColorAnswer11
-        {
-            get { return _textColorAnswer11; }
-            set { SetProperty(ref _textColorAnswer11, value); }
-        }
-
-        private bool _isEnabledAnswer11 = true;
-
-        public bool IsEnabledAnswer11
-        {
-            get { return _isEnabledAnswer11; }
-            set { SetProperty(ref _isEnabledAnswer11, value); }
-        }
-
-        private bool _isVisibleAnswer11 = true;
-
-        public bool IsVisibleAnswer11
-        {
-            get { return _isVisibleAnswer11; }
-            set { SetProperty(ref _isVisibleAnswer11, value); }
-        }
-        #endregion
-
-        #region Answer 12
-        private string _backgroundColorAnswer12 = "#FFFFFF";
-
-        public string BackgroundColorAnswer12
-        {
-            get { return _backgroundColorAnswer12; }
-            set { SetProperty(ref _backgroundColorAnswer12, value); }
-        }
-
-        private Answer answer12;
-
-        public Answer Answer12
-        {
-            get { return answer12; }
-            set { SetProperty(ref answer12, value); }
-        }
-
-        private string _textColorAnswer12 = "#000000";
-
-        public string TextColorAnswer12
-        {
-            get { return _textColorAnswer12; }
-            set { SetProperty(ref _textColorAnswer12, value); }
-        }
-
-        private bool _isEnabledAnswer12 = true;
-
-        public bool IsEnabledAnswer12
-        {
-            get { return _isEnabledAnswer12; }
-            set { SetProperty(ref _isEnabledAnswer12, value); }
-        }
-
-        private bool _isVisibleAnswer12 = true;
-
-        public bool IsVisibleAnswer12
-        {
-            get { return _isVisibleAnswer12; }
-            set { SetProperty(ref _isVisibleAnswer12, value); }
         }
         #endregion
         #endregion

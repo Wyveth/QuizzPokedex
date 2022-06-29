@@ -59,7 +59,7 @@ namespace QuizzPokedex.Resources
             int i = 15;
 
             if (questionType.IsBlurred)
-                i = 500;
+                i = 600;
 
             return await Task.FromResult(i);
         }
@@ -68,8 +68,14 @@ namespace QuizzPokedex.Resources
         {
             if (question != null)
             {
-                if (questionType.Code.Equals(Constantes.QTypPok))
+                if (questionType.Code.Equals(Constantes.QTypPok) 
+                    || questionType.Code.Equals(Constantes.QTypPokBlurred)
+                    || questionType.Code.Equals(Constantes.QTypPokBlack))
                     await _navigation.Navigate<QTypPokQuizzViewModel, QuestionAnswers>(questionAnswers);
+                else if (questionType.Code.Equals(Constantes.QTypPokDesc))
+                    await _navigation.Navigate<QTypPokDescQuizzViewModel, QuestionAnswers>(questionAnswers);
+                else if (questionType.Code.Equals(Constantes.QTypPokDescReverse))
+                    await _navigation.Navigate<QTypPokDescReverseQuizzViewModel, QuestionAnswers>(questionAnswers);
                 else if (questionType.Code.Equals(Constantes.QTypTypPok))
                     await _navigation.Navigate<QTypTypPokQuizzViewModel, QuestionAnswers>(questionAnswers);
                 else if (questionType.Code.Equals(Constantes.QTypTyp))

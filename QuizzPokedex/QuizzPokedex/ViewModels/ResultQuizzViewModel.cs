@@ -99,7 +99,11 @@ namespace QuizzPokedex.ViewModels
             TypePok typePok = null;
             byte[] typePokByte = null;
 
-            if (questionType.Code.Equals(Constantes.QTypPok))
+            if (questionType.Code.Equals(Constantes.QTypPok)
+                || questionType.Code.Equals(Constantes.QTypPokBlurred)
+                || questionType.Code.Equals(Constantes.QTypPokBlack)
+                || questionType.Code.Equals(Constantes.QTypPokDesc)
+                || questionType.Code.Equals(Constantes.QTypPokDescReverse))
             {
                 IsVisiblePokemon = true;
                 IsVisibleTypePok = false;
@@ -152,7 +156,7 @@ namespace QuizzPokedex.ViewModels
 
         private async Task<byte[]> GetByteImgAnswer(Answer answer)
         {
-            if(answer.IsSelected)
+            if (answer.IsSelected)
                 return await Utils.GetByteAssetImage(Constantes.StarSuccess);
             else
                 return await Utils.GetByteAssetImage(Constantes.StarWrong);
@@ -232,7 +236,8 @@ namespace QuizzPokedex.ViewModels
             await _navigation.Close(this);
         }
 
-        private async Task RefreshAsync() {
+        private async Task RefreshAsync()
+        {
             var refresh = new MessageRefresh(this, true);
             _messenger.Publish(refresh);
 

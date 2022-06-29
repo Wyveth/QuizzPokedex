@@ -77,7 +77,10 @@ namespace QuizzPokedex.Services
         #region Quizz
         public async Task<List<Answer>> GenerateAnswers(Quizz quizz, QuestionType questionType, List<Answer> answers)
         {
-            if (questionType.Code.Equals(Constantes.QTypPok))
+            if (questionType.Code.Equals(Constantes.QTypPok) 
+                || questionType.Code.Equals(Constantes.QTypPokBlurred)
+                || questionType.Code.Equals(Constantes.QTypPokBlack)
+                || questionType.Code.Equals(Constantes.QTypPokDescReverse))
             {
                 List<Pokemon> pokemons = new List<Pokemon>();
                 foreach (Answer item in answers)
@@ -110,6 +113,23 @@ namespace QuizzPokedex.Services
                 }
 
                 answers = await GenerateAnswers(questionType, typePoks, answers);
+            }
+            else if (questionType.Code.Equals(Constantes.QTypPokDesc))
+            {
+                List<Pokemon> pokemons = new List<Pokemon>();
+                foreach (Answer item in answers)
+                {
+                    pokemons.Add(await _pokemonService.GetByIdAsync(item.IsCorrectID));
+                }
+
+                int qMissing = questionType.NbAnswers - answers.Count;
+
+                for (int i = 0; i < qMissing; i++)
+                {
+                    pokemons.Add(await _pokemonService.GetPokemonRandom(quizz.Gen1, quizz.Gen2, quizz.Gen3, quizz.Gen4, quizz.Gen5, quizz.Gen6, quizz.Gen7, quizz.Gen8, quizz.GenArceus, pokemons));
+                }
+
+                answers = await GenerateAnswersDesc(questionType, pokemons, answers);
             }
 
             return await Task.FromResult(answers);
@@ -305,6 +325,160 @@ namespace QuizzPokedex.Services
             }
 
             return await Task.FromResult(typesAnswer);
+        }
+        #endregion
+
+        #region Quizz Description
+        public async Task<string> GenerateCorrectAnswersDesc(QuestionType questionType, List<Pokemon> pokemonsAnswer)
+        {
+            List<Answer> answers = new List<Answer>();
+            Random random = new Random();
+
+            string result = string.Empty;
+            Dictionary<int, Pokemon> dic = new Dictionary<int, Pokemon>();
+            foreach (var pokemon in pokemonsAnswer)
+            {
+                while (!dic.ContainsValue(pokemon))
+                {
+                    int numberRandom = random.Next(questionType.NbAnswers);
+
+                    if (!dic.ContainsKey(numberRandom))
+                        dic.Add(numberRandom, pokemon);
+                }
+            }
+
+            foreach (KeyValuePair<int, Pokemon> pair in dic)
+            {
+                string description = await ConvertDescription(pair.Value);
+                Answer answer = new Answer()
+                {
+                    IsSelected = false,
+                    IsCorrect = true,
+                    IsCorrectID = pair.Value.Id,
+                    Libelle = description,
+                    Order = pair.Key + 1
+                };
+
+                await CreateAsync(answer);
+                answers.Add(answer);
+            }
+
+            int i = 0;
+            foreach (Answer answer in answers)
+            {
+                if (i == 0)
+                {
+                    result = answer.Id.ToString();
+                    i++;
+                }
+                else
+                {
+                    result += ',' + answer.Id.ToString();
+                }
+            }
+
+            return await Task.FromResult(result);
+        }
+
+        private async Task<List<Answer>> GenerateAnswersDesc(QuestionType questionType, List<Pokemon> pokemons, List<Answer> pokemonsAnswer)
+        {
+            Random random = new Random();
+
+            string result = string.Empty;
+            Dictionary<int, Pokemon> dic = new Dictionary<int, Pokemon>();
+
+            foreach (var pokemon in pokemons)
+            {
+                while (!dic.ContainsValue(pokemon))
+                {
+                    int numberRandom = random.Next(questionType.NbAnswers);
+
+                    if (!dic.ContainsKey(numberRandom))
+                        dic.Add(numberRandom, pokemon);
+                }
+            }
+
+            foreach (KeyValuePair<int, Pokemon> pair in dic)
+            {
+                Answer answerExist = pokemonsAnswer.Find(m => m.IsCorrectID.Equals(pair.Value.Id));
+                if (answerExist == null)
+                {
+                    string description = await ConvertDescription(pair.Value);
+                    Answer answer = new Answer()
+                    {
+                        IsSelected = false,
+                        IsCorrect = false,
+                        IsCorrectID = -1,
+                        Libelle = description,
+                        Order = pair.Key + 1
+                    };
+
+                    pokemonsAnswer.Add(answer);
+                }
+                else
+                {
+                    answerExist.Order = pair.Key + 1;
+                    await UpdateAsync(answerExist);
+                }
+            }
+
+            return await Task.FromResult(pokemonsAnswer);
+        }
+
+        private async Task<string> ConvertDescription(Pokemon pokemon)
+        {
+            string description = "";
+            if (pokemon.DescriptionVx.Contains(pokemon.DisplayName))
+            {
+                description = await CheckAndConvert(pokemon.DescriptionVx, pokemon.Evolutions);
+            }
+            else if (pokemon.DescriptionVx.Contains(pokemon.DisplayName))
+            {
+                description = await CheckAndConvert(pokemon.DescriptionVy, pokemon.Evolutions);
+            }
+            else
+            {
+                description = pokemon.DescriptionVx;
+            }
+
+            return await Task.FromResult(description);
+        }
+
+        private async Task<string> CheckAndConvert(string description, string family)
+        {
+            try
+            {
+                List<Pokemon> pokemons = new List<Pokemon>();
+                foreach (string idPok in family.Split(','))
+                {
+                    int id = int.Parse(idPok);
+                    pokemons.Add(await _pokemonService.GetByIdAsync(id));
+                }
+
+                //string[] descSplit = description.Split(' ');
+
+                //int index = -1;
+                //for (int i = 0; i < descSplit.Length; i++)
+                //{
+                //    if (descSplit[i].Contains(pokemonName))
+                //    {
+                //        index = i;
+                //        break;
+                //    }
+                //}
+
+                //if (!index.Equals(-1))
+                foreach (Pokemon item in pokemons)
+                {
+                    description = description.Replace(item.Name, "[...]");
+                }
+
+                return await Task.FromResult(description);
+            } 
+            catch(Exception ex) 
+            {
+                throw ex;
+            }
         }
         #endregion
         #endregion

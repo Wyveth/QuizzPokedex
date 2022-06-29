@@ -111,6 +111,7 @@ namespace QuizzPokedex.Resources
         public const string LoveFull = "Lovefull" + ExtensionImage;
         public const string StarSuccess = "StarSuccess" + ExtensionImage;
         public const string StarWrong = "StarWrong" + ExtensionImage;
+        public const string DetectivePikachu = "Detective_Pikachu" + ExtensionImage;
         #endregion
 
         #region Difficulty
@@ -121,8 +122,16 @@ namespace QuizzPokedex.Resources
 
         #region Code Type Question
         public const string QTypPok = "Pokemon";
+        public const string QTypPokBlurred = "PokemonBlurred";
+        public const string QTypPokBlack = "PokemonBlack";
         public const string QTypTypPok = "TypePokemon";
+        public const string QTypTypPokVarious = "TypePokemonVarious";
         public const string QTypTyp = "Type";
+        public const string QTypPokDesc = "Description";
+        public const string QTypPokDescReverse = "DescriptionReverse";
+        public const string QTypPokStat = "Statistique";
+        public const string QTypPokTalent = "Talent";
+        public const string QTypPokTalentRevert = "TalentRevert";
         #endregion
     }
 }
