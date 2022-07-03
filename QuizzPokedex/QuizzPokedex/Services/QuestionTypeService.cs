@@ -423,14 +423,14 @@ namespace QuizzPokedex.Services
             int numberRandom = random.Next(100);
 
             //If Question Type => Type // 10%
-            if (numberRandom <= 5)
+            if (numberRandom <= 3)
                 questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypTyp));
-            else if (numberRandom <= 15)
+            else if (numberRandom <= 10)
+                questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypPokDesc) || m.Code.Equals(Constantes.QTypPokDescReverse));
+            else if (numberRandom <= 20)
                 questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypTypPok));
             else
                 questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypPok) || m.Code.Equals(Constantes.QTypPokBlurred) || m.Code.Equals(Constantes.QTypPokBlack));
-
-            questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypPokDesc) || m.Code.Equals(Constantes.QTypPokDescReverse));
 
             //QTypTypPokVarious = "TypePokemonVarious";
             //QTypPokDesc = "Description";

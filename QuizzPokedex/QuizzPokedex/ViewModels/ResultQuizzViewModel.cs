@@ -101,11 +101,10 @@ namespace QuizzPokedex.ViewModels
 
             if (questionType.Code.Equals(Constantes.QTypPok)
                 || questionType.Code.Equals(Constantes.QTypPokBlurred)
-                || questionType.Code.Equals(Constantes.QTypPokBlack)
-                || questionType.Code.Equals(Constantes.QTypPokDesc)
-                || questionType.Code.Equals(Constantes.QTypPokDescReverse))
+                || questionType.Code.Equals(Constantes.QTypPokBlack))
             {
                 IsVisiblePokemon = true;
+                IsVisiblePokemonDesc = false;
                 IsVisibleTypePok = false;
 
                 if (answerCorrect != null)
@@ -117,6 +116,7 @@ namespace QuizzPokedex.ViewModels
             else if (questionType.Code.Equals(Constantes.QTypTypPok))
             {
                 IsVisiblePokemon = true;
+                IsVisiblePokemonDesc = false;
                 IsVisibleTypePok = false;
 
                 if (answerCorrect != null)
@@ -128,12 +128,26 @@ namespace QuizzPokedex.ViewModels
             else if (questionType.Code.Equals(Constantes.QTypTyp))
             {
                 IsVisiblePokemon = false;
+                IsVisiblePokemonDesc = false;
                 IsVisibleTypePok = true;
 
                 if (answerCorrect != null)
                 {
                     typePok = await _typePokService.GetByIdAsync(answerCorrect.IsCorrectID);
                     typePokByte = await GetBytesTypesFilter(typePok.Name);
+                }
+            }
+            else if (questionType.Code.Equals(Constantes.QTypPokDesc) 
+                || questionType.Code.Equals(Constantes.QTypPokDescReverse))
+            {
+                IsVisiblePokemon = false;
+                IsVisiblePokemonDesc = true;
+                IsVisibleTypePok = false;
+
+                if (answerCorrect != null)
+                {
+                    pokemon = await _pokemonService.GetByIdAsync(answerCorrect.IsCorrectID);
+                    typePok = await _typePokService.GetByIdAsync(int.Parse(pokemon.TypesID.Split(',')[0]));
                 }
             }
 
@@ -148,6 +162,7 @@ namespace QuizzPokedex.ViewModels
                 Pokemon = pokemon,
                 IsQTypPok = IsVisiblePokemon,
                 IsQTypTyp = IsVisibleTypePok,
+                IsQTypPokDesc = IsVisiblePokemonDesc,
                 ByteResult = await GetByteImgAnswer(answerCorrect)
             };
 
@@ -323,6 +338,14 @@ namespace QuizzPokedex.ViewModels
         {
             get { return _isVisibleTypePok; }
             set { SetProperty(ref _isVisibleTypePok, value); }
+        }
+
+        private bool _isVisiblePokemonDesc = false;
+
+        public bool IsVisiblePokemonDesc
+        {
+            get { return _isVisiblePokemonDesc; }
+            set { SetProperty(ref _isVisiblePokemonDesc, value); }
         }
         #endregion
         #endregion

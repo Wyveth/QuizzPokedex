@@ -542,18 +542,15 @@
                                 <RowDefinition />
                                 <RowDefinition />
                                 <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
                             <shadows:Shadows
                                 Grid.Row="0"
                                 Grid.Column="0"
-                                Margin="5,0,5,0"
+                                Margin="10,0,10,5"
                                 CornerRadius="15">
                                 <shadows:Shadows.Shades>
                                     <shadows:ImmutableShades>
@@ -590,9 +587,9 @@
                                 </pv:PancakeView>
                             </shadows:Shadows>
                             <shadows:Shadows
-                                Grid.Row="1"
-                                Grid.Column="0"
-                                Margin="5,0,5,0"
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                Margin="10,0,10,5"
                                 CornerRadius="15">
                                 <shadows:Shadows.Shades>
                                     <shadows:ImmutableShades>
@@ -629,9 +626,9 @@
                                 </pv:PancakeView>
                             </shadows:Shadows>
                             <shadows:Shadows
-                                Grid.Row="2"
+                                Grid.Row="1"
                                 Grid.Column="0"
-                                Margin="5,0,5,0"
+                                Margin="10,0,10,5"
                                 CornerRadius="15">
                                 <shadows:Shadows.Shades>
                                     <shadows:ImmutableShades>
@@ -668,9 +665,9 @@
                                 </pv:PancakeView>
                             </shadows:Shadows>
                             <shadows:Shadows
-                                Grid.Row="3"
-                                Grid.Column="0"
-                                Margin="5,0,5,0"
+                                Grid.Row="1"
+                                Grid.Column="1"
+                                Margin="10,0,10,5"
                                 CornerRadius="15">
                                 <shadows:Shadows.Shades>
                                     <shadows:ImmutableShades>
@@ -707,9 +704,9 @@
                                 </pv:PancakeView>
                             </shadows:Shadows>
                             <shadows:Shadows
-                                Grid.Row="4"
+                                Grid.Row="2"
                                 Grid.Column="0"
-                                Margin="5,0,5,0"
+                                Margin="10,0,10,5"
                                 CornerRadius="15">
                                 <shadows:Shadows.Shades>
                                     <shadows:ImmutableShades>
@@ -746,9 +743,9 @@
                                 </pv:PancakeView>
                             </shadows:Shadows>
                             <shadows:Shadows
-                                Grid.Row="5"
-                                Grid.Column="0"
-                                Margin="5,0,5,0"
+                                Grid.Row="2"
+                                Grid.Column="1"
+                                Margin="10,0,10,5"
                                 CornerRadius="15">
                                 <shadows:Shadows.Shades>
                                     <shadows:ImmutableShades>
@@ -785,9 +782,9 @@
                                 </pv:PancakeView>
                             </shadows:Shadows>
                             <shadows:Shadows
-                                Grid.Row="6"
+                                Grid.Row="3"
                                 Grid.Column="0"
-                                Margin="5,0,5,0"
+                                Margin="10,0,10,5"
                                 CornerRadius="15">
                                 <shadows:Shadows.Shades>
                                     <shadows:ImmutableShades>
@@ -824,9 +821,9 @@
                                 </pv:PancakeView>
                             </shadows:Shadows>
                             <shadows:Shadows
-                                Grid.Row="7"
-                                Grid.Column="0"
-                                Margin="5,0,5,0"
+                                Grid.Row="3"
+                                Grid.Column="1"
+                                Margin="10,0,10,5"
                                 CornerRadius="15">
                                 <shadows:Shadows.Shades>
                                     <shadows:ImmutableShades>

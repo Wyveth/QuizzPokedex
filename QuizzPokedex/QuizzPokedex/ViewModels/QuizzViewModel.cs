@@ -738,6 +738,16 @@ namespace QuizzPokedex.ViewModels
         }
         #endregion
 
+        #region EnabledQuizzNotFinished
+        private bool _enableQNF = false;
+
+        public bool EnableQNF
+        {
+            get { return _enableQNF; }
+            set { SetProperty(ref _enableQNF, value); }
+        }
+        #endregion
+
         #region Profile
         private string _msgChangeProfile;
 

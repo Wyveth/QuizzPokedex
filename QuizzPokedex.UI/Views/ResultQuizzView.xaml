@@ -106,7 +106,7 @@
                                         IsVisible="{Binding IsQTypTyp}"
                                         Source="{Binding ByteTypePok, Converter={StaticResource ByteToImageSourceConverter}}"
                                         WidthRequest="80" />
-                                    <!--<Label
+                                    <Label
                                         Margin="10,0,10,0"
                                         xct:ShadowEffect.Color="black"
                                         xct:ShadowEffect.OffsetX="5"
@@ -117,15 +117,16 @@
                                         FontSize="11"
                                         HorizontalOptions="Center"
                                         HorizontalTextAlignment="Center"
+                                        IsVisible="{Binding IsQTypPokDesc}"
                                         Text="{Binding Pokemon.DisplayName}"
                                         TextColor="Black"
                                         VerticalOptions="Start" />
                                     <Image
                                         Aspect="AspectFit"
                                         HeightRequest="60"
-                                        IsVisible="{Binding IsQTypPok}"
+                                        IsVisible="{Binding IsQTypPokDesc}"
                                         Source="{Binding Pokemon.DataImg, Converter={StaticResource ByteToImageSourceConverter}}"
-                                        WidthRequest="60" />-->
+                                        WidthRequest="60" />
                                 </StackLayout>
                                 <StackLayout Grid.Row="0">
                                     <Image
@@ -160,10 +161,11 @@
                                         FontSize="11"
                                         HorizontalOptions="Center"
                                         HorizontalTextAlignment="Center"
+                                        IsVisible="{Binding IsQTypPok}"
                                         Text="{Binding CorrectAnswer.Libelle}"
                                         TextColor="Black"
                                         VerticalOptions="Start" />
-                                    <!--<Label
+                                    <Label
                                         Margin="10,0,10,0"
                                         xct:ShadowEffect.Color="black"
                                         xct:ShadowEffect.OffsetX="5"
@@ -174,9 +176,25 @@
                                         FontSize="11"
                                         HorizontalOptions="Center"
                                         HorizontalTextAlignment="Center"
+                                        IsVisible="{Binding IsQTypTyp}"
+                                        Text="{Binding CorrectAnswer.Libelle}"
+                                        TextColor="Black"
+                                        VerticalOptions="Start" />
+                                    <Label
+                                        Margin="10,0,10,0"
+                                        xct:ShadowEffect.Color="black"
+                                        xct:ShadowEffect.OffsetX="5"
+                                        xct:ShadowEffect.OffsetY="10"
+                                        xct:ShadowEffect.Opacity="0.5"
+                                        xct:ShadowEffect.Radius="20"
+                                        FontAttributes="Italic"
+                                        FontSize="11"
+                                        HorizontalOptions="Center"
+                                        HorizontalTextAlignment="Center"
+                                        IsVisible="{Binding IsQTypPokDesc}"
                                         Text="{Binding Pokemon.DescriptionVx}"
                                         TextColor="Black"
-                                        VerticalOptions="Start" />-->
+                                        VerticalOptions="Start" />
                                 </StackLayout>
                                 <VisualStateManager.VisualStateGroups>
                                     <VisualStateGroup Name="CommonStates">

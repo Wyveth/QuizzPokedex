@@ -12,6 +12,7 @@ namespace QuizzPokedex.Models
         public Pokemon Pokemon { get; set; }
         public bool IsQTypTyp { get; set; }
         public TypePok TypePok { get; set; }
+        public bool IsQTypPokDesc { get; set; }
         public Answer CorrectAnswer { get; set; }
         public Answer WrongAnswer { get; set; }
         public byte[] ByteTypePok { get; set; }
