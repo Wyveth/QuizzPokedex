@@ -30,6 +30,20 @@ namespace QuizzPokedex.Droid.Configuration
                     embeddedDatabaseStream.CopyTo(fileStreamToWrite);
                     fileStreamToWrite.Close();
                 }
+
+                //var databaseFolderExt = Android.OS.Environment.ExternalStorageDirectory.AbsolutePath;
+                //var databaseFilePathExt = Path.Combine(databaseFolderExt, Android.OS.Environment.DirectoryDownloads);
+                //if (!System.IO.File.Exists(databaseFilePathExt + "/" + FileName))
+                //{
+                //    FileStream fileStreamToWrite = System.IO.File.Create(databaseFilePathExt + "/" + FileName);
+                //    using (var stream = System.IO.File.OpenRead(databaseFilePath))
+                //    {
+                //        stream.Seek(0, SeekOrigin.Begin);
+                //        stream.CopyTo(fileStreamToWrite);
+                //    }
+
+                //    fileStreamToWrite.Close();
+                //}
                 //https://1drv.ms/u/s!AuC6m7Y-ssAPh3v0Km9kRzrmnzNA?e=IX6hu4
 
                 _connection = new SQLiteAsyncConnection(databaseFilePath);

@@ -87,6 +87,8 @@ namespace QuizzPokedex.ViewModels
             DetectiveP = await Utils.GetByteAssetImage(Constantes.DetectivePikachu);
             Pokemon = await _pokemonService.GetByIdAsync(QuestionAnswers.Answers.Find(m => m.IsCorrect.Equals(true)).IsCorrectID);
 
+            Description = await _answerService.ConvertDescription(Pokemon);
+
             int typeID = int.Parse(Pokemon.TypesID.Split(',')[0]);
             TypePok = await _typePokService.GetByIdAsync(typeID);
 
@@ -374,6 +376,14 @@ namespace QuizzPokedex.ViewModels
         {
             get { return _formatQuestion; }
             set { SetProperty(ref _formatQuestion, value); }
+        }
+
+        private string _description;
+
+        public string Description
+        {
+            get { return _description; }
+            set { SetProperty(ref _description, value); }
         }
 
         private Pokemon _pokemon;

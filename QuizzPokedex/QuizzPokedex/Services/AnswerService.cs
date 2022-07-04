@@ -425,7 +425,7 @@ namespace QuizzPokedex.Services
             return await Task.FromResult(pokemonsAnswer);
         }
 
-        private async Task<string> ConvertDescription(Pokemon pokemon)
+        public async Task<string> ConvertDescription(Pokemon pokemon)
         {
             string description = "";
             if (pokemon.DescriptionVx.Contains(pokemon.DisplayName))
@@ -455,19 +455,6 @@ namespace QuizzPokedex.Services
                     pokemons.Add(await _pokemonService.GetByIdAsync(id));
                 }
 
-                //string[] descSplit = description.Split(' ');
-
-                //int index = -1;
-                //for (int i = 0; i < descSplit.Length; i++)
-                //{
-                //    if (descSplit[i].Contains(pokemonName))
-                //    {
-                //        index = i;
-                //        break;
-                //    }
-                //}
-
-                //if (!index.Equals(-1))
                 foreach (Pokemon item in pokemons)
                 {
                     description = description.Replace(item.Name, "[...]");

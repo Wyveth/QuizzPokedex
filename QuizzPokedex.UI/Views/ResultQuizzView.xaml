@@ -91,7 +91,7 @@
                             <Grid Margin="10,35,0,0">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="80" />
-                                    <RowDefinition Height="55" />
+                                    <RowDefinition Height="60" />
                                 </Grid.RowDefinitions>
                                 <StackLayout Grid.Row="0">
                                     <Image
@@ -188,7 +188,7 @@
                                         xct:ShadowEffect.Opacity="0.5"
                                         xct:ShadowEffect.Radius="20"
                                         FontAttributes="Italic"
-                                        FontSize="11"
+                                        FontSize="10"
                                         HorizontalOptions="Center"
                                         HorizontalTextAlignment="Center"
                                         IsVisible="{Binding IsQTypPokDesc}"
