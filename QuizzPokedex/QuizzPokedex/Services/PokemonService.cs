@@ -228,6 +228,10 @@ namespace QuizzPokedex.Services
                         await CreateAsync(pokemon);
 
                         Debug.Write("Creation:" + pokemon.Number + " - " + pokemon.Name);
+
+                        if (Constantes.IsTestDB)
+                            if (pokemon.Number.Equals("721"))
+                                break;
                     }
                 }
             }
@@ -280,7 +284,7 @@ namespace QuizzPokedex.Services
                 TypePok type = await _typePokService.GetByNameAsync(item);
                 if (i == 0)
                 {
-                    pokemon.WeaknessID = type.Name.ToString();
+                    pokemon.Weakness = type.Name.ToString();
                     pokemon.WeaknessID = type.Id.ToString();
                     i++;
                 }
@@ -324,6 +328,10 @@ namespace QuizzPokedex.Services
                         await UpdateAsync(pokemonUpdated);
 
                     Debug.Write("Update: " + pokemonJson.Number + " - " + pokemonJson.Name);
+
+                    if(Constantes.IsTestDB)
+                        if (pokemonJson.Number.Equals("721"))
+                        break;
                 }
                 catch
                 {

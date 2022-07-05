@@ -133,5 +133,8 @@ namespace QuizzPokedex.Resources
         public const string QTypPokTalent = "Talent";
         public const string QTypPokTalentRevert = "TalentRevert";
         #endregion
+
+        //Variable pour différencier les tests
+        public const bool IsTestDB = false;
     }
 }

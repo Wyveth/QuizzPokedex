@@ -74,17 +74,20 @@ namespace QuizzPokedex.ViewModels
             int nbPokMax = await _pokemonService.GetNumberPokJsonAsync();
             int nbPokInDb = await _pokemonService.GetNumberInDbAsync();
 
+            if (Constantes.IsTestDB)
+                nbPokMax = 889;
+
             if (!nbPokInDb.Equals(nbPokMax))
             {
                 ProgressBarIsVisible = true;
                 ValueProgressBar = await getPercent(nbPokInDb, nbPokMax);
-                TextProgressBar = "Création Pokémon: " + nbPokInDb.ToString() + "/" + nbPokMax.ToString();
+                TextProgressBar = "Création DB: " + nbPokInDb.ToString() + "/" + nbPokMax.ToString();
 
                 while (ValueProgressBar != 1)
                 {
                     nbPokInDb = await _pokemonService.GetNumberInDbAsync();
                     ValueProgressBar = await getPercent(nbPokInDb, nbPokMax);
-                    TextProgressBar = "Création Pokémon: " + nbPokInDb.ToString() + "/" + nbPokMax.ToString();
+                    TextProgressBar = await GetTextCreateProgressBar(nbPokInDb, nbPokMax);
                 }
 
                 ProgressBarIsVisible = false;
@@ -96,17 +99,69 @@ namespace QuizzPokedex.ViewModels
             {
                 ProgressBarIsVisible = true;
                 ValueProgressBar = await getPercent(nbPokNotUpdated, nbPokMax);
-                TextProgressBar = "Update Pokémon: " + nbPokNotUpdated.ToString() + "/" + nbPokMax.ToString();
+                TextProgressBar = "Check DB: " + nbPokNotUpdated.ToString() + "/" + nbPokMax.ToString();
 
                 while (ValueProgressBar != 1)
                 {
                     nbPokNotUpdated = await _pokemonService.GetNumberPokUpdateAsync();
                     ValueProgressBar = await getPercent(nbPokNotUpdated, nbPokMax);
-                    TextProgressBar = "Update Pokémon: " + nbPokNotUpdated.ToString() + "/" + nbPokMax.ToString();
+                    TextProgressBar = await GetTextCheckProgressBar(nbPokNotUpdated, nbPokMax);
                 }
 
                 ProgressBarIsVisible = false;
             }
+        }
+
+        private async Task<string> GetTextCreateProgressBar(int nbPokInDb, int nbPokMax)
+        {
+            string total = nbPokInDb.ToString() + "/" + nbPokMax.ToString();
+            string result = "";
+            if (nbPokInDb <= 211)
+                result = "Création Gen 1: " + total;
+            else if(nbPokInDb <= 322)
+                result = "Création Gen 2: " + total;
+            else if (nbPokInDb <= 484)
+                result = "Création Gen 3: " + total;
+            else if (nbPokInDb <= 613)
+                result = "Création Gen 4: " + total;
+            else if (nbPokInDb <= 797)
+                result = "Création Gen 5: " + total;
+            else if (nbPokInDb <= 889)
+                result = "Création Gen 6: " + total;
+            else if (nbPokInDb <= 989)
+                result = "Création Gen 7: " + total;
+            else if (nbPokInDb <= 1104)
+                result = "Création Gen 8: " + total;
+            else if (nbPokInDb <= 1114)
+                result = "Création Gen Arceus: " + total;
+
+            return await Task.FromResult(result);
+        }
+
+        private async Task<string> GetTextCheckProgressBar(int nbPokInDb, int nbPokMax)
+        {
+            string total = nbPokInDb.ToString() + "/" + nbPokMax.ToString();
+            string result = "";
+            if (nbPokInDb <= 211)
+                result = "Check Gen 1: " + total;
+            else if (nbPokInDb <= 322)
+                result = "Check Gen 2: " + total;
+            else if (nbPokInDb <= 484)
+                result = "Check Gen 3: " + total;
+            else if (nbPokInDb <= 613)
+                result = "Check Gen 4: " + total;
+            else if (nbPokInDb <= 797)
+                result = "Check Gen 5: " + total;
+            else if (nbPokInDb <= 889)
+                result = "Check Gen 6: " + total;
+            else if (nbPokInDb <= 989)
+                result = "Check Gen 7: " + total;
+            else if (nbPokInDb <= 1104)
+                result = "Check Gen 8: " + total;
+            else if (nbPokInDb <= 1114)
+                result = "Check Gen Arceus: " + total;
+
+            return await Task.FromResult(result);
         }
 
         private async Task<double> getPercent(double nbPok, double nbPokMax)

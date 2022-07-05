@@ -44,7 +44,6 @@ namespace QuizzPokedex.Droid.Configuration
 
                 //    fileStreamToWrite.Close();
                 //}
-                //https://1drv.ms/u/s!AuC6m7Y-ssAPh3v0Km9kRzrmnzNA?e=IX6hu4
 
                 _connection = new SQLiteAsyncConnection(databaseFilePath);
             }
