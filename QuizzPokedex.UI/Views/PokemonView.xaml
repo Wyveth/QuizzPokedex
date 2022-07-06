@@ -353,13 +353,13 @@
                             xct:ShadowEffect.OffsetY="10"
                             xct:ShadowEffect.Opacity="0.5"
                             FontAttributes="Bold"
-                            Text="{Binding TalentOne}"
+                            Text="{Binding FirstTalent.Name}"
                             TextColor="black" />
                         <Label
                             xct:ShadowEffect.Color="#464C56"
                             xct:ShadowEffect.OffsetY="10"
                             xct:ShadowEffect.Opacity="0.5"
-                            Text="{Binding TalentDescriptionOne}"
+                            Text="{Binding FirstTalent.Description}"
                             TextColor="black" />
                         <Label
                             xct:ShadowEffect.Color="#464C56"
@@ -367,14 +367,14 @@
                             xct:ShadowEffect.Opacity="0.5"
                             FontAttributes="Bold"
                             IsVisible="{Binding SecondTalentIsVisible}"
-                            Text="{Binding TalentTwo}"
+                            Text="{Binding SecondTalent.Name}"
                             TextColor="black" />
                         <Label
                             xct:ShadowEffect.Color="#464C56"
                             xct:ShadowEffect.OffsetY="10"
                             xct:ShadowEffect.Opacity="0.5"
                             IsVisible="{Binding SecondTalentIsVisible}"
-                            Text="{Binding TalentDescriptionTwo}"
+                            Text="{Binding SecondTalent.Description}"
                             TextColor="black" />
                     </StackLayout>
                 </RelativeLayout>

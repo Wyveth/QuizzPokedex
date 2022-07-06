@@ -19,17 +19,19 @@ namespace QuizzPokedex.ViewModels
         private readonly IMvxNavigationService _navigation;
         private readonly IMvxIoCProvider _logger;
         private readonly IPokemonService _pokemonService;
+        private readonly ITalentService _talentService;
         private readonly ITypePokService _typePokService;
         private readonly IFavoriteService _favoriteService;
         private readonly IMvxMessenger _messenger;
         #endregion
 
         #region Constructor
-        public PokemonViewModel(IMvxNavigationService navigation, IMvxMessenger messenger, IMvxIoCProvider logger, IPokemonService pokemonService, ITypePokService typeService, IFavoriteService favoriteService)
+        public PokemonViewModel(IMvxNavigationService navigation, IMvxMessenger messenger, IMvxIoCProvider logger, IPokemonService pokemonService, ITalentService talentService, ITypePokService typeService, IFavoriteService favoriteService)
         {
             _navigation = navigation;
             _logger = logger;
             _pokemonService = pokemonService;
+            _talentService = talentService;
             _typePokService = typeService;
             _favoriteService = favoriteService;
             _messenger = messenger;
@@ -40,29 +42,6 @@ namespace QuizzPokedex.ViewModels
         public override void Prepare(Pokemon pokemon)
         {
             Pokemon = pokemon;
-
-            if (!string.IsNullOrEmpty(Pokemon.Talent))
-            {
-                TalentIsVisible = true;
-                if (Pokemon.Talent.Contains(",") && Pokemon.DescriptionTalent.Contains(";"))
-                {
-                    SecondTalentIsVisible = true;
-                    string[] talentTab = Pokemon.Talent.Split(',');
-                    TalentOne = talentTab[0];
-                    TalentTwo = talentTab[1];
-                    string[] descTalentTab = Pokemon.DescriptionTalent.Split(';');
-                    TalentDescriptionOne = descTalentTab[0];
-                    TalentDescriptionTwo = descTalentTab[1];
-                }
-                else
-                {
-                    TalentOne = Pokemon.Talent;
-                    TalentDescriptionOne = Pokemon.DescriptionTalent;
-                    SecondTalentIsVisible = false;
-                }
-            }
-            else
-                TalentIsVisible = false;
 
             if (!Pokemon.StatTotal.Equals(0))
                 StatisticIsVisible = true;
@@ -93,6 +72,29 @@ namespace QuizzPokedex.ViewModels
                 ImgFavorite = await Utils.GetByteAssetImage(Constantes.LoveFull);
             else
                 ImgFavorite = await Utils.GetByteAssetImage(Constantes.Love);
+            #endregion
+
+            #region Talent
+            if (!string.IsNullOrEmpty(Pokemon.TalentsID))
+            {
+                TalentIsVisible = true;
+                if (Pokemon.TalentsID.Contains(","))
+                {
+
+                    SecondTalentIsVisible = true;
+                    string[] talentIds = Pokemon.TalentsID.Split(',');
+
+                    FirstTalent = await _talentService.GetByIdAsync(int.Parse(talentIds[0]));
+                    SecondTalent = await _talentService.GetByIdAsync(int.Parse(talentIds[1]));
+                }
+                else
+                {
+                    FirstTalent = await _talentService.GetByIdAsync(int.Parse(Pokemon.TalentsID));
+                    SecondTalentIsVisible = false;
+                }
+            }
+            else
+                TalentIsVisible = false;
             #endregion
 
             #region Type
@@ -439,36 +441,20 @@ namespace QuizzPokedex.ViewModels
             set { SetProperty(ref _firstType, value); }
         }
 
-        private string _talentOne;
+        private Talent _firstTalent;
 
-        public string TalentOne
+        public Talent FirstTalent
         {
-            get { return _talentOne; }
-            set { _talentOne = value; }
+            get { return _firstTalent; }
+            set { SetProperty(ref _firstTalent, value); }
         }
 
-        private string _talentDescriptionOne;
+        private Talent _secondTalent;
 
-        public string TalentDescriptionOne
+        public Talent SecondTalent
         {
-            get { return _talentDescriptionOne; }
-            set { _talentDescriptionOne = value; }
-        }
-
-        private string _talentTwo;
-
-        public string TalentTwo
-        {
-            get { return _talentTwo; }
-            set { _talentTwo = value; }
-        }
-
-        private string _talentDescriptionTwo;
-
-        public string TalentDescriptionTwo
-        {
-            get { return _talentDescriptionTwo; }
-            set { _talentDescriptionTwo = value; }
+            get { return _secondTalent; }
+            set { SetProperty(ref _secondTalent, value); }
         }
         #endregion
 

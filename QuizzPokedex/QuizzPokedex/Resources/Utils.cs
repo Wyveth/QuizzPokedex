@@ -76,6 +76,8 @@ namespace QuizzPokedex.Resources
                     await _navigation.Navigate<QTypPokDescQuizzViewModel, QuestionAnswers>(questionAnswers);
                 else if (questionType.Code.Equals(Constantes.QTypPokDescReverse))
                     await _navigation.Navigate<QTypPokDescReverseQuizzViewModel, QuestionAnswers>(questionAnswers);
+                else if (questionType.Code.Equals(Constantes.QTypTalent) || questionType.Code.Equals(Constantes.QTypTalentReverse))
+                    await _navigation.Navigate<QTypTalentQuizzViewModel, QuestionAnswers>(questionAnswers);
                 else if (questionType.Code.Equals(Constantes.QTypTypPok))
                     await _navigation.Navigate<QTypTypPokQuizzViewModel, QuestionAnswers>(questionAnswers);
                 else if (questionType.Code.Equals(Constantes.QTypTyp))

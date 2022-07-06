@@ -127,14 +127,16 @@ namespace QuizzPokedex.Resources
         public const string QTypTypPok = "TypePokemon";
         public const string QTypTypPokVarious = "TypePokemonVarious";
         public const string QTypTyp = "Type";
-        public const string QTypPokDesc = "Description";
-        public const string QTypPokDescReverse = "DescriptionReverse";
+        public const string QTypPokDesc = "PokemonDescription";
+        public const string QTypPokDescReverse = "PokemonDescriptionReverse";
+        public const string QTypPokTalent = "PokemonTalent";
+        public const string QTypPokTalentReverse = "PokemonTalentReverse";
         public const string QTypPokStat = "Statistique";
-        public const string QTypPokTalent = "Talent";
-        public const string QTypPokTalentRevert = "TalentRevert";
+        public const string QTypTalent = "Talent";
+        public const string QTypTalentReverse = "TalentReverse";
         #endregion
 
         //Variable pour différencier les tests
-        public const bool IsTestDB = false;
+        public const bool IsGenerateDB = false;
     }
 }

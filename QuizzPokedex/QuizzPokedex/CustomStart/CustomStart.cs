@@ -36,6 +36,7 @@ namespace QuizzPokedex.CustomStart
         {
             //initialisation des tables par défaut
             //_connectionService.GetAsyncConnection().DropTableAsync<TypePok>().Wait();
+            //_connectionService.GetAsyncConnection().DropTableAsync<Talent>().Wait();
             //_connectionService.GetAsyncConnection().DropTableAsync<Pokemon>().Wait();
             //_connectionService.GetAsyncConnection().DropTableAsync<Profile>().Wait();
             //_connectionService.GetAsyncConnection().DropTableAsync<Favorite>().Wait();
@@ -46,6 +47,7 @@ namespace QuizzPokedex.CustomStart
             //_connectionService.GetAsyncConnection().DropTableAsync<Quizz>().Wait();
 
             _connectionService.GetAsyncConnection().CreateTableAsync<TypePok>().Wait();
+            _connectionService.GetAsyncConnection().CreateTableAsync<Talent>().Wait();
             _connectionService.GetAsyncConnection().CreateTableAsync<Pokemon>().Wait();
             _connectionService.GetAsyncConnection().CreateTableAsync<Profile>().Wait();
             _connectionService.GetAsyncConnection().CreateTableAsync<Favorite>().Wait();

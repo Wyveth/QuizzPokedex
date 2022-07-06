@@ -16,6 +16,7 @@ namespace QuizzPokedex.Interfaces
         Task<int> UpdateAsync(Answer answer);
         Task<string> GenerateCorrectAnswers(QuestionType questionType, List<Pokemon> pokemonsAnswer);
         Task<string> GenerateCorrectAnswers(QuestionType questionType, List<TypePok> typesAnswer);
+        Task<string> GenerateCorrectAnswers(QuestionType questionType, List<Talent> talentsAnswer, bool Reverse);
         Task<List<Answer>> GenerateAnswers(Quizz quizz, QuestionType questionType, List<Answer> answers);
         Task<string> GenerateCorrectAnswersDesc(QuestionType questionType, List<Pokemon> pokemonsAnswer);
         Task<string> ConvertDescription(Pokemon pokemon);

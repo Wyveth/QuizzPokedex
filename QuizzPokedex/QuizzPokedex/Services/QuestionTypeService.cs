@@ -129,6 +129,30 @@ namespace QuizzPokedex.Services
             };
             await CreateAsync(questionType);
             #endregion
+
+            #region QTypTalent
+            questionType = new QuestionType()
+            {
+                Code = Constantes.QTypTalent,
+                Libelle = "Trouver la description du talent",
+                DifficultyID = difficultyEasy.Id,
+                NbAnswers = 4,
+                NbAnswersPossible = 1
+            };
+            await CreateAsync(questionType);
+            #endregion
+
+            #region QTypTalentReverse
+            questionType = new QuestionType()
+            {
+                Code = Constantes.QTypTalentReverse,
+                Libelle = "Trouver le bon talent",
+                DifficultyID = difficultyEasy.Id,
+                NbAnswers = 4,
+                NbAnswersPossible = 1
+            };
+            await CreateAsync(questionType);
+            #endregion
             #endregion
 
             #region Normal
@@ -233,6 +257,30 @@ namespace QuizzPokedex.Services
                 Libelle = "Quel est-ce type?",
                 DifficultyID = difficultyNormal.Id,
                 NbAnswers = 12,
+                NbAnswersPossible = 1
+            };
+            await CreateAsync(questionType);
+            #endregion
+
+            #region QTypTalent
+            questionType = new QuestionType()
+            {
+                Code = Constantes.QTypTalent,
+                Libelle = "Trouver la description du talent",
+                DifficultyID = difficultyNormal.Id,
+                NbAnswers = 6,
+                NbAnswersPossible = 1
+            };
+            await CreateAsync(questionType);
+            #endregion
+
+            #region QTypTalentReverse
+            questionType = new QuestionType()
+            {
+                Code = Constantes.QTypTalentReverse,
+                Libelle = "Trouver le bon talent",
+                DifficultyID = difficultyNormal.Id,
+                NbAnswers = 6,
                 NbAnswersPossible = 1
             };
             await CreateAsync(questionType);
@@ -371,6 +419,30 @@ namespace QuizzPokedex.Services
             };
             await CreateAsync(questionType);
             #endregion
+
+            #region QTypTalent
+            questionType = new QuestionType()
+            {
+                Code = Constantes.QTypTalent,
+                Libelle = "Trouver la description du talent",
+                DifficultyID = difficultyHard.Id,
+                NbAnswers = 8,
+                NbAnswersPossible = 1
+            };
+            await CreateAsync(questionType);
+            #endregion
+
+            #region QTypTalentReverse
+            questionType = new QuestionType()
+            {
+                Code = Constantes.QTypTalentReverse,
+                Libelle = "Trouver le bon talent",
+                DifficultyID = difficultyHard.Id,
+                NbAnswers = 8,
+                NbAnswersPossible = 1
+            };
+            await CreateAsync(questionType);
+            #endregion
             #endregion
         }
         #endregion
@@ -425,6 +497,8 @@ namespace QuizzPokedex.Services
             //If Question Type => Type // 10%
             if (numberRandom <= 3)
                 questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypTyp));
+            if (numberRandom <= 6)
+                questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypTalent) || m.Code.Equals(Constantes.QTypTalentReverse));
             else if (numberRandom <= 10)
                 questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypPokDesc) || m.Code.Equals(Constantes.QTypPokDescReverse));
             else if (numberRandom <= 20)
@@ -438,6 +512,8 @@ namespace QuizzPokedex.Services
             //QTypPokStat = "Statistique";
             //QTypPokTalent = "Talent";
             //QTypPokTalentRevert = "TalentRevert";
+
+            questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypTalent) || m.Code.Equals(Constantes.QTypTalentReverse));
 
             int numberTypeQuestion = random.Next(questionTypes.Count);
             return await Task.FromResult(questionTypes[numberTypeQuestion]);

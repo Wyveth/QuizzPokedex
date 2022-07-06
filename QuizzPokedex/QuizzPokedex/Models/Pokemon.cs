@@ -49,11 +49,14 @@ namespace QuizzPokedex.Models
         //Poids du Pokémon
         public string Weight { get; set; }
 
+        //ID des Talents
+        public string TalentsID { get; set; }
+
         //Talent du Pokémon
-        public string Talent { get; set; }
+        //public string Talent { get; set; }
 
         //Description du Talent
-        public string DescriptionTalent { get; set; }
+        //public string DescriptionTalent { get; set; }
 
         //ID des Types
         public string TypesID { get; set; }

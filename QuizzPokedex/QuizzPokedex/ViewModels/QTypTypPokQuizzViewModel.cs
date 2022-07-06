@@ -518,14 +518,6 @@ namespace QuizzPokedex.ViewModels
             set { SetProperty(ref _typePok, value); }
         }
 
-        private Question _question;
-
-        public Question Question
-        {
-            get { return _question; }
-            set { SetProperty(ref _question, value); }
-        }
-
         private QuestionType _questionType;
 
         public QuestionType QuestionType

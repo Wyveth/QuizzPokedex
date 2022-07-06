@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace QuizzPokedex.ViewModels
 {
-    public class QTypPokDescReverseQuizzViewModel : MvxViewModel<QuestionAnswers>
+    public class QTypTalentQuizzViewModel : MvxViewModel<QuestionAnswers>
     {
         #region Field
         private readonly IMvxNavigationService _navigation;
@@ -24,13 +24,13 @@ namespace QuizzPokedex.ViewModels
         private readonly IQuestionTypeService _questionTypeService;
         private readonly IDifficultyService _difficultyService;
         private readonly IAnswerService _answerService;
-        private readonly IPokemonService _pokemonService;
+        private readonly ITalentService _talentService;
         private readonly ITypePokService _typePokService;
         private readonly IMvxMessenger _messenger;
         #endregion
 
         #region Constructor
-        public QTypPokDescReverseQuizzViewModel(IMvxNavigationService navigation, IMvxIoCProvider logger, IQuizzService quizzService, IPokemonService pokemonService, IQuestionService questionService, IDifficultyService difficultyService, IAnswerService answerService, IQuestionTypeService questionTypeService, ITypePokService typePokService, IMvxMessenger messenger)
+        public QTypTalentQuizzViewModel(IMvxNavigationService navigation, IMvxIoCProvider logger, IQuizzService quizzService, IQuestionService questionService, IDifficultyService difficultyService, IAnswerService answerService, IQuestionTypeService questionTypeService, ITalentService talentService, ITypePokService typePokService, IMvxMessenger messenger)
         {
             _navigation = navigation;
             _logger = logger;
@@ -39,7 +39,7 @@ namespace QuizzPokedex.ViewModels
             _questionTypeService = questionTypeService;
             _difficultyService = difficultyService;
             _answerService = answerService;
-            _pokemonService = pokemonService;
+            _talentService = talentService;
             _typePokService = typePokService;
             _messenger = messenger;
         }
@@ -50,8 +50,6 @@ namespace QuizzPokedex.ViewModels
         {
             QuestionAnswers = questionAnswers;
             Order = questionAnswers.Question.Order;
-
-            Transformations = new List<ITransformation>();
 
             FormatQuestion = new string[] { Order.ToString(), questionAnswers.Quizz.QuestionsID.Split(',').Length.ToString() };
 
@@ -81,16 +79,10 @@ namespace QuizzPokedex.ViewModels
         private async Task LoadData()
         {
             QuestionType = await _questionTypeService.GetByIdAsync(QuestionAnswers.Question.QuestionTypeID);
-            Transformations = await Utils.GetTransformationImage(QuestionType);
-            Delay = await Utils.GetTransformationImageDelay(QuestionType);
-
+            Talent = await _talentService.GetByIdAsync(QuestionAnswers.Answers.Find(m => m.IsCorrect.Equals(true)).IsCorrectID);
+            Description = QuestionType.Code.Equals(Constantes.QTypTalent) ? Talent.Name : Talent.Description;
+            TypePok = await _typePokService.GetTypeRandom();
             DetectiveP = await Utils.GetByteAssetImage(Constantes.DetectivePikachu);
-            Pokemon = await _pokemonService.GetByIdAsync(QuestionAnswers.Answers.Find(m => m.IsCorrect.Equals(true)).IsCorrectID);
-
-            Description = await _answerService.ConvertDescription(Pokemon);
-
-            int typeID = int.Parse(Pokemon.TypesID.Split(',')[0]);
-            TypePok = await _typePokService.GetByIdAsync(typeID);
 
             Difficulty difficulty = await _difficultyService.GetByIdAsync(QuestionType.DifficultyID);
             DifficultyByte = await Utils.GetBytesDifficulty(difficulty);
@@ -378,28 +370,20 @@ namespace QuizzPokedex.ViewModels
             set { SetProperty(ref _formatQuestion, value); }
         }
 
-        private string _description;
-
-        public string Description
-        {
-            get { return _description; }
-            set { SetProperty(ref _description, value); }
-        }
-
-        private Pokemon _pokemon;
-
-        public Pokemon Pokemon
-        {
-            get { return _pokemon; }
-            set { SetProperty(ref _pokemon, value); }
-        }
-
         private TypePok _typePok;
 
         public TypePok TypePok
         {
             get { return _typePok; }
             set { SetProperty(ref _typePok, value); }
+        }
+
+        private Talent _talent;
+
+        public Talent Talent
+        {
+            get { return _talent; }
+            set { SetProperty(ref _talent, value); }
         }
 
         private QuestionType _questionType;
@@ -433,6 +417,15 @@ namespace QuizzPokedex.ViewModels
             get { return _detectiveP; }
             set { SetProperty(ref _detectiveP, value); }
         }
+
+        private string _description;
+
+        public string Description
+        {
+            get { return _description; }
+            set { SetProperty(ref _description, value); }
+        }
+
         #endregion
 
         #region Difficulty
@@ -477,26 +470,6 @@ namespace QuizzPokedex.ViewModels
             get { return _imgPokedexDown; }
             set { SetProperty(ref _imgPokedexDown, value); }
         }
-        #endregion
-
-        #region Transformation
-
-        private List<ITransformation> _iTransformations;
-
-        public List<ITransformation> Transformations
-        {
-            get { return _iTransformations; }
-            set { SetProperty(ref _iTransformations, value); }
-        }
-
-        private int _delay;
-
-        public int Delay
-        {
-            get { return _delay; }
-            set { SetProperty(ref _delay, value); }
-        }
-
         #endregion
 
         #region IsVisible

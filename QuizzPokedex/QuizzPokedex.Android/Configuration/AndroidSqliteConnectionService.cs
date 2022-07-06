@@ -23,13 +23,13 @@ namespace QuizzPokedex.Droid.Configuration
                 Assembly assembly = IntrospectionExtensions.GetTypeInfo(typeof(App)).Assembly;
                 Stream embeddedDatabaseStream = assembly.GetManifestResourceStream("QuizzPokedex.SQlite.QuizzPokedex.db");
 
-                if (!System.IO.File.Exists(databaseFilePath))
-                {
-                    FileStream fileStreamToWrite = System.IO.File.Create(databaseFilePath);
-                    embeddedDatabaseStream.Seek(0, SeekOrigin.Begin);
-                    embeddedDatabaseStream.CopyTo(fileStreamToWrite);
-                    fileStreamToWrite.Close();
-                }
+                //if (!System.IO.File.Exists(databaseFilePath))
+                //{
+                //    FileStream fileStreamToWrite = System.IO.File.Create(databaseFilePath);
+                //    embeddedDatabaseStream.Seek(0, SeekOrigin.Begin);
+                //    embeddedDatabaseStream.CopyTo(fileStreamToWrite);
+                //    fileStreamToWrite.Close();
+                //}
 
                 //var databaseFolderExt = Android.OS.Environment.ExternalStorageDirectory.AbsolutePath;
                 //var databaseFilePathExt = Path.Combine(databaseFolderExt, Android.OS.Environment.DirectoryDownloads);

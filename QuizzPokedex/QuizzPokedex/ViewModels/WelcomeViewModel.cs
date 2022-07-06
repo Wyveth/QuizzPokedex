@@ -74,7 +74,7 @@ namespace QuizzPokedex.ViewModels
             int nbPokMax = await _pokemonService.GetNumberPokJsonAsync();
             int nbPokInDb = await _pokemonService.GetNumberInDbAsync();
 
-            if (Constantes.IsTestDB)
+            if (Constantes.IsGenerateDB)
                 nbPokMax = 889;
 
             if (!nbPokInDb.Equals(nbPokMax))

@@ -14,15 +14,17 @@ namespace QuizzPokedex.Services
         private readonly ISqliteConnectionService _connectionService;
         private readonly IPokemonService _pokemonService;
         private readonly ITypePokService _typePokService;
+        private readonly ITalentService _talentService;
         private SQLite.SQLiteAsyncConnection _database => _connectionService.GetAsyncConnection();
         #endregion
 
         #region Constructor
-        public AnswerService(ISqliteConnectionService connectionService, IPokemonService pokemonService, ITypePokService typePokService)
+        public AnswerService(ISqliteConnectionService connectionService, IPokemonService pokemonService, ITypePokService typePokService, ITalentService talentService)
         {
             _connectionService = connectionService;
             _pokemonService = pokemonService;
             _typePokService = typePokService;
+            _talentService = talentService;
         }
         #endregion
 
@@ -130,6 +132,26 @@ namespace QuizzPokedex.Services
                 }
 
                 answers = await GenerateAnswersDesc(questionType, pokemons, answers);
+            }
+            else if (questionType.Code.Equals(Constantes.QTypTalent) || questionType.Code.Equals(Constantes.QTypTalentReverse))
+            {
+                List<Talent> talents = new List<Talent>();
+                foreach (Answer item in answers)
+                {
+                    talents.Add(await _talentService.GetByIdAsync(item.IsCorrectID));
+                }
+
+                int qMissing = questionType.NbAnswers - answers.Count;
+
+                for (int i = 0; i < qMissing; i++)
+                {
+                    talents.Add(await _talentService.GetTalentRandom(talents));
+                }
+
+                if (questionType.Code.Equals(Constantes.QTypTalent))
+                    answers = await GenerateAnswers(questionType, talents, answers);
+                else if (questionType.Code.Equals(Constantes.QTypTalentReverse))
+                    answers = await GenerateAnswers(questionType, talents, answers, true);
             }
 
             return await Task.FromResult(answers);
@@ -466,6 +488,102 @@ namespace QuizzPokedex.Services
             {
                 throw ex;
             }
+        }
+        #endregion
+
+        #region Quizz Talent
+        public async Task<string> GenerateCorrectAnswers(QuestionType questionType, List<Talent> talentsAnswer, bool Reverse)
+        {
+            List<Answer> answers = new List<Answer>();
+            Random random = new Random();
+
+            string result = string.Empty;
+            Dictionary<int, Talent> dic = new Dictionary<int, Talent>();
+            foreach (var talent in talentsAnswer)
+            {
+                while (!dic.ContainsValue(talent))
+                {
+                    int numberRandom = random.Next(questionType.NbAnswers);
+
+                    if (!dic.ContainsKey(numberRandom))
+                        dic.Add(numberRandom, talent);
+                }
+            }
+
+            foreach (KeyValuePair<int, Talent> pair in dic)
+            {
+                Answer answer = new Answer()
+                {
+                    IsSelected = false,
+                    IsCorrect = true,
+                    IsCorrectID = pair.Value.Id,
+                    Libelle = Reverse ? pair.Value.Name : pair.Value.Description,
+                    Order = pair.Key + 1
+                };
+
+                await CreateAsync(answer);
+                answers.Add(answer);
+            }
+
+            int i = 0;
+            foreach (Answer answer in answers)
+            {
+                if (i == 0)
+                {
+                    result = answer.Id.ToString();
+                    i++;
+                }
+                else
+                {
+                    result += ',' + answer.Id.ToString();
+                }
+            }
+
+            return await Task.FromResult(result);
+        }
+
+        private async Task<List<Answer>> GenerateAnswers(QuestionType questionType, List<Talent> talents, List<Answer> talentsAnswer, bool Reverse = false)
+        {
+            Random random = new Random();
+
+            string result = string.Empty;
+            Dictionary<int, Talent> dic = new Dictionary<int, Talent>();
+
+            foreach (var talent in talents)
+            {
+                while (!dic.ContainsValue(talent))
+                {
+                    int numberRandom = random.Next(questionType.NbAnswers);
+
+                    if (!dic.ContainsKey(numberRandom))
+                        dic.Add(numberRandom, talent);
+                }
+            }
+
+            foreach (KeyValuePair<int, Talent> pair in dic)
+            {
+                Answer answerExist = talentsAnswer.Find(m => m.IsCorrectID.Equals(pair.Value.Id));
+                if (answerExist == null)
+                {
+                    Answer answer = new Answer()
+                    {
+                        IsSelected = false,
+                        IsCorrect = false,
+                        IsCorrectID = -1,
+                        Libelle = Reverse ? pair.Value.Name : pair.Value.Description,
+                        Order = pair.Key + 1
+                    };
+
+                    talentsAnswer.Add(answer);
+                }
+                else
+                {
+                    answerExist.Order = pair.Key + 1;
+                    await UpdateAsync(answerExist);
+                }
+            }
+
+            return await Task.FromResult(talentsAnswer);
         }
         #endregion
         #endregion

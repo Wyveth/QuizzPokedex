@@ -21,6 +21,7 @@ namespace QuizzPokedex.Services
 
         private readonly ISqliteConnectionService _connectionService;
         private readonly ITypePokService _typePokService;
+        private readonly ITalentService _talentService;
         private readonly IProfileService _profileService;
         private readonly HttpClient _httpClient = new HttpClient { Timeout = TimeSpan.FromSeconds(_downloadImageTimeoutInSeconds) };
 
@@ -28,10 +29,11 @@ namespace QuizzPokedex.Services
         #endregion
 
         #region Constructor
-        public PokemonService(ISqliteConnectionService connectionService, ITypePokService typePokService, IProfileService profileService)
+        public PokemonService(ISqliteConnectionService connectionService, ITypePokService typePokService, ITalentService talentService, IProfileService profileService)
         {
             _connectionService = connectionService;
             _typePokService = typePokService;
+            _talentService = talentService;
             _profileService = profileService;
         }
         #endregion
@@ -229,7 +231,7 @@ namespace QuizzPokedex.Services
 
                         Debug.Write("Creation:" + pokemon.Number + " - " + pokemon.Name);
 
-                        if (Constantes.IsTestDB)
+                        if (Constantes.IsGenerateDB)
                             if (pokemon.Number.Equals("721"))
                                 break;
                     }
@@ -255,11 +257,36 @@ namespace QuizzPokedex.Services
             pokemon.Size = pokemonJson.Size;
             pokemon.Category = pokemonJson.Category;
             pokemon.Weight = pokemonJson.Weight;
-            pokemon.Talent = pokemonJson.Talent;
-            pokemon.DescriptionTalent = pokemonJson.DescriptionTalent;
+
+            string[] talentsTab = pokemonJson.Talent.Split(',');
+            string[] descriptionTalentsTab = pokemonJson.DescriptionTalent.Split(';');
+            int i = 0;
+            foreach (string item in talentsTab)
+            {
+                Talent talent = await _talentService.GetByNameAsync(item);
+                if (talent == null)
+                {
+                    talent = new Talent() { Name = item, Description = descriptionTalentsTab[i] };
+                    await _talentService.CreateAsync(talent);
+                }
+
+                if (i == 0)
+                {
+                    //pokemon.Types = type.Name.ToString();
+                    pokemon.TalentsID = talent.Id.ToString();
+                    i++;
+                }
+                else
+                {
+                    //pokemon.Types += ',' + type.Name.ToString();
+                    pokemon.TalentsID += ',' + talent.Id.ToString();
+                }
+            }
+            //pokemon.Talent = pokemonJson.Talent;
+            //pokemon.DescriptionTalent = pokemonJson.DescriptionTalent;
 
             string[] typesTab = pokemonJson.Types.Split(',');
-            int i = 0;
+            i = 0;
             foreach (string item in typesTab)
             {
                 TypePok type = await _typePokService.GetByNameAsync(item);
@@ -329,7 +356,7 @@ namespace QuizzPokedex.Services
 
                     Debug.Write("Update: " + pokemonJson.Number + " - " + pokemonJson.Name);
 
-                    if(Constantes.IsTestDB)
+                    if(Constantes.IsGenerateDB)
                         if (pokemonJson.Number.Equals("721"))
                         break;
                 }

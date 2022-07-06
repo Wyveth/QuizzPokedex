@@ -74,6 +74,9 @@
 	  <Compile Update="Views\ProfilesView.xaml.cs">
 	    <DependentUpon>ProfilesView.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Views\QTypTalentQuizzView.xaml.cs">
+	    <DependentUpon>QTypTalentQuizzView.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Views\QTypPokDescReverseQuizzView.xaml.cs">
 	    <DependentUpon>QTypPokDescReverseQuizzView.xaml</DependentUpon>
 	  </Compile>

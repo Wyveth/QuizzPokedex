@@ -16,16 +16,18 @@ namespace QuizzPokedex.Services
         private readonly ITypePokService _typePokService;
         private readonly IPokemonService _pokemonService;
         private readonly IQuestionTypeService _questionTypeService;
+        private readonly ITalentService _talentService;
         private readonly IAnswerService _answerService;
         private SQLite.SQLiteAsyncConnection _database => _connectionService.GetAsyncConnection();
         #endregion
 
         #region Constructor
-        public QuestionService(ISqliteConnectionService connectionService, ITypePokService typePokService, IPokemonService pokemonService, IQuestionTypeService questionTypeService, IAnswerService answerService)
+        public QuestionService(ISqliteConnectionService connectionService, ITypePokService typePokService, IPokemonService pokemonService, IQuestionTypeService questionTypeService, IAnswerService answerService, ITalentService talentService)
         {
             _connectionService = connectionService;
             _typePokService = typePokService;
             _pokemonService = pokemonService;
+            _talentService = talentService;
             _questionTypeService = questionTypeService;
             _answerService = answerService;
         }
@@ -107,6 +109,7 @@ namespace QuizzPokedex.Services
             List<Pokemon> alreadyExistQTypPok = new List<Pokemon>();
             List<Pokemon> alreadyExistQTypTypPok = new List<Pokemon>();
             List<TypePok> alreadyExistQTypTyp = new List<TypePok>();
+            List<Talent> alreadyExistQTypTalent = new List<Talent>();
 
             for (int nbQuestion = 0; nbQuestion < nbQuestionMax; nbQuestion++)
             {
@@ -149,6 +152,14 @@ namespace QuizzPokedex.Services
                         int answerID = int.Parse(AnswersID);
                         Answer answer = await _answerService.GetByIdAsync(answerID);
                         alreadyExistQTypPok.Add(await _pokemonService.GetByIdAsync(answer.IsCorrectID));
+                        DataObjectID = answer.IsCorrectID;
+                    }
+                    else if (questionType.Code.Equals(Constantes.QTypTalent) || questionType.Code.Equals(Constantes.QTypTalentReverse))
+                    {
+                        AnswersID = await GetAnswersID_QTypTalent(questionType, alreadyExistQTypTalent);
+                        int answerID = int.Parse(AnswersID);
+                        Answer answer = await _answerService.GetByIdAsync(answerID);
+                        alreadyExistQTypTalent.Add(await _talentService.GetByIdAsync(answer.IsCorrectID));
                         DataObjectID = answer.IsCorrectID;
                     }
 
@@ -301,6 +312,32 @@ namespace QuizzPokedex.Services
             }
 
             AnswersID = await _answerService.GenerateCorrectAnswersDesc(questionType, pokemonsAnswer); ;
+
+            return await Task.FromResult(AnswersID);
+        }
+
+        private async Task<string> GetAnswersID_QTypTalent(QuestionType questionType, List<Talent> alreadySelected)
+        {
+            string AnswersID = string.Empty;
+
+            List<Task> tasks = new List<Task>();
+            List<Talent> talentsAnswer = new List<Talent>();
+
+            for (int nbAnswer = 0; nbAnswer < questionType.NbAnswersPossible; nbAnswer++)
+            {
+                tasks.Add(
+                    Task.Run(async () =>
+                    {
+                        talentsAnswer.Add(await _talentService.GetTalentRandom(alreadySelected));
+                    })
+                );
+            }
+
+            Task.WaitAll(tasks.ToArray());
+            if(questionType.Code.Equals(Constantes.QTypTalent))
+                AnswersID = await _answerService.GenerateCorrectAnswers(questionType, talentsAnswer, false);
+            else if (questionType.Code.Equals(Constantes.QTypTalentReverse))
+                AnswersID = await _answerService.GenerateCorrectAnswers(questionType, talentsAnswer, true);
 
             return await Task.FromResult(AnswersID);
         }
