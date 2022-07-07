@@ -513,8 +513,6 @@ namespace QuizzPokedex.Services
             //QTypPokTalent = "Talent";
             //QTypPokTalentRevert = "TalentRevert";
 
-            questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypTalent) || m.Code.Equals(Constantes.QTypTalentReverse));
-
             int numberTypeQuestion = random.Next(questionTypes.Count);
             return await Task.FromResult(questionTypes[numberTypeQuestion]);
         }

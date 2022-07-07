@@ -127,6 +127,28 @@
                                         IsVisible="{Binding IsQTypPokDesc}"
                                         Source="{Binding Pokemon.DataImg, Converter={StaticResource ByteToImageSourceConverter}}"
                                         WidthRequest="60" />
+
+                                    <Label
+                                        Margin="10,0,10,0"
+                                        xct:ShadowEffect.Color="black"
+                                        xct:ShadowEffect.OffsetX="5"
+                                        xct:ShadowEffect.OffsetY="10"
+                                        xct:ShadowEffect.Opacity="0.5"
+                                        xct:ShadowEffect.Radius="20"
+                                        FontAttributes="Bold,Italic"
+                                        FontSize="11"
+                                        HorizontalOptions="Center"
+                                        HorizontalTextAlignment="Center"
+                                        IsVisible="{Binding IsQTypTalent}"
+                                        Text="{Binding Talent.Name}"
+                                        TextColor="Black"
+                                        VerticalOptions="Start" />
+                                    <Image
+                                        Aspect="AspectFit"
+                                        HeightRequest="60"
+                                        IsVisible="{Binding IsQTypTalent}"
+                                        Source="{Binding ByteDetectiveP, Converter={StaticResource ByteToImageSourceConverter}}"
+                                        WidthRequest="60" />
                                 </StackLayout>
                                 <StackLayout Grid.Row="0">
                                     <Image
@@ -193,6 +215,21 @@
                                         HorizontalTextAlignment="Center"
                                         IsVisible="{Binding IsQTypPokDesc}"
                                         Text="{Binding Pokemon.DescriptionVx}"
+                                        TextColor="Black"
+                                        VerticalOptions="Start" />
+                                    <Label
+                                        Margin="10,0,10,0"
+                                        xct:ShadowEffect.Color="black"
+                                        xct:ShadowEffect.OffsetX="5"
+                                        xct:ShadowEffect.OffsetY="10"
+                                        xct:ShadowEffect.Opacity="0.5"
+                                        xct:ShadowEffect.Radius="20"
+                                        FontAttributes="Italic"
+                                        FontSize="10"
+                                        HorizontalOptions="Center"
+                                        HorizontalTextAlignment="Center"
+                                        IsVisible="{Binding IsQTypTalent}"
+                                        Text="{Binding Talent.Description}"
                                         TextColor="Black"
                                         VerticalOptions="Start" />
                                 </StackLayout>
