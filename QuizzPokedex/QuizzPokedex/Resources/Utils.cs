@@ -64,6 +64,25 @@ namespace QuizzPokedex.Resources
             return await Task.FromResult(i);
         }
 
+        public static string GetValueStat(Pokemon pokemon, string typeStat)
+        {
+            string libelle = string.Empty;
+            if (typeStat.Equals(Constantes.Pv))
+                libelle = pokemon.StatPv.ToString();
+            else if (typeStat.Equals(Constantes.Attaque))
+                libelle = pokemon.StatAttaque.ToString();
+            else if (typeStat.Equals(Constantes.Defense))
+                libelle = pokemon.StatDefense.ToString();
+            else if (typeStat.Equals(Constantes.AttaqueSpe))
+                libelle = pokemon.StatAttaqueSpe.ToString();
+            else if (typeStat.Equals(Constantes.DefenseSpe))
+                libelle = pokemon.StatDefenseSpe.ToString();
+            else if (typeStat.Equals(Constantes.Vitesse))
+                libelle = pokemon.StatVitesse.ToString();
+
+            return libelle;
+        }
+
         public static async Task RedirectQuizz(IMvxNavigationService _navigation, QuestionAnswers questionAnswers, Question question = null, QuestionType questionType = null)
         {
             if (question != null)
@@ -82,6 +101,8 @@ namespace QuizzPokedex.Resources
                     await _navigation.Navigate<QTypTypPokQuizzViewModel, QuestionAnswers>(questionAnswers);
                 else if (questionType.Code.Equals(Constantes.QTypTyp))
                     await _navigation.Navigate<QTypTypQuizzViewModel, QuestionAnswers>(questionAnswers);
+                else if (questionType.Code.Equals(Constantes.QTypPokStat))
+                    await _navigation.Navigate<QTypPokStatQuizzViewModel, QuestionAnswers>(questionAnswers);
             }
             else
                 await _navigation.Navigate<ResultQuizzViewModel, QuestionAnswers>(questionAnswers);

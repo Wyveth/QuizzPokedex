@@ -9,6 +9,7 @@ namespace QuizzPokedex.Models
         public Question Question { get; set; }
         public QuestionType QuestionType { get; set; }
         public bool IsQTypPok { get; set; }
+        public bool IsQTypPokStat { get; set; }
         public Pokemon Pokemon { get; set; }
         public bool IsQTypTyp { get; set; }
         public TypePok TypePok { get; set; }
@@ -20,5 +21,6 @@ namespace QuizzPokedex.Models
         public byte[] ByteTypePok { get; set; }
         public byte[] ByteDetectiveP { get; set; }
         public byte[] ByteResult { get; set; }
+        public string[] FormatLibelleQuestion { get; set; }
     }
 }

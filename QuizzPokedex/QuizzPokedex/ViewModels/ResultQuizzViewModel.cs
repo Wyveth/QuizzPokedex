@@ -96,7 +96,6 @@ namespace QuizzPokedex.ViewModels
             Answer answerCorrect = answers.Find(m => m.IsCorrect.Equals(true));
             Answer answerWrong = answers.Find(m => m.IsCorrect.Equals(false) && m.IsSelected.Equals(true));
             QuestionType questionType = await _questionTypeService.GetByIdAsync(question.QuestionTypeID);
-            DetectiveP = await Utils.GetByteAssetImage(Constantes.DetectivePikachu);
             Pokemon pokemon = null;
             TypePok typePok = null;
             Talent talent = null;
@@ -113,6 +112,19 @@ namespace QuizzPokedex.ViewModels
                 {
                     pokemon = await _pokemonService.GetByIdAsync(answerCorrect.IsCorrectID);
                     typePok = await _typePokService.GetByIdAsync(int.Parse(pokemon.TypesID.Split(',')[0]));
+                }
+            }
+            else if (questionType.Code.Equals(Constantes.QTypPokStat))
+            {
+                ResetIsVisible();
+                IsVisiblePokStat = true;
+
+                if (answerCorrect != null)
+                {
+                    pokemon = await _pokemonService.GetByIdAsync(answerCorrect.IsCorrectID);
+                    typePok = await _typePokService.GetByIdAsync(int.Parse(pokemon.TypesID.Split(',')[0]));
+
+                    FormatLibelleQuestion = new string[] { answerCorrect.Type, pokemon.Name };
                 }
             }
             else if (questionType.Code.Equals(Constantes.QTypTypPok))
@@ -154,6 +166,7 @@ namespace QuizzPokedex.ViewModels
             {
                 ResetIsVisible();
                 IsVisibleTalent = true;
+                DetectiveP = await Utils.GetByteAssetImage(Constantes.DetectivePikachu);
 
                 if (answerCorrect != null)
                 {
@@ -173,10 +186,12 @@ namespace QuizzPokedex.ViewModels
                 Talent = talent,
                 ByteDetectiveP = DetectiveP,
                 IsQTypPok = IsVisiblePokemon,
+                IsQTypPokStat = IsVisiblePokStat,
                 IsQTypTyp = IsVisibleTypePok,
                 IsQTypPokDesc = IsVisiblePokemonDesc,
                 IsQTypTalent = IsVisibleTalent,
-                ByteResult = await GetByteImgAnswer(answerCorrect)
+                ByteResult = await GetByteImgAnswer(answerCorrect),
+                FormatLibelleQuestion = FormatLibelleQuestion
             };
 
             return await Task.FromResult(correctionQuizz);
@@ -185,6 +200,7 @@ namespace QuizzPokedex.ViewModels
         private void ResetIsVisible()
         {
             IsVisiblePokemon = false;
+            IsVisiblePokStat = false;
             IsVisiblePokemonDesc = false;
             IsVisibleTypePok = false;
             IsVisibleTalent = false;
@@ -332,6 +348,14 @@ namespace QuizzPokedex.ViewModels
             get { return _detectiveP; }
             set { SetProperty(ref _detectiveP, value); }
         }
+
+        private string[] _formatLibelleQuestion;
+
+        public string[] FormatLibelleQuestion
+        {
+            get { return _formatLibelleQuestion; }
+            set { SetProperty(ref _formatLibelleQuestion, value); }
+        }
         #endregion
 
         #region Image Background
@@ -359,6 +383,14 @@ namespace QuizzPokedex.ViewModels
         {
             get { return _isVisiblePokemon; }
             set { SetProperty(ref _isVisiblePokemon, value); }
+        }
+
+        private bool _isVisiblePokStat = false;
+
+        public bool IsVisiblePokStat
+        {
+            get { return _isVisiblePokStat; }
+            set { SetProperty(ref _isVisiblePokStat, value); }
         }
 
         private bool _isVisibleTypePok = false;

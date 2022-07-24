@@ -15,6 +15,7 @@
         <ResourceDictionary>
             <converters:ByteToImageSourceConverter x:Key="ByteToImageSourceConverter" />
             <converters:StringArrayConverter x:Key="StringArrayConverter" />
+            <converters:InverseBoolConverter x:Key="InverseBoolConverter" />
         </ResourceDictionary>
     </views:MvxContentPage.Resources>
     <ContentPage.Content>
@@ -103,6 +104,12 @@
                                     <Image
                                         Aspect="AspectFit"
                                         HeightRequest="80"
+                                        IsVisible="{Binding IsQTypPokStat}"
+                                        Source="{Binding Pokemon.DataImg, Converter={StaticResource ByteToImageSourceConverter}}"
+                                        WidthRequest="80" />
+                                    <Image
+                                        Aspect="AspectFit"
+                                        HeightRequest="80"
                                         IsVisible="{Binding IsQTypTyp}"
                                         Source="{Binding ByteTypePok, Converter={StaticResource ByteToImageSourceConverter}}"
                                         WidthRequest="80" />
@@ -169,7 +176,23 @@
                                         FontSize="12"
                                         HorizontalOptions="CenterAndExpand"
                                         HorizontalTextAlignment="Center"
+                                        IsVisible="{Binding IsQTypPokStat, Converter={StaticResource InverseBoolConverter}}"
                                         Text="{Binding QuestionType.Libelle}"
+                                        TextColor="Black"
+                                        VerticalOptions="Center" />
+                                    <Label
+                                        Margin="10,0,10,0"
+                                        xct:ShadowEffect.Color="black"
+                                        xct:ShadowEffect.OffsetX="5"
+                                        xct:ShadowEffect.OffsetY="10"
+                                        xct:ShadowEffect.Opacity="0.5"
+                                        xct:ShadowEffect.Radius="20"
+                                        FontAttributes="Bold"
+                                        FontSize="12"
+                                        HorizontalOptions="CenterAndExpand"
+                                        HorizontalTextAlignment="Center"
+                                        IsVisible="{Binding IsQTypPokStat}"
+                                        Text="{Binding FormatLibelleQuestion, Converter={StaticResource StringArrayConverter}, ConverterParameter='Quel est la statistique {0} de {1}?'}"
                                         TextColor="Black"
                                         VerticalOptions="Center" />
                                     <Label
@@ -184,6 +207,21 @@
                                         HorizontalOptions="Center"
                                         HorizontalTextAlignment="Center"
                                         IsVisible="{Binding IsQTypPok}"
+                                        Text="{Binding CorrectAnswer.Libelle}"
+                                        TextColor="Black"
+                                        VerticalOptions="Start" />
+                                    <Label
+                                        Margin="10,0,10,0"
+                                        xct:ShadowEffect.Color="black"
+                                        xct:ShadowEffect.OffsetX="5"
+                                        xct:ShadowEffect.OffsetY="10"
+                                        xct:ShadowEffect.Opacity="0.5"
+                                        xct:ShadowEffect.Radius="20"
+                                        FontAttributes="Italic"
+                                        FontSize="11"
+                                        HorizontalOptions="Center"
+                                        HorizontalTextAlignment="Center"
+                                        IsVisible="{Binding IsQTypPokStat}"
                                         Text="{Binding CorrectAnswer.Libelle}"
                                         TextColor="Black"
                                         VerticalOptions="Start" />

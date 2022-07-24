@@ -79,7 +79,7 @@ namespace QuizzPokedex.Services
         #region Quizz
         public async Task<List<Answer>> GenerateAnswers(Quizz quizz, QuestionType questionType, List<Answer> answers)
         {
-            if (questionType.Code.Equals(Constantes.QTypPok) 
+            if (questionType.Code.Equals(Constantes.QTypPok)
                 || questionType.Code.Equals(Constantes.QTypPokBlurred)
                 || questionType.Code.Equals(Constantes.QTypPokBlack)
                 || questionType.Code.Equals(Constantes.QTypPokDescReverse))
@@ -152,6 +152,49 @@ namespace QuizzPokedex.Services
                     answers = await GenerateAnswers(questionType, talents, answers);
                 else if (questionType.Code.Equals(Constantes.QTypTalentReverse))
                     answers = await GenerateAnswers(questionType, talents, answers, true);
+            }
+            else if (questionType.Code.Equals(Constantes.QTypPokStat))
+            {
+                Random random = new Random();
+                List<Pokemon> pokemons = new List<Pokemon>();
+                List<string> statAnswers = new List<string>();
+                int stat = 0;
+                string typeStat = "";
+
+                foreach (Answer item in answers)
+                {
+                    typeStat = item.Type;
+                    stat = int.Parse(item.Libelle);
+                    statAnswers.Add(item.Libelle);
+                    pokemons.Add(await _pokemonService.GetByIdAsync(item.IsCorrectID));
+                }
+
+                int minValue = 0;
+                int maxValue = 255;
+
+                if (stat - 50 > minValue)
+                    minValue = stat - 50;
+
+                if (stat + 50 < maxValue)
+                    maxValue = stat + 50;
+
+                int qMissing = questionType.NbAnswers - answers.Count;
+
+                for (int i = 0; i < qMissing; i++)
+                {
+                    int x = 0;
+                    while (x.Equals(0))
+                    {
+                        x = random.Next(minValue, maxValue);
+
+                        if (statAnswers.Contains(x.ToString()))
+                            x = 0;
+                        else
+                            statAnswers.Add(x.ToString());
+                    }
+                }
+
+                answers = await GenerateAnswersStat(questionType, pokemons, answers, typeStat, statAnswers);
             }
 
             return await Task.FromResult(answers);
@@ -483,8 +526,8 @@ namespace QuizzPokedex.Services
                 }
 
                 return await Task.FromResult(description);
-            } 
-            catch(Exception ex) 
+            }
+            catch (Exception ex)
             {
                 throw ex;
             }
@@ -584,6 +627,115 @@ namespace QuizzPokedex.Services
             }
 
             return await Task.FromResult(talentsAnswer);
+        }
+        #endregion
+
+        #region Quizz Stat
+        public async Task<string> GenerateCorrectAnswersStat(QuestionType questionType, List<Pokemon> pokemonsAnswer, string typeStat)
+        {
+            List<Answer> answers = new List<Answer>();
+            Random random = new Random();
+
+            string result = string.Empty;
+            Dictionary<int, Pokemon> dic = new Dictionary<int, Pokemon>();
+            foreach (var pokemon in pokemonsAnswer)
+            {
+                while (!dic.ContainsValue(pokemon))
+                {
+                    int numberRandom = random.Next(questionType.NbAnswers);
+
+                    if (!dic.ContainsKey(numberRandom))
+                        dic.Add(numberRandom, pokemon);
+                }
+            }
+
+            foreach (KeyValuePair<int, Pokemon> pair in dic)
+            {
+                Answer answer = new Answer()
+                {
+                    IsSelected = false,
+                    IsCorrect = true,
+                    IsCorrectID = pair.Value.Id,
+                    Libelle = Utils.GetValueStat(pair.Value, typeStat),
+                    Type = typeStat,
+                    Order = pair.Key + 1
+                };
+
+                await CreateAsync(answer);
+                answers.Add(answer);
+            }
+
+            int i = 0;
+            foreach (Answer answer in answers)
+            {
+                if (i == 0)
+                {
+                    result = answer.Id.ToString();
+                    i++;
+                }
+                else
+                {
+                    result += ',' + answer.Id.ToString();
+                }
+            }
+
+            return await Task.FromResult(result);
+        }
+
+        private async Task<List<Answer>> GenerateAnswersStat(QuestionType questionType, List<Pokemon> pokemons, List<Answer> pokemonsAnswer, string typeStat, List<string> statAnswers)
+        {
+            Random random = new Random();
+
+            string result = string.Empty;
+            Dictionary<int, Pokemon> dic = new Dictionary<int, Pokemon>();
+            foreach (var pokemon in pokemons)
+            {
+                while (!dic.ContainsValue(pokemon))
+                {
+                    int numberRandom = random.Next(questionType.NbAnswers);
+
+                    if (!dic.ContainsKey(numberRandom))
+                        dic.Add(numberRandom, pokemon);
+                }
+            }
+
+            foreach (KeyValuePair<int, Pokemon> pair in dic)
+            {
+                Answer answerExist = pokemonsAnswer.Find(m => m.IsCorrectID.Equals(pair.Value.Id));
+                answerExist.Order = pair.Key + 1;
+                await UpdateAsync(answerExist);
+
+                statAnswers.Remove(Utils.GetValueStat(pair.Value, typeStat));
+            }
+
+            Dictionary<int, string> dicStat = new Dictionary<int, string>();
+            foreach (var stat in statAnswers)
+            {
+                int numberRandom = random.Next(questionType.NbAnswers);
+                while (!dicStat.ContainsValue(stat))
+                {
+                    numberRandom = random.Next(questionType.NbAnswers);
+                    if (!dicStat.ContainsKey(numberRandom) && !dic.ContainsKey(numberRandom))
+                        dicStat.Add(numberRandom, stat);
+                }
+            }
+
+            foreach (KeyValuePair<int, string> pair in dicStat)
+            {
+                Answer answer = new Answer()
+                {
+                    IsSelected = false,
+                    IsCorrect = false,
+                    IsCorrectID = -1,
+                    Libelle = pair.Value,
+                    Type = typeStat,
+                    Order = pair.Key + 1
+                };
+
+                pokemonsAnswer.Add(answer);
+            }
+
+            return await Task.FromResult(pokemonsAnswer);
         }
         #endregion
         #endregion

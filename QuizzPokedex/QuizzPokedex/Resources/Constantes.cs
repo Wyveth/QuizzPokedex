@@ -120,20 +120,29 @@ namespace QuizzPokedex.Resources
         public const string HardTQ = "Difficile";
         #endregion
 
+        #region Statistic
+        public const string Pv = "Pv";
+        public const string Attaque = "Attaque";
+        public const string Defense = "Defense";
+        public const string AttaqueSpe = "AttaqueSpe";
+        public const string DefenseSpe = "DefenseSpe";
+        public const string Vitesse = "Vitesse";
+        #endregion
+
         #region Code Type Question
-        public const string QTypPok = "Pokemon";
-        public const string QTypPokBlurred = "PokemonBlurred";
-        public const string QTypPokBlack = "PokemonBlack";
-        public const string QTypTypPok = "TypePokemon";
+        public const string QTypPok = "Pokemon"; //OK
+        public const string QTypPokBlurred = "PokemonBlurred"; //OK
+        public const string QTypPokBlack = "PokemonBlack"; //OK
+        public const string QTypTypPok = "TypePokemon"; //OK
         public const string QTypTypPokVarious = "TypePokemonVarious";
-        public const string QTypTyp = "Type";
-        public const string QTypPokDesc = "PokemonDescription";
-        public const string QTypPokDescReverse = "PokemonDescriptionReverse";
-        public const string QTypPokTalent = "PokemonTalent";
-        public const string QTypPokTalentReverse = "PokemonTalentReverse";
+        public const string QTypTyp = "Type"; //OK
+        public const string QTypPokDesc = "PokemonDescription"; //OK
+        public const string QTypPokDescReverse = "PokemonDescriptionReverse"; //OK
+        public const string QTypPokTalent = "PokemonTalent"; //OK
+        public const string QTypPokTalentReverse = "PokemonTalentReverse";//OK
         public const string QTypPokStat = "Statistique";
-        public const string QTypTalent = "Talent";
-        public const string QTypTalentReverse = "TalentReverse";
+        public const string QTypTalent = "Talent"; //OK
+        public const string QTypTalentReverse = "TalentReverse"; //OK
         #endregion
 
         //Variable pour différencier les tests

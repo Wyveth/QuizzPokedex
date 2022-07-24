@@ -153,6 +153,18 @@ namespace QuizzPokedex.Services
             };
             await CreateAsync(questionType);
             #endregion
+
+            #region QTypPokStat
+            questionType = new QuestionType()
+            {
+                Code = Constantes.QTypPokStat,
+                Libelle = "Quel est la stat {0} de {1}?",
+                DifficultyID = difficultyEasy.Id,
+                NbAnswers = 4,
+                NbAnswersPossible = 1
+            };
+            await CreateAsync(questionType);
+            #endregion
             #endregion
 
             #region Normal
@@ -496,10 +508,12 @@ namespace QuizzPokedex.Services
 
             //If Question Type => Type // 10%
             if (numberRandom <= 3)
-                questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypTyp));
+                questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypPokStat));
             if (numberRandom <= 6)
+                questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypTyp));
+            else if (numberRandom <= 9)
                 questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypTalent) || m.Code.Equals(Constantes.QTypTalentReverse));
-            else if (numberRandom <= 10)
+            else if (numberRandom <= 12)
                 questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypPokDesc) || m.Code.Equals(Constantes.QTypPokDescReverse));
             else if (numberRandom <= 20)
                 questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypTypPok));
@@ -507,11 +521,6 @@ namespace QuizzPokedex.Services
                 questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypPok) || m.Code.Equals(Constantes.QTypPokBlurred) || m.Code.Equals(Constantes.QTypPokBlack));
 
             //QTypTypPokVarious = "TypePokemonVarious";
-            //QTypPokDesc = "Description";
-            //QTypPokDescRevert = "DescriptionRevert";
-            //QTypPokStat = "Statistique";
-            //QTypPokTalent = "Talent";
-            //QTypPokTalentRevert = "TalentRevert";
 
             int numberTypeQuestion = random.Next(questionTypes.Count);
             return await Task.FromResult(questionTypes[numberTypeQuestion]);
