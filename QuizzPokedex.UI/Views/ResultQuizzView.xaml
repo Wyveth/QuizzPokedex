@@ -95,24 +95,34 @@
                                     <RowDefinition Height="60" />
                                 </Grid.RowDefinitions>
                                 <StackLayout Grid.Row="0">
+                                    <!--#region IsQTypPok-->
                                     <Image
                                         Aspect="AspectFit"
                                         HeightRequest="80"
                                         IsVisible="{Binding IsQTypPok}"
                                         Source="{Binding Pokemon.DataImg, Converter={StaticResource ByteToImageSourceConverter}}"
                                         WidthRequest="80" />
-                                    <Image
-                                        Aspect="AspectFit"
-                                        HeightRequest="80"
-                                        IsVisible="{Binding IsQTypPokStat}"
-                                        Source="{Binding Pokemon.DataImg, Converter={StaticResource ByteToImageSourceConverter}}"
-                                        WidthRequest="80" />
+                                    <!--#endregion-->
+
+                                    <!--#region IsQTypTyp-->
                                     <Image
                                         Aspect="AspectFit"
                                         HeightRequest="80"
                                         IsVisible="{Binding IsQTypTyp}"
                                         Source="{Binding ByteTypePok, Converter={StaticResource ByteToImageSourceConverter}}"
                                         WidthRequest="80" />
+                                    <!--#endregion-->
+
+                                    <!--#region IsQTypPokStat-->
+                                    <Image
+                                        Aspect="AspectFit"
+                                        HeightRequest="80"
+                                        IsVisible="{Binding IsQTypPokStat}"
+                                        Source="{Binding Pokemon.DataImg, Converter={StaticResource ByteToImageSourceConverter}}"
+                                        WidthRequest="80" />
+                                    <!--#endregion-->
+
+                                    <!--#region IsQTypPokDesc-->
                                     <Label
                                         Margin="10,0,10,0"
                                         xct:ShadowEffect.Color="black"
@@ -134,7 +144,18 @@
                                         IsVisible="{Binding IsQTypPokDesc}"
                                         Source="{Binding Pokemon.DataImg, Converter={StaticResource ByteToImageSourceConverter}}"
                                         WidthRequest="60" />
+                                    <!--#endregion-->
 
+                                    <!--#region IsQTypTypPok-->
+                                    <Image
+                                        Aspect="AspectFit"
+                                        HeightRequest="80"
+                                        IsVisible="{Binding IsQTypTypPok}"
+                                        Source="{Binding Pokemon.DataImg, Converter={StaticResource ByteToImageSourceConverter}}"
+                                        WidthRequest="80" />
+                                    <!--#endregion-->
+
+                                    <!--#region IsQTypTalent-->
                                     <Label
                                         Margin="10,0,10,0"
                                         xct:ShadowEffect.Color="black"
@@ -156,6 +177,16 @@
                                         IsVisible="{Binding IsQTypTalent}"
                                         Source="{Binding ByteDetectiveP, Converter={StaticResource ByteToImageSourceConverter}}"
                                         WidthRequest="60" />
+                                    <!--#endregion-->
+
+                                    <!--#region IsQTypTypPokVarious-->
+                                    <Image
+                                        Aspect="AspectFit"
+                                        HeightRequest="80"
+                                        IsVisible="{Binding IsQTypTypPokVarious}"
+                                        Source="{Binding Pokemon.DataImg, Converter={StaticResource ByteToImageSourceConverter}}"
+                                        WidthRequest="80" />
+                                    <!--#endregion-->
                                 </StackLayout>
                                 <StackLayout Grid.Row="0">
                                     <Image
@@ -166,7 +197,9 @@
                                         WidthRequest="30" />
                                 </StackLayout>
                                 <StackLayout Grid.Row="1">
+                                    <!--#region IsQTypPok-->
                                     <Label
+                                        Margin="10,0,10,0"
                                         xct:ShadowEffect.Color="black"
                                         xct:ShadowEffect.OffsetX="5"
                                         xct:ShadowEffect.OffsetY="10"
@@ -176,10 +209,63 @@
                                         FontSize="12"
                                         HorizontalOptions="CenterAndExpand"
                                         HorizontalTextAlignment="Center"
-                                        IsVisible="{Binding IsQTypPokStat, Converter={StaticResource InverseBoolConverter}}"
+                                        IsVisible="{Binding IsQTypPok}"
                                         Text="{Binding QuestionType.Libelle}"
                                         TextColor="Black"
                                         VerticalOptions="Center" />
+
+                                    <Label
+                                        Margin="10,0,10,0"
+                                        xct:ShadowEffect.Color="black"
+                                        xct:ShadowEffect.OffsetX="5"
+                                        xct:ShadowEffect.OffsetY="10"
+                                        xct:ShadowEffect.Opacity="0.5"
+                                        xct:ShadowEffect.Radius="20"
+                                        FontAttributes="Italic"
+                                        FontSize="11"
+                                        HorizontalOptions="Center"
+                                        HorizontalTextAlignment="Center"
+                                        IsVisible="{Binding IsQTypPok}"
+                                        Text="{Binding CorrectAnswer}"
+                                        TextColor="Black"
+                                        VerticalOptions="Start" />
+                                    <!--#endregion-->
+
+                                    <!--#region IsQTypTyp-->
+                                    <Label
+                                        Margin="10,0,10,0"
+                                        xct:ShadowEffect.Color="black"
+                                        xct:ShadowEffect.OffsetX="5"
+                                        xct:ShadowEffect.OffsetY="10"
+                                        xct:ShadowEffect.Opacity="0.5"
+                                        xct:ShadowEffect.Radius="20"
+                                        FontAttributes="Bold"
+                                        FontSize="12"
+                                        HorizontalOptions="CenterAndExpand"
+                                        HorizontalTextAlignment="Center"
+                                        IsVisible="{Binding IsQTypTyp}"
+                                        Text="{Binding QuestionType.Libelle}"
+                                        TextColor="Black"
+                                        VerticalOptions="Center" />
+
+                                    <Label
+                                        Margin="10,0,10,0"
+                                        xct:ShadowEffect.Color="black"
+                                        xct:ShadowEffect.OffsetX="5"
+                                        xct:ShadowEffect.OffsetY="10"
+                                        xct:ShadowEffect.Opacity="0.5"
+                                        xct:ShadowEffect.Radius="20"
+                                        FontAttributes="Italic"
+                                        FontSize="11"
+                                        HorizontalOptions="Center"
+                                        HorizontalTextAlignment="Center"
+                                        IsVisible="{Binding IsQTypTyp}"
+                                        Text="{Binding CorrectAnswer}"
+                                        TextColor="Black"
+                                        VerticalOptions="Start" />
+                                    <!--#endregion-->
+
+                                    <!--#region IsQTypPokStat-->
                                     <Label
                                         Margin="10,0,10,0"
                                         xct:ShadowEffect.Color="black"
@@ -195,21 +281,7 @@
                                         Text="{Binding FormatLibelleQuestion, Converter={StaticResource StringArrayConverter}, ConverterParameter='Quel est la statistique {0} de {1}?'}"
                                         TextColor="Black"
                                         VerticalOptions="Center" />
-                                    <Label
-                                        Margin="10,0,10,0"
-                                        xct:ShadowEffect.Color="black"
-                                        xct:ShadowEffect.OffsetX="5"
-                                        xct:ShadowEffect.OffsetY="10"
-                                        xct:ShadowEffect.Opacity="0.5"
-                                        xct:ShadowEffect.Radius="20"
-                                        FontAttributes="Italic"
-                                        FontSize="11"
-                                        HorizontalOptions="Center"
-                                        HorizontalTextAlignment="Center"
-                                        IsVisible="{Binding IsQTypPok}"
-                                        Text="{Binding CorrectAnswer.Libelle}"
-                                        TextColor="Black"
-                                        VerticalOptions="Start" />
+
                                     <Label
                                         Margin="10,0,10,0"
                                         xct:ShadowEffect.Color="black"
@@ -222,9 +294,12 @@
                                         HorizontalOptions="Center"
                                         HorizontalTextAlignment="Center"
                                         IsVisible="{Binding IsQTypPokStat}"
-                                        Text="{Binding CorrectAnswer.Libelle}"
+                                        Text="{Binding CorrectAnswer}"
                                         TextColor="Black"
                                         VerticalOptions="Start" />
+                                    <!--#endregion-->
+
+                                    <!--#region IsQTypPokDesc-->
                                     <Label
                                         Margin="10,0,10,0"
                                         xct:ShadowEffect.Color="black"
@@ -232,14 +307,15 @@
                                         xct:ShadowEffect.OffsetY="10"
                                         xct:ShadowEffect.Opacity="0.5"
                                         xct:ShadowEffect.Radius="20"
-                                        FontAttributes="Italic"
-                                        FontSize="11"
-                                        HorizontalOptions="Center"
+                                        FontAttributes="Bold"
+                                        FontSize="12"
+                                        HorizontalOptions="CenterAndExpand"
                                         HorizontalTextAlignment="Center"
-                                        IsVisible="{Binding IsQTypTyp}"
-                                        Text="{Binding CorrectAnswer.Libelle}"
+                                        IsVisible="{Binding IsQTypPokDesc}"
+                                        Text="{Binding QuestionType.Libelle}"
                                         TextColor="Black"
-                                        VerticalOptions="Start" />
+                                        VerticalOptions="Center" />
+                                    
                                     <Label
                                         Margin="10,0,10,0"
                                         xct:ShadowEffect.Color="black"
@@ -255,6 +331,59 @@
                                         Text="{Binding Pokemon.DescriptionVx}"
                                         TextColor="Black"
                                         VerticalOptions="Start" />
+                                    <!--#endregion-->
+
+                                    <!--#region IsQTypTypPok-->
+                                    <Label
+                                        Margin="10,0,10,0"
+                                        xct:ShadowEffect.Color="black"
+                                        xct:ShadowEffect.OffsetX="5"
+                                        xct:ShadowEffect.OffsetY="10"
+                                        xct:ShadowEffect.Opacity="0.5"
+                                        xct:ShadowEffect.Radius="20"
+                                        FontAttributes="Bold"
+                                        FontSize="12"
+                                        HorizontalOptions="CenterAndExpand"
+                                        HorizontalTextAlignment="Center"
+                                        IsVisible="{Binding IsQTypTypPok}"
+                                        Text="{Binding FormatLibelleQuestion, Converter={StaticResource StringArrayConverter}, ConverterParameter='Quel est le type principal de {0}?'}"
+                                        TextColor="Black"
+                                        VerticalOptions="Center" />
+
+                                    <Label
+                                        Margin="10,0,10,0"
+                                        xct:ShadowEffect.Color="black"
+                                        xct:ShadowEffect.OffsetX="5"
+                                        xct:ShadowEffect.OffsetY="10"
+                                        xct:ShadowEffect.Opacity="0.5"
+                                        xct:ShadowEffect.Radius="20"
+                                        FontAttributes="Italic"
+                                        FontSize="11"
+                                        HorizontalOptions="Center"
+                                        HorizontalTextAlignment="Center"
+                                        IsVisible="{Binding IsQTypTypPok}"
+                                        Text="{Binding CorrectAnswer}"
+                                        TextColor="Black"
+                                        VerticalOptions="Start" />
+                                    <!--#endregion-->
+
+                                    <!--#region IsQTypTalent-->
+                                    <Label
+                                        Margin="10,0,10,0"
+                                        xct:ShadowEffect.Color="black"
+                                        xct:ShadowEffect.OffsetX="5"
+                                        xct:ShadowEffect.OffsetY="10"
+                                        xct:ShadowEffect.Opacity="0.5"
+                                        xct:ShadowEffect.Radius="20"
+                                        FontAttributes="Bold"
+                                        FontSize="12"
+                                        HorizontalOptions="CenterAndExpand"
+                                        HorizontalTextAlignment="Center"
+                                        IsVisible="{Binding IsQTypTalent}"
+                                        Text="{Binding QuestionType.Libelle}"
+                                        TextColor="Black"
+                                        VerticalOptions="Center" />
+                                    
                                     <Label
                                         Margin="10,0,10,0"
                                         xct:ShadowEffect.Color="black"
@@ -270,6 +399,57 @@
                                         Text="{Binding Talent.Description}"
                                         TextColor="Black"
                                         VerticalOptions="Start" />
+                                    <!--#endregion-->
+
+                                    <!--#region IsQTypTypPokVarious-->
+                                    <Label
+                                        Margin="10,0,10,0"
+                                        xct:ShadowEffect.Color="black"
+                                        xct:ShadowEffect.OffsetX="5"
+                                        xct:ShadowEffect.OffsetY="10"
+                                        xct:ShadowEffect.Opacity="0.5"
+                                        xct:ShadowEffect.Radius="20"
+                                        FontAttributes="Bold"
+                                        FontSize="12"
+                                        HorizontalOptions="CenterAndExpand"
+                                        HorizontalTextAlignment="Center"
+                                        IsVisible="{Binding IsQTypTypPokVarious}"
+                                        Text="{Binding FormatLibelleQuestion, Converter={StaticResource StringArrayConverter}, ConverterParameter='Quels sont le ou les types de {0}?'}"
+                                        TextColor="Black"
+                                        VerticalOptions="Center" />
+
+                                    <Label
+                                        Margin="10,0,10,0"
+                                        xct:ShadowEffect.Color="black"
+                                        xct:ShadowEffect.OffsetX="5"
+                                        xct:ShadowEffect.OffsetY="10"
+                                        xct:ShadowEffect.Opacity="0.5"
+                                        xct:ShadowEffect.Radius="20"
+                                        FontAttributes="Italic"
+                                        FontSize="11"
+                                        HorizontalOptions="Center"
+                                        HorizontalTextAlignment="Center"
+                                        IsVisible="{Binding IsQTypTypPokVarious}"
+                                        Text="{Binding CorrectAnswer}"
+                                        TextColor="Black"
+                                        VerticalOptions="Start" />
+                                    <!--#endregion-->
+
+                                    <!--<Label
+                                        Margin="10,0,10,0"
+                                        xct:ShadowEffect.Color="black"
+                                        xct:ShadowEffect.OffsetX="5"
+                                        xct:ShadowEffect.OffsetY="10"
+                                        xct:ShadowEffect.Opacity="0.5"
+                                        xct:ShadowEffect.Radius="20"
+                                        FontAttributes="Bold"
+                                        FontSize="12"
+                                        HorizontalOptions="CenterAndExpand"
+                                        HorizontalTextAlignment="Center"
+                                        IsVisible="{Binding IsQTypWeakPokVarious}"
+                                        Text="{Binding FormatLibelleQuestion, Converter={StaticResource StringArrayConverter}, ConverterParameter='Quels sont le ou les types de faiblesse de {0}?'}"
+                                        TextColor="Black"
+                                        VerticalOptions="Center" />-->
                                 </StackLayout>
                                 <VisualStateManager.VisualStateGroups>
                                     <VisualStateGroup Name="CommonStates">

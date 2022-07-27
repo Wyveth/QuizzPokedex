@@ -99,6 +99,8 @@ namespace QuizzPokedex.Resources
                     await _navigation.Navigate<QTypTalentQuizzViewModel, QuestionAnswers>(questionAnswers);
                 else if (questionType.Code.Equals(Constantes.QTypTypPok))
                     await _navigation.Navigate<QTypTypPokQuizzViewModel, QuestionAnswers>(questionAnswers);
+                else if (questionType.Code.Equals(Constantes.QTypTypPokVarious))
+                    await _navigation.Navigate<QTypTypPokVariousQuizzViewModel, QuestionAnswers>(questionAnswers);
                 else if (questionType.Code.Equals(Constantes.QTypTyp))
                     await _navigation.Navigate<QTypTypQuizzViewModel, QuestionAnswers>(questionAnswers);
                 else if (questionType.Code.Equals(Constantes.QTypPokStat))

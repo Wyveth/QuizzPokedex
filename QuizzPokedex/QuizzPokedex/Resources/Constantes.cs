@@ -130,17 +130,20 @@ namespace QuizzPokedex.Resources
         #endregion
 
         #region Code Type Question
-        public const string QTypPok = "Pokemon"; //OK
-        public const string QTypPokBlurred = "PokemonBlurred"; //OK
-        public const string QTypPokBlack = "PokemonBlack"; //OK
-        public const string QTypTypPok = "TypePokemon"; //OK
-        public const string QTypTypPokVarious = "TypePokemonVarious";
-        public const string QTypTyp = "Type"; //OK
-        public const string QTypPokDesc = "PokemonDescription"; //OK
-        public const string QTypPokDescReverse = "PokemonDescriptionReverse"; //OK
-        public const string QTypPokTalent = "PokemonTalent"; //OK
-        public const string QTypPokTalentReverse = "PokemonTalentReverse";//OK
-        public const string QTypPokStat = "Statistique";
+        public const string QTypPok = "Pok"; //OK
+        public const string QTypPokBlurred = "PokBlurred"; //OK
+        public const string QTypPokBlack = "PokBlack"; //OK
+        public const string QTypPokFamily = "PokFamily";
+        public const string QTypPokTyp = "PokTyp";
+        public const string QTypTypPok = "TypPok"; //OK
+        public const string QTypTypPokVarious = "TypPokVarious"; //OK
+        public const string QTypWeakPokVarious = "TypWeakPokVarious";
+        public const string QTypTyp = "Typ"; //OK
+        public const string QTypPokDesc = "PokDesc"; //OK
+        public const string QTypPokDescReverse = "PokDescReverse"; //OK
+        public const string QTypPokTalent = "PokTalent"; //OK
+        public const string QTypPokTalentReverse = "PokTalentReverse";//OK
+        public const string QTypPokStat = "PokStat"; //OK
         public const string QTypTalent = "Talent"; //OK
         public const string QTypTalentReverse = "TalentReverse"; //OK
         #endregion

@@ -88,6 +88,9 @@
 	  <Compile Update="Views\QTypPokDescReverseQuizzView.xaml.cs">
 	    <DependentUpon>QTypPokDescReverseQuizzView.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Views\QTypTypPokVariousQuizzView.xaml.cs">
+	    <DependentUpon>QTypTypPokVariousQuizzView.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Views\QTypTypPokQuizzView.xaml.cs">
 	    <DependentUpon>QTypTypPokQuizzView.xaml</DependentUpon>
 	  </Compile>

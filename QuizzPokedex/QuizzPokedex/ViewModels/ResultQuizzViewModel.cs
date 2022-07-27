@@ -76,121 +76,176 @@ namespace QuizzPokedex.ViewModels
             await Task.Run(async () =>
             {
                 List<Question> questions = await _questionService.GetAllByQuestionsIDAsync(QuestionAnswers.Quizz.QuestionsID);
-                List<Answer> answersCorrect = new List<Answer>();
+                int answersCorrectCount = 0;
+
                 foreach (Question question in questions)
                 {
+                    QuestionType questionType = await _questionTypeService.GetByIdAsync(question.QuestionTypeID);
                     List<Answer> answers = await _answerService.GetAllByAnswersIDAsync(question.AnswersID);
-                    Answer answerIsCorrect = answers.Find(m => m.IsCorrect.Equals(true) && m.IsSelected.Equals(true));
-                    correctionQuizz.Add(await LoadCorrectionQuizz(question, answers, answerIsCorrect));
-                    if (answerIsCorrect != null)
-                        answersCorrect.Add(answerIsCorrect);
+                    
+                    if (!questionType.IsMultipleAnswers)
+                    {
+                        Answer answerIsCorrect = answers.Find(m => m.IsCorrect.Equals(true) && m.IsSelected.Equals(true));
+                        Answer answerCorrect = answers.Find(m => m.IsCorrect.Equals(true));
+                        correctionQuizz.Add(await LoadCorrectionQuizz(question, questionType, answerCorrect));
+                        if (answerIsCorrect != null)
+                            answersCorrectCount++;
+                    }
+                    else
+                    {
+                        List<Answer> answersIsCorrectSelected = answers.FindAll(m => m.IsCorrect.Equals(true) && m.IsSelected.Equals(true));
+                        List<Answer> answersIsNotCorrect = answers.FindAll(m => m.IsCorrect.Equals(false) && m.IsSelected.Equals(true));
+                        List<Answer> answersIsCorrect = answers.FindAll(m => m.IsCorrect.Equals(true));
+
+                        correctionQuizz.Add(await LoadCorrectionQuizz(question, questionType, null, answersIsCorrectSelected, answersIsNotCorrect, answersIsCorrect));
+
+                        if (answersIsCorrectSelected.Count.Equals(answersIsCorrect.Count) && answersIsNotCorrect.Count.Equals(0))
+                            answersCorrectCount++;
+                        
+                    }
                 }
-                Result = answersCorrect.Count + "/" + questions.Count;
+                Result = answersCorrectCount.ToString() + "/" + questions.Count;
             });
 
             CorrectionQuizz = new MvxObservableCollection<CorrectionQuizzSimple>(correctionQuizz);
         }
 
-        private async Task<CorrectionQuizzSimple> LoadCorrectionQuizz(Question question, List<Answer> answers, Answer answerIsCorrect)
+        private async Task<CorrectionQuizzSimple> LoadCorrectionQuizz(Question question, QuestionType questionType, Answer answerCorrect = null, List<Answer> answersIsCorrectSelected = null, List<Answer> answersIsNotCorrect = null, List<Answer> answersIsCorrect = null)
         {
-            Answer answerCorrect = answers.Find(m => m.IsCorrect.Equals(true));
-            Answer answerWrong = answers.Find(m => m.IsCorrect.Equals(false) && m.IsSelected.Equals(true));
-            QuestionType questionType = await _questionTypeService.GetByIdAsync(question.QuestionTypeID);
             Pokemon pokemon = null;
             TypePok typePok = null;
             Talent talent = null;
             byte[] typePokByte = null;
+            byte[] byteResult = null;
+            string libelleAnswerCorrect = "";
 
-            if (questionType.Code.Equals(Constantes.QTypPok)
-                || questionType.Code.Equals(Constantes.QTypPokBlurred)
-                || questionType.Code.Equals(Constantes.QTypPokBlack))
+            if (!questionType.IsMultipleAnswers)
             {
-                ResetIsVisible();
-                IsVisiblePokemon = true;
-
-                if (answerCorrect != null)
+                if (questionType.Code.Equals(Constantes.QTypPok)
+                    || questionType.Code.Equals(Constantes.QTypPokBlurred)
+                    || questionType.Code.Equals(Constantes.QTypPokBlack))
                 {
-                    pokemon = await _pokemonService.GetByIdAsync(answerCorrect.IsCorrectID);
-                    typePok = await _typePokService.GetByIdAsync(int.Parse(pokemon.TypesID.Split(',')[0]));
+                    ResetIsVisible();
+                    IsVisiblePok = true;
+
+                    if (answerCorrect != null)
+                    {
+                        pokemon = await _pokemonService.GetByIdAsync(answerCorrect.IsCorrectID);
+                        typePok = await _typePokService.GetByIdAsync(int.Parse(pokemon.TypesID.Split(',')[0]));
+                    }
                 }
-            }
-            else if (questionType.Code.Equals(Constantes.QTypPokStat))
-            {
-                ResetIsVisible();
-                IsVisiblePokStat = true;
-
-                if (answerCorrect != null)
+                else if (questionType.Code.Equals(Constantes.QTypPokStat))
                 {
-                    pokemon = await _pokemonService.GetByIdAsync(answerCorrect.IsCorrectID);
-                    typePok = await _typePokService.GetByIdAsync(int.Parse(pokemon.TypesID.Split(',')[0]));
+                    ResetIsVisible();
+                    IsVisiblePokStat = true;
 
-                    FormatLibelleQuestion = new string[] { answerCorrect.Type, pokemon.Name };
+                    if (answerCorrect != null)
+                    {
+                        pokemon = await _pokemonService.GetByIdAsync(answerCorrect.IsCorrectID);
+                        typePok = await _typePokService.GetByIdAsync(int.Parse(pokemon.TypesID.Split(',')[0]));
+
+                        FormatLibelleQuestion = new string[] { answerCorrect.Type, pokemon.Name };
+                    }
                 }
-            }
-            else if (questionType.Code.Equals(Constantes.QTypTypPok))
-            {
-                ResetIsVisible();
-                IsVisiblePokemon = true;
-
-                if (answerCorrect != null)
+                else if (questionType.Code.Equals(Constantes.QTypTypPok))
                 {
+                    ResetIsVisible();
+                    IsVisibleTypPok = true;
+
+                    if (answerCorrect != null)
+                    {
+                        pokemon = await _pokemonService.GetByIdAsync(question.DataObjectID);
+                        typePok = await _typePokService.GetByIdAsync(answerCorrect.IsCorrectID);
+
+                        FormatLibelleQuestion = new string[] { pokemon.Name };
+                    }
+                }
+                else if (questionType.Code.Equals(Constantes.QTypTyp))
+                {
+                    ResetIsVisible();
+                    IsVisibleTyp = true;
+
+                    if (answerCorrect != null)
+                    {
+                        typePok = await _typePokService.GetByIdAsync(answerCorrect.IsCorrectID);
+                        typePokByte = await GetBytesTypesFilter(typePok.Name);
+                    }
+                }
+                else if (questionType.Code.Equals(Constantes.QTypPokDesc)
+                    || questionType.Code.Equals(Constantes.QTypPokDescReverse))
+                {
+                    ResetIsVisible();
+                    IsVisiblePokDesc = true;
+
+                    if (answerCorrect != null)
+                    {
+                        pokemon = await _pokemonService.GetByIdAsync(answerCorrect.IsCorrectID);
+                        typePok = await _typePokService.GetByIdAsync(int.Parse(pokemon.TypesID.Split(',')[0]));
+                    }
+                }
+                else if (questionType.Code.Equals(Constantes.QTypTalent)
+                    || questionType.Code.Equals(Constantes.QTypTalentReverse))
+                {
+                    ResetIsVisible();
+                    IsVisibleTalent = true;
+                    DetectiveP = await Utils.GetByteAssetImage(Constantes.DetectivePikachu);
+
+                    if (answerCorrect != null)
+                    {
+                        talent = await _talentService.GetByIdAsync(answerCorrect.IsCorrectID);
+                    }
+                }
+
+                libelleAnswerCorrect = answerCorrect.Libelle;
+                byteResult = await GetByteImgAnswer(answerCorrect.IsSelected);
+            }
+            else
+            {
+                if (questionType.Code.Equals(Constantes.QTypPokFamily)){
+
+                }
+                else if(questionType.Code.Equals(Constantes.QTypPokTyp))
+                {
+
+                }
+                else if (questionType.Code.Equals(Constantes.QTypTypPokVarious)
+                    || questionType.Code.Equals(Constantes.QTypWeakPokVarious))
+                {
+                    ResetIsVisible();
+                    IsVisibleTypPokVarious = true;
+
                     pokemon = await _pokemonService.GetByIdAsync(question.DataObjectID);
-                    typePok = await _typePokService.GetByIdAsync(answerCorrect.IsCorrectID);
-                }
-            }
-            else if (questionType.Code.Equals(Constantes.QTypTyp))
-            {
-                ResetIsVisible();
-                IsVisibleTypePok = true;
-
-                if (answerCorrect != null)
-                {
-                    typePok = await _typePokService.GetByIdAsync(answerCorrect.IsCorrectID);
-                    typePokByte = await GetBytesTypesFilter(typePok.Name);
-                }
-            }
-            else if (questionType.Code.Equals(Constantes.QTypPokDesc) 
-                || questionType.Code.Equals(Constantes.QTypPokDescReverse))
-            {
-                ResetIsVisible();
-                IsVisiblePokemonDesc = true;
-
-                if (answerCorrect != null)
-                {
-                    pokemon = await _pokemonService.GetByIdAsync(answerCorrect.IsCorrectID);
                     typePok = await _typePokService.GetByIdAsync(int.Parse(pokemon.TypesID.Split(',')[0]));
-                }
-            }
-            else if (questionType.Code.Equals(Constantes.QTypTalent)
-                || questionType.Code.Equals(Constantes.QTypTalentReverse))
-            {
-                ResetIsVisible();
-                IsVisibleTalent = true;
-                DetectiveP = await Utils.GetByteAssetImage(Constantes.DetectivePikachu);
 
-                if (answerCorrect != null)
-                {
-                    talent = await _talentService.GetByIdAsync(answerCorrect.IsCorrectID);
+                    FormatLibelleQuestion = new string[] { pokemon.Name };
                 }
+
+                libelleAnswerCorrect = await GetAnswerLibelle(answersIsCorrect);
+
+                if (answersIsCorrectSelected.Count.Equals(answersIsCorrect.Count) && answersIsNotCorrect.Count.Equals(0))
+                    byteResult = await GetByteImgAnswer(true);
+                else
+                    byteResult = await GetByteImgAnswer(false);
             }
 
             CorrectionQuizzSimple correctionQuizz = new CorrectionQuizzSimple()
             {
                 Question = question,
-                CorrectAnswer = answerCorrect,
-                WrongAnswer = answerWrong,
+                CorrectAnswer = libelleAnswerCorrect,
                 QuestionType = questionType,
                 TypePok = typePok,
                 ByteTypePok = typePokByte,
                 Pokemon = pokemon,
                 Talent = talent,
                 ByteDetectiveP = DetectiveP,
-                IsQTypPok = IsVisiblePokemon,
+                IsQTypPok = IsVisiblePok,
+                IsQTypTyp = IsVisibleTyp,
                 IsQTypPokStat = IsVisiblePokStat,
-                IsQTypTyp = IsVisibleTypePok,
-                IsQTypPokDesc = IsVisiblePokemonDesc,
+                IsQTypPokDesc = IsVisiblePokDesc,
+                IsQTypTypPok = IsVisibleTypPok,
                 IsQTypTalent = IsVisibleTalent,
-                ByteResult = await GetByteImgAnswer(answerCorrect),
+                IsQTypTypPokVarious = IsVisibleTypPokVarious,
+                ByteResult = byteResult,
                 FormatLibelleQuestion = FormatLibelleQuestion
             };
 
@@ -199,16 +254,23 @@ namespace QuizzPokedex.ViewModels
 
         private void ResetIsVisible()
         {
-            IsVisiblePokemon = false;
+            #region Single
+            IsVisiblePok = false;
+            IsVisibleTyp = false;
             IsVisiblePokStat = false;
-            IsVisiblePokemonDesc = false;
-            IsVisibleTypePok = false;
+            IsVisiblePokDesc = false;
+            IsVisibleTypPok = false;
             IsVisibleTalent = false;
+            #endregion
+
+            #region Multiple
+            IsVisibleTypPokVarious = false;
+            #endregion
         }
 
-        private async Task<byte[]> GetByteImgAnswer(Answer answer)
+        private async Task<byte[]> GetByteImgAnswer(bool answerCorrectIsSelected)
         {
-            if (answer.IsSelected)
+            if (answerCorrectIsSelected)
                 return await Utils.GetByteAssetImage(Constantes.StarSuccess);
             else
                 return await Utils.GetByteAssetImage(Constantes.StarWrong);
@@ -277,6 +339,25 @@ namespace QuizzPokedex.ViewModels
             }
             #endregion
             return await Task.FromResult(typeByte);
+        }
+
+        private async Task<string> GetAnswerLibelle(List<Answer> answers)
+        {
+            string libelle = "";
+            int i = 0;
+            foreach (Answer item in answers)
+            {
+                if (i == 0) {
+                    libelle = item.Libelle;
+                    i++;
+                }
+                else
+                {
+                    libelle += ", " + item.Libelle;
+                }
+            }
+
+            return await Task.FromResult(libelle);
         }
         #endregion
 
@@ -377,12 +458,21 @@ namespace QuizzPokedex.ViewModels
         #endregion
 
         #region Visibility
-        private bool _isVisiblePokemon = false;
+        #region Single Answers
+        private bool _isVisiblePok = false;
 
-        public bool IsVisiblePokemon
+        public bool IsVisiblePok
         {
-            get { return _isVisiblePokemon; }
-            set { SetProperty(ref _isVisiblePokemon, value); }
+            get { return _isVisiblePok; }
+            set { SetProperty(ref _isVisiblePok, value); }
+        }
+
+        private bool _isVisibleTyp = false;
+
+        public bool IsVisibleTyp
+        {
+            get { return _isVisibleTyp; }
+            set { SetProperty(ref _isVisibleTyp, value); }
         }
 
         private bool _isVisiblePokStat = false;
@@ -393,20 +483,20 @@ namespace QuizzPokedex.ViewModels
             set { SetProperty(ref _isVisiblePokStat, value); }
         }
 
-        private bool _isVisibleTypePok = false;
+        private bool _isVisibleTypPok = false;
 
-        public bool IsVisibleTypePok
+        public bool IsVisibleTypPok
         {
-            get { return _isVisibleTypePok; }
-            set { SetProperty(ref _isVisibleTypePok, value); }
+            get { return _isVisibleTypPok; }
+            set { SetProperty(ref _isVisibleTypPok, value); }
         }
 
-        private bool _isVisiblePokemonDesc = false;
+        private bool _isVisiblePokDesc = false;
 
-        public bool IsVisiblePokemonDesc
+        public bool IsVisiblePokDesc
         {
-            get { return _isVisiblePokemonDesc; }
-            set { SetProperty(ref _isVisiblePokemonDesc, value); }
+            get { return _isVisiblePokDesc; }
+            set { SetProperty(ref _isVisiblePokDesc, value); }
         }
 
         private bool _isVisibleTalent = false;
@@ -416,6 +506,25 @@ namespace QuizzPokedex.ViewModels
             get { return _isVisibleTalent; }
             set { SetProperty(ref _isVisibleTalent, value); }
         }
+        #endregion
+
+        #region Multiple Answer
+        //private bool _isVisibleFamily = false;
+
+        //public bool IsVisibleFamily
+        //{
+        //    get { return _isVisibleFamily; }
+        //    set { SetProperty(ref _isVisibleFamily, value); }
+        //}
+
+        private bool _isVisibleTypPokVarious = false;
+
+        public bool IsVisibleTypPokVarious
+        {
+            get { return _isVisibleTypPokVarious; }
+            set { SetProperty(ref _isVisibleTypPokVarious, value); }
+        }
+        #endregion
         #endregion
         #endregion
     }

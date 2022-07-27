@@ -99,7 +99,7 @@ namespace QuizzPokedex.Services
 
                 answers = await GenerateAnswers(questionType, pokemons, answers);
             }
-            else if (questionType.Code.Equals(Constantes.QTypTypPok) || questionType.Code.Equals(Constantes.QTypTyp))
+            else if (questionType.Code.Equals(Constantes.QTypTypPok) || questionType.Code.Equals(Constantes.QTypTyp) || questionType.Code.Equals(Constantes.QTypTypPokVarious))
             {
                 List<TypePok> typePoks = new List<TypePok>();
                 foreach (Answer item in answers)

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 <views:MvxContentPage
-    x:Class="QuizzPokedex.UI.Views.QTypTypPokQuizzView"
+    x:Class="QuizzPokedex.UI.Views.QTypTypPokVariousQuizzView"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:shadows="http://sharpnado.com"
@@ -11,7 +11,7 @@
     xmlns:converters="clr-namespace:QuizzPokedex.UI.Converters"
     xmlns:viewmodel="clr-namespace:QuizzPokedex.ViewModels;assembly=QuizzPokedex"
     xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
-    x:TypeArguments="viewmodel:QTypTypPokQuizzViewModel"
+    x:TypeArguments="viewmodel:QTypTypPokVariousQuizzViewModel"
     BackgroundColor="White"
     NavigationPage.HasNavigationBar="False">
 
@@ -19,7 +19,6 @@
         <ResourceDictionary>
             <converters:ByteToImageSourceConverter x:Key="ByteToImageSourceConverter" />
             <converters:StringArrayConverter x:Key="StringArrayConverter" />
-            <converters:InverseBoolConverter x:Key="InverseBoolConverter" />
         </ResourceDictionary>
     </views:MvxContentPage.Resources>
     <ContentPage.Content>
@@ -72,36 +71,7 @@
                         Grid.Row="1"
                         Grid.ColumnSpan="4"
                         HorizontalOptions="CenterAndExpand">
-                        <shadows:Shadows CornerRadius="20" IsVisible="{Binding EasyQ}">
-                            <shadows:Shadows.Shades>
-                                <shadows:ImmutableShades>
-                                    <shadows:Shade
-                                        BlurRadius="10"
-                                        Opacity="0.5"
-                                        Offset="-1,-1"
-                                        Color="#464C56" />
-                                    <shadows:Shade
-                                        BlurRadius="10"
-                                        Opacity="0.5"
-                                        Offset="1,1"
-                                        Color="#464C56" />
-                                </shadows:ImmutableShades>
-                            </shadows:Shadows.Shades>
-                            <pv:PancakeView
-                                BackgroundColor="{Binding TypePok.InfoColor}"
-                                Border="{pv:BorderMarkup Color=Black,
-                                                         Thickness=0}"
-                                CornerRadius="100">
-                                <Label
-                                    Padding="20,4,20,4"
-                                    xct:ShadowEffect.Color="#464C56"
-                                    xct:ShadowEffect.OffsetY="10"
-                                    xct:ShadowEffect.Opacity="0.5"
-                                    Text="{Binding FormatLibelleQuestion, Converter={StaticResource StringArrayConverter}, ConverterParameter='Quel est le type principal de {0}?'}"
-                                    TextColor="White" />
-                            </pv:PancakeView>
-                        </shadows:Shadows>
-                        <shadows:Shadows CornerRadius="20" IsVisible="{Binding EasyQ, Converter={StaticResource InverseBoolConverter}}">
+                        <shadows:Shadows CornerRadius="20">
                             <shadows:Shadows.Shades>
                                 <shadows:ImmutableShades>
                                     <shadows:Shade

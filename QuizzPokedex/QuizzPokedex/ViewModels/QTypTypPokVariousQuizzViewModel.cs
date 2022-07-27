@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace QuizzPokedex.ViewModels
 {
-    public class QTypTypPokQuizzViewModel : MvxViewModel<QuestionAnswers>
+    public class QTypTypPokVariousQuizzViewModel : MvxViewModel<QuestionAnswers>
     {
         #region Field
         private readonly IMvxNavigationService _navigation;
@@ -28,7 +28,7 @@ namespace QuizzPokedex.ViewModels
         #endregion
 
         #region Constructor
-        public QTypTypPokQuizzViewModel(IMvxNavigationService navigation, IMvxIoCProvider logger, IQuizzService quizzService, IPokemonService pokemonService, IQuestionService questionService, IDifficultyService difficultyService, IAnswerService answerService, IQuestionTypeService questionTypeService, ITypePokService typePokService, IMvxMessenger messenger)
+        public QTypTypPokVariousQuizzViewModel(IMvxNavigationService navigation, IMvxIoCProvider logger, IQuizzService quizzService, IPokemonService pokemonService, IQuestionService questionService, IDifficultyService difficultyService, IAnswerService answerService, IQuestionTypeService questionTypeService, ITypePokService typePokService, IMvxMessenger messenger)
         {
             _navigation = navigation;
             _logger = logger;
@@ -48,6 +48,8 @@ namespace QuizzPokedex.ViewModels
         {
             QuestionAnswers = questionAnswers;
             Order = questionAnswers.Question.Order;
+
+            SelectedAnswers = new List<Answer>();
 
             Transformations = new List<ITransformation>();
 
@@ -144,12 +146,6 @@ namespace QuizzPokedex.ViewModels
                 else if (difficulty.Libelle.Equals(Constantes.HardTQ))
                     HardQ = true;
             });
-        }
-
-        private async Task ResetData()
-        {
-            SelectedAnswer.IsSelected = false;
-            await UpdateUIByOrder(SelectedAnswer);
         }
 
         private async Task<bool> UpdateUIByOrder(Answer answer)
@@ -400,12 +396,16 @@ namespace QuizzPokedex.ViewModels
 
             #region Update
             QuestionAnswers.Question.Done = true;
-            if (SelectedAnswer != null)
+            GetSelectedAnswers();
+            if (SelectedAnswers.Count > 0)
             {
-                if (SelectedAnswer.IsCorrect)
-                    await _answerService.UpdateAsync(SelectedAnswer);
-                else
-                    await _answerService.CreateAsync(SelectedAnswer);
+                foreach (Answer item in SelectedAnswers)
+                {
+                    if (item.IsCorrect)
+                        await _answerService.UpdateAsync(item);
+                    else
+                        await _answerService.CreateAsync(item);
+                }
 
                 string IDs = "";
 
@@ -461,15 +461,77 @@ namespace QuizzPokedex.ViewModels
 
         private async Task SelectedAnswerAsync(Answer answer)
         {
-            if (SelectedAnswer != null)
-                await ResetData();
-
             //Update Data
             answer.IsSelected = !answer.IsSelected;
-            SelectedAnswer = answer;
 
             //Update UI
             await UpdateUIByOrder(answer);
+        }
+
+        private void GetSelectedAnswers()
+        {
+            if (EasyQ)
+            {
+                if (Answer1.IsSelected)
+                    SelectedAnswers.Add(Answer1);
+
+                if (Answer2.IsSelected)
+                    SelectedAnswers.Add(Answer2);
+
+                if (Answer3.IsSelected)
+                    SelectedAnswers.Add(Answer3);
+
+                if (Answer4.IsSelected)
+                    SelectedAnswers.Add(Answer4);
+
+                if (Answer5.IsSelected)
+                    SelectedAnswers.Add(Answer5);
+
+                if (Answer6.IsSelected)
+                    SelectedAnswers.Add(Answer6);
+            }
+
+            if (NormalQ)
+            {
+                if (Answer7.IsSelected)
+                    SelectedAnswers.Add(Answer7);
+
+                if (Answer8.IsSelected)
+                    SelectedAnswers.Add(Answer8);
+
+                if (Answer9.IsSelected)
+                    SelectedAnswers.Add(Answer9);
+
+                if (Answer10.IsSelected)
+                    SelectedAnswers.Add(Answer10);
+
+                if (Answer11.IsSelected)
+                    SelectedAnswers.Add(Answer11);
+
+                if (Answer12.IsSelected)
+                    SelectedAnswers.Add(Answer12);
+            }
+
+            if (HardQ)
+            {
+                if (Answer13.IsSelected)
+                    SelectedAnswers.Add(Answer13);
+
+                if (Answer14.IsSelected)
+                    SelectedAnswers.Add(Answer14);
+
+                if (Answer15.IsSelected)
+                    SelectedAnswers.Add(Answer15);
+
+                if (Answer16.IsSelected)
+                    SelectedAnswers.Add(Answer16);
+
+                if (Answer17.IsSelected)
+                    SelectedAnswers.Add(Answer17);
+
+                if (Answer18.IsSelected)
+                    SelectedAnswers.Add(Answer18);
+            }
         }
         #endregion
 
@@ -536,12 +598,12 @@ namespace QuizzPokedex.ViewModels
             set { SetProperty(ref _questionType, value); }
         }
 
-        private Answer _selectedAnswer;
+        private List<Answer> _selectedAnswers;
 
-        public Answer SelectedAnswer
+        public List<Answer> SelectedAnswers
         {
-            get { return _selectedAnswer; }
-            set { _selectedAnswer = value; }
+            get { return _selectedAnswers; }
+            set { _selectedAnswers = value; }
         }
 
         private byte[] _difficultyByte;

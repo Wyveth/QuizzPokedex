@@ -132,7 +132,14 @@ namespace QuizzPokedex.Services
                     else if (questionType.Code.Equals(Constantes.QTypTypPok))
                     {
                         Pokemon pokemon = await _pokemonService.GetPokemonRandom(gen1, gen2, gen3, gen4, gen5, gen6, gen7, gen8, genArceus, alreadyExistQTypTypPok);
-                        AnswersID = await GetAnswersID_QTypTypPok(questionType, pokemon);
+                        AnswersID = await GetAnswersID_QTypTypPok(questionType, pokemon, false);
+                        alreadyExistQTypTypPok.Add(pokemon);
+                        DataObjectID = pokemon.Id;
+                    }
+                    else if (questionType.Code.Equals(Constantes.QTypTypPokVarious))
+                    {
+                        Pokemon pokemon = await _pokemonService.GetPokemonRandom(gen1, gen2, gen3, gen4, gen5, gen6, gen7, gen8, genArceus, alreadyExistQTypTypPok);
+                        AnswersID = await GetAnswersID_QTypTypPok(questionType, pokemon, true);
                         alreadyExistQTypTypPok.Add(pokemon);
                         DataObjectID = pokemon.Id;
                     }
@@ -251,26 +258,19 @@ namespace QuizzPokedex.Services
             return await Task.FromResult(AnswersID);
         }
 
-        private async Task<string> GetAnswersID_QTypTypPok(QuestionType questionType, Pokemon pokemon)
+        private async Task<string> GetAnswersID_QTypTypPok(QuestionType questionType, Pokemon pokemon, bool various)
         {
             string AnswersID = string.Empty;
 
             List<Task> tasks = new List<Task>();
             List<TypePok> typesAnswer = new List<TypePok>();
 
-            typesAnswer.Add(await _typePokService.GetByIdAsync(int.Parse(pokemon.TypesID.Split(',')[0])));
+            if (!various)
+                typesAnswer.Add(await _typePokService.GetByIdAsync(int.Parse(pokemon.TypesID.Split(',')[0])));
+            else
+                foreach (string item in pokemon.TypesID.Split(','))
+                    typesAnswer.Add(await _typePokService.GetByIdAsync(int.Parse(item)));
 
-            for (int nbAnswer = 1; nbAnswer < questionType.NbAnswersPossible; nbAnswer++)
-            {
-                tasks.Add(
-                    Task.Run(async () =>
-                    {
-                        typesAnswer.Add(await _typePokService.GetTypeRandom(typesAnswer));
-                    })
-                );
-            }
-
-            Task.WaitAll(tasks.ToArray());
             AnswersID = await _answerService.GenerateCorrectAnswers(questionType, typesAnswer);
 
             return await Task.FromResult(AnswersID);

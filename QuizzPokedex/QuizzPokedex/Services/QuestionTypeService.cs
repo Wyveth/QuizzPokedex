@@ -165,6 +165,18 @@ namespace QuizzPokedex.Services
             };
             await CreateAsync(questionType);
             #endregion
+
+            #region QTypTypPokVarious
+            questionType = new QuestionType()
+            {
+                Code = Constantes.QTypTypPokVarious,
+                Libelle = "Quel sont le ou les types de ce pokémon?",
+                DifficultyID = difficultyEasy.Id,
+                NbAnswers = 6,
+                IsMultipleAnswers = true
+            };
+            await CreateAsync(questionType);
+            #endregion
             #endregion
 
             #region Normal
@@ -294,6 +306,52 @@ namespace QuizzPokedex.Services
                 DifficultyID = difficultyNormal.Id,
                 NbAnswers = 6,
                 NbAnswersPossible = 1
+            };
+            await CreateAsync(questionType);
+            #endregion
+
+            #region QTypPokStat
+            questionType = new QuestionType()
+            {
+                Code = Constantes.QTypPokStat,
+                Libelle = "Quel est la stat {0} de {1}?",
+                DifficultyID = difficultyNormal.Id,
+                NbAnswers = 8,
+                NbAnswersPossible = 1
+            };
+            await CreateAsync(questionType);
+            #endregion
+
+            #region QTypTypPokVarious
+            questionType = new QuestionType()
+            {
+                Code = Constantes.QTypTypPokVarious,
+                Libelle = "Quel sont le ou les types de ce pokémon?",
+                DifficultyID = difficultyNormal.Id,
+                NbAnswers = 12,
+                IsMultipleAnswers = true
+            };
+            await CreateAsync(questionType);
+
+            questionType = new QuestionType()
+            {
+                Code = Constantes.QTypTypPokVarious,
+                Libelle = "Quel sont le ou les types de ce pokémon?",
+                DifficultyID = difficultyNormal.Id,
+                IsBlurred = true,
+                NbAnswers = 12,
+                IsMultipleAnswers = true
+            };
+            await CreateAsync(questionType);
+
+            questionType = new QuestionType()
+            {
+                Code = Constantes.QTypTypPokVarious,
+                Libelle = "Quel sont le ou les types de ce pokémon?",
+                DifficultyID = difficultyNormal.Id,
+                IsHide = true,
+                NbAnswers = 12,
+                IsMultipleAnswers = true
             };
             await CreateAsync(questionType);
             #endregion
@@ -455,6 +513,65 @@ namespace QuizzPokedex.Services
             };
             await CreateAsync(questionType);
             #endregion
+
+            #region QTypPokStat
+            questionType = new QuestionType()
+            {
+                Code = Constantes.QTypPokStat,
+                Libelle = "Quel est la stat {0} de {1}?",
+                DifficultyID = difficultyHard.Id,
+                NbAnswers = 12,
+                NbAnswersPossible = 1
+            };
+            await CreateAsync(questionType);
+            #endregion
+
+            #region QTypTypPokVarious
+            questionType = new QuestionType()
+            {
+                Code = Constantes.QTypTypPokVarious,
+                Libelle = "Quel sont le ou les types de ce pokémon?",
+                DifficultyID = difficultyHard.Id,
+                NbAnswers = 18,
+                IsMultipleAnswers = true
+            };
+            await CreateAsync(questionType);
+
+            questionType = new QuestionType()
+            {
+                Code = Constantes.QTypTypPokVarious,
+                Libelle = "Quel sont le ou les types de ce pokémon?",
+                DifficultyID = difficultyHard.Id,
+                IsBlurred = true,
+                IsGrayscale = true,
+                NbAnswers = 18,
+                IsMultipleAnswers = true
+            };
+            await CreateAsync(questionType);
+
+            questionType = new QuestionType()
+            {
+                Code = Constantes.QTypTypPokVarious,
+                Libelle = "Quel sont le ou les types de ce pokémon?",
+                DifficultyID = difficultyHard.Id,
+                IsHide = true,
+                NbAnswers = 18,
+                IsMultipleAnswers = true
+            };
+            await CreateAsync(questionType);
+
+            questionType = new QuestionType()
+            {
+                Code = Constantes.QTypTypPokVarious,
+                Libelle = "Quel sont le ou les types de ce pokémon?",
+                DifficultyID = difficultyHard.Id,
+                IsBlurred = true,
+                IsHide = true,
+                NbAnswers = 18,
+                IsMultipleAnswers = true
+            };
+            await CreateAsync(questionType);
+            #endregion
             #endregion
         }
         #endregion
@@ -516,11 +633,13 @@ namespace QuizzPokedex.Services
             else if (numberRandom <= 12)
                 questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypPokDesc) || m.Code.Equals(Constantes.QTypPokDescReverse));
             else if (numberRandom <= 20)
-                questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypTypPok));
+                questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypTypPok) || m.Code.Equals(Constantes.QTypTypPokVarious));
             else
                 questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypPok) || m.Code.Equals(Constantes.QTypPokBlurred) || m.Code.Equals(Constantes.QTypPokBlack));
 
+            //QTypPokFamily = "PokemonFamily";
             //QTypTypPokVarious = "TypePokemonVarious";
+            //QTypWeakPokVarious = "TypeWeaknessPokemonVarious";
 
             int numberTypeQuestion = random.Next(questionTypes.Count);
             return await Task.FromResult(questionTypes[numberTypeQuestion]);
