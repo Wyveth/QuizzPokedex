@@ -143,6 +143,13 @@ namespace QuizzPokedex.Services
                         alreadyExistQTypTypPok.Add(pokemon);
                         DataObjectID = pokemon.Id;
                     }
+                    else if (questionType.Code.Equals(Constantes.QTypWeakPokVarious))
+                    {
+                        Pokemon pokemon = await _pokemonService.GetPokemonRandom(gen1, gen2, gen3, gen4, gen5, gen6, gen7, gen8, genArceus, alreadyExistQTypTypPok);
+                        AnswersID = await GetAnswersID_QTypWeakPok(questionType, pokemon, true);
+                        alreadyExistQTypTypPok.Add(pokemon);
+                        DataObjectID = pokemon.Id;
+                    }
                     else if (questionType.Code.Equals(Constantes.QTypTyp))
                     {
                         AnswersID = await GetAnswersID_QTypTyp(questionType, alreadyExistQTypTyp);
@@ -272,6 +279,24 @@ namespace QuizzPokedex.Services
                     typesAnswer.Add(await _typePokService.GetByIdAsync(int.Parse(item)));
 
             AnswersID = await _answerService.GenerateCorrectAnswers(questionType, typesAnswer);
+
+            return await Task.FromResult(AnswersID);
+        }
+
+        private async Task<string> GetAnswersID_QTypWeakPok(QuestionType questionType, Pokemon pokemon, bool various)
+        {
+            string AnswersID = string.Empty;
+
+            List<Task> tasks = new List<Task>();
+            List<TypePok> weaknessAnswer = new List<TypePok>();
+
+            if (!various)
+                weaknessAnswer.Add(await _typePokService.GetByIdAsync(int.Parse(pokemon.WeaknessID.Split(',')[0])));
+            else
+                foreach (string item in pokemon.WeaknessID.Split(','))
+                    weaknessAnswer.Add(await _typePokService.GetByIdAsync(int.Parse(item)));
+
+            AnswersID = await _answerService.GenerateCorrectAnswers(questionType, weaknessAnswer);
 
             return await Task.FromResult(AnswersID);
         }

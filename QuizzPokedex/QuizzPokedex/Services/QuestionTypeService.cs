@@ -177,6 +177,18 @@ namespace QuizzPokedex.Services
             };
             await CreateAsync(questionType);
             #endregion
+
+            #region QTypWeakPokVarious
+            questionType = new QuestionType()
+            {
+                Code = Constantes.QTypWeakPokVarious,
+                Libelle = "Quel sont le ou les faiblesses de ce pokémon?",
+                DifficultyID = difficultyEasy.Id,
+                NbAnswers = 6,
+                IsMultipleAnswers = true
+            };
+            await CreateAsync(questionType);
+            #endregion
             #endregion
 
             #region Normal
@@ -348,6 +360,40 @@ namespace QuizzPokedex.Services
             {
                 Code = Constantes.QTypTypPokVarious,
                 Libelle = "Quel sont le ou les types de ce pokémon?",
+                DifficultyID = difficultyNormal.Id,
+                IsHide = true,
+                NbAnswers = 12,
+                IsMultipleAnswers = true
+            };
+            await CreateAsync(questionType);
+            #endregion
+
+            #region QTypWeakPokVarious
+            questionType = new QuestionType()
+            {
+                Code = Constantes.QTypWeakPokVarious,
+                Libelle = "Quel sont le ou les faiblesses de ce pokémon?",
+                DifficultyID = difficultyNormal.Id,
+                NbAnswers = 12,
+                IsMultipleAnswers = true
+            };
+            await CreateAsync(questionType);
+
+            questionType = new QuestionType()
+            {
+                Code = Constantes.QTypWeakPokVarious,
+                Libelle = "Quel sont le ou les faiblesses de ce pokémon?",
+                DifficultyID = difficultyNormal.Id,
+                IsBlurred = true,
+                NbAnswers = 12,
+                IsMultipleAnswers = true
+            };
+            await CreateAsync(questionType);
+
+            questionType = new QuestionType()
+            {
+                Code = Constantes.QTypWeakPokVarious,
+                Libelle = "Quel sont le ou les faiblesses de ce pokémon?",
                 DifficultyID = difficultyNormal.Id,
                 IsHide = true,
                 NbAnswers = 12,
@@ -572,6 +618,53 @@ namespace QuizzPokedex.Services
             };
             await CreateAsync(questionType);
             #endregion
+
+            #region QTypWeakPokVarious
+            questionType = new QuestionType()
+            {
+                Code = Constantes.QTypWeakPokVarious,
+                Libelle = "Quel sont le ou les faiblesses de ce pokémon?",
+                DifficultyID = difficultyHard.Id,
+                NbAnswers = 18,
+                IsMultipleAnswers = true
+            };
+            await CreateAsync(questionType);
+
+            questionType = new QuestionType()
+            {
+                Code = Constantes.QTypWeakPokVarious,
+                Libelle = "Quel sont le ou les faiblesses de ce pokémon?",
+                DifficultyID = difficultyHard.Id,
+                IsBlurred = true,
+                IsGrayscale = true,
+                NbAnswers = 18,
+                IsMultipleAnswers = true
+            };
+            await CreateAsync(questionType);
+
+            questionType = new QuestionType()
+            {
+                Code = Constantes.QTypWeakPokVarious,
+                Libelle = "Quel sont le ou les faiblesses de ce pokémon?",
+                DifficultyID = difficultyHard.Id,
+                IsHide = true,
+                NbAnswers = 18,
+                IsMultipleAnswers = true
+            };
+            await CreateAsync(questionType);
+
+            questionType = new QuestionType()
+            {
+                Code = Constantes.QTypWeakPokVarious,
+                Libelle = "Quel sont le ou les faiblesses de ce pokémon?",
+                DifficultyID = difficultyHard.Id,
+                IsBlurred = true,
+                IsHide = true,
+                NbAnswers = 18,
+                IsMultipleAnswers = true
+            };
+            await CreateAsync(questionType);
+            #endregion
             #endregion
         }
         #endregion
@@ -637,9 +730,8 @@ namespace QuizzPokedex.Services
             else
                 questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypPok) || m.Code.Equals(Constantes.QTypPokBlurred) || m.Code.Equals(Constantes.QTypPokBlack));
 
+            questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypWeakPokVarious));
             //QTypPokFamily = "PokemonFamily";
-            //QTypTypPokVarious = "TypePokemonVarious";
-            //QTypWeakPokVarious = "TypeWeaknessPokemonVarious";
 
             int numberTypeQuestion = random.Next(questionTypes.Count);
             return await Task.FromResult(questionTypes[numberTypeQuestion]);

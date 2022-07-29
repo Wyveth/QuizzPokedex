@@ -99,7 +99,10 @@ namespace QuizzPokedex.Services
 
                 answers = await GenerateAnswers(questionType, pokemons, answers);
             }
-            else if (questionType.Code.Equals(Constantes.QTypTypPok) || questionType.Code.Equals(Constantes.QTypTyp) || questionType.Code.Equals(Constantes.QTypTypPokVarious))
+            else if (questionType.Code.Equals(Constantes.QTypTypPok) 
+                || questionType.Code.Equals(Constantes.QTypTyp) 
+                || questionType.Code.Equals(Constantes.QTypTypPokVarious)
+                || questionType.Code.Equals(Constantes.QTypWeakPokVarious))
             {
                 List<TypePok> typePoks = new List<TypePok>();
                 foreach (Answer item in answers)
@@ -133,7 +136,8 @@ namespace QuizzPokedex.Services
 
                 answers = await GenerateAnswersDesc(questionType, pokemons, answers);
             }
-            else if (questionType.Code.Equals(Constantes.QTypTalent) || questionType.Code.Equals(Constantes.QTypTalentReverse))
+            else if (questionType.Code.Equals(Constantes.QTypTalent) 
+                || questionType.Code.Equals(Constantes.QTypTalentReverse))
             {
                 List<Talent> talents = new List<Talent>();
                 foreach (Answer item in answers)

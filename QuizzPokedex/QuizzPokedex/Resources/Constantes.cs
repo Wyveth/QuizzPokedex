@@ -138,6 +138,7 @@ namespace QuizzPokedex.Resources
         public const string QTypTypPok = "TypPok"; //OK
         public const string QTypTypPokVarious = "TypPokVarious"; //OK
         public const string QTypWeakPokVarious = "TypWeakPokVarious";
+        public const string QTypTalentPokVarious = "TypTalentPokVarious";
         public const string QTypTyp = "Typ"; //OK
         public const string QTypPokDesc = "PokDesc"; //OK
         public const string QTypPokDescReverse = "PokDescReverse"; //OK
