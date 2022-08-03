@@ -40,11 +40,12 @@ namespace QuizzPokedex.Services
         public async Task<List<Answer>> GetAllByAnswersIDAsync(string answersID)
         {
             List<Answer> result = new List<Answer>();
-            foreach (string item in answersID.Split(','))
-            {
-                int id = int.Parse(item);
-                result.Add(await GetByIdAsync(id));
-            }
+            if(!string.IsNullOrEmpty(answersID))
+                foreach (string item in answersID.Split(','))
+                {
+                    int id = int.Parse(item);
+                    result.Add(await GetByIdAsync(id));
+                }
 
             return await Task.FromResult(result);
         }
@@ -137,7 +138,8 @@ namespace QuizzPokedex.Services
                 answers = await GenerateAnswersDesc(questionType, pokemons, answers);
             }
             else if (questionType.Code.Equals(Constantes.QTypTalent) 
-                || questionType.Code.Equals(Constantes.QTypTalentReverse))
+                || questionType.Code.Equals(Constantes.QTypTalentReverse)
+                || questionType.Code.Equals(Constantes.QTypTalentPokVarious))
             {
                 List<Talent> talents = new List<Talent>();
                 foreach (Answer item in answers)
@@ -154,7 +156,7 @@ namespace QuizzPokedex.Services
 
                 if (questionType.Code.Equals(Constantes.QTypTalent))
                     answers = await GenerateAnswers(questionType, talents, answers);
-                else if (questionType.Code.Equals(Constantes.QTypTalentReverse))
+                else if (questionType.Code.Equals(Constantes.QTypTalentReverse) || questionType.Code.Equals(Constantes.QTypTalentPokVarious))
                     answers = await GenerateAnswers(questionType, talents, answers, true);
             }
             else if (questionType.Code.Equals(Constantes.QTypPokStat))
@@ -565,6 +567,56 @@ namespace QuizzPokedex.Services
                     IsCorrect = true,
                     IsCorrectID = pair.Value.Id,
                     Libelle = Reverse ? pair.Value.Name : pair.Value.Description,
+                    Order = pair.Key + 1
+                };
+
+                await CreateAsync(answer);
+                answers.Add(answer);
+            }
+
+            int i = 0;
+            foreach (Answer answer in answers)
+            {
+                if (i == 0)
+                {
+                    result = answer.Id.ToString();
+                    i++;
+                }
+                else
+                {
+                    result += ',' + answer.Id.ToString();
+                }
+            }
+
+            return await Task.FromResult(result);
+        }
+
+        public async Task<string> GenerateCorrectAnswers(QuestionType questionType, List<Talent> talentsAnswer)
+        {
+            List<Answer> answers = new List<Answer>();
+            Random random = new Random();
+
+            string result = string.Empty;
+            Dictionary<int, Talent> dic = new Dictionary<int, Talent>();
+            foreach (var type in talentsAnswer)
+            {
+                while (!dic.ContainsValue(type))
+                {
+                    int numberRandom = random.Next(questionType.NbAnswers);
+
+                    if (!dic.ContainsKey(numberRandom))
+                        dic.Add(numberRandom, type);
+                }
+            }
+
+            foreach (KeyValuePair<int, Talent> pair in dic)
+            {
+                Answer answer = new Answer()
+                {
+                    IsSelected = false,
+                    IsCorrect = true,
+                    IsCorrectID = pair.Value.Id,
+                    Libelle = pair.Value.Name,
                     Order = pair.Key + 1
                 };
 

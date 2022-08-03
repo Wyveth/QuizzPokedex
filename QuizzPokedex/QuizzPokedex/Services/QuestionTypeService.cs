@@ -189,6 +189,18 @@ namespace QuizzPokedex.Services
             };
             await CreateAsync(questionType);
             #endregion
+
+            #region QTypTalentPokVarious
+            questionType = new QuestionType()
+            {
+                Code = Constantes.QTypTalentPokVarious,
+                Libelle = "Quel sont le ou les talents de ce pokémon?",
+                DifficultyID = difficultyEasy.Id,
+                NbAnswers = 4,
+                IsMultipleAnswers = true
+            };
+            await CreateAsync(questionType);
+            #endregion
             #endregion
 
             #region Normal
@@ -397,6 +409,18 @@ namespace QuizzPokedex.Services
                 DifficultyID = difficultyNormal.Id,
                 IsHide = true,
                 NbAnswers = 12,
+                IsMultipleAnswers = true
+            };
+            await CreateAsync(questionType);
+            #endregion
+
+            #region QTypTalentPokVarious
+            questionType = new QuestionType()
+            {
+                Code = Constantes.QTypTalentPokVarious,
+                Libelle = "Quel sont le ou les talents de ce pokémon?",
+                DifficultyID = difficultyNormal.Id,
+                NbAnswers = 8,
                 IsMultipleAnswers = true
             };
             await CreateAsync(questionType);
@@ -665,6 +689,18 @@ namespace QuizzPokedex.Services
             };
             await CreateAsync(questionType);
             #endregion
+
+            #region QTypTalentPokVarious
+            questionType = new QuestionType()
+            {
+                Code = Constantes.QTypTalentPokVarious,
+                Libelle = "Quel sont le ou les talents de ce pokémon?",
+                DifficultyID = difficultyHard.Id,
+                NbAnswers = 12,
+                IsMultipleAnswers = true
+            };
+            await CreateAsync(questionType);
+            #endregion
             #endregion
         }
         #endregion
@@ -722,15 +758,15 @@ namespace QuizzPokedex.Services
             if (numberRandom <= 6)
                 questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypTyp));
             else if (numberRandom <= 9)
-                questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypTalent) || m.Code.Equals(Constantes.QTypTalentReverse));
+                questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypTalent) || m.Code.Equals(Constantes.QTypTalentReverse) || m.Code.Equals(Constantes.QTypTalentPokVarious));
             else if (numberRandom <= 12)
                 questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypPokDesc) || m.Code.Equals(Constantes.QTypPokDescReverse));
             else if (numberRandom <= 20)
-                questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypTypPok) || m.Code.Equals(Constantes.QTypTypPokVarious));
+                questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypTypPok) || m.Code.Equals(Constantes.QTypTypPokVarious) || m.Code.Equals(Constantes.QTypWeakPokVarious));
             else
                 questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypPok) || m.Code.Equals(Constantes.QTypPokBlurred) || m.Code.Equals(Constantes.QTypPokBlack));
 
-            questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypWeakPokVarious));
+            //questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypTalentPokVarious) || m.Code.Equals(Constantes.QTypTypPokVarious) || m.Code.Equals(Constantes.QTypWeakPokVarious));
             //QTypPokFamily = "PokemonFamily";
 
             int numberTypeQuestion = random.Next(questionTypes.Count);

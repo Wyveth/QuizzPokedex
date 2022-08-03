@@ -258,32 +258,31 @@ namespace QuizzPokedex.Services
             pokemon.Category = pokemonJson.Category;
             pokemon.Weight = pokemonJson.Weight;
 
-            string[] talentsTab = pokemonJson.Talent.Split(',');
-            string[] descriptionTalentsTab = pokemonJson.DescriptionTalent.Split(';');
             int i = 0;
-            foreach (string item in talentsTab)
+            if (!string.IsNullOrEmpty(pokemonJson.Talent))
             {
-                Talent talent = await _talentService.GetByNameAsync(item);
-                if (talent == null)
+                string[] talentsTab = pokemonJson.Talent.Split(',');
+                string[] descriptionTalentsTab = pokemonJson.DescriptionTalent.Split(';');
+                foreach (string item in talentsTab)
                 {
-                    talent = new Talent() { Name = item, Description = descriptionTalentsTab[i] };
-                    await _talentService.CreateAsync(talent);
-                }
+                    Talent talent = await _talentService.GetByNameAsync(item);
+                    if (talent == null)
+                    {
+                        talent = new Talent() { Name = item, Description = descriptionTalentsTab[i] };
+                        await _talentService.CreateAsync(talent);
+                    }
 
-                if (i == 0)
-                {
-                    //pokemon.Types = type.Name.ToString();
-                    pokemon.TalentsID = talent.Id.ToString();
-                    i++;
-                }
-                else
-                {
-                    //pokemon.Types += ',' + type.Name.ToString();
-                    pokemon.TalentsID += ',' + talent.Id.ToString();
+                    if (i == 0)
+                    {
+                        pokemon.TalentsID = talent.Id.ToString();
+                        i++;
+                    }
+                    else
+                    {
+                        pokemon.TalentsID += ',' + talent.Id.ToString();
+                    }
                 }
             }
-            //pokemon.Talent = pokemonJson.Talent;
-            //pokemon.DescriptionTalent = pokemonJson.DescriptionTalent;
 
             string[] typesTab = pokemonJson.Types.Split(',');
             i = 0;

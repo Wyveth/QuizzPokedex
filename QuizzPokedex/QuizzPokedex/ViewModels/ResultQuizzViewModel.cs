@@ -208,8 +208,7 @@ namespace QuizzPokedex.ViewModels
                 {
 
                 }
-                else if (questionType.Code.Equals(Constantes.QTypTypPokVarious)
-                    || questionType.Code.Equals(Constantes.QTypWeakPokVarious))
+                else if (questionType.Code.Equals(Constantes.QTypTypPokVarious))
                 {
                     ResetIsVisible();
                     IsVisibleTypPokVarious = true;
@@ -219,8 +218,28 @@ namespace QuizzPokedex.ViewModels
 
                     FormatLibelleQuestion = new string[] { pokemon.Name };
                 }
+                else if (questionType.Code.Equals(Constantes.QTypWeakPokVarious))
+                {
+                    ResetIsVisible();
+                    IsVisibleWeakPokVarious = true;
 
-                libelleAnswerCorrect = await GetAnswerLibelle(answersIsCorrect);
+                    pokemon = await _pokemonService.GetByIdAsync(question.DataObjectID);
+                    typePok = await _typePokService.GetByIdAsync(int.Parse(pokemon.TypesID.Split(',')[0]));
+
+                    FormatLibelleQuestion = new string[] { pokemon.Name };
+                }
+                else if (questionType.Code.Equals(Constantes.QTypTalentPokVarious))
+                {
+                    ResetIsVisible();
+                    IsVisibleTalentPokVarious = true;
+
+                    pokemon = await _pokemonService.GetByIdAsync(question.DataObjectID);
+                    typePok = await _typePokService.GetByIdAsync(int.Parse(pokemon.TypesID.Split(',')[0]));
+
+                    FormatLibelleQuestion = new string[] { pokemon.Name };
+                }
+
+                libelleAnswerCorrect = await GetAnswerLibelle(answersIsCorrect, questionType);
 
                 if (answersIsCorrectSelected.Count.Equals(answersIsCorrect.Count) && answersIsNotCorrect.Count.Equals(0))
                     byteResult = await GetByteImgAnswer(true);
@@ -245,6 +264,8 @@ namespace QuizzPokedex.ViewModels
                 IsQTypTypPok = IsVisibleTypPok,
                 IsQTypTalent = IsVisibleTalent,
                 IsQTypTypPokVarious = IsVisibleTypPokVarious,
+                IsQTypWeakPokVarious = IsVisibleWeakPokVarious,
+                IsQTypTalentPokVarious = IsVisibleTalentPokVarious,
                 ByteResult = byteResult,
                 FormatLibelleQuestion = FormatLibelleQuestion
             };
@@ -265,6 +286,8 @@ namespace QuizzPokedex.ViewModels
 
             #region Multiple
             IsVisibleTypPokVarious = false;
+            IsVisibleWeakPokVarious = false;
+            IsVisibleTalentPokVarious = false;
             #endregion
         }
 
@@ -341,20 +364,29 @@ namespace QuizzPokedex.ViewModels
             return await Task.FromResult(typeByte);
         }
 
-        private async Task<string> GetAnswerLibelle(List<Answer> answers)
+        private async Task<string> GetAnswerLibelle(List<Answer> answers, QuestionType questionType)
         {
             string libelle = "";
             int i = 0;
-            foreach (Answer item in answers)
+            if (answers.Count > 0)
             {
-                if (i == 0) {
-                    libelle = item.Libelle;
-                    i++;
-                }
-                else
+                foreach (Answer item in answers)
                 {
-                    libelle += ", " + item.Libelle;
+                    if (i == 0)
+                    {
+                        libelle = item.Libelle;
+                        i++;
+                    }
+                    else
+                    {
+                        libelle += ", " + item.Libelle;
+                    }
                 }
+            }
+            else
+            {
+                if (questionType.Code.Equals(Constantes.QTypTalentPokVarious))
+                    libelle = "Ce pokémon n'a pas de talent!";
             }
 
             return await Task.FromResult(libelle);
@@ -523,6 +555,22 @@ namespace QuizzPokedex.ViewModels
         {
             get { return _isVisibleTypPokVarious; }
             set { SetProperty(ref _isVisibleTypPokVarious, value); }
+        }
+
+        private bool _isVisibleWeakPokVarious = false;
+
+        public bool IsVisibleWeakPokVarious
+        {
+            get { return _isVisibleWeakPokVarious; }
+            set { SetProperty(ref _isVisibleWeakPokVarious, value); }
+        }
+
+        private bool _isVisibleTalentPokVarious = false;
+
+        public bool IsVisibleTalentPokVarious
+        {
+            get { return _isVisibleTalentPokVarious; }
+            set { SetProperty(ref _isVisibleTalentPokVarious, value); }
         }
         #endregion
         #endregion

@@ -31,11 +31,10 @@ namespace QuizzPokedex.Droid.Configuration
                     fileStreamToWrite.Close();
                 }
 
-                //var databaseFolderExt = Android.OS.Environment.ExternalStorageDirectory.AbsolutePath;
-                //var databaseFilePathExt = Path.Combine(databaseFolderExt, Android.OS.Environment.DirectoryDownloads);
-                //if (!System.IO.File.Exists(databaseFilePathExt + "/" + FileName))
+                //var databaseFolderExt = Android.App.Application.Context.GetExternalFilesDir("").AbsolutePath;
+                //if (!System.IO.File.Exists(databaseFolderExt + "/" + FileName))
                 //{
-                //    FileStream fileStreamToWrite = System.IO.File.Create(databaseFilePathExt + "/" + FileName);
+                //    FileStream fileStreamToWrite = System.IO.File.Create(databaseFolderExt + "/" + FileName);
                 //    using (var stream = System.IO.File.OpenRead(databaseFilePath))
                 //    {
                 //        stream.Seek(0, SeekOrigin.Begin);

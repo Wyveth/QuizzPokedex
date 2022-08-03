@@ -35,6 +35,10 @@
 		  <SubType>Designer</SubType>
 		  <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
 		</EmbeddedResource>
+		<EmbeddedResource Update="Views\QTypTalentPokVariousQuizzView.xaml">
+		  <SubType>Designer</SubType>
+		  <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+		</EmbeddedResource>
 		<EmbeddedResource Update="Views\QTypWeakPokVariousQuizzView.xaml">
 		  <SubType>Designer</SubType>
 		  <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
@@ -91,6 +95,10 @@
 	  </Compile>
 	  <Compile Update="Views\QTypPokDescReverseQuizzView.xaml.cs">
 	    <DependentUpon>QTypPokDescReverseQuizzView.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\QTypTalentPokVariousQuizzView.xaml.cs">
+	    <SubType>Code</SubType>
+	    <DependentUpon>QTypTalentPokVariousQuizzView.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="Views\QTypWeakPokVariousQuizzView.xaml.cs">
 	    <SubType>Code</SubType>
