@@ -190,11 +190,35 @@ namespace QuizzPokedex.Services
             await CreateAsync(questionType);
             #endregion
 
-            #region QTypTalentPokVarious
+            #region QTypPokTalentVarious
             questionType = new QuestionType()
             {
-                Code = Constantes.QTypTalentPokVarious,
+                Code = Constantes.QTypPokTalentVarious,
                 Libelle = "Quel sont le ou les talents de ce pokémon?",
+                DifficultyID = difficultyEasy.Id,
+                NbAnswers = 4,
+                IsMultipleAnswers = true
+            };
+            await CreateAsync(questionType);
+            #endregion
+
+            #region QTypPokFamilyVarious
+            questionType = new QuestionType()
+            {
+                Code = Constantes.QTypPokFamilyVarious,
+                Libelle = "Quel sont le ou les évolutions de ce pokémon?",
+                DifficultyID = difficultyEasy.Id,
+                NbAnswers = 4,
+                IsMultipleAnswers = true
+            };
+            await CreateAsync(questionType);
+            #endregion
+
+            #region QTypPokTypVarious
+            questionType = new QuestionType()
+            {
+                Code = Constantes.QTypPokTypVarious,
+                Libelle = "Quel sont le ou les pokémons de ce type?",
                 DifficultyID = difficultyEasy.Id,
                 NbAnswers = 4,
                 IsMultipleAnswers = true
@@ -414,11 +438,35 @@ namespace QuizzPokedex.Services
             await CreateAsync(questionType);
             #endregion
 
-            #region QTypTalentPokVarious
+            #region QTypPokTalentVarious
             questionType = new QuestionType()
             {
-                Code = Constantes.QTypTalentPokVarious,
+                Code = Constantes.QTypPokTalentVarious,
                 Libelle = "Quel sont le ou les talents de ce pokémon?",
+                DifficultyID = difficultyNormal.Id,
+                NbAnswers = 8,
+                IsMultipleAnswers = true
+            };
+            await CreateAsync(questionType);
+            #endregion
+
+            #region QTypPokFamilyVarious
+            questionType = new QuestionType()
+            {
+                Code = Constantes.QTypPokFamilyVarious,
+                Libelle = "Quel sont le ou les évolutions de ce pokémon?",
+                DifficultyID = difficultyNormal.Id,
+                NbAnswers = 8,
+                IsMultipleAnswers = true
+            };
+            await CreateAsync(questionType);
+            #endregion
+
+            #region QTypPokTypVarious
+            questionType = new QuestionType()
+            {
+                Code = Constantes.QTypPokTypVarious,
+                Libelle = "Quel sont le ou les pokémons de ce type?",
                 DifficultyID = difficultyNormal.Id,
                 NbAnswers = 8,
                 IsMultipleAnswers = true
@@ -690,11 +738,35 @@ namespace QuizzPokedex.Services
             await CreateAsync(questionType);
             #endregion
 
-            #region QTypTalentPokVarious
+            #region QTypPokTalentVarious
             questionType = new QuestionType()
             {
-                Code = Constantes.QTypTalentPokVarious,
+                Code = Constantes.QTypPokTalentVarious,
                 Libelle = "Quel sont le ou les talents de ce pokémon?",
+                DifficultyID = difficultyHard.Id,
+                NbAnswers = 12,
+                IsMultipleAnswers = true
+            };
+            await CreateAsync(questionType);
+            #endregion
+
+            #region QTypPokFamilyVarious
+            questionType = new QuestionType()
+            {
+                Code = Constantes.QTypPokFamilyVarious,
+                Libelle = "Quel sont le ou les évolutions de ce pokémon?",
+                DifficultyID = difficultyHard.Id,
+                NbAnswers = 12,
+                IsMultipleAnswers = true
+            };
+            await CreateAsync(questionType);
+            #endregion
+
+            #region QTypPokTypVarious
+            questionType = new QuestionType()
+            {
+                Code = Constantes.QTypPokTypVarious,
+                Libelle = "Quel sont le ou les pokémons de ce type?",
                 DifficultyID = difficultyHard.Id,
                 NbAnswers = 12,
                 IsMultipleAnswers = true
@@ -748,26 +820,127 @@ namespace QuizzPokedex.Services
         private async Task<QuestionType> GetQuestionTypeRandomBySelectedDifficulty(List<QuestionType> resultFilterDifficulty, bool easy, bool normal, bool hard)
         {
             List<QuestionType> questionTypes = new List<QuestionType>();
+            QuestionType questionTypeSelected = new QuestionType();
+            List<string> DifficultSelected = new List<string>();
 
+            Random random = new Random();
+
+            if (easy)
+                DifficultSelected.Add(Constantes.EasyTQ);
+            if (normal)
+                DifficultSelected.Add(Constantes.NormalTQ);
+            if (hard)
+                DifficultSelected.Add(Constantes.HardTQ);
+
+            if (DifficultSelected.Count.Equals(1))
+            {
+                if(easy)
+                    questionTypeSelected = await GetQuestionTypeRandomByEasyDifficulty(resultFilterDifficulty);
+                else if (normal)
+                    questionTypeSelected = await GetQuestionTypeRandomByNormalDifficulty(resultFilterDifficulty);
+                else if (hard)
+                    questionTypeSelected = await GetQuestionTypeRandomByHardDifficulty(resultFilterDifficulty);
+            }
+            else
+            {
+                int difficultyRandom = random.Next(DifficultSelected.Count);
+                if(DifficultSelected[difficultyRandom].Equals(Constantes.EasyTQ))
+                    questionTypeSelected = await GetQuestionTypeRandomByEasyDifficulty(resultFilterDifficulty);
+                else if (DifficultSelected[difficultyRandom].Equals(Constantes.NormalTQ))
+                    questionTypeSelected = await GetQuestionTypeRandomByNormalDifficulty(resultFilterDifficulty);
+                else if (DifficultSelected[difficultyRandom].Equals(Constantes.HardTQ))
+                    questionTypeSelected = await GetQuestionTypeRandomByHardDifficulty(resultFilterDifficulty);
+            }
+
+
+            //Random random = new Random();
+            //int numberRandom = random.Next(100);
+
+            ////If Question Type => Type // 10%
+            //if (numberRandom <= 3)
+            //    questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypPokStat));
+            //if (numberRandom <= 6)
+            //    questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypTyp));
+            //else if (numberRandom <= 9)
+            //    questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypTalent) || m.Code.Equals(Constantes.QTypTalentReverse) || m.Code.Equals(Constantes.QTypPokTalentVarious));
+            //else if (numberRandom <= 12)
+            //    questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypPokDesc) || m.Code.Equals(Constantes.QTypPokDescReverse));
+            //else if (numberRandom <= 15)
+            //    questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypPokFamilyVarious) || m.Code.Equals(Constantes.QTypPokTypVarious));
+            //else if (numberRandom <= 20)
+            //    questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypTypPok) || m.Code.Equals(Constantes.QTypTypPokVarious) || m.Code.Equals(Constantes.QTypWeakPokVarious));
+            //else
+            //    questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypPok) || m.Code.Equals(Constantes.QTypPokBlurred) || m.Code.Equals(Constantes.QTypPokBlack));
+
+            return await Task.FromResult(questionTypeSelected);
+        }
+
+        private async Task<QuestionType> GetQuestionTypeRandomByEasyDifficulty(List<QuestionType> resultFilterDifficulty)
+        {
+            List<QuestionType> questionTypes = new List<QuestionType>();
             Random random = new Random();
             int numberRandom = random.Next(100);
 
-            //If Question Type => Type // 10%
+            if (numberRandom <= 3)
+                questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypTyp));
+            else if (numberRandom <= 6)
+                questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypTalent) || m.Code.Equals(Constantes.QTypTalentReverse));
+            else if (numberRandom <= 9)
+                questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypPokDesc) || m.Code.Equals(Constantes.QTypPokDescReverse));
+            else if (numberRandom <= 12)
+                questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypPokFamilyVarious));
+            else if (numberRandom <= 15)
+                questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypTypPok));
+            else
+                questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypPok));
+
+            int numberTypeQuestion = random.Next(questionTypes.Count);
+            return await Task.FromResult(questionTypes[numberTypeQuestion]);
+        }
+
+        private async Task<QuestionType> GetQuestionTypeRandomByNormalDifficulty(List<QuestionType> resultFilterDifficulty)
+        {
+            List<QuestionType> questionTypes = new List<QuestionType>();
+            Random random = new Random();
+            int numberRandom = random.Next(100);
+
+            if (numberRandom <= 3)
+                questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypTyp));
+            else if (numberRandom <= 6)
+                questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypTalent) || m.Code.Equals(Constantes.QTypTalentReverse) || m.Code.Equals(Constantes.QTypPokTalentVarious));
+            else if (numberRandom <= 9)
+                questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypPokDesc) || m.Code.Equals(Constantes.QTypPokDescReverse));
+            else if (numberRandom <= 12)
+                questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypPokFamilyVarious) || m.Code.Equals(Constantes.QTypPokTypVarious));
+            else if (numberRandom <= 15)
+                questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypTypPok) || m.Code.Equals(Constantes.QTypTypPokVarious));
+            else
+                questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypPok) || m.Code.Equals(Constantes.QTypPokBlurred));
+
+            int numberTypeQuestion = random.Next(questionTypes.Count);
+            return await Task.FromResult(questionTypes[numberTypeQuestion]);
+        }
+
+        private async Task<QuestionType> GetQuestionTypeRandomByHardDifficulty(List<QuestionType> resultFilterDifficulty)
+        {
+            List<QuestionType> questionTypes = new List<QuestionType>();
+            Random random = new Random();
+            int numberRandom = random.Next(100);
+
             if (numberRandom <= 3)
                 questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypPokStat));
             if (numberRandom <= 6)
                 questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypTyp));
             else if (numberRandom <= 9)
-                questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypTalent) || m.Code.Equals(Constantes.QTypTalentReverse) || m.Code.Equals(Constantes.QTypTalentPokVarious));
+                questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypTalent) || m.Code.Equals(Constantes.QTypTalentReverse) || m.Code.Equals(Constantes.QTypPokTalentVarious));
             else if (numberRandom <= 12)
                 questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypPokDesc) || m.Code.Equals(Constantes.QTypPokDescReverse));
+            else if (numberRandom <= 15)
+                questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypPokFamilyVarious) || m.Code.Equals(Constantes.QTypPokTypVarious));
             else if (numberRandom <= 20)
                 questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypTypPok) || m.Code.Equals(Constantes.QTypTypPokVarious) || m.Code.Equals(Constantes.QTypWeakPokVarious));
             else
                 questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypPok) || m.Code.Equals(Constantes.QTypPokBlurred) || m.Code.Equals(Constantes.QTypPokBlack));
-
-            //questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypTalentPokVarious) || m.Code.Equals(Constantes.QTypTypPokVarious) || m.Code.Equals(Constantes.QTypWeakPokVarious));
-            //QTypPokFamily = "PokemonFamily";
 
             int numberTypeQuestion = random.Next(questionTypes.Count);
             return await Task.FromResult(questionTypes[numberTypeQuestion]);

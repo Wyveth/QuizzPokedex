@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace QuizzPokedex.ViewModels
 {
-    public class QTypPokFamilyVariousQuizzViewModel : MvxViewModel<QuestionAnswers>
+    public class QTypPokTypVariousQuizzViewModel : MvxViewModel<QuestionAnswers>
     {
         #region Field
         private readonly IMvxNavigationService _navigation;
@@ -28,7 +28,7 @@ namespace QuizzPokedex.ViewModels
         #endregion
 
         #region Constructor
-        public QTypPokFamilyVariousQuizzViewModel(IMvxNavigationService navigation, IMvxIoCProvider logger, IQuizzService quizzService, IPokemonService pokemonService, IQuestionService questionService, IDifficultyService difficultyService, IAnswerService answerService, IQuestionTypeService questionTypeService, ITypePokService typePokService, IMvxMessenger messenger)
+        public QTypPokTypVariousQuizzViewModel(IMvxNavigationService navigation, IMvxIoCProvider logger, IQuizzService quizzService, IPokemonService pokemonService, IQuestionService questionService, IDifficultyService difficultyService, IAnswerService answerService, IQuestionTypeService questionTypeService, ITypePokService typePokService, IMvxMessenger messenger)
         {
             _navigation = navigation;
             _logger = logger;
@@ -84,11 +84,9 @@ namespace QuizzPokedex.ViewModels
             Transformations = await Utils.GetTransformationImage(QuestionType);
             Delay = await Utils.GetTransformationImageDelay(QuestionType);
 
-            Pokemon = await _pokemonService.GetByIdAsync(QuestionAnswers.Question.DataObjectID);
+            TypePok = await _typePokService.GetByIdAsync(QuestionAnswers.Question.DataObjectID);
             
-            FormatLibelleQuestion = new string[] { Pokemon.Name };
-
-            TypePok = await _typePokService.GetTypeRandom();
+            FormatLibelleQuestion = new string[] { TypePok.Name };
 
             Difficulty difficulty = await _difficultyService.GetByIdAsync(QuestionType.DifficultyID);
             DifficultyByte = await Utils.GetBytesDifficulty(difficulty);

@@ -12,9 +12,9 @@ using Xamarin.Forms.Xaml;
 namespace QuizzPokedex.UI.Views
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class QTypPokTalentVariousQuizzView : MvxContentPage<QTypPokTalentVariousQuizzViewModel>
+	public partial class QTypPokFamilyVariousQuizzView : MvxContentPage<QTypPokFamilyVariousQuizzViewModel>
 	{
-		public QTypPokTalentVariousQuizzView()
+		public QTypPokFamilyVariousQuizzView()
 		{
 			InitializeComponent ();
 		}

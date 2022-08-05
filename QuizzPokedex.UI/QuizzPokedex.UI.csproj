@@ -35,7 +35,11 @@
 		  <SubType>Designer</SubType>
 		  <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
 		</EmbeddedResource>
-		<EmbeddedResource Update="Views\QTypTalentPokVariousQuizzView.xaml">
+		<EmbeddedResource Update="Views\QTypPokFamilyVariousQuizzView.xaml">
+		  <SubType>Designer</SubType>
+		  <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Views\QTypPokTalentVariousQuizzView.xaml">
 		  <SubType>Designer</SubType>
 		  <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
 		</EmbeddedResource>
@@ -86,9 +90,16 @@
 	  <Compile Update="Views\ProfilesView.xaml.cs">
 	    <DependentUpon>ProfilesView.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Views\QTypPokTypVariousQuizzView.xaml.cs">
+	    <DependentUpon>QTypPokTypVariousQuizzView.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Views\QTypPokStatQuizzView.xaml.cs">
 	    <SubType>Code</SubType>
 	    <DependentUpon>QTypPokStatQuizzView.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\QTypPokFamilyVariousQuizzView.xaml.cs">
+	    <SubType>Code</SubType>
+	    <DependentUpon>QTypPokFamilyVariousQuizzView.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="Views\QTypTalentQuizzView.xaml.cs">
 	    <DependentUpon>QTypTalentQuizzView.xaml</DependentUpon>
@@ -96,9 +107,9 @@
 	  <Compile Update="Views\QTypPokDescReverseQuizzView.xaml.cs">
 	    <DependentUpon>QTypPokDescReverseQuizzView.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="Views\QTypTalentPokVariousQuizzView.xaml.cs">
+	  <Compile Update="Views\QTypPokTalentVariousQuizzView.xaml.cs">
 	    <SubType>Code</SubType>
-	    <DependentUpon>QTypTalentPokVariousQuizzView.xaml</DependentUpon>
+	    <DependentUpon>QTypPokTalentVariousQuizzView.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="Views\QTypWeakPokVariousQuizzView.xaml.cs">
 	    <SubType>Code</SubType>

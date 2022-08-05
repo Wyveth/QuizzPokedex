@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 <views:MvxContentPage
-    x:Class="QuizzPokedex.UI.Views.QTypPokTalentVariousQuizzView"
+    x:Class="QuizzPokedex.UI.Views.QTypPokTypVariousQuizzView"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:shadows="http://sharpnado.com"
@@ -11,7 +11,7 @@
     xmlns:converters="clr-namespace:QuizzPokedex.UI.Converters"
     xmlns:viewmodel="clr-namespace:QuizzPokedex.ViewModels;assembly=QuizzPokedex"
     xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
-    x:TypeArguments="viewmodel:QTypPokTalentVariousQuizzViewModel"
+    x:TypeArguments="viewmodel:QTypPokTypVariousQuizzViewModel"
     BackgroundColor="White"
     NavigationPage.HasNavigationBar="False">
 
@@ -60,13 +60,7 @@
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <StackLayout Grid.Row="0" Grid.ColumnSpan="4">
-                        <forms:CachedImage
-                            HorizontalOptions="Center"
-                            LoadingDelay="{Binding Delay}"
-                            LoadingPriority="Highest"
-                            Source="{Binding Pokemon.DataImg, Converter={StaticResource ByteToImageSourceConverter}}"
-                            Transformations="{Binding Transformations}"
-                            VerticalOptions="Center" />
+                        <Image HeightRequest="90" VerticalOptions="CenterAndExpand" Source="{Binding TypePok.DataAutoHome, Converter={StaticResource ByteToImageSourceConverter}}" />
                     </StackLayout>
                     <StackLayout
                         Grid.Row="1"
@@ -97,7 +91,7 @@
                                     xct:ShadowEffect.Color="#464C56"
                                     xct:ShadowEffect.OffsetY="10"
                                     xct:ShadowEffect.Opacity="0.5"
-                                    Text="{Binding FormatLibelleQuestion, Converter={StaticResource StringArrayConverter}, ConverterParameter='Quel sont le ou les talents de {0}?'}"
+                                    Text="{Binding FormatLibelleQuestion, Converter={StaticResource StringArrayConverter}, ConverterParameter='Quel sont le ou les pokémons de type {0}?'}"
                                     TextColor="White" />
                             </pv:PancakeView>
                         </shadows:Shadows>

@@ -83,7 +83,9 @@ namespace QuizzPokedex.Services
             if (questionType.Code.Equals(Constantes.QTypPok)
                 || questionType.Code.Equals(Constantes.QTypPokBlurred)
                 || questionType.Code.Equals(Constantes.QTypPokBlack)
-                || questionType.Code.Equals(Constantes.QTypPokDescReverse))
+                || questionType.Code.Equals(Constantes.QTypPokDescReverse)
+                || questionType.Code.Equals(Constantes.QTypPokFamilyVarious)
+                || questionType.Code.Equals(Constantes.QTypPokTypVarious))
             {
                 List<Pokemon> pokemons = new List<Pokemon>();
                 foreach (Answer item in answers)
@@ -139,7 +141,7 @@ namespace QuizzPokedex.Services
             }
             else if (questionType.Code.Equals(Constantes.QTypTalent) 
                 || questionType.Code.Equals(Constantes.QTypTalentReverse)
-                || questionType.Code.Equals(Constantes.QTypTalentPokVarious))
+                || questionType.Code.Equals(Constantes.QTypPokTalentVarious))
             {
                 List<Talent> talents = new List<Talent>();
                 foreach (Answer item in answers)
@@ -156,7 +158,7 @@ namespace QuizzPokedex.Services
 
                 if (questionType.Code.Equals(Constantes.QTypTalent))
                     answers = await GenerateAnswers(questionType, talents, answers);
-                else if (questionType.Code.Equals(Constantes.QTypTalentReverse) || questionType.Code.Equals(Constantes.QTypTalentPokVarious))
+                else if (questionType.Code.Equals(Constantes.QTypTalentReverse) || questionType.Code.Equals(Constantes.QTypPokTalentVarious))
                     answers = await GenerateAnswers(questionType, talents, answers, true);
             }
             else if (questionType.Code.Equals(Constantes.QTypPokStat))

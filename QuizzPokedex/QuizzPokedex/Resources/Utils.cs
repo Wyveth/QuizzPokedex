@@ -95,6 +95,10 @@ namespace QuizzPokedex.Resources
                     await _navigation.Navigate<QTypPokDescQuizzViewModel, QuestionAnswers>(questionAnswers);
                 else if (questionType.Code.Equals(Constantes.QTypPokDescReverse))
                     await _navigation.Navigate<QTypPokDescReverseQuizzViewModel, QuestionAnswers>(questionAnswers);
+                else if (questionType.Code.Equals(Constantes.QTypPokFamilyVarious))
+                    await _navigation.Navigate<QTypPokFamilyVariousQuizzViewModel, QuestionAnswers>(questionAnswers);
+                else if (questionType.Code.Equals(Constantes.QTypPokTypVarious))
+                    await _navigation.Navigate<QTypPokTypVariousQuizzViewModel, QuestionAnswers>(questionAnswers);
                 else if (questionType.Code.Equals(Constantes.QTypTalent) || questionType.Code.Equals(Constantes.QTypTalentReverse))
                     await _navigation.Navigate<QTypTalentQuizzViewModel, QuestionAnswers>(questionAnswers);
                 else if (questionType.Code.Equals(Constantes.QTypTypPok))
@@ -103,8 +107,8 @@ namespace QuizzPokedex.Resources
                     await _navigation.Navigate<QTypTypPokVariousQuizzViewModel, QuestionAnswers>(questionAnswers);
                 else if (questionType.Code.Equals(Constantes.QTypWeakPokVarious))
                     await _navigation.Navigate<QTypWeakPokVariousQuizzViewModel, QuestionAnswers>(questionAnswers);
-                else if (questionType.Code.Equals(Constantes.QTypTalentPokVarious))
-                    await _navigation.Navigate<QTypTalentPokVariousQuizzViewModel, QuestionAnswers>(questionAnswers);
+                else if (questionType.Code.Equals(Constantes.QTypPokTalentVarious))
+                    await _navigation.Navigate<QTypPokTalentVariousQuizzViewModel, QuestionAnswers>(questionAnswers);
                 else if (questionType.Code.Equals(Constantes.QTypTyp))
                     await _navigation.Navigate<QTypTypQuizzViewModel, QuestionAnswers>(questionAnswers);
                 else if (questionType.Code.Equals(Constantes.QTypPokStat))

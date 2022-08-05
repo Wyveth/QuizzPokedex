@@ -454,6 +454,7 @@ namespace QuizzPokedex.Services
 
             return await Task.FromResult(resultFilterGen[numberRandom]);
         }
+
         public async Task<Pokemon> GetPokemonRandom(bool gen1, bool gen2, bool gen3, bool gen4, bool gen5, bool gen6, bool gen7, bool gen8, bool genArceus, List<Pokemon> alreadySelected)
         {
             List<Pokemon> result = await GetAllAsync();
@@ -467,6 +468,28 @@ namespace QuizzPokedex.Services
             {
                 numberRandom = random.Next(resultFilterGen.Count);
                 pokemon = alreadySelected.Find(m => m.Id.Equals(resultFilterGen[numberRandom].Id));
+            }
+
+            return await Task.FromResult(resultFilterGen[numberRandom]);
+        }
+
+        public async Task<Pokemon> GetPokemonRandom(bool gen1, bool gen2, bool gen3, bool gen4, bool gen5, bool gen6, bool gen7, bool gen8, bool genArceus, TypePok typePok, List<Pokemon> alreadySelected)
+        {
+            List<Pokemon> result = await GetAllAsync();
+            List<Pokemon> resultFilterGen = await GetPokemonsWithFilterGen(result, gen1, gen2, gen3, gen4, gen5, gen6, gen7, gen8, genArceus);
+            resultFilterGen = resultFilterGen.FindAll(m => m.Types.Contains(typePok.Name));
+
+            Random random = new Random();
+            int numberRandom = random.Next(resultFilterGen.Count);
+            Pokemon pokemon = alreadySelected.Find(m => m.Id.Equals(resultFilterGen[numberRandom].Id));
+
+            while (pokemon != null)
+            {
+                numberRandom = random.Next(resultFilterGen.Count);
+                pokemon = alreadySelected.Find(m => m.Id.Equals(resultFilterGen[numberRandom].Id));
+
+                if (alreadySelected.Count.Equals(resultFilterGen.Count))
+                    break;
             }
 
             return await Task.FromResult(resultFilterGen[numberRandom]);

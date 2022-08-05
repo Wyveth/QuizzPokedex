@@ -26,6 +26,8 @@ namespace QuizzPokedex.Models
         public bool IsQTypTalent { get; set; }     
         public bool IsQTypTypPokVarious { get; set; }
         public bool IsQTypWeakPokVarious { get; set; }
-        public bool IsQTypTalentPokVarious { get; set; }
+        public bool IsQTypPokTalentVarious { get; set; }
+        public bool IsQTypPokFamilyVarious { get; set; }
+        public bool IsQTypPokTypVarious { get; set; }
     }
 }

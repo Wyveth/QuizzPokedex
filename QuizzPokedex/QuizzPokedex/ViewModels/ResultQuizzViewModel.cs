@@ -201,12 +201,24 @@ namespace QuizzPokedex.ViewModels
             }
             else
             {
-                if (questionType.Code.Equals(Constantes.QTypPokFamily)){
+                if (questionType.Code.Equals(Constantes.QTypPokFamilyVarious)){
+                    ResetIsVisible();
+                    IsVisiblePokFamilyVarious = true;
 
+                    pokemon = await _pokemonService.GetByIdAsync(question.DataObjectID);
+                    typePok = await _typePokService.GetByIdAsync(int.Parse(pokemon.TypesID.Split(',')[0]));
+
+                    FormatLibelleQuestion = new string[] { pokemon.Name };
                 }
-                else if(questionType.Code.Equals(Constantes.QTypPokTyp))
+                else if(questionType.Code.Equals(Constantes.QTypPokTypVarious))
                 {
+                    ResetIsVisible();
+                    IsVisiblePokTypVarious = true;
 
+                    typePok = await _typePokService.GetByIdAsync(question.DataObjectID);
+                    typePokByte = typePok.DataAutoHome;
+
+                    FormatLibelleQuestion = new string[] { typePok.Name };
                 }
                 else if (questionType.Code.Equals(Constantes.QTypTypPokVarious))
                 {
@@ -228,7 +240,7 @@ namespace QuizzPokedex.ViewModels
 
                     FormatLibelleQuestion = new string[] { pokemon.Name };
                 }
-                else if (questionType.Code.Equals(Constantes.QTypTalentPokVarious))
+                else if (questionType.Code.Equals(Constantes.QTypPokTalentVarious))
                 {
                     ResetIsVisible();
                     IsVisibleTalentPokVarious = true;
@@ -265,7 +277,9 @@ namespace QuizzPokedex.ViewModels
                 IsQTypTalent = IsVisibleTalent,
                 IsQTypTypPokVarious = IsVisibleTypPokVarious,
                 IsQTypWeakPokVarious = IsVisibleWeakPokVarious,
-                IsQTypTalentPokVarious = IsVisibleTalentPokVarious,
+                IsQTypPokTalentVarious = IsVisibleTalentPokVarious,
+                IsQTypPokFamilyVarious = IsVisiblePokFamilyVarious,
+                IsQTypPokTypVarious = IsVisiblePokTypVarious,
                 ByteResult = byteResult,
                 FormatLibelleQuestion = FormatLibelleQuestion
             };
@@ -288,6 +302,8 @@ namespace QuizzPokedex.ViewModels
             IsVisibleTypPokVarious = false;
             IsVisibleWeakPokVarious = false;
             IsVisibleTalentPokVarious = false;
+            IsVisiblePokFamilyVarious = false;
+            IsVisiblePokTypVarious = false;
             #endregion
         }
 
@@ -385,8 +401,12 @@ namespace QuizzPokedex.ViewModels
             }
             else
             {
-                if (questionType.Code.Equals(Constantes.QTypTalentPokVarious))
+                if (questionType.Code.Equals(Constantes.QTypPokTalentVarious))
                     libelle = "Ce pokémon n'a pas de talent!";
+                else if (questionType.Code.Equals(Constantes.QTypPokFamilyVarious))
+                    libelle = "Ce pokémon n'a pas d'évolution!";
+                else if (questionType.Code.Equals(Constantes.QTypPokTypVarious))
+                    libelle = "Il n'y avait pas de pokémon de ce type!";
             }
 
             return await Task.FromResult(libelle);
@@ -541,14 +561,6 @@ namespace QuizzPokedex.ViewModels
         #endregion
 
         #region Multiple Answer
-        //private bool _isVisibleFamily = false;
-
-        //public bool IsVisibleFamily
-        //{
-        //    get { return _isVisibleFamily; }
-        //    set { SetProperty(ref _isVisibleFamily, value); }
-        //}
-
         private bool _isVisibleTypPokVarious = false;
 
         public bool IsVisibleTypPokVarious
@@ -571,6 +583,22 @@ namespace QuizzPokedex.ViewModels
         {
             get { return _isVisibleTalentPokVarious; }
             set { SetProperty(ref _isVisibleTalentPokVarious, value); }
+        }
+
+        private bool _isVisiblePokFamilyVarious = false;
+
+        public bool IsVisiblePokFamilyVarious
+        {
+            get { return _isVisiblePokFamilyVarious; }
+            set { SetProperty(ref _isVisiblePokFamilyVarious, value); }
+        }
+
+        private bool _isVisiblePokTypVarious = false;
+
+        public bool IsVisiblePokTypVarious
+        {
+            get { return _isVisiblePokTypVarious; }
+            set { SetProperty(ref _isVisiblePokTypVarious, value); }
         }
         #endregion
         #endregion
