@@ -852,26 +852,6 @@ namespace QuizzPokedex.Services
                     questionTypeSelected = await GetQuestionTypeRandomByHardDifficulty(resultFilterDifficulty);
             }
 
-
-            //Random random = new Random();
-            //int numberRandom = random.Next(100);
-
-            ////If Question Type => Type // 10%
-            //if (numberRandom <= 3)
-            //    questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypPokStat));
-            //if (numberRandom <= 6)
-            //    questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypTyp));
-            //else if (numberRandom <= 9)
-            //    questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypTalent) || m.Code.Equals(Constantes.QTypTalentReverse) || m.Code.Equals(Constantes.QTypPokTalentVarious));
-            //else if (numberRandom <= 12)
-            //    questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypPokDesc) || m.Code.Equals(Constantes.QTypPokDescReverse));
-            //else if (numberRandom <= 15)
-            //    questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypPokFamilyVarious) || m.Code.Equals(Constantes.QTypPokTypVarious));
-            //else if (numberRandom <= 20)
-            //    questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypTypPok) || m.Code.Equals(Constantes.QTypTypPokVarious) || m.Code.Equals(Constantes.QTypWeakPokVarious));
-            //else
-            //    questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypPok) || m.Code.Equals(Constantes.QTypPokBlurred) || m.Code.Equals(Constantes.QTypPokBlack));
-
             return await Task.FromResult(questionTypeSelected);
         }
 

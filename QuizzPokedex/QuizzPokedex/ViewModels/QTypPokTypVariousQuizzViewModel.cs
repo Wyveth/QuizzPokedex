@@ -390,7 +390,7 @@ namespace QuizzPokedex.ViewModels
 
         private void GetSelectedAnswers()
         {
-            if (EasyQ)
+            if (EasyQ || NormalQ || HardQ)
             {
                 if (Answer1.IsSelected)
                     SelectedAnswers.Add(Answer1);
@@ -405,7 +405,7 @@ namespace QuizzPokedex.ViewModels
                     SelectedAnswers.Add(Answer4);
             }
 
-            if (NormalQ)
+            if (NormalQ || HardQ)
             {
                 if (Answer5.IsSelected)
                     SelectedAnswers.Add(Answer5);

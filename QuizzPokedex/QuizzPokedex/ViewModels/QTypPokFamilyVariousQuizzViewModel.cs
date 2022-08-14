@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace QuizzPokedex.ViewModels
 {
-    public class QTypPokTalentVariousQuizzViewModel : MvxViewModel<QuestionAnswers>
+    public class QTypPokFamilyVariousQuizzViewModel : MvxViewModel<QuestionAnswers>
     {
         #region Field
         private readonly IMvxNavigationService _navigation;
@@ -28,7 +28,7 @@ namespace QuizzPokedex.ViewModels
         #endregion
 
         #region Constructor
-        public QTypPokTalentVariousQuizzViewModel(IMvxNavigationService navigation, IMvxIoCProvider logger, IQuizzService quizzService, IPokemonService pokemonService, IQuestionService questionService, IDifficultyService difficultyService, IAnswerService answerService, IQuestionTypeService questionTypeService, ITypePokService typePokService, IMvxMessenger messenger)
+        public QTypPokFamilyVariousQuizzViewModel(IMvxNavigationService navigation, IMvxIoCProvider logger, IQuizzService quizzService, IPokemonService pokemonService, IQuestionService questionService, IDifficultyService difficultyService, IAnswerService answerService, IQuestionTypeService questionTypeService, ITypePokService typePokService, IMvxMessenger messenger)
         {
             _navigation = navigation;
             _logger = logger;
@@ -392,7 +392,7 @@ namespace QuizzPokedex.ViewModels
 
         private void GetSelectedAnswers()
         {
-            if (EasyQ)
+            if (EasyQ || NormalQ || HardQ)
             {
                 if (Answer1.IsSelected)
                     SelectedAnswers.Add(Answer1);
@@ -407,7 +407,7 @@ namespace QuizzPokedex.ViewModels
                     SelectedAnswers.Add(Answer4);
             }
 
-            if (NormalQ)
+            if (NormalQ || HardQ)
             {
                 if (Answer5.IsSelected)
                     SelectedAnswers.Add(Answer5);
