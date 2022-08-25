@@ -70,6 +70,7 @@
                                         FontAttributes="Bold"
                                         FontSize="12"
                                         HorizontalOptions="Center"
+                                        HorizontalTextAlignment="Center"
                                         Text="{Binding Name}"
                                         TextColor="Black"
                                         VerticalOptions="Center" />

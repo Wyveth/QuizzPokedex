@@ -245,7 +245,7 @@
                         </shadows:Shadows>
                     </StackLayout>
                     <StackLayout Margin="0,30,0,0">
-                        <Grid Margin="80,10,80,10">
+                        <Grid Margin="70,10,70,10">
                             <Grid.RowDefinitions>
                                 <RowDefinition />
                                 <RowDefinition />
@@ -492,6 +492,7 @@
                                             xct:ShadowEffect.Opacity="0.5"
                                             FontAttributes="Bold"
                                             HorizontalOptions="CenterAndExpand"
+                                            HorizontalTextAlignment="Center"
                                             Text="{Binding Name}"
                                             TextColor="black" />
                                         <Label
@@ -501,6 +502,7 @@
                                             xct:ShadowEffect.Opacity="0.5"
                                             FontSize="11"
                                             HorizontalOptions="CenterAndExpand"
+                                            HorizontalTextAlignment="Center"
                                             Text="{Binding WhenEvolution}"
                                             TextColor="black" />
                                         <VisualStateManager.VisualStateGroups>
@@ -584,6 +586,7 @@
                                             xct:ShadowEffect.Opacity="0.5"
                                             FontAttributes="Bold"
                                             HorizontalOptions="CenterAndExpand"
+                                            HorizontalTextAlignment="Center"
                                             Text="{Binding Name}"
                                             TextColor="black" />
                                         <Label
@@ -593,6 +596,7 @@
                                             xct:ShadowEffect.Opacity="0.5"
                                             FontSize="11"
                                             HorizontalOptions="CenterAndExpand"
+                                            HorizontalTextAlignment="Center"
                                             Text="{Binding WhenEvolution}"
                                             TextColor="black" />
                                         <VisualStateManager.VisualStateGroups>
@@ -675,6 +679,7 @@
                                             xct:ShadowEffect.Opacity="0.5"
                                             FontAttributes="Bold"
                                             HorizontalOptions="CenterAndExpand"
+                                            HorizontalTextAlignment="Center"
                                             Text="{Binding Name}"
                                             TextColor="black" />
                                         <VisualStateManager.VisualStateGroups>
@@ -757,6 +762,7 @@
                                             xct:ShadowEffect.Opacity="0.5"
                                             FontAttributes="Bold"
                                             HorizontalOptions="CenterAndExpand"
+                                            HorizontalTextAlignment="Center"
                                             Text="{Binding Name}"
                                             TextColor="black" />
                                         <VisualStateManager.VisualStateGroups>
@@ -839,6 +845,7 @@
                                             xct:ShadowEffect.Opacity="0.5"
                                             FontAttributes="Bold"
                                             HorizontalOptions="CenterAndExpand"
+                                            HorizontalTextAlignment="Center"
                                             Text="{Binding Name}"
                                             TextColor="black" />
                                         <VisualStateManager.VisualStateGroups>
@@ -921,6 +928,7 @@
                                             xct:ShadowEffect.Opacity="0.5"
                                             FontAttributes="Bold"
                                             HorizontalOptions="CenterAndExpand"
+                                            HorizontalTextAlignment="Center"
                                             Text="{Binding Name}"
                                             TextColor="black" />
                                         <VisualStateManager.VisualStateGroups>
@@ -1003,6 +1011,7 @@
                                             xct:ShadowEffect.Opacity="0.5"
                                             FontAttributes="Bold"
                                             HorizontalOptions="CenterAndExpand"
+                                            HorizontalTextAlignment="Center"
                                             Text="{Binding Name}"
                                             TextColor="black" />
                                         <VisualStateManager.VisualStateGroups>
@@ -1085,6 +1094,7 @@
                                             xct:ShadowEffect.Opacity="0.5"
                                             FontAttributes="Bold"
                                             HorizontalOptions="CenterAndExpand"
+                                            HorizontalTextAlignment="Center"
                                             Text="{Binding Name}"
                                             TextColor="black" />
                                         <VisualStateManager.VisualStateGroups>
