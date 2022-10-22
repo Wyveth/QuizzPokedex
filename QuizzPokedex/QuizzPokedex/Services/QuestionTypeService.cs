@@ -636,7 +636,7 @@ namespace QuizzPokedex.Services
             questionType = new QuestionType()
             {
                 Code = Constantes.QTypPokStat,
-                Libelle = "Quel est la stat {0} de {1}?",
+                Libelle = "Quel est la stat {0} de ce pokémon?",
                 DifficultyID = difficultyHard.Id,
                 NbAnswers = 12,
                 NbAnswersPossible = 1
@@ -805,6 +805,7 @@ namespace QuizzPokedex.Services
                 difficulty = await _difficultyService.GetByLibelleAsync(Constantes.NormalTQ);
                 resultFilterDifficulty.AddRange(result.FindAll(m => m.DifficultyID.Equals(difficulty.Id)));
             }
+
             if (hard)
             {
                 difficulty = await _difficultyService.GetByLibelleAsync(Constantes.HardTQ);
@@ -819,7 +820,6 @@ namespace QuizzPokedex.Services
 
         private async Task<QuestionType> GetQuestionTypeRandomBySelectedDifficulty(List<QuestionType> resultFilterDifficulty, bool easy, bool normal, bool hard)
         {
-            List<QuestionType> questionTypes = new List<QuestionType>();
             QuestionType questionTypeSelected = new QuestionType();
             List<string> DifficultSelected = new List<string>();
 
@@ -857,7 +857,7 @@ namespace QuizzPokedex.Services
 
         private async Task<QuestionType> GetQuestionTypeRandomByEasyDifficulty(List<QuestionType> resultFilterDifficulty)
         {
-            List<QuestionType> questionTypes = new List<QuestionType>();
+            List<QuestionType> questionTypes;
             Random random = new Random();
             int numberRandom = random.Next(100);
 
@@ -880,7 +880,7 @@ namespace QuizzPokedex.Services
 
         private async Task<QuestionType> GetQuestionTypeRandomByNormalDifficulty(List<QuestionType> resultFilterDifficulty)
         {
-            List<QuestionType> questionTypes = new List<QuestionType>();
+            List<QuestionType> questionTypes;
             Random random = new Random();
             int numberRandom = random.Next(100);
 
@@ -903,13 +903,13 @@ namespace QuizzPokedex.Services
 
         private async Task<QuestionType> GetQuestionTypeRandomByHardDifficulty(List<QuestionType> resultFilterDifficulty)
         {
-            List<QuestionType> questionTypes = new List<QuestionType>();
+            List<QuestionType> questionTypes;
             Random random = new Random();
             int numberRandom = random.Next(100);
 
             if (numberRandom <= 3)
                 questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypPokStat));
-            if (numberRandom <= 6)
+            else if (numberRandom <= 6)
                 questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypTyp));
             else if (numberRandom <= 9)
                 questionTypes = resultFilterDifficulty.FindAll(m => m.Code.Equals(Constantes.QTypTalent) || m.Code.Equals(Constantes.QTypTalentReverse) || m.Code.Equals(Constantes.QTypPokTalentVarious));

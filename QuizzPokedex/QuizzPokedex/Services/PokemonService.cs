@@ -69,7 +69,7 @@ namespace QuizzPokedex.Services
             IEnumerable<Favorite> favorites = await _database.Table<Favorite>().Where(m => m.ProfileID.Equals(profile.Id)).ToListAsync();
 
             byte[] ImgFavorite = null;
-            if (favorites.Count() > 0)
+            if (favorites.Any())
                 ImgFavorite = await Utils.GetByteAssetImage(Constantes.LoveFull);
 
             foreach (Favorite favorite in favorites)
@@ -83,8 +83,8 @@ namespace QuizzPokedex.Services
             }
 
             List<Pokemon> resultFilter = new List<Pokemon>();
-            List<Pokemon> resultFilterGen = new List<Pokemon>();
-            List<Pokemon> resultFilterType = new List<Pokemon>();
+            List<Pokemon> resultFilterGen;
+            List<Pokemon> resultFilterType;
 
             resultFilterGen = await GetPokemonsWithFilterGen(result, gen1, gen2, gen3, gen4, gen5, gen6, gen7, gen8, genArceus);
 
@@ -160,20 +160,20 @@ namespace QuizzPokedex.Services
             }
             else
             {
-                return result = pokemons.Find(m => m.Name.Contains(libelle.Split(' ')[0]) && m.TypeEvolution.Equals(Constantes.NormalEvolution));
+                return pokemons.Find(m => m.Name.Contains(libelle.Split(' ')[0]) && m.TypeEvolution.Equals(Constantes.NormalEvolution));
             }
         }
         #endregion
 
-        public async Task<int> CreateAsync(Pokemon Pokemon)
+        public async Task<int> CreateAsync(Pokemon pokemon)
         {
-            var result = await _database.InsertAsync(Pokemon);
+            var result = await _database.InsertAsync(pokemon);
             return result;
         }
 
-        public async Task<int> UpdateAsync(Pokemon Pokemon)
+        public async Task<int> UpdateAsync(Pokemon pokemon)
         {
-            var result = await _database.InsertOrReplaceAsync(Pokemon);
+            var result = await _database.InsertOrReplaceAsync(pokemon);
             return result;
         }
 
@@ -346,7 +346,6 @@ namespace QuizzPokedex.Services
             {
                 PokemonJson pokemonJson = pokemonsJson.Find(m => m.Name.Equals(pokemonNoUpdated.Name));
 
-                int i = int.Parse(pokemonJson.Number);
                 try
                 {
                     Pokemon pokemonUpdated = await UpdateEvolutionWithJson(pokemonJson, pokemonNoUpdated);
@@ -372,7 +371,6 @@ namespace QuizzPokedex.Services
 
             PokemonJson pokemonJson = pokemonsJson.Find(m => m.Name.Equals(pokemonNoUpdated.Name));
 
-            int i = int.Parse(pokemonJson.Number);
             try
             {
                 Pokemon pokemonUpdated = await UpdateEvolutionWithJson(pokemonJson, pokemonNoUpdated);
@@ -418,11 +416,11 @@ namespace QuizzPokedex.Services
                 return null;
         }
 
-        public async Task<byte[]> DownloadImageAsync(string imageUrl)
+        public async Task<byte[]> DownloadImageAsync(string UrlImg)
         {
             try
             {
-                using (var httpResponse = await _httpClient.GetAsync(imageUrl))
+                using (var httpResponse = await _httpClient.GetAsync(UrlImg))
                 {
                     if (httpResponse.StatusCode == HttpStatusCode.OK)
                     {
