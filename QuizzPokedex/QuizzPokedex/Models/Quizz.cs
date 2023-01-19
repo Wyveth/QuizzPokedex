@@ -37,6 +37,9 @@ namespace QuizzPokedex.Models
         //Si Filtre Gen 8 Active
         public bool Gen8 { get; set; }
 
+        //Si Filtre Gen 9 Active
+        public bool Gen9 { get; set; }
+
         //Si Filtre Gen Arceus Active
         public bool GenArceus { get; set; }
 

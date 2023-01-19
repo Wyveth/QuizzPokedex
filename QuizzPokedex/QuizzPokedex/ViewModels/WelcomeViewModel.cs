@@ -6,6 +6,7 @@ using QuizzPokedex.Interfaces;
 using QuizzPokedex.Models;
 using QuizzPokedex.Resources;
 using System.Collections.Generic;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace QuizzPokedex.ViewModels
@@ -115,25 +116,27 @@ namespace QuizzPokedex.ViewModels
         private async Task<string> GetTextCreateProgressBar(int nbPokInDb, int nbPokMax)
         {
             string total = nbPokInDb.ToString() + "/" + nbPokMax.ToString();
-            string result = "";
+            StringBuilder result = new StringBuilder();
             if (nbPokInDb <= 211)
-                result = "Création Gen 1: " + total;
+                result.Append("Création Gen 1: " + total);
             else if(nbPokInDb <= 322)
-                result = "Création Gen 2: " + total;
+                result.Append("Création Gen 2: " + total);
             else if (nbPokInDb <= 484)
-                result = "Création Gen 3: " + total;
+                result.Append("Création Gen 3: " + total);
             else if (nbPokInDb <= 613)
-                result = "Création Gen 4: " + total;
+                result.Append("Création Gen 4: " + total);
             else if (nbPokInDb <= 797)
-                result = "Création Gen 5: " + total;
+                result.Append("Création Gen 5: " + total);
             else if (nbPokInDb <= 889)
-                result = "Création Gen 6: " + total;
+                result.Append("Création Gen 6: " + total);
             else if (nbPokInDb <= 989)
-                result = "Création Gen 7: " + total;
+                result.Append("Création Gen 7: " + total);
             else if (nbPokInDb <= 1104)
-                result = "Création Gen 8: " + total;
+                result.Append("Création Gen 8: " + total);
             else if (nbPokInDb <= 1114)
-                result = "Création Gen Arceus: " + total;
+                result.Append("Création Gen Arceus: " + total);
+            else
+                result.Append("Création Gen 9: " + total);
 
             return await Task.FromResult(result);
         }
@@ -141,25 +144,27 @@ namespace QuizzPokedex.ViewModels
         private async Task<string> GetTextCheckProgressBar(int nbPokInDb, int nbPokMax)
         {
             string total = nbPokInDb.ToString() + "/" + nbPokMax.ToString();
-            string result = "";
+            StringBuilder result = new StringBuilder();
             if (nbPokInDb <= 211)
-                result = "Check Gen 1: " + total;
+                result.Append("Check Gen 1: " + total);
             else if (nbPokInDb <= 322)
-                result = "Check Gen 2: " + total;
+                result.Append("Check Gen 2: " + total);
             else if (nbPokInDb <= 484)
-                result = "Check Gen 3: " + total;
+                result.Append("Check Gen 3: " + total);
             else if (nbPokInDb <= 613)
-                result = "Check Gen 4: " + total;
+                result.Append("Check Gen 4: " + total);
             else if (nbPokInDb <= 797)
-                result = "Check Gen 5: " + total;
+                result.Append("Check Gen 5: " + total);
             else if (nbPokInDb <= 889)
-                result = "Check Gen 6: " + total;
+                result.Append("Check Gen 6: " + total);
             else if (nbPokInDb <= 989)
-                result = "Check Gen 7: " + total;
+                result.Append("Check Gen 7: " + total);
             else if (nbPokInDb <= 1104)
-                result = "Check Gen 8: " + total;
+                result.Append("Check Gen 8: " + total);
             else if (nbPokInDb <= 1114)
-                result = "Check Gen Arceus: " + total;
+                result.Append("Check Gen Arceus: " + total);
+            else
+                result.Append("Check Gen 9: " + total;
 
             return await Task.FromResult(result);
         }
