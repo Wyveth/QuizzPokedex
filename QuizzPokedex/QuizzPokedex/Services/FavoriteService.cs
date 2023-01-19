@@ -36,7 +36,7 @@ namespace QuizzPokedex.Services
             return await _database.Table<Favorite>().Where(m => m.ProfileID.Equals(profile.Id) && m.PokemonID.Equals(pokemon.Id)).FirstOrDefaultAsync();
         }
 
-        public async Task<List<Pokemon>> GetAllByProfileAsync(string filter, bool gen1, bool gen2, bool gen3, bool gen4, bool gen5, bool gen6, bool gen7, bool gen8, bool genArceus, bool steel, bool fighting, bool dragon, bool water, bool electric, bool fairy, bool fire, bool ice, bool bug, bool normal, bool grass, bool poison, bool psychic, bool rock, bool ground, bool ghost, bool dark, bool flying, bool descending)
+        public async Task<List<Pokemon>> GetAllByProfileAsync(string filter, bool gen1, bool gen2, bool gen3, bool gen4, bool gen5, bool gen6, bool gen7, bool gen8, bool gen9, bool genArceus, bool steel, bool fighting, bool dragon, bool water, bool electric, bool fairy, bool fire, bool ice, bool bug, bool normal, bool grass, bool poison, bool psychic, bool rock, bool ground, bool ghost, bool dark, bool flying, bool descending)
         {
             Profile profile = await _profileService.GetProfileActivatedAsync();
             IEnumerable<Favorite> favorites = await _database.Table<Favorite>().Where(m => m.ProfileID.Equals(profile.Id)).ToListAsync();
@@ -49,7 +49,7 @@ namespace QuizzPokedex.Services
             List<Pokemon> resultFilterGen = new List<Pokemon>();
             List<Pokemon> resultFilterType = new List<Pokemon>();
 
-            resultFilterGen = await GetPokemonsWithFilterGen(result, gen1, gen2, gen3, gen4, gen5, gen6, gen7, gen8, genArceus);
+            resultFilterGen = await GetPokemonsWithFilterGen(result, gen1, gen2, gen3, gen4, gen5, gen6, gen7, gen8, gen9, genArceus);
 
             resultFilterType = await GetPokemonsWithFilterType(resultFilterGen, steel, fighting, dragon, water, electric, fairy, fire, ice, bug, normal, grass, poison, psychic, rock, ground, ghost, dark, flying);
 
@@ -109,7 +109,7 @@ namespace QuizzPokedex.Services
         #endregion
 
         #region Private Methods
-        private async Task<List<Pokemon>> GetPokemonsWithFilterGen(List<Pokemon> result, bool gen1, bool gen2, bool gen3, bool gen4, bool gen5, bool gen6, bool gen7, bool gen8, bool genArceus)
+        private async Task<List<Pokemon>> GetPokemonsWithFilterGen(List<Pokemon> result, bool gen1, bool gen2, bool gen3, bool gen4, bool gen5, bool gen6, bool gen7, bool gen8, bool gen9, bool genArceus)
         {
             List<Pokemon> resultFilterGen = new List<Pokemon>();
 
@@ -129,6 +129,8 @@ namespace QuizzPokedex.Services
                 resultFilterGen.AddRange(result.FindAll(m => m.Generation.Equals(7)));
             if (gen8)
                 resultFilterGen.AddRange(result.FindAll(m => m.Generation.Equals(8)));
+            if (gen9)
+                resultFilterGen.AddRange(result.FindAll(m => m.Generation.Equals(9)));
             if (genArceus)
                 resultFilterGen.AddRange(result.FindAll(m => m.Generation.Equals(0)));
 

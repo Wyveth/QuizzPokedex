@@ -202,6 +202,7 @@ namespace QuizzPokedex.ViewModels
         public IMvxAsyncCommand FilterByGen6CommandAsync => new MvxAsyncCommand(FilterByGen6Async);
         public IMvxAsyncCommand FilterByGen7CommandAsync => new MvxAsyncCommand(FilterByGen7Async);
         public IMvxAsyncCommand FilterByGen8CommandAsync => new MvxAsyncCommand(FilterByGen8Async);
+        public IMvxAsyncCommand FilterByGen9CommandAsync => new MvxAsyncCommand(FilterByGen9Async);
         public IMvxAsyncCommand FilterByGenArceusCommandAsync => new MvxAsyncCommand(FilterByGenArceusAsync);
         #endregion
 
@@ -258,7 +259,7 @@ namespace QuizzPokedex.ViewModels
 
             Profile profile = await _profileService.GetProfileActivatedAsync();
 
-            Task<Quizz> TaskQuizz = _quizzService.GenerateQuizz(profile, FiltreActiveGen1, FiltreActiveGen2, FiltreActiveGen3, FiltreActiveGen4, FiltreActiveGen5, FiltreActiveGen6, FiltreActiveGen7, FiltreActiveGen8, FiltreActiveGenArceus, Easy, Normal, Hard);
+            Task<Quizz> TaskQuizz = _quizzService.GenerateQuizz(profile, FiltreActiveGen1, FiltreActiveGen2, FiltreActiveGen3, FiltreActiveGen4, FiltreActiveGen5, FiltreActiveGen6, FiltreActiveGen7, FiltreActiveGen8, FiltreActiveGen9, FiltreActiveGenArceus, Easy, Normal, Hard);
             await ProgressCreation();
 
             Quizz quizz = await TaskQuizz;
@@ -443,6 +444,25 @@ namespace QuizzPokedex.ViewModels
                     FiltreActiveGen8 = true;
                     BackgroundColorGen8 = Constantes.BlackHexa;
                     TextColorGen8 = Constantes.WhiteHexa;
+                }
+            });
+        }
+
+        private async Task FilterByGen9Async()
+        {
+            await Task.Run(() =>
+            {
+                if (FiltreActiveGen9)
+                {
+                    FiltreActiveGen9 = false;
+                    BackgroundColorGen9 = Constantes.WhiteHexa;
+                    TextColorGen9 = Constantes.BlackHexa;
+                }
+                else
+                {
+                    FiltreActiveGen9 = true;
+                    BackgroundColorGen9 = Constantes.BlackHexa;
+                    TextColorGen9 = Constantes.WhiteHexa;
                 }
             });
         }
@@ -1073,6 +1093,31 @@ namespace QuizzPokedex.ViewModels
         {
             get { return _textColorGen8; }
             set { SetProperty(ref _textColorGen8, value); }
+        }
+        #endregion
+
+        #region Generation 9
+        private bool _filtreActiveGen9 = false;
+
+        public bool FiltreActiveGen9
+        {
+            get { return _filtreActiveGen9; }
+            set { SetProperty(ref _filtreActiveGen9, value); }
+        }
+
+        private string _backgroundColorGen9 = "#FFFFFF";
+
+        public string BackgroundColorGen9
+        {
+            get { return _backgroundColorGen9; }
+            set { SetProperty(ref _backgroundColorGen9, value); }
+        }
+        private string _textColorGen9 = "#000000";
+
+        public string TextColorGen9
+        {
+            get { return _textColorGen9; }
+            set { SetProperty(ref _textColorGen9, value); }
         }
         #endregion
 

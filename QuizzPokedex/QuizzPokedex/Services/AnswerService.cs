@@ -97,7 +97,7 @@ namespace QuizzPokedex.Services
 
                 for (int i = 0; i < qMissing; i++)
                 {
-                    pokemons.Add(await _pokemonService.GetPokemonRandom(quizz.Gen1, quizz.Gen2, quizz.Gen3, quizz.Gen4, quizz.Gen5, quizz.Gen6, quizz.Gen7, quizz.Gen8, quizz.GenArceus, pokemons));
+                    pokemons.Add(await _pokemonService.GetPokemonRandom(quizz.Gen1, quizz.Gen2, quizz.Gen3, quizz.Gen4, quizz.Gen5, quizz.Gen6, quizz.Gen7, quizz.Gen8, quizz.Gen9, quizz.GenArceus, pokemons));
                 }
 
                 answers = await GenerateAnswers(questionType, pokemons, answers);
@@ -134,7 +134,7 @@ namespace QuizzPokedex.Services
 
                 for (int i = 0; i < qMissing; i++)
                 {
-                    pokemons.Add(await _pokemonService.GetPokemonRandom(quizz.Gen1, quizz.Gen2, quizz.Gen3, quizz.Gen4, quizz.Gen5, quizz.Gen6, quizz.Gen7, quizz.Gen8, quizz.GenArceus, pokemons));
+                    pokemons.Add(await _pokemonService.GetPokemonRandom(quizz.Gen1, quizz.Gen2, quizz.Gen3, quizz.Gen4, quizz.Gen5, quizz.Gen6, quizz.Gen7, quizz.Gen8, quizz.Gen9, quizz.GenArceus, pokemons));
                 }
 
                 answers = await GenerateAnswersDesc(questionType, pokemons, answers);

@@ -138,7 +138,7 @@ namespace QuizzPokedex.ViewModels
             else
                 result.Append("Création Gen 9: " + total);
 
-            return await Task.FromResult(result);
+            return await Task.FromResult(result.ToString());
         }
 
         private async Task<string> GetTextCheckProgressBar(int nbPokInDb, int nbPokMax)
@@ -164,9 +164,9 @@ namespace QuizzPokedex.ViewModels
             else if (nbPokInDb <= 1114)
                 result.Append("Check Gen Arceus: " + total);
             else
-                result.Append("Check Gen 9: " + total;
+                result.Append("Check Gen 9: " + total);
 
-            return await Task.FromResult(result);
+            return await Task.FromResult(result.ToString());
         }
 
         private async Task<double> getPercent(double nbPok, double nbPokMax)

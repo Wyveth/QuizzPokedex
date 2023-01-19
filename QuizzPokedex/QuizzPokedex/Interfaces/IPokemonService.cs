@@ -13,7 +13,7 @@ namespace QuizzPokedex.Interfaces
         Task PopulateUpdateEvolution(List<PokemonJson> pokemonsJson);
         Task<List<Pokemon>> GetAllAsync();
         Task<List<Pokemon>> GetAllStartGen1Async();
-        Task<List<Pokemon>> GetAllWithoutVariantAsync(string filter, bool gen1, bool gen2, bool gen3, bool gen4, bool gen5, bool gen6, bool gen7, bool gen8, bool genArceus, bool steel, bool fighting, bool dragon, bool water, bool electric, bool fairy, bool fire, bool ice, bool bug, bool normal, bool grass, bool poison, bool psychic, bool rock, bool ground, bool ghost, bool dark, bool flying, bool descending);
+        Task<List<Pokemon>> GetAllWithoutVariantAsync(string filter, bool gen1, bool gen2, bool gen3, bool gen4, bool gen5, bool gen6, bool gen7, bool gen8, bool gen9, bool genArceus, bool steel, bool fighting, bool dragon, bool water, bool electric, bool fairy, bool fire, bool ice, bool bug, bool normal, bool grass, bool poison, bool psychic, bool rock, bool ground, bool ghost, bool dark, bool flying, bool descending);
         Task<Pokemon> GetByIdAsync(int id);
         Task<Pokemon> GetByNameAsync(string libelle);
         Task<List<Pokemon>> GetFamilyWithoutVariantAsync(string family);
@@ -27,9 +27,9 @@ namespace QuizzPokedex.Interfaces
         Task<int> GetNumberPokJsonAsync();
         Task<int> GetNumberInDbAsync();
         Task<int> GetNumberPokUpdateAsync();
-        Task<Pokemon> GetPokemonRandom(bool gen1, bool gen2, bool gen3, bool gen4, bool gen5, bool gen6, bool gen7, bool gen8, bool genArceus);
-        Task<Pokemon> GetPokemonRandom(bool gen1, bool gen2, bool gen3, bool gen4, bool gen5, bool gen6, bool gen7, bool gen8, bool genArceus, TypePok typePok, List<Pokemon> alreadySelected);
-        Task<Pokemon> GetPokemonRandom(bool gen1, bool gen2, bool gen3, bool gen4, bool gen5, bool gen6, bool gen7, bool gen8, bool genArceus, List<Pokemon> alreadySelected);
+        Task<Pokemon> GetPokemonRandom(bool gen1, bool gen2, bool gen3, bool gen4, bool gen5, bool gen6, bool gen7, bool gen8, bool gen9, bool genArceus);
+        Task<Pokemon> GetPokemonRandom(bool gen1, bool gen2, bool gen3, bool gen4, bool gen5, bool gen6, bool gen7, bool gen8, bool gen9, bool genArceus, TypePok typePok, List<Pokemon> alreadySelected);
+        Task<Pokemon> GetPokemonRandom(bool gen1, bool gen2, bool gen3, bool gen4, bool gen5, bool gen6, bool gen7, bool gen8, bool gen9, bool genArceus, List<Pokemon> alreadySelected);
         Task<byte[]> DownloadImageAsync(string UrlImg);
     }
 }

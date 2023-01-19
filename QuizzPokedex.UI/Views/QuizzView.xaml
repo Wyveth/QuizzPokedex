@@ -1017,8 +1017,42 @@
                     <shadows:Shadows
                         Grid.Row="5"
                         Grid.Column="0"
-                        Grid.ColumnSpan="2"
-                        Margin="80,5,80,10"
+                        Margin="30,5,10,10"
+                        CornerRadius="15">
+                        <shadows:Shadows.Shades>
+                            <shadows:ImmutableShades>
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.3"
+                                    Offset="-1,-1"
+                                    Color="#464C56" />
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.5"
+                                    Offset="1,1"
+                                    Color="#464C56" />
+                            </shadows:ImmutableShades>
+                        </shadows:Shadows.Shades>
+                        <pv:PancakeView
+                            BackgroundColor="White"
+                            Border="{pv:BorderMarkup Color=Gray,
+                                                     Thickness=0}"
+                            CornerRadius="10">
+                            <Button
+                                Padding="6"
+                                BackgroundColor="{Binding BackgroundColorGen9}"
+                                Command="{Binding FilterByGen9CommandAsync}"
+                                FontAttributes="Bold"
+                                FontSize="11"
+                                Text="Gen 9"
+                                TextColor="{Binding TextColorGen9}"
+                                TextTransform="None" />
+                        </pv:PancakeView>
+                    </shadows:Shadows>
+                    <shadows:Shadows
+                        Grid.Row="5"
+                        Grid.Column="1"
+                        Margin="10,5,30,10"
                         CornerRadius="15">
                         <shadows:Shadows.Shades>
                             <shadows:ImmutableShades>
@@ -1045,7 +1079,7 @@
                                 Command="{Binding FilterByGenArceusCommandAsync}"
                                 FontAttributes="Bold"
                                 FontSize="11"
-                                Text="Gen Arceus"
+                                Text="Arceus"
                                 TextColor="{Binding TextColorGenArceus}"
                                 TextTransform="None" />
                         </pv:PancakeView>
