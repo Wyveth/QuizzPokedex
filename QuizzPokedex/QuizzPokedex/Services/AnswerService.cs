@@ -87,6 +87,8 @@ namespace QuizzPokedex.Services
                 || questionType.Code.Equals(Constantes.QTypPokFamilyVarious)
                 || questionType.Code.Equals(Constantes.QTypPokTypVarious))
             {
+                Console.WriteLine("GenerateAnswers - QTypPok");
+                
                 List<Pokemon> pokemons = new List<Pokemon>();
                 foreach (Answer item in answers)
                 {
@@ -107,6 +109,8 @@ namespace QuizzPokedex.Services
                 || questionType.Code.Equals(Constantes.QTypTypPokVarious)
                 || questionType.Code.Equals(Constantes.QTypWeakPokVarious))
             {
+                Console.WriteLine("GenerateAnswers - QTypTypPok");
+                
                 List<TypePok> typePoks = new List<TypePok>();
                 foreach (Answer item in answers)
                 {
@@ -124,6 +128,8 @@ namespace QuizzPokedex.Services
             }
             else if (questionType.Code.Equals(Constantes.QTypPokDesc))
             {
+                Console.WriteLine("GenerateAnswers - QTypPokDesc");
+                
                 List<Pokemon> pokemons = new List<Pokemon>();
                 foreach (Answer item in answers)
                 {
@@ -143,6 +149,8 @@ namespace QuizzPokedex.Services
                 || questionType.Code.Equals(Constantes.QTypTalentReverse)
                 || questionType.Code.Equals(Constantes.QTypPokTalentVarious))
             {
+                Console.WriteLine("GenerateAnswers - QTypTalent");
+                
                 List<Talent> talents = new List<Talent>();
                 foreach (Answer item in answers)
                 {
@@ -163,6 +171,8 @@ namespace QuizzPokedex.Services
             }
             else if (questionType.Code.Equals(Constantes.QTypPokStat))
             {
+                Console.WriteLine("GenerateAnswers - QTypPokStat");
+                
                 Random random = new Random();
                 List<Pokemon> pokemons = new List<Pokemon>();
                 List<string> statAnswers = new List<string>();

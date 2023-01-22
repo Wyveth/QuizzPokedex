@@ -1,4 +1,5 @@
 ﻿using Android.Content.Res;
+using Java.Lang;
 using Newtonsoft.Json;
 using QuizzPokedex.Interfaces;
 using QuizzPokedex.Models;
@@ -231,9 +232,8 @@ namespace QuizzPokedex.Services
 
                         Debug.Write("Creation:" + pokemon.Number + " - " + pokemon.Name);
 
-                        if (Constantes.IsGenerateDB)
-                            if (pokemon.Number.Equals("721"))
-                                break;
+                        if (Constantes.IsGenerateDB && pokemon.Number.Equals("721"))
+                            break;
                     }
                 }
             }
@@ -263,6 +263,7 @@ namespace QuizzPokedex.Services
             {
                 string[] talentsTab = pokemonJson.Talent.Split(',');
                 string[] descriptionTalentsTab = pokemonJson.DescriptionTalent.Split(';');
+                StringBuilder talentsID = new StringBuilder();
                 foreach (string item in talentsTab)
                 {
                     Talent talent = await _talentService.GetByNameAsync(item);
@@ -274,17 +275,22 @@ namespace QuizzPokedex.Services
 
                     if (i == 0)
                     {
-                        pokemon.TalentsID = talent.Id.ToString();
+                        talentsID.Append(talent.Id.ToString());
                         i++;
                     }
                     else
                     {
-                        pokemon.TalentsID += ',' + talent.Id.ToString();
+                        talentsID.Append(',' + talent.Id.ToString());
                     }
                 }
+
+                pokemon.TalentsID = talentsID.ToString();
             }
 
             string[] typesTab = pokemonJson.Types.Split(',');
+            StringBuilder types = new StringBuilder();
+            StringBuilder typesID = new StringBuilder();
+            
             i = 0;
             foreach (string item in typesTab)
             {
@@ -292,34 +298,43 @@ namespace QuizzPokedex.Services
 
                 if (i == 0)
                 {
-                    pokemon.Types = type.Name.ToString();
-                    pokemon.TypesID = type.Id.ToString();
+                    types.Append(type.Name);
+                    typesID.Append(type.Id.ToString());
                     i++;
                 }
                 else
                 {
-                    pokemon.Types += ',' + type.Name.ToString();
-                    pokemon.TypesID += ',' + type.Id.ToString();
+                    types.Append(',' + type.Name);
+                    typesID.Append(',' + type.Id.ToString());
                 }
             }
 
+            pokemon.Types = types.ToString();
+            pokemon.TypesID = typesID.ToString();
+
             string[] weaknessTab = pokemonJson.Weakness.Split(',');
+            StringBuilder weakness = new StringBuilder();
+            StringBuilder weaknessID = new StringBuilder();
+            
             i = 0;
             foreach (string item in weaknessTab)
             {
                 TypePok type = await _typePokService.GetByNameAsync(item);
                 if (i == 0)
                 {
-                    pokemon.Weakness = type.Name.ToString();
-                    pokemon.WeaknessID = type.Id.ToString();
+                    weakness.Append(type.Name);
+                    weaknessID.Append(type.Id.ToString());
                     i++;
                 }
                 else
                 {
-                    pokemon.Weakness += ',' + type.Name.ToString();
-                    pokemon.WeaknessID += ',' + type.Id.ToString();
+                    weakness.Append(',' + type.Name);
+                    weaknessID.Append(',' + type.Id.ToString());
                 }
             }
+
+            pokemon.Weakness = weakness.ToString();
+            pokemon.WeaknessID = weaknessID.ToString();
 
             pokemon.Evolutions = pokemonJson.Evolutions;
             pokemon.TypeEvolution = pokemonJson.TypeEvolution;
@@ -354,8 +369,7 @@ namespace QuizzPokedex.Services
 
                     Debug.Write("Update: " + pokemonJson.Number + " - " + pokemonJson.Name);
 
-                    if(Constantes.IsGenerateDB)
-                        if (pokemonJson.Number.Equals("721"))
+                    if (Constantes.IsGenerateDB && pokemonJson.Number.Equals("721"))
                         break;
                 }
                 catch
@@ -392,6 +406,7 @@ namespace QuizzPokedex.Services
             if (!string.IsNullOrEmpty(pokemonJson.Evolutions))
             {
                 string[] evolutionsTab = pokemonJson.Evolutions.Split(',');
+                StringBuilder evolution = new StringBuilder();
 
                 int i = 0;
                 foreach (string item in evolutionsTab)
@@ -399,14 +414,16 @@ namespace QuizzPokedex.Services
                     Pokemon pokemon = await GetByNameAsync(item);
                     if (i == 0)
                     {
-                        pokemonUpdate.Evolutions = pokemon.Id.ToString();
+                        evolution.Append(pokemon.Id.ToString());
                         i++;
                     }
                     else
                     {
-                        pokemonUpdate.Evolutions += ',' + pokemon.Id.ToString();
+                        evolution.Append(',' + pokemon.Id.ToString());
                     }
                 }
+
+                pokemonUpdate.Evolutions = evolution.ToString();
 
                 pokemonUpdate.Updated = true;
 
@@ -433,10 +450,10 @@ namespace QuizzPokedex.Services
                     }
                 }
             }
-            catch (Exception e)
+            catch (Java.Lang.Exception e)
             {
                 //Handle Exception
-                throw new Exception(e.Message);
+                throw new Java.Lang.Exception(e.Message);
             }
         }
         #endregion

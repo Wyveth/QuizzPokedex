@@ -4,6 +4,7 @@ using QuizzPokedex.Resources;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -42,10 +43,10 @@ namespace QuizzPokedex.Services
             return result;
         }
 
-        public async Task<List<Question>> GetAllByQuestionsIDAsync(string QuestionsID)
+        public async Task<List<Question>> GetAllByQuestionsIDAsync(string questionsID)
         {
             List<Question> result = new List<Question>();
-            foreach (string item in QuestionsID.Split(','))
+            foreach (string item in questionsID.Split(','))
             {
                 int id = int.Parse(item);
                 result.Add(await GetByIdAsync(id));
@@ -54,10 +55,10 @@ namespace QuizzPokedex.Services
             return await Task.FromResult(result);
         }
 
-        public async Task<int> GetAllByQuestionsIDResumeAsync(string[] QuestionsID)
+        public async Task<int> GetAllByQuestionsIDResumeAsync(string[] questionsID)
         {
             List<Question> result = new List<Question>();
-            foreach (string item in QuestionsID)
+            foreach (string item in questionsID)
             {
                 int id = int.Parse(item);
                 result.Add(await GetByIdAsync(id));
@@ -242,22 +243,22 @@ namespace QuizzPokedex.Services
         #region Private Methods
         private async Task<string> GetQuestionsID(List<Question> questions)
         {
-            string result = string.Empty;
+            StringBuilder result = new StringBuilder();
             int i = 0;
-            foreach (Question question in questions)
+            foreach (int id in questions.Select(m => m.Id))
             {
                 if (i == 0)
                 {
-                    result = question.Id.ToString();
+                    result.Append(id.ToString());
                     i++;
                 }
                 else
                 {
-                    result += ',' + question.Id.ToString();
+                    result.Append(',' + id.ToString());
                 }
             }
 
-            return await Task.FromResult(result);
+            return await Task.FromResult(result.ToString());
         }
 
         private async Task<string> GetAnswersID_QTypPok(QuestionType questionType, bool gen1, bool gen2, bool gen3, bool gen4, bool gen5, bool gen6, bool gen7, bool gen8, bool gen9, bool genArceus, List<Pokemon> alreadyExist)
@@ -281,7 +282,7 @@ namespace QuizzPokedex.Services
                 });
             }
 
-            AnswersID = await _answerService.GenerateCorrectAnswers(questionType, pokemonsAnswer); ;
+            AnswersID = await _answerService.GenerateCorrectAnswers(questionType, pokemonsAnswer);
 
             return await Task.FromResult(AnswersID);
         }
@@ -300,7 +301,7 @@ namespace QuizzPokedex.Services
                 }
             }
 
-            AnswersID = await _answerService.GenerateCorrectAnswers(questionType, pokemonsAnswer); ;
+            AnswersID = await _answerService.GenerateCorrectAnswers(questionType, pokemonsAnswer);
 
             return await Task.FromResult(AnswersID);
         }
@@ -404,7 +405,7 @@ namespace QuizzPokedex.Services
                 });
             }
 
-            AnswersID = await _answerService.GenerateCorrectAnswersDesc(questionType, pokemonsAnswer); ;
+            AnswersID = await _answerService.GenerateCorrectAnswersDesc(questionType, pokemonsAnswer);
 
             return await Task.FromResult(AnswersID);
         }

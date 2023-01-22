@@ -4,7 +4,7 @@ using System.Text;
 
 namespace QuizzPokedex.Resources
 {
-    public class Constantes
+    public static class Constantes
     {
         #region Evolution Type
         public const string MegaEvolution = "Mega";

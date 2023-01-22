@@ -62,12 +62,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="AiForms.Effects" Version="1.6.11" />
+		<PackageReference Include="AiForms.Effects" Version="1.6.13" />
 		<PackageReference Include="Com.Airbnb.Xamarin.Forms.Lottie" Version="4.1.0" />
 		<PackageReference Include="MvvmCross.Forms" Version="8.0.2" />
-		<PackageReference Include="Sharpnado.Shadows" Version="1.2.0" />
-		<PackageReference Include="Xamarin.CommunityToolkit" Version="2.0.2" />
-		<PackageReference Include="Xamarin.CommunityToolkit.Markup" Version="2.0.2" />
+		<PackageReference Include="Sharpnado.Shadows" Version="1.2.1" />
+		<PackageReference Include="Xamarin.CommunityToolkit" Version="2.0.5" />
+		<PackageReference Include="Xamarin.CommunityToolkit.Markup" Version="2.0.5" />
 		<PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.4.11.982" />
 		<PackageReference Include="Xamarin.FFImageLoading.Transformations" Version="2.4.11.982" />
 		<PackageReference Include="Xamarin.Forms.PancakeView" Version="2.3.0.763-beta" />
