@@ -34,11 +34,15 @@ namespace QuizzPokedex.Models
 
         //Url de l'Image
         public string UrlImg { get; set; }
-        public byte[] DataImg { get; set; }
+        public string PathImg { get; set; }
 
         //Url du Sprite
         public string UrlSprite { get; set; }
-        public byte[] DataSprite { get; set; }
+        public string PathSprite { get; set; }
+
+        //Url du Son
+        public string UrlSound { get; set; }
+        public string PathSound { get; set; }
 
         //Taille du Pokémon
         public string Size { get; set; }
@@ -108,6 +112,9 @@ namespace QuizzPokedex.Models
 
         //Update Bool
         public bool Updated { get; set; }
+
+        //Check Picture Bool
+        public bool Check { get; set; }
 
         //Favorite Profile
         [NotMapped]

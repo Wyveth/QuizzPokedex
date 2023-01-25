@@ -48,7 +48,7 @@
                                     Grid.Row="0"
                                     Aspect="AspectFit"
                                     HeightRequest="65"
-                                    Source="{Binding DataImg, Converter={StaticResource ByteToImageSourceConverter}}"
+                                    Source="{Binding PathImg}"
                                     WidthRequest="65" />
                                 <Image
                                     Grid.Row="0"

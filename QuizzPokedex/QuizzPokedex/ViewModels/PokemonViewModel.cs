@@ -4,11 +4,14 @@ using MvvmCross.IoC;
 using MvvmCross.Navigation;
 using MvvmCross.Plugin.Messenger;
 using MvvmCross.ViewModels;
+using Plugin.SimpleAudioPlayer;
 using QuizzPokedex.Interfaces;
 using QuizzPokedex.Models;
 using QuizzPokedex.Resources;
 using SkiaSharp;
 using System;
+using System.IO;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace QuizzPokedex.ViewModels
@@ -292,6 +295,7 @@ namespace QuizzPokedex.ViewModels
         public IMvxAsyncCommand NavigationBackCommandAsync => new MvxAsyncCommand(NavigationBackAsync);
         public IMvxAsyncCommand FavoriteCommandAsync => new MvxAsyncCommand(FavoriteAsync);
         public IMvxAsyncCommand<Pokemon> DetailsPokemonCommandAsync => new MvxAsyncCommand<Pokemon>(DetailsPokemonAsync);
+        public IMvxAsyncCommand PlaySoundCommandAsync => new MvxAsyncCommand(PlaySoundAsync);
 
         private async Task NavigationBackAsync()
         {
@@ -326,6 +330,24 @@ namespace QuizzPokedex.ViewModels
         private async Task DetailsPokemonAsync(Pokemon Pokemon)
         {
             await _navigation.Navigate<PokemonViewModel, Pokemon>(Pokemon);
+        }
+
+        private async Task<bool> PlaySoundAsync()
+        {
+            try
+            {
+                var assembly = typeof(App).GetTypeInfo().Assembly;
+                Stream audioStream = assembly.GetManifestResourceStream(assembly.GetName().Name + "." + Pokemon.PathSound.Replace("/", "."));
+                var audio = CrossSimpleAudioPlayer.Current;
+                audio.Load(audioStream);
+                audio.Play();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            return await Task.FromResult(true);
         }
         #endregion
 

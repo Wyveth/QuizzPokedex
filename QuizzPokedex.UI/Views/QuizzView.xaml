@@ -395,7 +395,7 @@
                             Padding="12"
                             BackgroundColor="White"
                             Command="{Binding ShowHideOtherProfileCommandAsync}"
-                            Source="{Binding ActivatedPokemonProfile.DataImg, Converter={StaticResource ByteToImageSourceConverter}}" />
+                            Source="{Binding ActivatedPokemonProfile.PathImg}" />
                     </pv:PancakeView>
                 </shadows:Shadows>
             </StackLayout>
@@ -472,7 +472,7 @@
                             BackgroundColor="White"
                             Command="{Binding OpenModalChangeProfileCommandAsync}"
                             CommandParameter="{Binding NotActivatedFirstProfile}"
-                            Source="{Binding NotActivatedPokemonFirstProfile.DataImg, Converter={StaticResource ByteToImageSourceConverter}}" />
+                            Source="{Binding NotActivatedPokemonFirstProfile.PathImg}" />
                     </pv:PancakeView>
                 </shadows:Shadows>
             </StackLayout>
@@ -550,7 +550,7 @@
                             BackgroundColor="White"
                             Command="{Binding OpenModalChangeProfileCommandAsync}"
                             CommandParameter="{Binding NotActivatedSecondProfile}"
-                            Source="{Binding NotActivatedPokemonSecondProfile.DataImg, Converter={StaticResource ByteToImageSourceConverter}}" />
+                            Source="{Binding NotActivatedPokemonSecondProfile.PathImg}" />
                     </pv:PancakeView>
                 </shadows:Shadows>
             </StackLayout>
@@ -1127,7 +1127,7 @@
                 <StackLayout>
                     <Image
                         HeightRequest="300"
-                        Source="{Binding Pokemon.DataImg, Converter={StaticResource ByteToImageSourceConverter}}"
+                        Source="{Binding Pokemon.PathImg}"
                         WidthRequest="300" />
                 </StackLayout>
             </RelativeLayout>
@@ -1154,7 +1154,7 @@
                 <forms:CachedImage
                     HeightRequest="100"
                     HorizontalOptions="Center"
-                    Source="{Binding ActivatedPokemonProfile.DataImg, Converter={StaticResource ByteToImageSourceConverter}}"
+                    Source="{Binding ActivatedPokemonProfile.PathImg}"
                     VerticalOptions="Center"
                     WidthRequest="100">
                     <forms:CachedImage.Transformations>-->

@@ -64,7 +64,7 @@
                             HorizontalOptions="Center"
                             LoadingDelay="{Binding Delay}"
                             LoadingPriority="Highest"
-                            Source="{Binding Pokemon.DataImg, Converter={StaticResource ByteToImageSourceConverter}}"
+                            Source="{Binding Pokemon.PathImg}"
                             Transformations="{Binding Transformations}"
                             VerticalOptions="Center" />
                     </StackLayout>

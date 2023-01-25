@@ -62,7 +62,7 @@ namespace QuizzPokedex.CustomStart
             return NavigationService.Navigate<WelcomeViewModel>();
         }
 
-        protected async void populateDb()
+        protected async Task populateDb()
         {
             await Task.Run(async () =>
             {
@@ -90,6 +90,8 @@ namespace QuizzPokedex.CustomStart
 
             await _pokemonService.Populate(nbPokInDb, PoksJson);
             await _pokemonService.PopulateUpdateEvolution(PoksJson);
+            await _pokemonService.CheckIfPictureNotExistDownload(PoksJson);
+            await _pokemonService.ResetNextLaunch();
         }
 
         private async Task PopulateDifficulty()

@@ -76,7 +76,7 @@ namespace QuizzPokedex.ViewModels
             int nbPokInDb = await _pokemonService.GetNumberInDbAsync();
 
             if (Constantes.IsGenerateDB)
-                nbPokMax = 905;
+                nbPokMax = 1008;
 
             if (!nbPokInDb.Equals(nbPokMax))
             {
@@ -107,6 +107,24 @@ namespace QuizzPokedex.ViewModels
                     nbPokNotUpdated = await _pokemonService.GetNumberPokUpdateAsync();
                     ValueProgressBar = await getPercent(nbPokNotUpdated, nbPokMax);
                     TextProgressBar = await GetTextCheckProgressBar(nbPokNotUpdated, nbPokMax);
+                }
+
+                ProgressBarIsVisible = false;
+            }
+
+            int nbPokChecked = await _pokemonService.GetNumberPokCheckSpriteAsync();
+
+            if (!nbPokChecked.Equals(nbPokMax))
+            {
+                ProgressBarIsVisible = true;
+                ValueProgressBar = await getPercent(nbPokChecked, nbPokMax);
+                TextProgressBar = "Check Sprite: " + nbPokChecked.ToString() + "/" + nbPokMax.ToString();
+
+                while (ValueProgressBar != 1)
+                {
+                    nbPokChecked = await _pokemonService.GetNumberPokCheckSpriteAsync();
+                    ValueProgressBar = await getPercent(nbPokChecked, nbPokMax);
+                    TextProgressBar = await GetTextCheckProgressBar(nbPokChecked, nbPokMax);
                 }
 
                 ProgressBarIsVisible = false;

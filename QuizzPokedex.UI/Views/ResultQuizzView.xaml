@@ -100,7 +100,7 @@
                                         Aspect="AspectFit"
                                         HeightRequest="80"
                                         IsVisible="{Binding IsQTypPok}"
-                                        Source="{Binding Pokemon.DataImg, Converter={StaticResource ByteToImageSourceConverter}}"
+                                        Source="{Binding Pokemon.PathImg}"
                                         WidthRequest="80" />
                                     <!--#endregion-->
 
@@ -118,7 +118,7 @@
                                         Aspect="AspectFit"
                                         HeightRequest="80"
                                         IsVisible="{Binding IsQTypPokStat}"
-                                        Source="{Binding Pokemon.DataImg, Converter={StaticResource ByteToImageSourceConverter}}"
+                                        Source="{Binding Pokemon.PathImg}"
                                         WidthRequest="80" />
                                     <!--#endregion-->
 
@@ -142,7 +142,7 @@
                                         Aspect="AspectFit"
                                         HeightRequest="60"
                                         IsVisible="{Binding IsQTypPokDesc}"
-                                        Source="{Binding Pokemon.DataImg, Converter={StaticResource ByteToImageSourceConverter}}"
+                                        Source="{Binding Pokemon.PathImg}"
                                         WidthRequest="60" />
                                     <!--#endregion-->
 
@@ -151,7 +151,7 @@
                                         Aspect="AspectFit"
                                         HeightRequest="80"
                                         IsVisible="{Binding IsQTypTypPok}"
-                                        Source="{Binding Pokemon.DataImg, Converter={StaticResource ByteToImageSourceConverter}}"
+                                        Source="{Binding Pokemon.PathImg}"
                                         WidthRequest="80" />
                                     <!--#endregion-->
 
@@ -184,7 +184,7 @@
                                         Aspect="AspectFit"
                                         HeightRequest="80"
                                         IsVisible="{Binding IsQTypTypPokVarious}"
-                                        Source="{Binding Pokemon.DataImg, Converter={StaticResource ByteToImageSourceConverter}}"
+                                        Source="{Binding Pokemon.PathImg}"
                                         WidthRequest="80" />
                                     <!--#endregion-->
 
@@ -193,7 +193,7 @@
                                         Aspect="AspectFit"
                                         HeightRequest="80"
                                         IsVisible="{Binding IsQTypWeakPokVarious}"
-                                        Source="{Binding Pokemon.DataImg, Converter={StaticResource ByteToImageSourceConverter}}"
+                                        Source="{Binding Pokemon.PathImg}"
                                         WidthRequest="80" />
                                     <!--#endregion-->
 
@@ -202,7 +202,7 @@
                                         Aspect="AspectFit"
                                         HeightRequest="80"
                                         IsVisible="{Binding IsQTypPokTalentVarious}"
-                                        Source="{Binding Pokemon.DataImg, Converter={StaticResource ByteToImageSourceConverter}}"
+                                        Source="{Binding Pokemon.PathImg}"
                                         WidthRequest="80" />
                                     <!--#endregion-->
 
@@ -211,7 +211,7 @@
                                         Aspect="AspectFit"
                                         HeightRequest="80"
                                         IsVisible="{Binding IsQTypPokFamilyVarious}"
-                                        Source="{Binding Pokemon.DataImg, Converter={StaticResource ByteToImageSourceConverter}}"
+                                        Source="{Binding Pokemon.PathImg}"
                                         WidthRequest="80" />
                                     <!--#endregion-->
 

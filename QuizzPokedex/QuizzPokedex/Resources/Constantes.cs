@@ -55,6 +55,7 @@ namespace QuizzPokedex.Resources
 
         #region FileExtension
         public const string ExtensionImage = ".png";
+        public const string ExtensionSound = ".ogg";
         #endregion
 
         #region Icon Type

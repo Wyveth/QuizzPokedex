@@ -201,6 +201,12 @@ namespace QuizzPokedex.Services
             var result = await _database.Table<Pokemon>().Where(m => m.Updated.Equals(true)).CountAsync();
             return result;
         }
+
+        public async Task<int> GetNumberPokCheckSpriteAsync()
+        {
+            var result = await _database.Table<Pokemon>().Where(m => m.Check.Equals(true)).CountAsync();
+            return result;
+        }
         #endregion
 
         #region Populate Database
@@ -249,10 +255,13 @@ namespace QuizzPokedex.Services
             pokemon.DescriptionVx = pokemonJson.DescriptionVx;
             pokemon.DescriptionVy = pokemonJson.DescriptionVy;
             pokemon.UrlImg = pokemonJson.UrlImg;
-            pokemon.DataImg = await DownloadImageAsync(pokemonJson.UrlImg);
+            pokemon.PathImg = await DownloadFile(pokemonJson.UrlImg, "Image/G" + pokemonJson.Generation, pokemonJson.NameEN + Constantes.ExtensionImage);
 
             pokemon.UrlSprite = pokemonJson.UrlSprite;
-            pokemon.DataSprite = await DownloadImageAsync(pokemonJson.UrlSprite);
+            pokemon.PathSprite = await DownloadFile(pokemonJson.UrlSprite, "Sprite/G" + pokemonJson.Generation, pokemonJson.NameEN + Constantes.ExtensionImage);
+
+            pokemon.UrlSound = pokemonJson.UrlSound;
+            pokemon.PathSound = "Sound/G" + pokemonJson.Generation + "/" + pokemonJson.NameEN + Constantes.ExtensionSound;
 
             pokemon.Size = pokemonJson.Size;
             pokemon.Category = pokemonJson.Category;
@@ -349,6 +358,7 @@ namespace QuizzPokedex.Services
             pokemon.Generation = pokemonJson.Generation;
             pokemon.NextUrl = pokemonJson.NextUrl;
             pokemon.Updated = false;
+            pokemon.Check = false;
 
             return pokemon;
         }
@@ -375,6 +385,61 @@ namespace QuizzPokedex.Services
                 catch
                 {
                     Debug.Write("Update Error: " + pokemonJson.Number + " - " + pokemonJson.Name);
+                }
+            }
+        }
+
+        public async Task CheckIfPictureNotExistDownload(List<PokemonJson> pokemonsJson)
+        {
+            List<Pokemon> pokemons = await GetAllAsync();
+            
+            foreach (Pokemon pokemon in pokemons)
+            {
+                PokemonJson pokemonJson = pokemonsJson.Find(m => m.Name.Equals(pokemon.Name));
+                
+                try
+                {
+                    Debug.Write("Info: " + pokemon.Number + " - " + pokemon.Name);
+                    if (!File.Exists(pokemon.PathImg))
+                    {
+                        await DownloadFile(pokemon.UrlImg, "Image/G" + pokemon.Generation, pokemonJson.NameEN + Constantes.ExtensionImage);
+                        Debug.Write("Download Image OK");
+                    }
+
+                    if (!File.Exists(pokemon.PathSprite))
+                    {
+                        await DownloadFile(pokemon.UrlSprite, "Sprite/G" + pokemon.Generation, pokemonJson.NameEN + Constantes.ExtensionImage);
+                        Debug.Write("Download Sprite OK");
+                    }
+
+                    pokemon.Check = true;
+
+                    Pokemon pokemonUpdated = pokemon;
+                    if (pokemonUpdated != null)
+                        await UpdateAsync(pokemonUpdated);
+                }
+                catch
+                {
+                    Debug.Write("Download Error: " + pokemon.Number + " - " + pokemon.Name);
+                }
+            }
+        }
+
+        public async Task ResetNextLaunch()
+        {
+            List<Pokemon> pokemons = await GetAllAsync();
+
+            foreach (Pokemon pokemon in pokemons)
+            {
+                try
+                {
+                    pokemon.Check = false;
+                    Pokemon pokemonUpdated = pokemon;
+                    await UpdateAsync(pokemonUpdated);
+                }
+                catch
+                {
+                    Debug.Write("Download Error: " + pokemon.Number + " - " + pokemon.Name);
                 }
             }
         }
@@ -588,6 +653,29 @@ namespace QuizzPokedex.Services
                 resultFilterType = resultFilterGen;
 
             return await Task.FromResult(resultFilterType);
+        }
+
+        public async Task<string> DownloadFile(string url, string folder, string filename)
+        {
+            string pathToNewFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), folder);
+            Directory.CreateDirectory(pathToNewFolder);
+
+            WebClient webClient = new WebClient();
+            try
+            {
+                string pathToNewFile = Path.Combine(pathToNewFolder, filename);
+                webClient.DownloadFileAsync(new Uri(url), pathToNewFile);
+
+                return await Task.FromResult(pathToNewFile);
+            }
+            catch (System.Exception ex)
+            {
+                return null;
+            }
+            finally
+            {
+                webClient.Dispose();
+            }
         }
         #endregion
     }

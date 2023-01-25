@@ -3,14 +3,14 @@
     x:Class="QuizzPokedex.UI.Views.PokemonView"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:shadows="http://sharpnado.com"
-    xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+    xmlns:converters="clr-namespace:QuizzPokedex.UI.Converters"
     xmlns:ef="clr-namespace:AiForms.Effects;assembly=AiForms.Effects"
     xmlns:microcharts="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
-    xmlns:views="clr-namespace:MvvmCross.Forms.Views;assembly=MvvmCross.Forms"
-    xmlns:converters="clr-namespace:QuizzPokedex.UI.Converters"
-    xmlns:viewmodel="clr-namespace:QuizzPokedex.ViewModels;assembly=QuizzPokedex"
     xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+    xmlns:shadows="http://sharpnado.com"
+    xmlns:viewmodel="clr-namespace:QuizzPokedex.ViewModels;assembly=QuizzPokedex"
+    xmlns:views="clr-namespace:MvvmCross.Forms.Views;assembly=MvvmCross.Forms"
+    xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
     x:TypeArguments="viewmodel:PokemonViewModel"
     BackgroundColor="White"
     NavigationPage.HasNavigationBar="False">
@@ -113,7 +113,7 @@
                         VerticalOptions="CenterAndExpand">
                         <Image
                             HeightRequest="200"
-                            Source="{Binding Pokemon.DataImg, Converter={StaticResource ByteToImageSourceConverter}}"
+                            Source="{Binding Pokemon.PathImg}"
                             WidthRequest="200" />
                     </StackLayout>
                     <StackLayout AbsoluteLayout.LayoutBounds="0.5,0.02,0.4,0.05" AbsoluteLayout.LayoutFlags="All">
@@ -304,13 +304,16 @@
                                 xct:ShadowEffect.Opacity="0.5"
                                 Text="{Binding Pokemon.Weight}"
                                 TextColor="black" />
-                            <Image
+                            <ImageButton
                                 Grid.Row="0"
                                 Grid.RowSpan="3"
                                 Grid.Column="2"
                                 Aspect="AspectFit"
+                                Background="White"
+                                BackgroundColor="White"
+                                Command="{Binding PlaySoundCommandAsync}"
                                 HeightRequest="40"
-                                Source="{Binding Pokemon.DataSprite, Converter={StaticResource ByteToImageSourceConverter}}"
+                                Source="{Binding Pokemon.UrlSprite}"
                                 WidthRequest="40" />
                         </Grid>
                     </StackLayout>
@@ -483,7 +486,7 @@
                                             Grid.Row="0"
                                             Aspect="AspectFit"
                                             HeightRequest="100"
-                                            Source="{Binding DataImg, Converter={StaticResource ByteToImageSourceConverter}}"
+                                            Source="{Binding PathImg}"
                                             WidthRequest="100" />
                                         <Label
                                             Grid.Row="1"
@@ -577,7 +580,7 @@
                                             Grid.Row="0"
                                             Aspect="AspectFit"
                                             HeightRequest="150"
-                                            Source="{Binding DataImg, Converter={StaticResource ByteToImageSourceConverter}}"
+                                            Source="{Binding PathImg}"
                                             WidthRequest="150" />
                                         <Label
                                             Grid.Row="1"
@@ -670,7 +673,7 @@
                                             Grid.Row="0"
                                             Aspect="AspectFit"
                                             HeightRequest="150"
-                                            Source="{Binding DataImg, Converter={StaticResource ByteToImageSourceConverter}}"
+                                            Source="{Binding PathImg}"
                                             WidthRequest="150" />
                                         <Label
                                             Grid.Row="1"
@@ -753,7 +756,7 @@
                                             Grid.Row="0"
                                             Aspect="AspectFit"
                                             HeightRequest="150"
-                                            Source="{Binding DataImg, Converter={StaticResource ByteToImageSourceConverter}}"
+                                            Source="{Binding PathImg}"
                                             WidthRequest="150" />
                                         <Label
                                             Grid.Row="1"
@@ -836,7 +839,7 @@
                                             Grid.Row="0"
                                             Aspect="AspectFit"
                                             HeightRequest="150"
-                                            Source="{Binding DataImg, Converter={StaticResource ByteToImageSourceConverter}}"
+                                            Source="{Binding PathImg}"
                                             WidthRequest="150" />
                                         <Label
                                             Grid.Row="1"
@@ -919,7 +922,7 @@
                                             Grid.Row="0"
                                             Aspect="AspectFit"
                                             HeightRequest="150"
-                                            Source="{Binding DataImg, Converter={StaticResource ByteToImageSourceConverter}}"
+                                            Source="{Binding PathImg}"
                                             WidthRequest="150" />
                                         <Label
                                             Grid.Row="1"
@@ -1002,7 +1005,7 @@
                                             Grid.Row="0"
                                             Aspect="AspectFit"
                                             HeightRequest="150"
-                                            Source="{Binding DataImg, Converter={StaticResource ByteToImageSourceConverter}}"
+                                            Source="{Binding PathImg}"
                                             WidthRequest="150" />
                                         <Label
                                             Grid.Row="1"
@@ -1085,7 +1088,7 @@
                                             Grid.Row="0"
                                             Aspect="AspectFit"
                                             HeightRequest="150"
-                                            Source="{Binding DataImg, Converter={StaticResource ByteToImageSourceConverter}}"
+                                            Source="{Binding PathImg}"
                                             WidthRequest="150" />
                                         <Label
                                             Grid.Row="1"

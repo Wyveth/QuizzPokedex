@@ -17,10 +17,13 @@ namespace QuizzPokedex.Models
         //Nom Affiché
         public string DisplayName { get; set; }
 
+        //Nom Anglais
+        public string NameEN { get; set; }
+
         //Description du Pokémon Version X
         public string DescriptionVx { get; set; }
 
-        //Description du Pokémon Version
+        //Description du Pokémon Version Y
         public string DescriptionVy { get; set; }
 
         //Url de l'Image
@@ -28,6 +31,9 @@ namespace QuizzPokedex.Models
 
         //Url du Sprite
         public string UrlSprite { get; set; }
+        
+        //Url du Son
+        public string UrlSound { get; set; }
 
         //Taille du Pokémon
         public string Size { get; set; }

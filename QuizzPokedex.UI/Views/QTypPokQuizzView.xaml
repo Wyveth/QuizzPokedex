@@ -3,14 +3,14 @@
     x:Class="QuizzPokedex.UI.Views.QTypPokQuizzView"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:shadows="http://sharpnado.com"
-    xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
-    xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
     xmlns:animation="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
-    xmlns:views="clr-namespace:MvvmCross.Forms.Views;assembly=MvvmCross.Forms"
     xmlns:converters="clr-namespace:QuizzPokedex.UI.Converters"
-    xmlns:viewmodel="clr-namespace:QuizzPokedex.ViewModels;assembly=QuizzPokedex"
+    xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
     xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+    xmlns:shadows="http://sharpnado.com"
+    xmlns:viewmodel="clr-namespace:QuizzPokedex.ViewModels;assembly=QuizzPokedex"
+    xmlns:views="clr-namespace:MvvmCross.Forms.Views;assembly=MvvmCross.Forms"
+    xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
     x:TypeArguments="viewmodel:QTypPokQuizzViewModel"
     BackgroundColor="White"
     NavigationPage.HasNavigationBar="False">
@@ -64,7 +64,7 @@
                             HorizontalOptions="Center"
                             LoadingDelay="{Binding Delay}"
                             LoadingPriority="Highest"
-                            Source="{Binding Pokemon.DataImg, Converter={StaticResource ByteToImageSourceConverter}}"
+                            Source="{Binding Pokemon.PathImg}"
                             Transformations="{Binding Transformations}"
                             VerticalOptions="Center" />
                     </StackLayout>
