@@ -124,7 +124,7 @@ namespace QuizzPokedex.ViewModels
                 {
                     nbPokChecked = await _pokemonService.GetNumberPokCheckSpriteAsync();
                     ValueProgressBar = await getPercent(nbPokChecked, nbPokMax);
-                    TextProgressBar = await GetTextCheckProgressBar(nbPokChecked, nbPokMax);
+                    TextProgressBar = await GetTextCheckSpriteProgressBar(nbPokChecked, nbPokMax);
                 }
 
                 ProgressBarIsVisible = false;
@@ -183,6 +183,34 @@ namespace QuizzPokedex.ViewModels
                 result.Append("Check Gen Arceus: " + total);
             else
                 result.Append("Check Gen 9: " + total);
+
+            return await Task.FromResult(result.ToString());
+        }
+
+        private async Task<string> GetTextCheckSpriteProgressBar(int nbPokInDb, int nbPokMax)
+        {
+            string total = nbPokInDb.ToString() + "/" + nbPokMax.ToString();
+            StringBuilder result = new StringBuilder();
+            if (nbPokInDb <= 211)
+                result.Append("Check Sprite Gen 1: " + total);
+            else if (nbPokInDb <= 322)
+                result.Append("Check Sprite Gen 2: " + total);
+            else if (nbPokInDb <= 484)
+                result.Append("Check Sprite Gen 3: " + total);
+            else if (nbPokInDb <= 613)
+                result.Append("Check Sprite Gen 4: " + total);
+            else if (nbPokInDb <= 797)
+                result.Append("Check Sprite Gen 5: " + total);
+            else if (nbPokInDb <= 889)
+                result.Append("Check Sprite Gen 6: " + total);
+            else if (nbPokInDb <= 989)
+                result.Append("Check Sprite Gen 7: " + total);
+            else if (nbPokInDb <= 1104)
+                result.Append("Check Sprite Gen 8: " + total);
+            else if (nbPokInDb <= 1114)
+                result.Append("Check Sprite Gen Arceus: " + total);
+            else
+                result.Append("Check Sprite Gen 9: " + total);
 
             return await Task.FromResult(result.ToString());
         }
