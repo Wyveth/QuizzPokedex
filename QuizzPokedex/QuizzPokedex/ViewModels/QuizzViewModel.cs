@@ -259,6 +259,9 @@ namespace QuizzPokedex.ViewModels
 
             Profile profile = await _profileService.GetProfileActivatedAsync();
 
+            if(!Easy && !Normal && !Hard)
+                Normal = true;
+
             Task<Quizz> TaskQuizz = _quizzService.GenerateQuizz(profile, FiltreActiveGen1, FiltreActiveGen2, FiltreActiveGen3, FiltreActiveGen4, FiltreActiveGen5, FiltreActiveGen6, FiltreActiveGen7, FiltreActiveGen8, FiltreActiveGen9, FiltreActiveGenArceus, Easy, Normal, Hard);
             await ProgressCreation();
 

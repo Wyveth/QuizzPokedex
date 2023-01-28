@@ -664,7 +664,7 @@ namespace QuizzPokedex.Services
             try
             {
                 string pathToNewFile = Path.Combine(pathToNewFolder, filename);
-                webClient.DownloadFileAsync(new Uri(url), pathToNewFile);
+                webClient.DownloadFile(new Uri(url), pathToNewFile);
 
                 return await Task.FromResult(pathToNewFile);
             }

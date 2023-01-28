@@ -35,6 +35,7 @@ namespace QuizzPokedex.ViewModels
         #region Public Methods
         public override async Task Initialize()
         {
+            ButtonIsEnabled = false;
             BackGroundTask = MvxNotifyTask.Create(BackGroundAsync);
             ProgressBarTask = MvxNotifyTask.Create(ProgressBarAsync);
             ProfileTask = MvxNotifyTask.Create(ProfileAsync);
@@ -113,10 +114,15 @@ namespace QuizzPokedex.ViewModels
             }
 
             int nbPokChecked = await _pokemonService.GetNumberPokCheckSpriteAsync();
-
+            //bool waitForDownload = false;
+            //if (nbPokChecked != nbPokMax) {
+            //    waitForDownload = true;
+            //}
+            ProgressBarIsVisible = true;
+            
             if (!nbPokChecked.Equals(nbPokMax))
             {
-                ProgressBarIsVisible = true;
+                
                 ValueProgressBar = await getPercent(nbPokChecked, nbPokMax);
                 TextProgressBar = "Check Sprite: " + nbPokChecked.ToString() + "/" + nbPokMax.ToString();
 
@@ -126,9 +132,42 @@ namespace QuizzPokedex.ViewModels
                     ValueProgressBar = await getPercent(nbPokChecked, nbPokMax);
                     TextProgressBar = await GetTextCheckSpriteProgressBar(nbPokChecked, nbPokMax);
                 }
-
-                ProgressBarIsVisible = false;
             }
+
+            ValueProgressBar = 1;
+            TextProgressBar = "Initialisation de l'application: Terminé!";
+            await Task.Delay(2000);
+
+            ProgressBarIsVisible = false;
+            ButtonIsEnabled = true;
+
+            //ProgressBarIsVisible = true;
+
+            //if (waitForDownload)
+            //{
+            //    int delay = 720;
+            //    for (int i = 0; i < delay; i++)
+            //    {
+            //        ValueProgressBar = Convert.ToDouble(i) / Convert.ToDouble(delay);
+            //        if (i < delay / 2)
+            //        {
+            //            TextProgressBar = "Initialisation de l'application: Veuillez Patienter!";
+            //            await Task.Delay(125);
+            //        }
+            //        else
+            //        {
+            //            TextProgressBar = "Initialisation de l'application: Encore un peu de patience!";
+            //            await Task.Delay(125);
+            //        }
+            //    }
+            //}
+
+            //ValueProgressBar = 1;
+            //TextProgressBar = "Initialisation de l'application: Terminé!";
+            //await Task.Delay(2000);
+
+
+            //ProgressBarIsVisible = false;
         }
 
         private async Task<string> GetTextCreateProgressBar(int nbPokInDb, int nbPokMax)
@@ -137,7 +176,7 @@ namespace QuizzPokedex.ViewModels
             StringBuilder result = new StringBuilder();
             if (nbPokInDb <= 211)
                 result.Append("Création Gen 1: " + total);
-            else if(nbPokInDb <= 322)
+            else if (nbPokInDb <= 322)
                 result.Append("Création Gen 2: " + total);
             else if (nbPokInDb <= 484)
                 result.Append("Création Gen 3: " + total);
@@ -218,7 +257,7 @@ namespace QuizzPokedex.ViewModels
         private async Task<double> getPercent(double nbPok, double nbPokMax)
         {
             double percent = 0;
-            var result = nbPok/nbPokMax;
+            var result = nbPok / nbPokMax;
             percent = double.Parse(result.ToString());
             return await Task.FromResult(percent);
         }
@@ -288,7 +327,7 @@ namespace QuizzPokedex.ViewModels
         {
             int countProfile = await _profileService.CountGetAllAsync();
 
-            if(countProfile > 0)
+            if (countProfile > 0)
                 await _navigation.Navigate<PokedexViewModel>();
             else
                 await _navigation.Navigate<ProfileViewModel, Profile>(new Profile());
@@ -394,6 +433,13 @@ namespace QuizzPokedex.ViewModels
         {
             get { return _textProgressBar; }
             set { SetProperty(ref _textProgressBar, value); }
+        }
+
+        private bool _buttonIsEnabled;
+        public bool ButtonIsEnabled
+        {
+            get { return _buttonIsEnabled; }
+            set { SetProperty(ref _buttonIsEnabled, value); }
         }
 
         #endregion

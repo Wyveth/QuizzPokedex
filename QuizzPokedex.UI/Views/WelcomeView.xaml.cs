@@ -18,10 +18,5 @@ namespace QuizzPokedex.UI.Views
         {
             InitializeComponent();
         }
-
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
-        }
     }
 }

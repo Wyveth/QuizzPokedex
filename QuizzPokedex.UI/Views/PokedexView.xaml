@@ -71,7 +71,7 @@
                                         FontSize="12"
                                         HorizontalOptions="Center"
                                         HorizontalTextAlignment="Center"
-                                        Text="{Binding Name}"
+                                        Text="{Binding DisplayName}"
                                         TextColor="Black"
                                         VerticalOptions="Center" />
                                     <Label

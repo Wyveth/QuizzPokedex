@@ -110,6 +110,7 @@
                                 Command="{Binding NavigationQuizzCommandAsync}"
                                 FontFamily="Montserrat-SemiBold"
                                 FontSize="20"
+                                IsEnabled="{Binding ButtonIsEnabled}"
                                 Text="Quizz"
                                 TextColor="#F75E6D"
                                 TextTransform="None" />
@@ -145,6 +146,7 @@
                                 Command="{Binding NavigationPokedexCommandAsync}"
                                 FontFamily="Montserrat-SemiBold"
                                 FontSize="20"
+                                IsEnabled="{Binding ButtonIsEnabled}"
                                 Text="Pokédex"
                                 TextColor="#F75E6D"
                                 TextTransform="None" />
@@ -188,6 +190,7 @@
                             Command="{Binding NavigationProfileCommandAsync}"
                             CornerRadius="40"
                             HeightRequest="35"
+                            IsEnabled="{Binding ButtonIsEnabled}"
                             Source="@mipmap/plus"
                             WidthRequest="35" />
                     </pv:PancakeView>
