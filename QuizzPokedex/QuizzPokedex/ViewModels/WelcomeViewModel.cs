@@ -114,10 +114,6 @@ namespace QuizzPokedex.ViewModels
             }
 
             int nbPokChecked = await _pokemonService.GetNumberPokCheckSpriteAsync();
-            //bool waitForDownload = false;
-            //if (nbPokChecked != nbPokMax) {
-            //    waitForDownload = true;
-            //}
             ProgressBarIsVisible = true;
             
             if (!nbPokChecked.Equals(nbPokMax))
@@ -140,34 +136,6 @@ namespace QuizzPokedex.ViewModels
 
             ProgressBarIsVisible = false;
             ButtonIsEnabled = true;
-
-            //ProgressBarIsVisible = true;
-
-            //if (waitForDownload)
-            //{
-            //    int delay = 720;
-            //    for (int i = 0; i < delay; i++)
-            //    {
-            //        ValueProgressBar = Convert.ToDouble(i) / Convert.ToDouble(delay);
-            //        if (i < delay / 2)
-            //        {
-            //            TextProgressBar = "Initialisation de l'application: Veuillez Patienter!";
-            //            await Task.Delay(125);
-            //        }
-            //        else
-            //        {
-            //            TextProgressBar = "Initialisation de l'application: Encore un peu de patience!";
-            //            await Task.Delay(125);
-            //        }
-            //    }
-            //}
-
-            //ValueProgressBar = 1;
-            //TextProgressBar = "Initialisation de l'application: Terminé!";
-            //await Task.Delay(2000);
-
-
-            //ProgressBarIsVisible = false;
         }
 
         private async Task<string> GetTextCreateProgressBar(int nbPokInDb, int nbPokMax)
