@@ -1,4 +1,5 @@
 ﻿using Android.Content.Res;
+using FFImageLoading;
 using Java.Lang;
 using Newtonsoft.Json;
 using QuizzPokedex.Interfaces;
@@ -11,6 +12,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Security;
 using System.Threading.Tasks;
 
 namespace QuizzPokedex.Services
@@ -299,7 +301,7 @@ namespace QuizzPokedex.Services
             string[] typesTab = pokemonJson.Types.Split(',');
             StringBuilder types = new StringBuilder();
             StringBuilder typesID = new StringBuilder();
-            
+
             i = 0;
             foreach (string item in typesTab)
             {
@@ -324,7 +326,7 @@ namespace QuizzPokedex.Services
             string[] weaknessTab = pokemonJson.Weakness.Split(',');
             StringBuilder weakness = new StringBuilder();
             StringBuilder weaknessID = new StringBuilder();
-            
+
             i = 0;
             foreach (string item in weaknessTab)
             {
@@ -392,11 +394,11 @@ namespace QuizzPokedex.Services
         public async Task CheckIfPictureNotExistDownload(List<PokemonJson> pokemonsJson)
         {
             List<Pokemon> pokemons = await GetAllAsync();
-            
+
             foreach (Pokemon pokemon in pokemons)
             {
                 PokemonJson pokemonJson = pokemonsJson.Find(m => m.Name.Equals(pokemon.Name));
-                
+
                 try
                 {
                     Debug.Write("Info: " + pokemon.Number + " - " + pokemon.Name);
@@ -524,7 +526,7 @@ namespace QuizzPokedex.Services
         #endregion
 
         #region Generate Quizz
-        public async Task<Pokemon> GetPokemonRandom(bool gen1, bool gen2, bool gen3, bool gen4, bool gen5, bool gen6, bool gen7, bool gen8,  bool gen9, bool genArceus)
+        public async Task<Pokemon> GetPokemonRandom(bool gen1, bool gen2, bool gen3, bool gen4, bool gen5, bool gen6, bool gen7, bool gen8, bool gen9, bool genArceus)
         {
             List<Pokemon> result = await GetAllAsync();
             List<Pokemon> resultFilterGen = await GetPokemonsWithFilterGen(result, gen1, gen2, gen3, gen4, gen5, gen6, gen7, gen8, gen9, genArceus);
@@ -661,12 +663,15 @@ namespace QuizzPokedex.Services
             Directory.CreateDirectory(pathToNewFolder);
 
             WebClient webClient = new WebClient();
+            string pathToNewFile = Path.Combine(pathToNewFolder, filename);
             try
             {
-                string pathToNewFile = Path.Combine(pathToNewFolder, filename);
+                ServicePointManager.ServerCertificateValidationCallback = new
+                RemoteCertificateValidationCallback
+                (
+                   delegate { return true; }
+                );
                 webClient.DownloadFile(new Uri(url), pathToNewFile);
-
-                return await Task.FromResult(pathToNewFile);
             }
             catch (System.Exception ex)
             {
@@ -676,6 +681,8 @@ namespace QuizzPokedex.Services
             {
                 webClient.Dispose();
             }
+
+            return await Task.FromResult(pathToNewFile);
         }
         #endregion
     }

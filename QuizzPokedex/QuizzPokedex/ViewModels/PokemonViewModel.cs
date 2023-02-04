@@ -146,6 +146,12 @@ namespace QuizzPokedex.ViewModels
             HisuiVariant = new MvxObservableCollection<Pokemon>(resultHisuiVariant);
             #endregion
 
+            #region Paldea Variant
+            var resultPaldeaVariant = await _pokemonService.GetAllVariantAsync(Pokemon.Number, Constantes.Paldea);
+            PaldeaIsVisible = await GetVisible(resultPaldeaVariant.Count);
+            PaldeaVariant = new MvxObservableCollection<Pokemon>(resultPaldeaVariant);
+            #endregion
+
             #region Sexe Variant
             var resultVarianteSexe = await _pokemonService.GetAllVariantAsync(Pokemon.Number, Constantes.VarianteSexe);
             VarianteSexeIsVisible = await GetVisible(resultVarianteSexe.Count);
@@ -410,6 +416,14 @@ namespace QuizzPokedex.ViewModels
             set { SetProperty(ref _hisuiVariant, value); }
         }
 
+        private MvxObservableCollection<Pokemon> _paldeaVariant;
+
+        public MvxObservableCollection<Pokemon> PaldeaVariant
+        {
+            get { return _paldeaVariant; }
+            set { SetProperty(ref _paldeaVariant, value); }
+        }
+
         private MvxObservableCollection<Pokemon> _varianteSexe;
 
         public MvxObservableCollection<Pokemon> VarianteSexe
@@ -595,6 +609,13 @@ namespace QuizzPokedex.ViewModels
         {
             get { return _hisuiIsVisible; }
             set { SetProperty(ref _hisuiIsVisible, value); }
+        }
+
+        private bool _paldeaIsVisible;
+        public bool PaldeaIsVisible
+        {
+            get { return _paldeaIsVisible; }
+            set { SetProperty(ref _paldeaIsVisible, value); }
         }
 
         private bool _variantIsVisible;

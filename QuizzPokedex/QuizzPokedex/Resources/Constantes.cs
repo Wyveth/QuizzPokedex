@@ -15,6 +15,7 @@ namespace QuizzPokedex.Resources
         public const string VarianteSexe = "VarianteSexe";
         public const string Variant = "Variant";
         public const string Hisui = "Hisui";
+        public const string Paldea = "Paldea";
         #endregion
 
         #region Pokemon Affichage Distinct

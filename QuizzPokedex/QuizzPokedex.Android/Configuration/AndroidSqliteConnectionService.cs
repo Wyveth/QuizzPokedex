@@ -1,5 +1,4 @@
-﻿using Java.IO;
-using QuizzPokedex.Interfaces;
+﻿using QuizzPokedex.Interfaces;
 using SQLite;
 using System;
 using System.IO;
@@ -23,19 +22,19 @@ namespace QuizzPokedex.Droid.Configuration
                 Assembly assembly = IntrospectionExtensions.GetTypeInfo(typeof(App)).Assembly;
                 Stream embeddedDatabaseStream = assembly.GetManifestResourceStream("QuizzPokedex.SQlite.QuizzPokedex.db");
 
-                if (!System.IO.File.Exists(databaseFilePath))
+                if (!File.Exists(databaseFilePath))
                 {
-                    FileStream fileStreamToWrite = System.IO.File.Create(databaseFilePath);
+                    FileStream fileStreamToWrite = File.Create(databaseFilePath);
                     embeddedDatabaseStream.Seek(0, SeekOrigin.Begin);
                     embeddedDatabaseStream.CopyTo(fileStreamToWrite);
                     fileStreamToWrite.Close();
                 }
 
                 //var databaseFolderExt = Android.App.Application.Context.GetExternalFilesDir("").AbsolutePath;
-                //if (!System.IO.File.Exists(databaseFolderExt + "/" + FileName))
+                //if (!File.Exists(databaseFolderExt + "/" + FileName))
                 //{
-                //    FileStream fileStreamToWrite = System.IO.File.Create(databaseFolderExt + "/" + FileName);
-                //    using (var stream = System.IO.File.OpenRead(databaseFilePath))
+                //    FileStream fileStreamToWrite = File.Create(databaseFolderExt + "/" + FileName);
+                //    using (var stream = File.OpenRead(databaseFilePath))
                 //    {
                 //        stream.Seek(0, SeekOrigin.Begin);
                 //        stream.CopyTo(fileStreamToWrite);

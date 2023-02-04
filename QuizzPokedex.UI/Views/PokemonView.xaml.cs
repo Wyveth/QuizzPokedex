@@ -58,6 +58,12 @@ namespace QuizzPokedex.UI.Views
                 HisuiList.SelectedItem = null;
         }
 
+        private void PaldeaList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (PaldeaList.SelectedItem != null)
+                PaldeaList.SelectedItem = null;
+        }
+
         private void VariantList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (VariantList.SelectedItem != null)
