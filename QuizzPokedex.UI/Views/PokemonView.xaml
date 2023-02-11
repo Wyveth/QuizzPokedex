@@ -304,16 +304,16 @@
                                 xct:ShadowEffect.Opacity="0.5"
                                 Text="{Binding Pokemon.Weight}"
                                 TextColor="black" />
-                            <ImageButton
+                            <Image
                                 Grid.Row="0"
                                 Grid.RowSpan="3"
                                 Grid.Column="2"
+                                ef:AddCommand.Command="{Binding PlaySoundCommandAsync}"
                                 Aspect="AspectFit"
                                 Background="White"
                                 BackgroundColor="White"
-                                Command="{Binding PlaySoundCommandAsync}"
                                 HeightRequest="40"
-                                Source="{Binding Pokemon.UrlSprite}"
+                                Source="{Binding Pokemon.PathSprite}"
                                 WidthRequest="40" />
                         </Grid>
                     </StackLayout>
