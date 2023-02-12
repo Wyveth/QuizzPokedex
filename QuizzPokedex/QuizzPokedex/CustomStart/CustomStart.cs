@@ -91,7 +91,7 @@ namespace QuizzPokedex.CustomStart
             await _pokemonService.Populate(nbPokInDb, PoksJson);
             await _pokemonService.PopulateUpdateEvolution(PoksJson);
             await _pokemonService.CheckIfPictureNotExistDownload(PoksJson);
-            //await _pokemonService.ResetNextLaunch();
+            await _pokemonService.ResetNextLaunch();
         }
 
         private async Task PopulateDifficulty()
