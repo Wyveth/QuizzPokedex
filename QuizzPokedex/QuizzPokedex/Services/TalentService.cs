@@ -65,6 +65,12 @@ namespace QuizzPokedex.Services
             var result = await _database.Table<Talent>().ToListAsync();
             return result.Find(m => m.Name.Equals(libelle));
         }
+
+        public async Task<int> GetNumberInDbAsync()
+        {
+            var result = await _database.Table<Talent>().CountAsync();
+            return result;
+        }
         #endregion
 
         public async Task<int> CreateAsync(Talent talent)
@@ -99,6 +105,49 @@ namespace QuizzPokedex.Services
             }
 
             return await Task.FromResult(result[numberRandom]);
+        }
+        #endregion
+
+        #region Populate Database
+
+        public async Task<List<TalentJson>> GetListTalentScrapJson()
+        {
+            AssetManager assets = Android.App.Application.Context.Assets;
+            string json;
+            using (StreamReader sr = new StreamReader(assets.Open("TalentScrap.json")))
+            {
+                json = sr.ReadToEnd();
+            }
+
+            return await Task.FromResult(JsonConvert.DeserializeObject<List<TalentJson>>(json));
+        }
+
+        public async Task Populate(int nbTalentInDb, List<TalentJson> talentsJson)
+        {
+            if (!nbTalentInDb.Equals(talentsJson.Count))
+            {
+                int countTalentJson = 0;
+                foreach (TalentJson talentJson in talentsJson)
+                {
+                    countTalentJson++;
+
+                    if (countTalentJson > nbTalentInDb)
+                    {
+                        Talent talent = await ConvertTalentJsonInTalent(talentJson);
+                        await CreateAsync(talent);
+
+                        Console.WriteLine("Creation Talent: " + talent.Name);
+                    }
+                }
+            }
+        }
+
+        public async Task<Talent> ConvertTalentJsonInTalent(TalentJson talentJson)
+        {
+            Talent talent = new Talent();
+            talent.Name = talentJson.Name;
+            talent.Description = talentJson.Description;
+            return await Task.FromResult(talent);
         }
         #endregion
     }

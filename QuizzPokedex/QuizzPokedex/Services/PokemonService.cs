@@ -1,5 +1,4 @@
 ﻿using Android.Content.Res;
-using FFImageLoading;
 using Java.Lang;
 using Newtonsoft.Json;
 using QuizzPokedex.Interfaces;

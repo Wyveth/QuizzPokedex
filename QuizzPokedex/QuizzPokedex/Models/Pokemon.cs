@@ -56,12 +56,6 @@ namespace QuizzPokedex.Models
         //ID des Talents
         public string TalentsID { get; set; }
 
-        //Talent du Pokémon
-        //public string Talent { get; set; }
-
-        //Description du Talent
-        //public string DescriptionTalent { get; set; }
-
         //ID des Types
         public string TypesID { get; set; }
 

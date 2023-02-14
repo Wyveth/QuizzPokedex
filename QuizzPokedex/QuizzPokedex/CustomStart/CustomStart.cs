@@ -15,17 +15,23 @@ namespace QuizzPokedex.CustomStart
         private readonly ISqliteConnectionService _connectionService;
         private readonly IPokemonService _pokemonService;
         private readonly ITypePokService _typePokService;
+        private readonly ITalentService _talentService;
+        private readonly IAttaqueService _attaqueService;
+        private readonly ITypeAttaqueService _typeAttaqueService;
         private readonly IDifficultyService _difficultyService;
         private readonly IQuestionTypeService _questionTypeService;
         #endregion
 
         #region Constructor
-        public AppStart(IMvxApplication app, IMvxNavigationService mvxNavigationService, ISqliteConnectionService connectionService, IPokemonService pokemonService, ITypePokService typePokService, IDifficultyService difficultyService, IQuestionTypeService questionTypeService)
+        public AppStart(IMvxApplication app, IMvxNavigationService mvxNavigationService, ISqliteConnectionService connectionService, IPokemonService pokemonService, ITypePokService typePokService, ITalentService talentService, IAttaqueService attaqueService, ITypeAttaqueService typeAttaqueService, IDifficultyService difficultyService, IQuestionTypeService questionTypeService)
             : base(app, mvxNavigationService)
         {
             _connectionService = connectionService;
             _pokemonService = pokemonService;
             _typePokService = typePokService;
+            _talentService = talentService;
+            _attaqueService = attaqueService;
+            _typeAttaqueService = typeAttaqueService;
             _difficultyService = difficultyService;
             _questionTypeService = questionTypeService;
         }
@@ -45,10 +51,15 @@ namespace QuizzPokedex.CustomStart
             //_connectionService.GetAsyncConnection().DropTableAsync<Answer>().Wait();
             //_connectionService.GetAsyncConnection().DropTableAsync<Question>().Wait();
             //_connectionService.GetAsyncConnection().DropTableAsync<Quizz>().Wait();
-
+            
             _connectionService.GetAsyncConnection().CreateTableAsync<TypePok>().Wait();
             _connectionService.GetAsyncConnection().CreateTableAsync<Talent>().Wait();
+            _connectionService.GetAsyncConnection().CreateTableAsync<TypeAttaque>().Wait();
+            _connectionService.GetAsyncConnection().CreateTableAsync<Attaque>().Wait();
             _connectionService.GetAsyncConnection().CreateTableAsync<Pokemon>().Wait();
+            _connectionService.GetAsyncConnection().CreateTableAsync<PokemonTypePok>().Wait();
+            _connectionService.GetAsyncConnection().CreateTableAsync<PokemonTalent>().Wait();
+            _connectionService.GetAsyncConnection().CreateTableAsync<PokemonAttaque>().Wait();
             _connectionService.GetAsyncConnection().CreateTableAsync<Profile>().Wait();
             _connectionService.GetAsyncConnection().CreateTableAsync<Favorite>().Wait();
             _connectionService.GetAsyncConnection().CreateTableAsync<Difficulty>().Wait();
@@ -66,6 +77,9 @@ namespace QuizzPokedex.CustomStart
         {
             await Task.Run(async () =>
             {
+                await PopulateTypeAttaque();
+                await PopulateAttaque();
+                await PopulateTalent();
                 await PopulateTypePok();
                 await PopulatePokemon();
                 await PopulateDifficulty();
@@ -75,6 +89,30 @@ namespace QuizzPokedex.CustomStart
         #endregion
 
         #region Private Methods
+        private async Task PopulateTypeAttaque()
+        {
+            List<TypeAttaqueJson> typesJson = await _typeAttaqueService.GetListTypeAttaqueScrapJson();
+            int nbTypeAttaqueInDb = await _typeAttaqueService.GetNumberInDbAsync();
+
+            await _typeAttaqueService.Populate(nbTypeAttaqueInDb, typesJson);
+        }
+
+        private async Task PopulateAttaque()
+        {
+            List<AttaqueJson> attaquesJson = await _attaqueService.GetListAttaqueScrapJson();
+            int nbAttaqueInDb = await _attaqueService.GetNumberInDbAsync();
+
+            await _attaqueService.Populate(nbAttaqueInDb, attaquesJson);
+        }
+
+        private async Task PopulateTalent()
+        {
+            List<TalentJson> talentsJson = await _talentService.GetListTalentScrapJson();
+            int nbTalentInDb = await _talentService.GetNumberInDbAsync();
+
+            await _talentService.Populate(nbTalentInDb, talentsJson);
+        }
+        
         private async Task PopulateTypePok()
         {
             List<TypeJson> typesJson = await _typePokService.GetListTypeScrapJson();

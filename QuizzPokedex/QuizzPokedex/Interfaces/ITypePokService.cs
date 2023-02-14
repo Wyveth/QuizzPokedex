@@ -1,8 +1,6 @@
 ﻿using QuizzPokedex.Models;
 using QuizzPokedex.Models.ClassJson;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace QuizzPokedex.Interfaces

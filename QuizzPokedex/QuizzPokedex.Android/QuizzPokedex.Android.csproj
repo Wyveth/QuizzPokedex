@@ -106,6 +106,10 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\TypeScrap.json" />
+    <AndroidAsset Include="Assets\PokeScrapV1.json" />
+    <AndroidAsset Include="Assets\AttaqueScrap.json" />
+    <AndroidAsset Include="Assets\TalentScrap.json" />
+    <AndroidAsset Include="Assets\TypeAttaqueScrap.json" />
     <AndroidAsset Include="Assets\PokeScrap.json" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
