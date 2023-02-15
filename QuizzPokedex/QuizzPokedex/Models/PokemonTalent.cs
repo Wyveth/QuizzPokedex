@@ -1,7 +1,4 @@
 ﻿using SQLite;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace QuizzPokedex.Models
 {
@@ -11,10 +8,10 @@ namespace QuizzPokedex.Models
         public int Id { get; set; }
 
         [Indexed]
-        public int IdPokemon { get; set; }
+        public int PokemonId { get; set; }
 
         [Indexed]
-        public int IdTalent { get; set; }
+        public int TalentId { get; set; }
 
         public bool isHidden { get; set; }
     }

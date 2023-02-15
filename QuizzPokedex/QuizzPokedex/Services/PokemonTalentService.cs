@@ -1,5 +1,4 @@
-﻿using MvvmCross.Base;
-using QuizzPokedex.Interfaces;
+﻿using QuizzPokedex.Interfaces;
 using QuizzPokedex.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;

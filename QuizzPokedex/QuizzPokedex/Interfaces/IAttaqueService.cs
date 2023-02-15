@@ -12,8 +12,9 @@ namespace QuizzPokedex.Interfaces
         Task<List<Attaque>> GetAttaquesAsync(string attaques);
         Task<Attaque> GetByIdAsync(int id);
         Task<Attaque> GetByNameAsync(string libelle);
-        Task<List<AttaqueJson>> GetListAttaqueScrapJson();
+        Task<List<AttaqueJson>> GetListScrapJson();
         Task<int> CreateAsync(Attaque attaque);
+        Task<int> GetNumberJsonAsync();
         Task<int> GetNumberInDbAsync();
     }
 }

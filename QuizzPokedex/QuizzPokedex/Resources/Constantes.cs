@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace QuizzPokedex.Resources
+﻿namespace QuizzPokedex.Resources
 {
     public static class Constantes
     {

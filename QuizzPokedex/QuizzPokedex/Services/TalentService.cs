@@ -4,12 +4,9 @@ using QuizzPokedex.Interfaces;
 using QuizzPokedex.Models;
 using QuizzPokedex.Models.ClassJson;
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
-using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace QuizzPokedex.Services
@@ -71,6 +68,18 @@ namespace QuizzPokedex.Services
             var result = await _database.Table<Talent>().CountAsync();
             return result;
         }
+
+        public async Task<int> GetNumberJsonAsync()
+        {
+            AssetManager assets = Android.App.Application.Context.Assets;
+            string json;
+            using (StreamReader sr = new StreamReader(assets.Open("TalentScrap.json")))
+            {
+                json = sr.ReadToEnd();
+            }
+
+            return await Task.FromResult(JsonConvert.DeserializeObject<List<TalentJson>>(json).Count);
+        }
         #endregion
 
         public async Task<int> CreateAsync(Talent talent)
@@ -110,7 +119,7 @@ namespace QuizzPokedex.Services
 
         #region Populate Database
 
-        public async Task<List<TalentJson>> GetListTalentScrapJson()
+        public async Task<List<TalentJson>> GetListScrapJson()
         {
             AssetManager assets = Android.App.Application.Context.Assets;
             string json;

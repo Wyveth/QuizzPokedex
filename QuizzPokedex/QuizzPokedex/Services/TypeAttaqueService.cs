@@ -70,6 +70,18 @@ namespace QuizzPokedex.Services
             var result = await _database.Table<TypeAttaque>().CountAsync();
             return result;
         }
+
+        public async Task<int> GetNumberJsonAsync()
+        {
+            AssetManager assets = Android.App.Application.Context.Assets;
+            string json;
+            using (StreamReader sr = new StreamReader(assets.Open("TypeAttaqueScrap.json")))
+            {
+                json = sr.ReadToEnd();
+            }
+
+            return await Task.FromResult(JsonConvert.DeserializeObject<List<TypeAttaqueJson>>(json).Count);
+        }
         #endregion
 
         public async Task<int> CreateAsync(TypeAttaque typeAttaque)
@@ -82,7 +94,7 @@ namespace QuizzPokedex.Services
 
         #region Populate Database
 
-        public async Task<List<TypeAttaqueJson>> GetListTypeAttaqueScrapJson()
+        public async Task<List<TypeAttaqueJson>> GetListScrapJson()
         {
             AssetManager assets = Android.App.Application.Context.Assets;
             string json;

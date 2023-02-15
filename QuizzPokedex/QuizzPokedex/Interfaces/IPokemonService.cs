@@ -22,8 +22,8 @@ namespace QuizzPokedex.Interfaces
         Task<Pokemon> UpdateEvolutionWithJson(PokemonJson pokemonJson, Pokemon pokemonUpdate);
         Task<int> CreateAsync(Pokemon pokemon);
         Task<int> UpdateAsync(Pokemon pokemon);
-        Task<List<PokemonJson>> GetListPokeScrapJson(); 
-        Task<int> GetNumberPokJsonAsync();
+        Task<List<PokemonJson>> GetListScrapJson(); 
+        Task<int> GetNumberJsonAsync();
         Task<int> GetNumberInDbAsync();
         Task<int> GetNumberPokUpdateAsync();
         Task<int> GetNumberPokCheckSpriteAsync();

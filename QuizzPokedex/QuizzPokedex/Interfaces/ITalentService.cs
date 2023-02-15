@@ -13,9 +13,10 @@ namespace QuizzPokedex.Interfaces
         Task<Talent> GetByIdAsync(int id);
         Task<Talent> GetByNameAsync(string libelle);
         Task<int> CreateAsync(Talent talent);
-        Task<List<TalentJson>> GetListTalentScrapJson();
+        Task<List<TalentJson>> GetListScrapJson();
         Task<Talent> GetTalentRandom();
         Task<Talent> GetTalentRandom(List<Talent> alreadySelected);
+        Task<int> GetNumberJsonAsync();
         Task<int> GetNumberInDbAsync();
     }
 }

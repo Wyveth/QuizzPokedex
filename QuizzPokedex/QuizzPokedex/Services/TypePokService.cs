@@ -3,11 +3,13 @@ using Newtonsoft.Json;
 using QuizzPokedex.Interfaces;
 using QuizzPokedex.Models;
 using QuizzPokedex.Models.ClassJson;
+using QuizzPokedex.Resources;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Http;
+using System.Net.Security;
 using System.Threading.Tasks;
 
 namespace QuizzPokedex.Services
@@ -70,7 +72,7 @@ namespace QuizzPokedex.Services
             return result.Find(m => m.Name.Equals(libelle)).TypeColor;
         }
 
-        public async Task<int> GetNumberTypeJsonAsync()
+        public async Task<int> GetNumberJsonAsync()
         {
             AssetManager assets = Android.App.Application.Context.Assets;
             string json;
@@ -125,7 +127,7 @@ namespace QuizzPokedex.Services
         #endregion
 
         #region Populate Database
-        public async Task<List<TypeJson>> GetListTypeScrapJson()
+        public async Task<List<TypeJson>> GetListScrapJson()
         {
             AssetManager assets = Android.App.Application.Context.Assets;
             string json;
@@ -162,14 +164,19 @@ namespace QuizzPokedex.Services
             TypePok type = new TypePok();
             type.Name = typeJson.Name;
             type.UrlMiniGo = typeJson.UrlMiniGo;
+            type.PathMiniGo = await DownloadFile(typeJson.UrlMiniGo, "Image/TypePok/MiniGo", typeJson.Name.Replace(" ", "_") + Constantes.ExtensionImage);
             type.DataMiniGo = await DownloadImageAsync(typeJson.UrlMiniGo);
             type.UrlFondGo = typeJson.UrlFondGo;
+            type.PathFondGo = await DownloadFile(typeJson.UrlFondGo, "Image/TypePok/FondGo", typeJson.Name.Replace(" ", "_") + Constantes.ExtensionImage);
             type.DataFondGo = await DownloadImageAsync(typeJson.UrlFondGo);
             type.UrlMiniHome = typeJson.UrlMiniHome;
+            type.PathMiniHome = await DownloadFile(typeJson.UrlMiniHome, "Image/TypePok/MiniHome", typeJson.Name.Replace(" ", "_") + Constantes.ExtensionImage);
             type.DataMiniHome = await DownloadImageAsync(typeJson.UrlMiniHome);
             type.UrlIconHome = typeJson.UrlIconHome;
+            type.PathIconHome = await DownloadFile(typeJson.UrlIconHome, "Image/TypePok/IconHome", typeJson.Name.Replace(" ", "_") + Constantes.ExtensionImage);
             type.DataIconHome = await DownloadImageAsync(typeJson.UrlIconHome);
             type.UrlAutoHome = typeJson.UrlAutoHome;
+            type.PathAutoHome = await DownloadFile(typeJson.UrlAutoHome, "Image/TypePok/AutoHome", typeJson.Name.Replace(" ", "_") + Constantes.ExtensionImage);
             type.DataAutoHome = await DownloadImageAsync(typeJson.UrlAutoHome);
             type.ImgColor = typeJson.imgColor;
             type.InfoColor = typeJson.infoColor;
@@ -177,11 +184,11 @@ namespace QuizzPokedex.Services
             return type;
         }
 
-        public async Task<byte[]> DownloadImageAsync(string imageUrl)
+        public async Task<byte[]> DownloadImageAsync(string UrlImg)
         {
             try
             {
-                using (var httpResponse = await _httpClient.GetAsync(imageUrl))
+                using (var httpResponse = await _httpClient.GetAsync(UrlImg))
                 {
                     if (httpResponse.StatusCode == HttpStatusCode.OK)
                     {
@@ -199,6 +206,34 @@ namespace QuizzPokedex.Services
                 //Handle Exception
                 throw new Exception(e.Message);
             }
+        }
+
+        public async Task<string> DownloadFile(string url, string folder, string filename)
+        {
+            string pathToNewFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), folder);
+            Directory.CreateDirectory(pathToNewFolder);
+
+            WebClient webClient = new WebClient();
+            string pathToNewFile = Path.Combine(pathToNewFolder, filename);
+            try
+            {
+                ServicePointManager.ServerCertificateValidationCallback = new
+                RemoteCertificateValidationCallback
+                (
+                   delegate { return true; }
+                );
+                webClient.DownloadFile(new Uri(url), pathToNewFile);
+            }
+            catch (System.Exception ex)
+            {
+                return null;
+            }
+            finally
+            {
+                webClient.Dispose();
+            }
+
+            return await Task.FromResult(pathToNewFile);
         }
         #endregion
     }

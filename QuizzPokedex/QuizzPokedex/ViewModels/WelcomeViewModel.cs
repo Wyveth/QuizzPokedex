@@ -17,17 +17,23 @@ namespace QuizzPokedex.ViewModels
         private readonly IMvxNavigationService _navigation;
         private readonly IPokemonService _pokemonService;
         private readonly ITypePokService _typePokService;
+        private readonly ITalentService _talentService;
+        private readonly IAttaqueService _attaqueService;
+        private readonly ITypeAttaqueService _typeAttaqueService;
         private readonly IProfileService _profileService;
         private readonly MvxSubscriptionToken _token;
         #endregion
 
         #region Constructor
-        public WelcomeViewModel(IMvxNavigationService navigation, IMvxMessenger messenger, IPokemonService pokemonService, ITypePokService typePokService, IProfileService profileService)
+        public WelcomeViewModel(IMvxNavigationService navigation, IMvxMessenger messenger, IPokemonService pokemonService, ITypePokService typePokService, ITalentService talentService, IAttaqueService attaqueService, ITypeAttaqueService typeAttaqueService, IProfileService profileService)
         {
             _navigation = navigation;
             _token = messenger.Subscribe<MessageRefresh>(RefreshAsync);
             _pokemonService = pokemonService;
             _typePokService = typePokService;
+            _talentService = talentService;
+            _attaqueService = attaqueService;
+            _typeAttaqueService = typeAttaqueService;
             _profileService = profileService;
         }
         #endregion
@@ -52,28 +58,85 @@ namespace QuizzPokedex.ViewModels
 
         private async Task ProgressBarAsync()
         {
-            int nbTypeMax = await _typePokService.GetNumberTypeJsonAsync();
-            int nbTypeInDb = await _typePokService.GetNumberInDbAsync();
-
             ProgressBarIsVisible = false;
 
-            if (!nbTypeInDb.Equals(nbTypeMax))
+            int nbTypeAttaqueMax = await _typeAttaqueService.GetNumberJsonAsync();
+            int nbTypeAttaqueInDb = await _typeAttaqueService.GetNumberInDbAsync();
+
+            if (!nbTypeAttaqueInDb.Equals(nbTypeAttaqueMax))
             {
                 ProgressBarIsVisible = true;
-                ValueProgressBar = await getPercent(nbTypeInDb, nbTypeMax);
-                TextProgressBar = "Création Type: " + nbTypeInDb.ToString() + "/" + nbTypeMax.ToString();
+                ValueProgressBar = await getPercent(nbTypeAttaqueInDb, nbTypeAttaqueMax);
+                TextProgressBar = "Création Type Attaque: " + nbTypeAttaqueInDb.ToString() + "/" + nbTypeAttaqueMax.ToString();
 
                 while (ValueProgressBar != 1)
                 {
-                    nbTypeInDb = await _typePokService.GetNumberInDbAsync();
-                    ValueProgressBar = await getPercent(nbTypeInDb, nbTypeMax);
-                    TextProgressBar = "Création Type: " + nbTypeInDb.ToString() + "/" + nbTypeMax.ToString();
+                    nbTypeAttaqueInDb = await _typeAttaqueService.GetNumberInDbAsync();
+                    ValueProgressBar = await getPercent(nbTypeAttaqueInDb, nbTypeAttaqueMax);
+                    TextProgressBar = "Création Type Attaque: " + nbTypeAttaqueInDb.ToString() + "/" + nbTypeAttaqueMax.ToString();
                 }
 
                 ProgressBarIsVisible = false;
             }
 
-            int nbPokMax = await _pokemonService.GetNumberPokJsonAsync();
+            int nbTypeMax = await _typePokService.GetNumberJsonAsync();
+            int nbTypeInDb = await _typePokService.GetNumberInDbAsync();
+
+            if (!nbTypeInDb.Equals(nbTypeMax))
+            {
+                ProgressBarIsVisible = true;
+                ValueProgressBar = await getPercent(nbTypeInDb, nbTypeMax);
+                TextProgressBar = "Création Type Pokémon: " + nbTypeInDb.ToString() + "/" + nbTypeMax.ToString();
+
+                while (ValueProgressBar != 1)
+                {
+                    nbTypeInDb = await _typePokService.GetNumberInDbAsync();
+                    ValueProgressBar = await getPercent(nbTypeInDb, nbTypeMax);
+                    TextProgressBar = "Création Type Pokémon: " + nbTypeInDb.ToString() + "/" + nbTypeMax.ToString();
+                }
+
+                ProgressBarIsVisible = false;
+            }
+
+            int nbAttaqueMax = await _attaqueService.GetNumberJsonAsync();
+            int nbAttaqueInDb = await _attaqueService.GetNumberInDbAsync();
+
+            if (!nbAttaqueInDb.Equals(nbAttaqueMax))
+            {
+                ProgressBarIsVisible = true;
+                ValueProgressBar = await getPercent(nbAttaqueInDb, nbAttaqueMax);
+                TextProgressBar = "Création Attaque: " + nbAttaqueInDb.ToString() + "/" + nbAttaqueMax.ToString();
+
+                while (ValueProgressBar != 1)
+                {
+                    nbAttaqueInDb = await _attaqueService.GetNumberInDbAsync();
+                    ValueProgressBar = await getPercent(nbAttaqueInDb, nbAttaqueMax);
+                    TextProgressBar = "Création Attaque: " + nbAttaqueInDb.ToString() + "/" + nbAttaqueMax.ToString();
+                }
+
+                ProgressBarIsVisible = false;
+            }
+
+            int nbTalentMax = await _talentService.GetNumberJsonAsync();
+            int nbTalentInDb = await _talentService.GetNumberInDbAsync();
+
+            if (!nbTalentInDb.Equals(nbTalentMax))
+            {
+                ProgressBarIsVisible = true;
+                ValueProgressBar = await getPercent(nbTalentInDb, nbTalentMax);
+                TextProgressBar = "Création Talent: " + nbTalentInDb.ToString() + "/" + nbTalentMax.ToString();
+
+                while (ValueProgressBar != 1)
+                {
+                    nbTalentInDb = await _talentService.GetNumberInDbAsync();
+                    ValueProgressBar = await getPercent(nbTalentInDb, nbTalentMax);
+                    TextProgressBar = "Création Talent: " + nbTalentInDb.ToString() + "/" + nbTalentMax.ToString();
+                }
+
+                ProgressBarIsVisible = false;
+            }
+
+            int nbPokMax = await _pokemonService.GetNumberJsonAsync();
             int nbPokInDb = await _pokemonService.GetNumberInDbAsync();
 
             if (Constantes.IsGenerateDB)
@@ -94,7 +157,7 @@ namespace QuizzPokedex.ViewModels
 
                 ProgressBarIsVisible = false;
             }
-
+            
             int nbPokNotUpdated = await _pokemonService.GetNumberPokUpdateAsync();
 
             if (!nbPokNotUpdated.Equals(nbPokMax))

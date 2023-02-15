@@ -1,11 +1,5 @@
 ﻿using SQLite;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Diagnostics;
-using System.IO;
-using System.Text;
-using Xamarin.Forms;
 
 namespace QuizzPokedex.Models
 {
@@ -65,6 +59,9 @@ namespace QuizzPokedex.Models
         //ID des Faiblesses
         public string WeaknessID { get; set; }
 
+        //ID des Attaques
+        public string AttacksID { get; set; }
+
         //Nom des Faiblesses
         public string Weakness { get; set; }
 
@@ -100,6 +97,9 @@ namespace QuizzPokedex.Models
 
         //Generation Number
         public int Generation { get; set; }
+
+        //Game Version
+        public string Game { get; set; }
 
         //Prochain Pokémon
         public string NextUrl { get; set; }
