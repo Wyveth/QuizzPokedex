@@ -249,9 +249,6 @@ namespace QuizzPokedex.Services
                         await CreateAsync(pokemon);
 
                         Debug.Write("Creation:" + pokemon.Number + " - " + pokemon.Name);
-
-                        if (Constantes.IsGenerateDB && pokemon.Number.Equals("721"))
-                            break;
                     }
                 }
             }
@@ -278,120 +275,6 @@ namespace QuizzPokedex.Services
             pokemon.Size = pokemonJson.Size;
             pokemon.Category = pokemonJson.Category;
             pokemon.Weight = pokemonJson.Weight;
-
-            int i = 0;
-            //StringBuilder typesPokID = new StringBuilder();
-            //foreach (TypePokJson typePokJson in pokemonJson.Types)
-            //{
-            //    TypePok typePok = await _typePokService.GetByNameAsync(typePokJson.Name);
-            //    if (typePok == null)
-            //    {
-            //        typePok = new PokemonTypePok() { PokemonId = pokemon.id, TypePokId = typePok.id };
-            //        //await _talentService.CreateAsync(typePok);
-            //    }
-
-            //    if (i == 0)
-            //    {
-            //        talentsID.Append(talent.Id.ToString());
-            //        i++;
-            //    }
-            //    else
-            //    {
-            //        talentsID.Append(',' + talent.Id.ToString());
-            //    }
-            //}
-            //pokemon.TypesID = typesPokID.ToString();
-
-            //foreach (string type in pokemonJson.Weakness)
-            //{
-
-            //}
-
-            //foreach (string type in pokemonJson.Talents)
-            //{
-
-            //}
-
-            //foreach (string type in pokemonJson.Attaques)
-            //{
-
-            //}
-            //if (!string.IsNullOrEmpty(pokemonJson.Talent))
-            //{
-            //    string[] talentsTab = pokemonJson.Talent.Split(',');
-            //    string[] descriptionTalentsTab = pokemonJson.DescriptionTalent.Split(';');
-            //    StringBuilder talentsID = new StringBuilder();
-            //    foreach (string item in talentsTab)
-            //    {
-            //        Talent talent = await _talentService.GetByNameAsync(item);
-            //        if (talent == null)
-            //        {
-            //            talent = new Talent() { Name = item, Description = descriptionTalentsTab[i] };
-            //            await _talentService.CreateAsync(talent);
-            //        }
-
-            //        if (i == 0)
-            //        {
-            //            talentsID.Append(talent.Id.ToString());
-            //            i++;
-            //        }
-            //        else
-            //        {
-            //            talentsID.Append(',' + talent.Id.ToString());
-            //        }
-            //    }
-
-            //    pokemon.TalentsID = talentsID.ToString();
-            //}
-
-            //string[] typesTab = pokemonJson.Types.Split(',');
-            //StringBuilder types = new StringBuilder();
-            //StringBuilder typesID = new StringBuilder();
-
-            //i = 0;
-            //foreach (string item in typesTab)
-            //{
-            //    TypePok type = await _typePokService.GetByNameAsync(item);
-
-            //    if (i == 0)
-            //    {
-            //        types.Append(type.Name);
-            //        typesID.Append(type.Id.ToString());
-            //        i++;
-            //    }
-            //    else
-            //    {
-            //        types.Append(',' + type.Name);
-            //        typesID.Append(',' + type.Id.ToString());
-            //    }
-            //}
-
-            //pokemon.Types = types.ToString();
-            //pokemon.TypesID = typesID.ToString();
-
-            //string[] weaknessTab = pokemonJson.Weakness.Split(',');
-            //StringBuilder weakness = new StringBuilder();
-            //StringBuilder weaknessID = new StringBuilder();
-
-            //i = 0;
-            //foreach (string item in weaknessTab)
-            //{
-            //    TypePok type = await _typePokService.GetByNameAsync(item);
-            //    if (i == 0)
-            //    {
-            //        weakness.Append(type.Name);
-            //        weaknessID.Append(type.Id.ToString());
-            //        i++;
-            //    }
-            //    else
-            //    {
-            //        weakness.Append(',' + type.Name);
-            //        weaknessID.Append(',' + type.Id.ToString());
-            //    }
-            //}
-
-            //pokemon.Weakness = weakness.ToString();
-            //pokemon.WeaknessID = weaknessID.ToString();
 
             pokemon.Evolutions = pokemonJson.Evolutions;
             pokemon.TypeEvolution = pokemonJson.TypeEvolution;
@@ -427,9 +310,6 @@ namespace QuizzPokedex.Services
                         await UpdateAsync(pokemonUpdated);
 
                     Debug.Write("Update: " + pokemonJson.Number + " - " + pokemonJson.Name);
-
-                    if (Constantes.IsGenerateDB && pokemonJson.Number.Equals("721"))
-                        break;
                 }
                 catch
                 {
@@ -861,7 +741,7 @@ namespace QuizzPokedex.Services
             }
             catch (System.Exception ex)
             {
-                return null;
+                return ex.Message;
             }
             finally
             {

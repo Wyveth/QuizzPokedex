@@ -146,8 +146,5 @@
         public const string QTypTalent = "Talent"; //OK
         public const string QTypTalentReverse = "TalentReverse"; //OK
         #endregion
-
-        //Variable pour différencier les tests
-        public const bool IsGenerateDB = false;
     }
 }

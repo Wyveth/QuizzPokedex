@@ -153,9 +153,9 @@ namespace QuizzPokedex.Services
                 );
                 webClient.DownloadFile(new Uri(url), pathToNewFile);
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
-                return null;
+                return ex.Message;
             }
             finally
             {

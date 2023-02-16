@@ -351,34 +351,38 @@
                         </shadows:Shadows>
                     </StackLayout>
                     <StackLayout Margin="50,40,50,10">
-                        <Label
-                            xct:ShadowEffect.Color="#464C56"
-                            xct:ShadowEffect.OffsetY="10"
-                            xct:ShadowEffect.Opacity="0.5"
-                            FontAttributes="Bold"
-                            Text="{Binding FirstTalent.Name}"
-                            TextColor="black" />
-                        <Label
-                            xct:ShadowEffect.Color="#464C56"
-                            xct:ShadowEffect.OffsetY="10"
-                            xct:ShadowEffect.Opacity="0.5"
-                            Text="{Binding FirstTalent.Description}"
-                            TextColor="black" />
-                        <Label
-                            xct:ShadowEffect.Color="#464C56"
-                            xct:ShadowEffect.OffsetY="10"
-                            xct:ShadowEffect.Opacity="0.5"
-                            FontAttributes="Bold"
-                            IsVisible="{Binding SecondTalentIsVisible}"
-                            Text="{Binding SecondTalent.Name}"
-                            TextColor="black" />
-                        <Label
-                            xct:ShadowEffect.Color="#464C56"
-                            xct:ShadowEffect.OffsetY="10"
-                            xct:ShadowEffect.Opacity="0.5"
-                            IsVisible="{Binding SecondTalentIsVisible}"
-                            Text="{Binding SecondTalent.Description}"
-                            TextColor="black" />
+                        <CollectionView
+                            x:Name="TalentList"
+                            HeightRequest="{Binding HeightTalent}"
+                            ItemsSource="{Binding Talent}"
+                            VerticalScrollBarVisibility="Never">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="15" />
+                                            <RowDefinition Height="*" />
+                                        </Grid.RowDefinitions>
+                                        <Label
+                                            Grid.Row="0"
+                                            xct:ShadowEffect.Color="#464C56"
+                                            xct:ShadowEffect.OffsetY="10"
+                                            xct:ShadowEffect.Opacity="0.5"
+                                            FontAttributes="Bold"
+                                            Text="{Binding Name}"
+                                            TextColor="black" />
+                                        <Label
+                                            Grid.Row="1"
+                                            Margin="0,0,0,10"
+                                            xct:ShadowEffect.Color="#464C56"
+                                            xct:ShadowEffect.OffsetY="10"
+                                            xct:ShadowEffect.Opacity="0.5"
+                                            Text="{Binding Description}"
+                                            TextColor="black" />
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
                     </StackLayout>
                 </RelativeLayout>
                 <RelativeLayout IsVisible="{Binding StatisticIsVisible}">

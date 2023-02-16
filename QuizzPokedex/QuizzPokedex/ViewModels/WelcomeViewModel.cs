@@ -139,9 +139,6 @@ namespace QuizzPokedex.ViewModels
             int nbPokMax = await _pokemonService.GetNumberJsonAsync();
             int nbPokInDb = await _pokemonService.GetNumberInDbAsync();
 
-            if (Constantes.IsGenerateDB)
-                nbPokMax = 1008;
-
             if (!nbPokInDb.Equals(nbPokMax))
             {
                 ProgressBarIsVisible = true;

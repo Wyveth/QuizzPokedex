@@ -9,7 +9,5 @@ namespace QuizzPokedex.Models.ViewModel
         public string Name { get; set; }
 
         public string Description { get; set; }
-
-        public string IsHidden { get; set; }
     }
 }

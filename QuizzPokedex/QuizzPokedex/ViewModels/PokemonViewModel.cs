@@ -1,4 +1,5 @@
-﻿using Microcharts;
+﻿using Java.Lang;
+using Microcharts;
 using MvvmCross.Commands;
 using MvvmCross.IoC;
 using MvvmCross.Navigation;
@@ -7,8 +8,8 @@ using MvvmCross.ViewModels;
 using Plugin.SimpleAudioPlayer;
 using QuizzPokedex.Interfaces;
 using QuizzPokedex.Models;
+using QuizzPokedex.Models.ViewModel;
 using QuizzPokedex.Resources;
-using QuizzPokedex.Services;
 using SkiaSharp;
 using System;
 using System.Collections.Generic;
@@ -88,14 +89,25 @@ namespace QuizzPokedex.ViewModels
             #endregion
 
             #region Talent
-            //List<PokemonTalent> pokemonTalents = await _pokemonTalentService.GetTalentsByPokemon(Pokemon.Id);
-            //List<Talent> talents = new List<Talent>();
-            //foreach (PokemonTalent pokemonTalent in pokemonTalents)
-            //{
-            //    Talent talent = await _talentService.GetByIdAsync(pokemonTalent.TalentId);
-            //    talents.Add(talent);
-            //}
-            
+            List<PokemonTalent> pokemonTalents = await _pokemonTalentService.GetTalentsByPokemon(Pokemon.Id);
+            List<TalentVM> talentsVM = new List<TalentVM>();
+            foreach (PokemonTalent pokemonTalent in pokemonTalents)
+            {
+                Talent talent = await _talentService.GetByIdAsync(pokemonTalent.TalentId);
+
+                StringBuilder nameSB = new StringBuilder();
+                if (pokemonTalent.isHidden)
+                    nameSB.Append(talent.Name + " (Caché)");
+                else
+                    nameSB.Append(talent.Name);
+
+                TalentVM talentVM = new TalentVM() { Name = nameSB.ToString(), Description = talent.Description };
+                talentsVM.Add(talentVM);
+            }
+
+            Talent = new MvxObservableCollection<TalentVM>(talentsVM);
+            HeightTalent = await GetHeightTalentSection(talentsVM);
+
             if (!string.IsNullOrEmpty(Pokemon.TalentsID))
             {
                 TalentIsVisible = true;
@@ -284,6 +296,24 @@ namespace QuizzPokedex.ViewModels
                 return await Task.FromResult(3);
         }
 
+        private async Task<int> GetHeightTalentSection(List<TalentVM> talentsVM)
+        {   
+            int height = 0;
+
+            for (int i = 0; i < talentsVM.Count; i++)
+            {
+                TalentVM talentVM = talentsVM[i];
+                if (talentVM.Description.Length < 50)
+                    height += 30;
+                else if (talentVM.Description.Length < 100)
+                    height += 55;
+                else
+                    height += 80;
+            }
+                
+            return height;
+        }
+
         private async Task<int> GetHeightSection(int count)
         {
             if (Pokemon.Name.Contains(Constantes.Ningale) 
@@ -379,7 +409,7 @@ namespace QuizzPokedex.ViewModels
                 audio.Load(audioStream);
                 audio.Play();
             }
-            catch (Exception ex)
+            catch (System.Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
@@ -487,6 +517,54 @@ namespace QuizzPokedex.ViewModels
             set { SetProperty(ref _weakness, value); }
         }
 
+        private MvxObservableCollection<TalentVM> _talent;
+
+        public MvxObservableCollection<TalentVM> Talent
+        {
+            get { return _talent; }
+            set { SetProperty(ref _talent, value); }
+        }
+
+        private MvxObservableCollection<AttaqueVM> _attaqueLevel;
+        
+        public MvxObservableCollection<AttaqueVM> AttaqueLevel
+        {
+            get { return _attaqueLevel; }
+            set { SetProperty(ref _attaqueLevel, value); }
+        }
+
+        private MvxObservableCollection<AttaqueVM> _attaqueCTCS;
+
+        public MvxObservableCollection<AttaqueVM> AttaqueCTCS
+        {
+            get { return _attaqueCTCS; }
+            set { SetProperty(ref _attaqueCTCS, value); }
+        }
+
+        private MvxObservableCollection<AttaqueVM> _attaqueReproduction;
+
+        public MvxObservableCollection<AttaqueVM> AttaqueReproduction
+        {
+            get { return _attaqueReproduction; }
+            set { SetProperty(ref _attaqueReproduction, value); }
+        }
+
+        private MvxObservableCollection<AttaqueVM> _attaqueEvolution;
+
+        public MvxObservableCollection<AttaqueVM> AttaqueEvolution
+        {
+            get { return _attaqueEvolution; }
+            set { SetProperty(ref _attaqueEvolution, value); }
+        }
+
+        private MvxObservableCollection<AttaqueVM> _attaqueMaitreCapacite;
+
+        public MvxObservableCollection<AttaqueVM> AttaqueMaitreCapacite
+        {
+            get { return _attaqueMaitreCapacite; }
+            set { SetProperty(ref _attaqueMaitreCapacite, value); }
+        }
+
         private Pokemon _selectedPokemon;
         public Pokemon SelectedPokemon
         {
@@ -526,6 +604,14 @@ namespace QuizzPokedex.ViewModels
         #endregion
 
         #region View Span List
+        private int _heightTalent = 80;
+
+        public int HeightTalent
+        {
+            get { return _heightTalent; }
+            set { SetProperty(ref _heightTalent, value); }
+        }
+
         private int _countFamilyEvol = 3;
 
         public int CountFamilyEvol
@@ -664,14 +750,8 @@ namespace QuizzPokedex.ViewModels
         }
         #endregion
 
-        #region Chart Stat
-        private Chart _chartStats;
-
-        public Chart ChartStats
-        {
-            get { return _chartStats; }
-            set { _chartStats = value; }
-        }
+        #region Chart Statistic
+        public Chart ChartStats { get; set; }
 
         private ChartEntry[] _chartEntry;
 
