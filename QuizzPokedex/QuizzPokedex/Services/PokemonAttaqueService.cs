@@ -2,6 +2,7 @@
 using QuizzPokedex.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using static Android.Resource;
 
 namespace QuizzPokedex.Services
 {
@@ -42,6 +43,13 @@ namespace QuizzPokedex.Services
 
             return result;
         }
+
+        public async Task<List<PokemonAttaque>> GetAttaquesByPokemonTypeLearnAsync(int pokemonId, string typeLearn)
+        {
+            var result = await _database.Table<PokemonAttaque>().ToListAsync();
+            return result.FindAll(m => m.PokemonId.Equals(pokemonId) && m.TypeLearn.Equals(typeLearn));
+        }
+        
         public async Task<PokemonAttaque> GetByIdAsync(int id)
         {
             var result = await _database.Table<PokemonAttaque>().ToListAsync();
@@ -54,6 +62,8 @@ namespace QuizzPokedex.Services
             var result = await _database.InsertAsync(pokemonAttaque);
             return result;
         }
+
+        
         #endregion
         #endregion
     }

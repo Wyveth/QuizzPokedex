@@ -12,15 +12,19 @@ namespace QuizzPokedex.Services
         #region Fields
         private readonly ISqliteConnectionService _connectionService;
         private readonly IPokemonService _pokemonService;
+        private readonly ITypePokService _typePokService;
+        private readonly IPokemonTypePokService _pokemonTypePokService;
         private readonly IProfileService _profileService;
         private SQLite.SQLiteAsyncConnection _database => _connectionService.GetAsyncConnection();
         #endregion
 
         #region Constructor
-        public FavoriteService(ISqliteConnectionService connectionService, IPokemonService pokemonService, IProfileService profileService)
+        public FavoriteService(ISqliteConnectionService connectionService, IPokemonService pokemonService, ITypePokService typePokService, IPokemonTypePokService pokemonTypePokService, IProfileService profileService)
         {
             _connectionService = connectionService;
             _pokemonService = pokemonService;
+            _typePokService = typePokService;
+            _pokemonTypePokService = pokemonTypePokService;
             _profileService = profileService;
         }
         #endregion
@@ -142,46 +146,77 @@ namespace QuizzPokedex.Services
         {
             List<Pokemon> resultFilterType = new List<Pokemon>();
             if (steel)
-                resultFilterType.AddRange(resultFilterGen.FindAll(m => m.Types.Contains(Constantes.Steel)));
+                resultFilterType.AddRange(await GetPokemonByFilterType(resultFilterGen, Constantes.Steel));
+
             if (fighting)
-                resultFilterType.AddRange(resultFilterGen.FindAll(m => m.Types.Contains(Constantes.Fighting)));
+                resultFilterType.AddRange(await GetPokemonByFilterType(resultFilterGen, Constantes.Fighting));
+
             if (dragon)
-                resultFilterType.AddRange(resultFilterGen.FindAll(m => m.Types.Contains(Constantes.Dragon)));
+                resultFilterType.AddRange(await GetPokemonByFilterType(resultFilterGen, Constantes.Dragon));
+
             if (water)
-                resultFilterType.AddRange(resultFilterGen.FindAll(m => m.Types.Contains(Constantes.Water)));
+                resultFilterType.AddRange(await GetPokemonByFilterType(resultFilterGen, Constantes.Water));
+
             if (electric)
-                resultFilterType.AddRange(resultFilterGen.FindAll(m => m.Types.Contains(Constantes.Electric)));
+                resultFilterType.AddRange(await GetPokemonByFilterType(resultFilterGen, Constantes.Electric));
+
             if (fairy)
-                resultFilterType.AddRange(resultFilterGen.FindAll(m => m.Types.Contains(Constantes.Fairy)));
+                resultFilterType.AddRange(await GetPokemonByFilterType(resultFilterGen, Constantes.Fairy));
+
             if (fire)
-                resultFilterType.AddRange(resultFilterGen.FindAll(m => m.Types.Contains(Constantes.Fire)));
+                resultFilterType.AddRange(await GetPokemonByFilterType(resultFilterGen, Constantes.Fire));
+
             if (ice)
-                resultFilterType.AddRange(resultFilterGen.FindAll(m => m.Types.Contains(Constantes.Ice)));
+                resultFilterType.AddRange(await GetPokemonByFilterType(resultFilterGen, Constantes.Ice));
+
             if (bug)
-                resultFilterType.AddRange(resultFilterGen.FindAll(m => m.Types.Contains(Constantes.Bug)));
+                resultFilterType.AddRange(await GetPokemonByFilterType(resultFilterGen, Constantes.Bug));
+
             if (normal)
-                resultFilterType.AddRange(resultFilterGen.FindAll(m => m.Types.Contains(Constantes.Normal)));
+                resultFilterType.AddRange(await GetPokemonByFilterType(resultFilterGen, Constantes.Normal));
+
             if (grass)
-                resultFilterType.AddRange(resultFilterGen.FindAll(m => m.Types.Contains(Constantes.Grass)));
+                resultFilterType.AddRange(await GetPokemonByFilterType(resultFilterGen, Constantes.Grass));
+
             if (poison)
-                resultFilterType.AddRange(resultFilterGen.FindAll(m => m.Types.Contains(Constantes.Poison)));
+                resultFilterType.AddRange(await GetPokemonByFilterType(resultFilterGen, Constantes.Poison));
+
             if (psychic)
-                resultFilterType.AddRange(resultFilterGen.FindAll(m => m.Types.Contains(Constantes.Psychic)));
+                resultFilterType.AddRange(await GetPokemonByFilterType(resultFilterGen, Constantes.Psychic));
+
             if (rock)
-                resultFilterType.AddRange(resultFilterGen.FindAll(m => m.Types.Contains(Constantes.Rock)));
+                resultFilterType.AddRange(await GetPokemonByFilterType(resultFilterGen, Constantes.Rock));
+
             if (ground)
-                resultFilterType.AddRange(resultFilterGen.FindAll(m => m.Types.Contains(Constantes.Ground)));
+                resultFilterType.AddRange(await GetPokemonByFilterType(resultFilterGen, Constantes.Ground));
+
             if (ghost)
-                resultFilterType.AddRange(resultFilterGen.FindAll(m => m.Types.Contains(Constantes.Ghost)));
+                resultFilterType.AddRange(await GetPokemonByFilterType(resultFilterGen, Constantes.Ghost));
+
             if (dark)
-                resultFilterType.AddRange(resultFilterGen.FindAll(m => m.Types.Contains(Constantes.Dark)));
+                resultFilterType.AddRange(await GetPokemonByFilterType(resultFilterGen, Constantes.Dark));
+
             if (flying)
-                resultFilterType.AddRange(resultFilterGen.FindAll(m => m.Types.Contains(Constantes.Flying)));
+                resultFilterType.AddRange(await GetPokemonByFilterType(resultFilterGen, Constantes.Flying));
 
             if (resultFilterType.Count.Equals(0))
                 resultFilterType = resultFilterGen;
 
             return await Task.FromResult(resultFilterType);
+        }
+
+        private async Task<List<Pokemon>> GetPokemonByFilterType(List<Pokemon> resultFilterGen, string typeName)
+        {
+            List<Pokemon> pokemons = new List<Pokemon>();
+            TypePok typePok = await _typePokService.GetByNameAsync(typeName);
+            List<PokemonTypePok> pokemonTypePoks = await _pokemonTypePokService.GetPokemonsByTypePok(typePok.Id);
+            foreach (PokemonTypePok pokemonTypePok in pokemonTypePoks)
+            {
+                Pokemon pokemon = resultFilterGen.Find(m => m.Id.Equals(pokemonTypePok.PokemonId));
+                if (pokemon != null)
+                    pokemons.Add(pokemon);
+            }
+            return pokemons;
         }
         #endregion
     }

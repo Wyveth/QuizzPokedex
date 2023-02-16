@@ -53,17 +53,11 @@ namespace QuizzPokedex.Models
         //ID des Types
         public string TypesID { get; set; }
 
-        //Nom des Types
-        public string Types { get; set; }
-
         //ID des Faiblesses
         public string WeaknessID { get; set; }
 
         //ID des Attaques
         public string AttacksID { get; set; }
-
-        //Nom des Faiblesses
-        public string Weakness { get; set; }
 
         //Evolution/Famille du Pokémon
         public string Evolutions { get; set; }

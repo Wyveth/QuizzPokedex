@@ -1,4 +1,7 @@
-﻿namespace QuizzPokedex.Resources
+﻿using static Android.Print.PrintAttributes;
+using System.Security.Cryptography;
+
+namespace QuizzPokedex.Resources
 {
     public static class Constantes
     {
@@ -48,6 +51,14 @@
         public const string Ghost = "Spectre";
         public const string Dark = "Ténèbres";
         public const string Flying = "Vol";
+        #endregion
+
+        #region TypeLearn
+        public const string Level = "Niveau";
+        public const string CTCS = "CT/CS";
+        public const string Reproduction = "Reproduction";
+        public const string Evolution = "Evolution";
+        public const string CapacityMaster = "Maître des Capacités";
         #endregion
 
         #region FileExtension

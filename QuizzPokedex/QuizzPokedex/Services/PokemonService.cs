@@ -594,8 +594,8 @@ namespace QuizzPokedex.Services
         {
             List<Pokemon> result = await GetAllAsync();
             List<Pokemon> resultFilterGen = await GetPokemonsWithFilterGen(result, gen1, gen2, gen3, gen4, gen5, gen6, gen7, gen8, gen9, genArceus);
-            resultFilterGen = resultFilterGen.FindAll(m => m.Types.Contains(typePok.Name));
-
+            resultFilterGen = await GetPokemonByFilterType(resultFilterGen, typePok.Name);
+            
             Random random = new Random();
             int numberRandom = random.Next(resultFilterGen.Count);
             Pokemon pokemon = alreadySelected.Find(m => m.Id.Equals(resultFilterGen[numberRandom].Id));

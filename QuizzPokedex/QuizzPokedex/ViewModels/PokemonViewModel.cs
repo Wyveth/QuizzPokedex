@@ -28,6 +28,8 @@ namespace QuizzPokedex.ViewModels
         private readonly ITalentService _talentService;
         private readonly ITypePokService _typePokService;
         private readonly IFavoriteService _favoriteService;
+        private readonly IAttaqueService _attaqueService;
+        private readonly ITypeAttaqueService _typeAttaqueService;
         private readonly IPokemonTypePokService _pokemonTypePokService;
         private readonly IPokemonWeaknessService _pokemonWeaknessService;
         private readonly IPokemonTalentService _pokemonTalentService;
@@ -36,13 +38,15 @@ namespace QuizzPokedex.ViewModels
         #endregion
 
         #region Constructor
-        public PokemonViewModel(IMvxNavigationService navigation, IMvxMessenger messenger, IMvxIoCProvider logger, IPokemonService pokemonService, ITalentService talentService, ITypePokService typeService, IPokemonTypePokService pokemonTypePokService, IPokemonWeaknessService pokemonWeaknessService, IPokemonTalentService pokemonTalentService, IPokemonAttaqueService pokemonAttaqueService, IFavoriteService favoriteService)
+        public PokemonViewModel(IMvxNavigationService navigation, IMvxMessenger messenger, IMvxIoCProvider logger, IPokemonService pokemonService, ITalentService talentService, ITypePokService typeService, IPokemonTypePokService pokemonTypePokService, IAttaqueService attaqueService, ITypeAttaqueService typeAttaqueService, IPokemonWeaknessService pokemonWeaknessService, IPokemonTalentService pokemonTalentService, IPokemonAttaqueService pokemonAttaqueService, IFavoriteService favoriteService)
         {
             _navigation = navigation;
             _logger = logger;
             _pokemonService = pokemonService;
             _talentService = talentService;
             _typePokService = typeService;
+            _attaqueService = attaqueService;
+            _typeAttaqueService = typeAttaqueService;
             _pokemonTypePokService = pokemonTypePokService;
             _pokemonWeaknessService = pokemonWeaknessService;
             _pokemonTalentService = pokemonTalentService;
@@ -82,7 +86,7 @@ namespace QuizzPokedex.ViewModels
 
             #region Favorite
             IsFavorite = await _favoriteService.CheckIfFavoriteExist(Pokemon);
-            if(IsFavorite)
+            if (IsFavorite)
                 ImgFavorite = await Utils.GetByteAssetImage(Constantes.LoveFull);
             else
                 ImgFavorite = await Utils.GetByteAssetImage(Constantes.Love);
@@ -105,16 +109,15 @@ namespace QuizzPokedex.ViewModels
                 talentsVM.Add(talentVM);
             }
 
-            if (pokemonTalents.Count > 0)
-                TalentIsVisible = true;
-            else
-                TalentIsVisible = false;
+            HeightTalent = await GetHeightSectionTalent(talentsVM);
+            TalentIsVisible = await GetVisible(talentsVM.Count);
+            Talent = new MvxObservableCollection<TalentVM>(talentsVM);
             #endregion
 
             #region Type
             List<PokemonTypePok> pokemonTypePoks = await _pokemonTypePokService.GetTypesPokByPokemon(Pokemon.Id);
             List<TypePok> typePoks = new List<TypePok>();
-            foreach(PokemonTypePok pokemonTypePok in pokemonTypePoks)
+            foreach (PokemonTypePok pokemonTypePok in pokemonTypePoks)
             {
                 TypePok typePok = await _typePokService.GetByIdAsync(pokemonTypePok.TypePokId);
                 typePoks.Add(typePok);
@@ -195,6 +198,106 @@ namespace QuizzPokedex.ViewModels
             HeightWeakness = await GetHeightSectionWeakness(weaknesses.Count);
             CountWeakness = await GetNbSpan(weaknesses.Count);
             Weakness = new MvxObservableCollection<TypePok>(weaknesses);
+            #endregion
+
+            #region Attaque - Niveau
+            await Task.Run(async () =>
+            {
+                List<PokemonAttaque> pokemonAttaques = await _pokemonAttaqueService.GetAttaquesByPokemonTypeLearnAsync(Pokemon.Id, Constantes.Level);
+                List<AttaqueVM> attaquesNiveauVM = new List<AttaqueVM>();
+                foreach (PokemonAttaque pokemonAttaque in pokemonAttaques)
+                {
+                    Attaque attaque = await _attaqueService.GetByIdAsync(pokemonAttaque.AttaqueId);
+                    TypeAttaque typeAttaque = await _typeAttaqueService.GetByIdAsync(attaque.TypeAttaqueId);
+                    TypePok typePok = await _typePokService.GetByIdAsync(attaque.TypePokId);
+
+                    AttaqueVM attaqueVM = new AttaqueVM() { Name = attaque.Name, Description = attaque.Description, Power = attaque.Power, Precision = attaque.Precision, PP = attaque.PP, Level = pokemonAttaque.Level, CTCS = pokemonAttaque.CTCS, TypeAttaque = typeAttaque, TypePok = typePok };
+                    attaquesNiveauVM.Add(attaqueVM);
+                }
+
+                AttaqueNiveauIsVisible = await GetVisible(attaquesNiveauVM.Count);
+                AttaqueNiveau = new MvxObservableCollection<AttaqueVM>(attaquesNiveauVM);
+            });
+            #endregion
+
+            #region Attaque - CTCS
+            await Task.Run(async () =>
+            {
+                List<PokemonAttaque> pokemonAttaques = await _pokemonAttaqueService.GetAttaquesByPokemonTypeLearnAsync(Pokemon.Id, Constantes.CTCS);
+                List<AttaqueVM> attaquesCTCSVM = new List<AttaqueVM>();
+                foreach (PokemonAttaque pokemonAttaque in pokemonAttaques)
+                {
+                    Attaque attaque = await _attaqueService.GetByIdAsync(pokemonAttaque.AttaqueId);
+                    TypeAttaque typeAttaque = await _typeAttaqueService.GetByIdAsync(attaque.TypeAttaqueId);
+                    TypePok typePok = await _typePokService.GetByIdAsync(attaque.TypePokId);
+
+                    AttaqueVM attaqueVM = new AttaqueVM() { Name = attaque.Name, Description = attaque.Description, Power = attaque.Power, Precision = attaque.Precision, PP = attaque.PP, Level = pokemonAttaque.Level, CTCS = pokemonAttaque.CTCS, TypeAttaque = typeAttaque, TypePok = typePok };
+                    attaquesCTCSVM.Add(attaqueVM);
+                }
+
+                AttaqueCTCSIsVisible = await GetVisible(attaquesCTCSVM.Count);
+                AttaqueCTCS = new MvxObservableCollection<AttaqueVM>(attaquesCTCSVM);
+            });
+            #endregion
+
+            #region Attaque - Reproduction
+            await Task.Run(async () =>
+            {
+                List<PokemonAttaque> pokemonAttaques = await _pokemonAttaqueService.GetAttaquesByPokemonTypeLearnAsync(Pokemon.Id, Constantes.Reproduction);
+                List<AttaqueVM> attaquesReproductionVM = new List<AttaqueVM>();
+                foreach (PokemonAttaque pokemonAttaque in pokemonAttaques)
+                {
+                    Attaque attaque = await _attaqueService.GetByIdAsync(pokemonAttaque.AttaqueId);
+                    TypeAttaque typeAttaque = await _typeAttaqueService.GetByIdAsync(attaque.TypeAttaqueId);
+                    TypePok typePok = await _typePokService.GetByIdAsync(attaque.TypePokId);
+
+                    AttaqueVM attaqueVM = new AttaqueVM() { Name = attaque.Name, Description = attaque.Description, Power = attaque.Power, Precision = attaque.Precision, PP = attaque.PP, Level = pokemonAttaque.Level, CTCS = pokemonAttaque.CTCS, TypeAttaque = typeAttaque, TypePok = typePok };
+                    attaquesReproductionVM.Add(attaqueVM);
+                }
+
+                AttaqueReproductionIsVisible = await GetVisible(attaquesReproductionVM.Count);
+                AttaqueReproduction = new MvxObservableCollection<AttaqueVM>(attaquesReproductionVM);
+            });
+            #endregion
+
+            #region Attaque - Evolution
+            await Task.Run(async () =>
+            {
+                List<PokemonAttaque> pokemonAttaques = await _pokemonAttaqueService.GetAttaquesByPokemonTypeLearnAsync(Pokemon.Id, Constantes.Evolution);
+                List<AttaqueVM> attaquesEvolutionVM = new List<AttaqueVM>();
+                foreach (PokemonAttaque pokemonAttaque in pokemonAttaques)
+                {
+                    Attaque attaque = await _attaqueService.GetByIdAsync(pokemonAttaque.AttaqueId);
+                    TypeAttaque typeAttaque = await _typeAttaqueService.GetByIdAsync(attaque.TypeAttaqueId);
+                    TypePok typePok = await _typePokService.GetByIdAsync(attaque.TypePokId);
+
+                    AttaqueVM attaqueVM = new AttaqueVM() { Name = attaque.Name, Description = attaque.Description, Power = attaque.Power, Precision = attaque.Precision, PP = attaque.PP, Level = pokemonAttaque.Level, CTCS = pokemonAttaque.CTCS, TypeAttaque = typeAttaque, TypePok = typePok };
+                    attaquesEvolutionVM.Add(attaqueVM);
+                }
+
+                AttaqueEvolutionIsVisible = await GetVisible(attaquesEvolutionVM.Count);
+                AttaqueEvolution = new MvxObservableCollection<AttaqueVM>(attaquesEvolutionVM);
+            });
+            #endregion
+
+            #region Attaque - MaitreCapacite
+            await Task.Run(async () =>
+            {
+                List<PokemonAttaque> pokemonAttaques = await _pokemonAttaqueService.GetAttaquesByPokemonTypeLearnAsync(Pokemon.Id, Constantes.CapacityMaster);
+                List<AttaqueVM> attaquesMaitreCapaciteVM = new List<AttaqueVM>();
+                foreach (PokemonAttaque pokemonAttaque in pokemonAttaques)
+                {
+                    Attaque attaque = await _attaqueService.GetByIdAsync(pokemonAttaque.AttaqueId);
+                    TypeAttaque typeAttaque = await _typeAttaqueService.GetByIdAsync(attaque.TypeAttaqueId);
+                    TypePok typePok = await _typePokService.GetByIdAsync(attaque.TypePokId);
+
+                    AttaqueVM attaqueVM = new AttaqueVM() { Name = attaque.Name, Description = attaque.Description, Power = attaque.Power, Precision = attaque.Precision, PP = attaque.PP, Level = pokemonAttaque.Level, CTCS = pokemonAttaque.CTCS, TypeAttaque = typeAttaque, TypePok = typePok };
+                    attaquesMaitreCapaciteVM.Add(attaqueVM);
+                }
+
+                AttaqueMaitreCapaciteIsVisible = await GetVisible(attaquesMaitreCapaciteVM.Count);
+                AttaqueMaitreCapacite = new MvxObservableCollection<AttaqueVM>(attaquesMaitreCapaciteVM);
+            });
             #endregion
         }
 
@@ -278,27 +381,27 @@ namespace QuizzPokedex.ViewModels
         }
 
         private async Task<int> GetHeightSectionTalent(List<TalentVM> talentsVM)
-        {   
+        {
             int height = 0;
 
             for (int i = 0; i < talentsVM.Count; i++)
             {
                 TalentVM talentVM = talentsVM[i];
-                if (talentVM.Description.Length < 50)
-                    height += 30;
-                else if (talentVM.Description.Length < 100)
-                    height += 55;
+                if (talentVM.Description.Length < 40)
+                    height += 50;
+                else if (talentVM.Description.Length < 80)
+                    height += 70;
                 else
                     height += 80;
             }
-                
+
             return height;
         }
 
         private async Task<int> GetHeightSection(int count)
         {
-            if (Pokemon.Name.Contains(Constantes.Ningale) 
-                || Pokemon.Name.Contains(Constantes.Ninjask) 
+            if (Pokemon.Name.Contains(Constantes.Ningale)
+                || Pokemon.Name.Contains(Constantes.Ninjask)
                 || Pokemon.Name.Contains(Constantes.Munja))
                 return await Task.FromResult(200);
             if (count <= 3)
@@ -506,12 +609,12 @@ namespace QuizzPokedex.ViewModels
             set { SetProperty(ref _talent, value); }
         }
 
-        private MvxObservableCollection<AttaqueVM> _attaqueLevel;
-        
-        public MvxObservableCollection<AttaqueVM> AttaqueLevel
+        private MvxObservableCollection<AttaqueVM> _attaqueNiveau;
+
+        public MvxObservableCollection<AttaqueVM> AttaqueNiveau
         {
-            get { return _attaqueLevel; }
-            set { SetProperty(ref _attaqueLevel, value); }
+            get { return _attaqueNiveau; }
+            set { SetProperty(ref _attaqueNiveau, value); }
         }
 
         private MvxObservableCollection<AttaqueVM> _attaqueCTCS;
@@ -728,6 +831,41 @@ namespace QuizzPokedex.ViewModels
         {
             get { return _varianteSexeIsVisible; }
             set { SetProperty(ref _varianteSexeIsVisible, value); }
+        }
+
+        private bool _attaqueNiveauIsVisible;
+        public bool AttaqueNiveauIsVisible
+        {
+            get { return _attaqueNiveauIsVisible; }
+            set { SetProperty(ref _attaqueNiveauIsVisible, value); }
+        }
+
+        private bool _attaqueCTCSIsVisible;
+        public bool AttaqueCTCSIsVisible
+        {
+            get { return _attaqueCTCSIsVisible; }
+            set { SetProperty(ref _attaqueCTCSIsVisible, value); }
+        }
+
+        private bool _attaqueReproductionIsVisible;
+        public bool AttaqueReproductionIsVisible
+        {
+            get { return _attaqueReproductionIsVisible; }
+            set { SetProperty(ref _attaqueReproductionIsVisible, value); }
+        }
+
+        private bool _attaqueEvolutionIsVisible;
+        public bool AttaqueEvolutionIsVisible
+        {
+            get { return _attaqueEvolutionIsVisible; }
+            set { SetProperty(ref _attaqueEvolutionIsVisible, value); }
+        }
+
+        private bool _attaqueMaitreCapaciteIsVisible;
+        public bool AttaqueMaitreCapaciteIsVisible
+        {
+            get { return _attaqueMaitreCapaciteIsVisible; }
+            set { SetProperty(ref _attaqueMaitreCapaciteIsVisible, value); }
         }
         #endregion
 

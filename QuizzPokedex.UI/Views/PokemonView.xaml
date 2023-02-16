@@ -184,7 +184,7 @@
                                             Grid.Row="0"
                                             Aspect="AspectFit"
                                             HeightRequest="20"
-                                            Source="{Binding DataMiniHome, Converter={StaticResource ByteToImageSourceConverter}}"
+                                            Source="{Binding PathMiniHome}"
                                             WidthRequest="20" />
                                         <VisualStateManager.VisualStateGroups>
                                             <VisualStateGroup Name="CommonStates">
@@ -1255,7 +1255,7 @@
                                             Margin="0,5,0,5"
                                             Aspect="AspectFit"
                                             HeightRequest="20"
-                                            Source="{Binding DataMiniHome, Converter={StaticResource ByteToImageSourceConverter}}"
+                                            Source="{Binding PathMiniHome}"
                                             WidthRequest="20" />
                                         <VisualStateManager.VisualStateGroups>
                                             <VisualStateGroup Name="CommonStates">
