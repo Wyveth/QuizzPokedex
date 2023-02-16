@@ -105,27 +105,8 @@ namespace QuizzPokedex.ViewModels
                 talentsVM.Add(talentVM);
             }
 
-            Talent = new MvxObservableCollection<TalentVM>(talentsVM);
-            HeightTalent = await GetHeightTalentSection(talentsVM);
-
-            if (!string.IsNullOrEmpty(Pokemon.TalentsID))
-            {
+            if (pokemonTalents.Count > 0)
                 TalentIsVisible = true;
-                if (Pokemon.TalentsID.Contains(","))
-                {
-
-                    SecondTalentIsVisible = true;
-                    string[] talentIds = Pokemon.TalentsID.Split(',');
-
-                    FirstTalent = await _talentService.GetByIdAsync(int.Parse(talentIds[0]));
-                    SecondTalent = await _talentService.GetByIdAsync(int.Parse(talentIds[1]));
-                }
-                else
-                {
-                    FirstTalent = await _talentService.GetByIdAsync(int.Parse(Pokemon.TalentsID));
-                    SecondTalentIsVisible = false;
-                }
-            }
             else
                 TalentIsVisible = false;
             #endregion
@@ -296,7 +277,7 @@ namespace QuizzPokedex.ViewModels
                 return await Task.FromResult(3);
         }
 
-        private async Task<int> GetHeightTalentSection(List<TalentVM> talentsVM)
+        private async Task<int> GetHeightSectionTalent(List<TalentVM> talentsVM)
         {   
             int height = 0;
 
