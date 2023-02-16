@@ -47,6 +47,18 @@ namespace QuizzPokedex.Services
             var result = await _database.Table<PokemonTypePok>().ToListAsync();
             return result.Find(m => m.Id.Equals(id));
         }
+
+        public async Task<List<PokemonTypePok>> GetTypesPokByPokemon(int pokemonId)
+        {
+            var result = await _database.Table<PokemonTypePok>().ToListAsync();
+            return result.FindAll(m => m.PokemonId.Equals(pokemonId));
+        }
+
+        public async Task<List<PokemonTypePok>> GetPokemonsByTypePok(int typePokId)
+        {
+            var result = await _database.Table<PokemonTypePok>().ToListAsync();
+            return result.FindAll(m => m.TypePokId.Equals(typePokId));
+        }
         #endregion
 
         public async Task<int> CreateAsync(PokemonTypePok pokemonTypePok)

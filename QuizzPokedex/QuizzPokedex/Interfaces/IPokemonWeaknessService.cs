@@ -7,8 +7,9 @@ namespace QuizzPokedex.Interfaces
     public interface IPokemonWeaknessService
     {
         Task<List<PokemonWeakness>> GetAllAsync();
-        Task<List<PokemonWeakness>> GetPokemonWeaknessesAsync(string pokemonWeaknesses);
         Task<PokemonWeakness> GetByIdAsync(int id);
+        Task<List<PokemonWeakness>> GetWeaknessesByPokemon(int pokemonId);
+        Task<List<PokemonWeakness>> GetPokemonsByWeakness(int typePokId);
         Task<int> CreateAsync(PokemonWeakness pokemonWeakness);
     }
 }

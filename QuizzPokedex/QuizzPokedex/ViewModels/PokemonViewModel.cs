@@ -8,8 +8,10 @@ using Plugin.SimpleAudioPlayer;
 using QuizzPokedex.Interfaces;
 using QuizzPokedex.Models;
 using QuizzPokedex.Resources;
+using QuizzPokedex.Services;
 using SkiaSharp;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -25,17 +27,25 @@ namespace QuizzPokedex.ViewModels
         private readonly ITalentService _talentService;
         private readonly ITypePokService _typePokService;
         private readonly IFavoriteService _favoriteService;
+        private readonly IPokemonTypePokService _pokemonTypePokService;
+        private readonly IPokemonWeaknessService _pokemonWeaknessService;
+        private readonly IPokemonTalentService _pokemonTalentService;
+        private readonly IPokemonAttaqueService _pokemonAttaqueService;
         private readonly IMvxMessenger _messenger;
         #endregion
 
         #region Constructor
-        public PokemonViewModel(IMvxNavigationService navigation, IMvxMessenger messenger, IMvxIoCProvider logger, IPokemonService pokemonService, ITalentService talentService, ITypePokService typeService, IFavoriteService favoriteService)
+        public PokemonViewModel(IMvxNavigationService navigation, IMvxMessenger messenger, IMvxIoCProvider logger, IPokemonService pokemonService, ITalentService talentService, ITypePokService typeService, IPokemonTypePokService pokemonTypePokService, IPokemonWeaknessService pokemonWeaknessService, IPokemonTalentService pokemonTalentService, IPokemonAttaqueService pokemonAttaqueService, IFavoriteService favoriteService)
         {
             _navigation = navigation;
             _logger = logger;
             _pokemonService = pokemonService;
             _talentService = talentService;
             _typePokService = typeService;
+            _pokemonTypePokService = pokemonTypePokService;
+            _pokemonWeaknessService = pokemonWeaknessService;
+            _pokemonTalentService = pokemonTalentService;
+            _pokemonAttaqueService = pokemonAttaqueService;
             _favoriteService = favoriteService;
             _messenger = messenger;
         }
@@ -78,6 +88,14 @@ namespace QuizzPokedex.ViewModels
             #endregion
 
             #region Talent
+            //List<PokemonTalent> pokemonTalents = await _pokemonTalentService.GetTalentsByPokemon(Pokemon.Id);
+            //List<Talent> talents = new List<Talent>();
+            //foreach (PokemonTalent pokemonTalent in pokemonTalents)
+            //{
+            //    Talent talent = await _talentService.GetByIdAsync(pokemonTalent.TalentId);
+            //    talents.Add(talent);
+            //}
+            
             if (!string.IsNullOrEmpty(Pokemon.TalentsID))
             {
                 TalentIsVisible = true;
@@ -101,11 +119,17 @@ namespace QuizzPokedex.ViewModels
             #endregion
 
             #region Type
-            int typeID = int.Parse(Pokemon.TypesID.Split(',')[0]);
-            FirstType = await _typePokService.GetByIdAsync(typeID);
+            List<PokemonTypePok> pokemonTypePoks = await _pokemonTypePokService.GetTypesPokByPokemon(Pokemon.Id);
+            List<TypePok> typePoks = new List<TypePok>();
+            foreach(PokemonTypePok pokemonTypePok in pokemonTypePoks)
+            {
+                TypePok typePok = await _typePokService.GetByIdAsync(pokemonTypePok.TypePokId);
+                typePoks.Add(typePok);
+            }
 
-            var resultTypes = await _typePokService.GetTypesAsync(Pokemon.TypesID);
-            Types = new MvxObservableCollection<TypePok>(resultTypes);
+            FirstType = typePoks[0];
+
+            Types = new MvxObservableCollection<TypePok>(typePoks);
             #endregion
 
             #region Family Evolution
@@ -167,10 +191,17 @@ namespace QuizzPokedex.ViewModels
             #endregion
 
             #region Weakness
-            var resultWeakness = await _typePokService.GetTypesAsync(Pokemon.WeaknessID);
-            HeightWeakness = await GetHeightSectionWeakness(resultWeakness.Count);
-            CountWeakness = await GetNbSpan(resultWeakness.Count);
-            Weakness = new MvxObservableCollection<TypePok>(resultWeakness);
+            List<PokemonWeakness> pokemonWeaknesses = await _pokemonWeaknessService.GetWeaknessesByPokemon(Pokemon.Id);
+            List<TypePok> weaknesses = new List<TypePok>();
+            foreach (PokemonWeakness pokemonWeakness in pokemonWeaknesses)
+            {
+                TypePok weakness = await _typePokService.GetByIdAsync(pokemonWeakness.TypePokId);
+                weaknesses.Add(weakness);
+            }
+
+            HeightWeakness = await GetHeightSectionWeakness(weaknesses.Count);
+            CountWeakness = await GetNbSpan(weaknesses.Count);
+            Weakness = new MvxObservableCollection<TypePok>(weaknesses);
             #endregion
         }
 

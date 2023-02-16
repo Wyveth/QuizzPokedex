@@ -9,6 +9,8 @@ namespace QuizzPokedex.Interfaces
         Task<List<PokemonTypePok>> GetAllAsync();
         Task<List<PokemonTypePok>> GetPokemonTypePoksAsync(string pokemonTypePoks);
         Task<PokemonTypePok> GetByIdAsync(int id);
+        Task<List<PokemonTypePok>> GetTypesPokByPokemon(int pokemonId);
+        Task<List<PokemonTypePok>> GetPokemonsByTypePok(int typePokId);
         Task<int> CreateAsync(PokemonTypePok pokemonTypePok);
     }
 }

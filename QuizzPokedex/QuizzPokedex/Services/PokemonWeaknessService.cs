@@ -28,24 +28,22 @@ namespace QuizzPokedex.Services
             return result;
         }
 
-        public async Task<List<PokemonWeakness>> GetPokemonWeaknessesAsync(string pokemonWeaknesses)
-        {
-            string[] vs = pokemonWeaknesses.Split(',');
-            List<PokemonWeakness> result = new List<PokemonWeakness>();
-            foreach (var item in vs)
-            {
-                int id = int.Parse(item);
-                PokemonWeakness pokemonWeakness = await GetByIdAsync(id);
-                if (pokemonWeakness != null)
-                    result.Add(pokemonWeakness);
-            }
-
-            return result;
-        }
         public async Task<PokemonWeakness> GetByIdAsync(int id)
         {
             var result = await _database.Table<PokemonWeakness>().ToListAsync();
             return result.Find(m => m.Id.Equals(id));
+        }
+
+        public async Task<List<PokemonWeakness>> GetWeaknessesByPokemon(int pokemonId)
+        {
+            var result = await _database.Table<PokemonWeakness>().ToListAsync();
+            return result.FindAll(m => m.PokemonId.Equals(pokemonId));
+        }
+
+        public async Task<List<PokemonWeakness>> GetPokemonsByWeakness(int typePokId)
+        {
+            var result = await _database.Table<PokemonWeakness>().ToListAsync();
+            return result.FindAll(m => m.TypePokId.Equals(typePokId));
         }
         #endregion
 

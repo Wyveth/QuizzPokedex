@@ -47,6 +47,18 @@ namespace QuizzPokedex.Services
             var result = await _database.Table<PokemonTalent>().ToListAsync();
             return result.Find(m => m.Id.Equals(id));
         }
+
+        public async Task<List<PokemonTalent>> GetTalentsByPokemon(int pokemonId)
+        {
+            var result = await _database.Table<PokemonTalent>().ToListAsync();
+            return result.FindAll(m => m.PokemonId.Equals(pokemonId));
+        }
+
+        public async Task<List<PokemonTalent>> GetPokemonsByTalent(int talentId)
+        {
+            var result = await _database.Table<PokemonTalent>().ToListAsync();
+            return result.FindAll(m => m.TalentId.Equals(talentId));
+        }
         #endregion
 
         public async Task<int> CreateAsync(PokemonTalent pokemonTalent)
