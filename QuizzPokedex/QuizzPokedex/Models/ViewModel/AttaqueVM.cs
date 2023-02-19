@@ -16,7 +16,7 @@ namespace QuizzPokedex.Models.ViewModel
 
         public string PP { get; set; }
 
-        public string Level { get; set; }
+        public int Level { get; set; }
 
         public string CTCS { get; set; }
 

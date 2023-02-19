@@ -287,6 +287,9 @@ namespace QuizzPokedex.Services
             pokemon.StatVitesse = pokemonJson.StatVitesse;
             pokemon.StatTotal = pokemonJson.StatTotal;
             pokemon.Generation = pokemonJson.Generation;
+            pokemon.EggMoves = pokemonJson.EggMoves;
+            pokemon.CaptureRate = pokemonJson.CaptureRate;
+            pokemon.BasicHappiness = pokemonJson.BasicHappiness;
             pokemon.Game = pokemonJson.Game;
             pokemon.NextUrl = pokemonJson.NextUrl;
             pokemon.Updated = false;

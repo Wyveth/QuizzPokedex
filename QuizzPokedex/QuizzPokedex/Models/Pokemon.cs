@@ -92,6 +92,15 @@ namespace QuizzPokedex.Models
         //Generation Number
         public int Generation { get; set; }
 
+        //Egg Moves
+        public string EggMoves { get; set; }
+
+        //Capture Rate
+        public string CaptureRate { get; set; }
+
+        //Basic Happiness
+        public string BasicHappiness { get; set; }
+
         //Game Version
         public string Game { get; set; }
 

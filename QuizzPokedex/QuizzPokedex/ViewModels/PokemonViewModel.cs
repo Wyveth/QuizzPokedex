@@ -1,4 +1,5 @@
 ﻿using Java.Lang;
+using Java.Util.Logging;
 using Microcharts;
 using MvvmCross.Commands;
 using MvvmCross.IoC;
@@ -211,10 +212,12 @@ namespace QuizzPokedex.ViewModels
                     TypeAttaque typeAttaque = await _typeAttaqueService.GetByIdAsync(attaque.TypeAttaqueId);
                     TypePok typePok = await _typePokService.GetByIdAsync(attaque.TypePokId);
 
-                    AttaqueVM attaqueVM = new AttaqueVM() { Name = attaque.Name, Description = attaque.Description, Power = attaque.Power, Precision = attaque.Precision, PP = attaque.PP, Level = pokemonAttaque.Level, CTCS = pokemonAttaque.CTCS, TypeAttaque = typeAttaque, TypePok = typePok };
+                    AttaqueVM attaqueVM = new AttaqueVM() { Name = attaque.Name, Description = attaque.Description, Power = attaque.Power, Precision = attaque.Precision, PP = attaque.PP, Level = int.Parse(pokemonAttaque.Level), CTCS = pokemonAttaque.CTCS, TypeAttaque = typeAttaque, TypePok = typePok };
                     attaquesNiveauVM.Add(attaqueVM);
+                    attaquesNiveauVM.Sort((x, y) => x.Level.CompareTo(y.Level));
                 }
 
+                HeightNiveau = await GetHeightSectionAttaque(attaquesNiveauVM.Count, 49);
                 AttaqueNiveauIsVisible = await GetVisible(attaquesNiveauVM.Count);
                 AttaqueNiveau = new MvxObservableCollection<AttaqueVM>(attaquesNiveauVM);
             });
@@ -223,18 +226,19 @@ namespace QuizzPokedex.ViewModels
             #region Attaque - CTCS
             await Task.Run(async () =>
             {
-                List<PokemonAttaque> pokemonAttaques = await _pokemonAttaqueService.GetAttaquesByPokemonTypeLearnAsync(Pokemon.Id, Constantes.CTCS);
+                List<PokemonAttaque> pokemonAttaqueds = await _pokemonAttaqueService.GetAttaquesByPokemonTypeLearnAsync(Pokemon.Id, Constantes.CTCS);
                 List<AttaqueVM> attaquesCTCSVM = new List<AttaqueVM>();
-                foreach (PokemonAttaque pokemonAttaque in pokemonAttaques)
+                foreach (PokemonAttaque pokemonAttaque in pokemonAttaqueds)
                 {
                     Attaque attaque = await _attaqueService.GetByIdAsync(pokemonAttaque.AttaqueId);
                     TypeAttaque typeAttaque = await _typeAttaqueService.GetByIdAsync(attaque.TypeAttaqueId);
                     TypePok typePok = await _typePokService.GetByIdAsync(attaque.TypePokId);
 
-                    AttaqueVM attaqueVM = new AttaqueVM() { Name = attaque.Name, Description = attaque.Description, Power = attaque.Power, Precision = attaque.Precision, PP = attaque.PP, Level = pokemonAttaque.Level, CTCS = pokemonAttaque.CTCS, TypeAttaque = typeAttaque, TypePok = typePok };
+                    AttaqueVM attaqueVM = new AttaqueVM() { Name = attaque.Name, Description = attaque.Description, Power = attaque.Power, Precision = attaque.Precision, PP = attaque.PP, Level = 0, CTCS = pokemonAttaque.CTCS, TypeAttaque = typeAttaque, TypePok = typePok };
                     attaquesCTCSVM.Add(attaqueVM);
                 }
 
+                HeightCTCS = await GetHeightSectionAttaque(attaquesCTCSVM.Count, 49);
                 AttaqueCTCSIsVisible = await GetVisible(attaquesCTCSVM.Count);
                 AttaqueCTCS = new MvxObservableCollection<AttaqueVM>(attaquesCTCSVM);
             });
@@ -251,10 +255,11 @@ namespace QuizzPokedex.ViewModels
                     TypeAttaque typeAttaque = await _typeAttaqueService.GetByIdAsync(attaque.TypeAttaqueId);
                     TypePok typePok = await _typePokService.GetByIdAsync(attaque.TypePokId);
 
-                    AttaqueVM attaqueVM = new AttaqueVM() { Name = attaque.Name, Description = attaque.Description, Power = attaque.Power, Precision = attaque.Precision, PP = attaque.PP, Level = pokemonAttaque.Level, CTCS = pokemonAttaque.CTCS, TypeAttaque = typeAttaque, TypePok = typePok };
+                    AttaqueVM attaqueVM = new AttaqueVM() { Name = attaque.Name, Description = attaque.Description, Power = attaque.Power, Precision = attaque.Precision, PP = attaque.PP, Level = 0, CTCS = pokemonAttaque.CTCS, TypeAttaque = typeAttaque, TypePok = typePok };
                     attaquesReproductionVM.Add(attaqueVM);
                 }
 
+                HeightReproduction = await GetHeightSectionAttaque(attaquesReproductionVM.Count, 43);
                 AttaqueReproductionIsVisible = await GetVisible(attaquesReproductionVM.Count);
                 AttaqueReproduction = new MvxObservableCollection<AttaqueVM>(attaquesReproductionVM);
             });
@@ -271,10 +276,11 @@ namespace QuizzPokedex.ViewModels
                     TypeAttaque typeAttaque = await _typeAttaqueService.GetByIdAsync(attaque.TypeAttaqueId);
                     TypePok typePok = await _typePokService.GetByIdAsync(attaque.TypePokId);
 
-                    AttaqueVM attaqueVM = new AttaqueVM() { Name = attaque.Name, Description = attaque.Description, Power = attaque.Power, Precision = attaque.Precision, PP = attaque.PP, Level = pokemonAttaque.Level, CTCS = pokemonAttaque.CTCS, TypeAttaque = typeAttaque, TypePok = typePok };
+                    AttaqueVM attaqueVM = new AttaqueVM() { Name = attaque.Name, Description = attaque.Description, Power = attaque.Power, Precision = attaque.Precision, PP = attaque.PP, Level = 0, CTCS = pokemonAttaque.CTCS, TypeAttaque = typeAttaque, TypePok = typePok };
                     attaquesEvolutionVM.Add(attaqueVM);
                 }
 
+                HeightEvolution = await GetHeightSectionAttaque(attaquesEvolutionVM.Count, 43);
                 AttaqueEvolutionIsVisible = await GetVisible(attaquesEvolutionVM.Count);
                 AttaqueEvolution = new MvxObservableCollection<AttaqueVM>(attaquesEvolutionVM);
             });
@@ -291,10 +297,11 @@ namespace QuizzPokedex.ViewModels
                     TypeAttaque typeAttaque = await _typeAttaqueService.GetByIdAsync(attaque.TypeAttaqueId);
                     TypePok typePok = await _typePokService.GetByIdAsync(attaque.TypePokId);
 
-                    AttaqueVM attaqueVM = new AttaqueVM() { Name = attaque.Name, Description = attaque.Description, Power = attaque.Power, Precision = attaque.Precision, PP = attaque.PP, Level = pokemonAttaque.Level, CTCS = pokemonAttaque.CTCS, TypeAttaque = typeAttaque, TypePok = typePok };
+                    AttaqueVM attaqueVM = new AttaqueVM() { Name = attaque.Name, Description = attaque.Description, Power = attaque.Power, Precision = attaque.Precision, PP = attaque.PP, Level = 0, CTCS = pokemonAttaque.CTCS, TypeAttaque = typeAttaque, TypePok = typePok };
                     attaquesMaitreCapaciteVM.Add(attaqueVM);
                 }
 
+                HeightMaitreCapacite = await GetHeightSectionAttaque(attaquesMaitreCapaciteVM.Count, 43);
                 AttaqueMaitreCapaciteIsVisible = await GetVisible(attaquesMaitreCapaciteVM.Count);
                 AttaqueMaitreCapacite = new MvxObservableCollection<AttaqueVM>(attaquesMaitreCapaciteVM);
             });
@@ -438,6 +445,11 @@ namespace QuizzPokedex.ViewModels
                 return await Task.FromResult(100);
             else
                 return await Task.FromResult(40);
+        }
+
+        private async Task<int> GetHeightSectionAttaque(int count, int height = 0)
+        {
+            return await Task.FromResult(30 + (height * count));
         }
         #endregion
         #endregion
@@ -743,6 +755,46 @@ namespace QuizzPokedex.ViewModels
             get { return _heightWeakness; }
             set { SetProperty(ref _heightWeakness, value); }
         }
+
+        private int _heightNiveau;
+
+        public int HeightNiveau
+        {
+            get { return _heightNiveau; }
+            set { SetProperty(ref _heightNiveau, value); }
+        }
+
+        private int _heightCTCS;
+
+        public int HeightCTCS
+        {
+            get { return _heightCTCS; }
+            set { SetProperty(ref _heightCTCS, value); }
+        }
+
+        private int _heightReproduction;
+
+        public int HeightReproduction
+        {
+            get { return _heightReproduction; }
+            set { SetProperty(ref _heightReproduction, value); }
+        }
+
+        private int _heightEvolution;
+
+        public int HeightEvolution
+        {
+            get { return _heightEvolution; }
+            set { SetProperty(ref _heightEvolution, value); }
+        }
+
+        private int _heightMaitreCapacite;
+
+        public int HeightMaitreCapacite
+        {
+            get { return _heightMaitreCapacite; }
+            set { SetProperty(ref _heightMaitreCapacite, value); }
+        }
         #endregion
 
         #region IsVisible
@@ -752,14 +804,6 @@ namespace QuizzPokedex.ViewModels
         {
             get { return _talentIsVisible; }
             set { SetProperty(ref _talentIsVisible, value); }
-        }
-
-        private bool _2ndTalentIsVisible;
-
-        public bool SecondTalentIsVisible
-        {
-            get { return _2ndTalentIsVisible; }
-            set { SetProperty(ref _2ndTalentIsVisible, value); }
         }
 
         private bool _statisticIsVisible;

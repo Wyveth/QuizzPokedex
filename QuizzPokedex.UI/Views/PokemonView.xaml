@@ -140,7 +140,7 @@
                                 TextColor="black" />
                         </StackLayout>
                     </StackLayout>
-                    <StackLayout AbsoluteLayout.LayoutBounds="0.5,0.9,0.4,0.05" AbsoluteLayout.LayoutFlags="All">
+                    <StackLayout AbsoluteLayout.LayoutBounds="0.5,0.9,0.5,0.05" AbsoluteLayout.LayoutFlags="All">
                         <StackLayout
                             Padding="10"
                             ef:Border.Color="{Binding FirstType.ImgColor}"
@@ -245,8 +245,11 @@
                         </shadows:Shadows>
                     </StackLayout>
                     <StackLayout Margin="0,30,0,0">
-                        <Grid Margin="70,10,70,10">
+                        <Grid Margin="60,10,60,10">
                             <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
                                 <RowDefinition />
                                 <RowDefinition />
                                 <RowDefinition />
@@ -256,6 +259,7 @@
                                 <ColumnDefinition />
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
+
                             <Label
                                 Grid.Row="0"
                                 xct:ShadowEffect.Color="#464C56"
@@ -272,6 +276,7 @@
                                 xct:ShadowEffect.Opacity="0.5"
                                 Text="{Binding Pokemon.Category}"
                                 TextColor="black" />
+
                             <Label
                                 Grid.Row="1"
                                 xct:ShadowEffect.Color="#464C56"
@@ -288,6 +293,7 @@
                                 xct:ShadowEffect.Opacity="0.5"
                                 Text="{Binding Pokemon.Size}"
                                 TextColor="black" />
+
                             <Label
                                 Grid.Row="2"
                                 xct:ShadowEffect.Color="#464C56"
@@ -304,17 +310,72 @@
                                 xct:ShadowEffect.Opacity="0.5"
                                 Text="{Binding Pokemon.Weight}"
                                 TextColor="black" />
+
+                            <Label
+                                Grid.Row="3"
+                                xct:ShadowEffect.Color="#464C56"
+                                xct:ShadowEffect.OffsetY="10"
+                                xct:ShadowEffect.Opacity="0.5"
+                                FontAttributes="Bold"
+                                Text="Éclosion:"
+                                TextColor="black" />
+                            <Label
+                                Grid.Row="3"
+                                Grid.Column="1"
+                                xct:ShadowEffect.Color="#464C56"
+                                xct:ShadowEffect.OffsetY="10"
+                                xct:ShadowEffect.Opacity="0.5"
+                                Text="{Binding Pokemon.EggMoves, StringFormat='{0} pas'}"
+                                TextColor="black" />
+
+                            <Label
+                                Grid.Row="4"
+                                Grid.ColumnSpan="2"
+                                xct:ShadowEffect.Color="#464C56"
+                                xct:ShadowEffect.OffsetY="10"
+                                xct:ShadowEffect.Opacity="0.5"
+                                FontAttributes="Bold"
+                                Text="Taux de capture:"
+                                TextColor="black" />
+                            <Label
+                                Grid.Row="4"
+                                Grid.Column="1"
+                                xct:ShadowEffect.Color="#464C56"
+                                xct:ShadowEffect.OffsetY="10"
+                                xct:ShadowEffect.Opacity="0.5"
+                                HorizontalTextAlignment="center"
+                                Text="{Binding Pokemon.CaptureRate}"
+                                TextColor="black" />
+
+                            <Label
+                                Grid.Row="5"
+                                Grid.ColumnSpan="2"
+                                xct:ShadowEffect.Color="#464C56"
+                                xct:ShadowEffect.OffsetY="10"
+                                xct:ShadowEffect.Opacity="0.5"
+                                FontAttributes="Bold"
+                                Text="Bonheur de base:"
+                                TextColor="black" />
+                            <Label
+                                Grid.Row="5"
+                                Grid.Column="1"
+                                xct:ShadowEffect.Color="#464C56"
+                                xct:ShadowEffect.OffsetY="10"
+                                xct:ShadowEffect.Opacity="0.5"
+                                HorizontalTextAlignment="Center"
+                                Text="{Binding Pokemon.BasicHappiness}"
+                                TextColor="black" />
+
                             <Image
-                                Grid.Row="0"
+                                Grid.Row="1"
                                 Grid.RowSpan="3"
                                 Grid.Column="2"
                                 ef:AddCommand.Command="{Binding PlaySoundCommandAsync}"
                                 Aspect="AspectFit"
                                 Background="White"
                                 BackgroundColor="White"
-                                HeightRequest="40"
-                                Source="{Binding Pokemon.PathSprite}"
-                                WidthRequest="40" />
+                                HeightRequest="20"
+                                Source="{Binding Pokemon.PathSprite}" />
                         </Grid>
                     </StackLayout>
                 </RelativeLayout>
@@ -1270,6 +1331,994 @@
                                 </DataTemplate>
                             </CollectionView.ItemTemplate>
                         </CollectionView>
+                    </StackLayout>
+                </RelativeLayout>
+                <RelativeLayout IsVisible="{Binding AttaqueNiveauIsVisible}">
+                    <StackLayout WidthRequest="170">
+                        <shadows:Shadows CornerRadius="20">
+                            <shadows:Shadows.Shades>
+                                <shadows:ImmutableShades>
+                                    <shadows:Shade
+                                        BlurRadius="10"
+                                        Opacity="0.5"
+                                        Offset="-1,-1"
+                                        Color="#464C56" />
+                                    <shadows:Shade
+                                        BlurRadius="10"
+                                        Opacity="0.5"
+                                        Offset="1,1"
+                                        Color="#464C56" />
+                                </shadows:ImmutableShades>
+                            </shadows:Shadows.Shades>
+                            <pv:PancakeView
+                                BackgroundColor="{Binding FirstType.InfoColor}"
+                                Border="{pv:BorderMarkup Color=Black,
+                                                         Thickness=0}"
+                                CornerRadius="0,100,0,100">
+                                <Label
+                                    Padding="20,4,4,4"
+                                    xct:ShadowEffect.Color="#464C56"
+                                    xct:ShadowEffect.OffsetY="10"
+                                    xct:ShadowEffect.Opacity="0.5"
+                                    Text="Capacités (Par niveau)"
+                                    TextColor="White" />
+                            </pv:PancakeView>
+                        </shadows:Shadows>
+                    </StackLayout>
+                    <StackLayout Margin="50,40,50,10">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="{Binding HeightNiveau}" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <CollectionView
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                ItemsSource="{Binding AttaqueNiveau}">
+                                <CollectionView.Header>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="20" />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="3*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <Label
+                                            Grid.Row="0"
+                                            Grid.Column="3"
+                                            xct:ShadowEffect.Color="#464C56"
+                                            xct:ShadowEffect.OffsetY="10"
+                                            xct:ShadowEffect.Opacity="0.5"
+                                            FontSize="13"
+                                            HorizontalTextAlignment="Center"
+                                            Text="Puis."
+                                            TextColor="black"
+                                            VerticalTextAlignment="Center" />
+
+                                        <Label
+                                            Grid.Row="0"
+                                            Grid.Column="4"
+                                            xct:ShadowEffect.Color="#464C56"
+                                            xct:ShadowEffect.OffsetY="10"
+                                            xct:ShadowEffect.Opacity="0.5"
+                                            FontSize="13"
+                                            HorizontalTextAlignment="Center"
+                                            Text="Préc."
+                                            TextColor="black"
+                                            VerticalTextAlignment="Center" />
+
+                                        <Label
+                                            Grid.Row="0"
+                                            Grid.Column="5"
+                                            xct:ShadowEffect.Color="#464C56"
+                                            xct:ShadowEffect.OffsetY="10"
+                                            xct:ShadowEffect.Opacity="0.5"
+                                            FontSize="13"
+                                            HorizontalTextAlignment="Center"
+                                            Text="PP"
+                                            TextColor="black"
+                                            VerticalTextAlignment="Center" />
+                                    </Grid>
+                                </CollectionView.Header>
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="15" />
+                                                <RowDefinition Height="15" />
+                                                <RowDefinition Height="7" />
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="3*" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <Label
+                                                Grid.Row="0"
+                                                Grid.Column="0"
+                                                xct:ShadowEffect.Color="#464C56"
+                                                xct:ShadowEffect.OffsetY="10"
+                                                xct:ShadowEffect.Opacity="0.5"
+                                                FontSize="13"
+                                                Text="{Binding Name}"
+                                                TextColor="black"
+                                                VerticalTextAlignment="Center" />
+
+                                            <Image
+                                                Grid.Row="0"
+                                                Grid.RowSpan="2"
+                                                Grid.Column="1"
+                                                Aspect="AspectFit"
+                                                HeightRequest="20"
+                                                HorizontalOptions="Center"
+                                                Source="{Binding TypePok.PathAutoHome}" />
+                                            <Image
+                                                Grid.Row="0"
+                                                Grid.RowSpan="2"
+                                                Grid.Column="2"
+                                                Aspect="AspectFit"
+                                                HeightRequest="20"
+                                                HorizontalOptions="FillAndExpand"
+                                                Source="{Binding TypeAttaque.PathImg}" />
+                                            <Label
+                                                Grid.Row="0"
+                                                Grid.RowSpan="2"
+                                                Grid.Column="3"
+                                                xct:ShadowEffect.Color="#464C56"
+                                                xct:ShadowEffect.OffsetY="10"
+                                                xct:ShadowEffect.Opacity="0.5"
+                                                FontSize="11"
+                                                HorizontalOptions="Center"
+                                                Text="{Binding Power}"
+                                                TextColor="black"
+                                                VerticalTextAlignment="Center" />
+                                            <Label
+                                                Grid.Row="0"
+                                                Grid.RowSpan="2"
+                                                Grid.Column="4"
+                                                xct:ShadowEffect.Color="#464C56"
+                                                xct:ShadowEffect.OffsetY="10"
+                                                xct:ShadowEffect.Opacity="0.5"
+                                                FontSize="11"
+                                                HorizontalOptions="Center"
+                                                Text="{Binding Precision}"
+                                                TextColor="black"
+                                                VerticalTextAlignment="Center" />
+                                            <Label
+                                                Grid.Row="0"
+                                                Grid.RowSpan="2"
+                                                Grid.Column="5"
+                                                xct:ShadowEffect.Color="#464C56"
+                                                xct:ShadowEffect.OffsetY="10"
+                                                xct:ShadowEffect.Opacity="0.5"
+                                                FontSize="11"
+                                                HorizontalOptions="Center"
+                                                Text="{Binding PP}"
+                                                TextColor="black"
+                                                VerticalTextAlignment="Center" />
+
+                                            <Label
+                                                Grid.Row="1"
+                                                Grid.Column="0"
+                                                xct:ShadowEffect.Color="#464C56"
+                                                xct:ShadowEffect.OffsetY="10"
+                                                xct:ShadowEffect.Opacity="0.5"
+                                                FontSize="10"
+                                                Text="{Binding Level, StringFormat='Appris au niveau {0}'}"
+                                                TextColor="{Binding TypePok.TypeColor}"
+                                                VerticalTextAlignment="Center" />
+
+                                            <BoxView
+                                                Grid.Row="2"
+                                                Grid.ColumnSpan="6"
+                                                Margin="0,3"
+                                                BackgroundColor="#464C56"
+                                                HeightRequest="1"
+                                                HorizontalOptions="FillAndExpand"
+                                                Opacity="0.2"
+                                                VerticalOptions="CenterAndExpand" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                        </Grid>
+                    </StackLayout>
+                </RelativeLayout>
+                <RelativeLayout IsVisible="{Binding AttaqueCTCSIsVisible}">
+                    <StackLayout WidthRequest="190">
+                        <shadows:Shadows CornerRadius="20">
+                            <shadows:Shadows.Shades>
+                                <shadows:ImmutableShades>
+                                    <shadows:Shade
+                                        BlurRadius="10"
+                                        Opacity="0.5"
+                                        Offset="-1,-1"
+                                        Color="#464C56" />
+                                    <shadows:Shade
+                                        BlurRadius="10"
+                                        Opacity="0.5"
+                                        Offset="1,1"
+                                        Color="#464C56" />
+                                </shadows:ImmutableShades>
+                            </shadows:Shadows.Shades>
+                            <pv:PancakeView
+                                BackgroundColor="{Binding FirstType.InfoColor}"
+                                Border="{pv:BorderMarkup Color=Black,
+                                                         Thickness=0}"
+                                CornerRadius="0,100,0,100">
+                                <Label
+                                    Padding="20,4,4,4"
+                                    xct:ShadowEffect.Color="#464C56"
+                                    xct:ShadowEffect.OffsetY="10"
+                                    xct:ShadowEffect.Opacity="0.5"
+                                    Text="Capacités (Par CT/CS)"
+                                    TextColor="White" />
+                            </pv:PancakeView>
+                        </shadows:Shadows>
+                    </StackLayout>
+                    <StackLayout Margin="50,40,50,10">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="{Binding HeightCTCS}" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <CollectionView
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                ItemsSource="{Binding AttaqueCTCS}">
+                                <CollectionView.Header>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="20" />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="3*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <Label
+                                            Grid.Row="0"
+                                            Grid.Column="3"
+                                            xct:ShadowEffect.Color="#464C56"
+                                            xct:ShadowEffect.OffsetY="10"
+                                            xct:ShadowEffect.Opacity="0.5"
+                                            FontSize="13"
+                                            HorizontalTextAlignment="Center"
+                                            Text="Puis."
+                                            TextColor="black"
+                                            VerticalTextAlignment="Center" />
+
+                                        <Label
+                                            Grid.Row="0"
+                                            Grid.Column="4"
+                                            xct:ShadowEffect.Color="#464C56"
+                                            xct:ShadowEffect.OffsetY="10"
+                                            xct:ShadowEffect.Opacity="0.5"
+                                            FontSize="13"
+                                            HorizontalTextAlignment="Center"
+                                            Text="Préc."
+                                            TextColor="black"
+                                            VerticalTextAlignment="Center" />
+
+                                        <Label
+                                            Grid.Row="0"
+                                            Grid.Column="5"
+                                            xct:ShadowEffect.Color="#464C56"
+                                            xct:ShadowEffect.OffsetY="10"
+                                            xct:ShadowEffect.Opacity="0.5"
+                                            FontSize="13"
+                                            HorizontalTextAlignment="Center"
+                                            Text="PP"
+                                            TextColor="black"
+                                            VerticalTextAlignment="Center" />
+                                    </Grid>
+                                </CollectionView.Header>
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="15" />
+                                                <RowDefinition Height="15" />
+                                                <RowDefinition Height="7" />
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="3*" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <Label
+                                                Grid.Row="0"
+                                                Grid.Column="0"
+                                                xct:ShadowEffect.Color="#464C56"
+                                                xct:ShadowEffect.OffsetY="10"
+                                                xct:ShadowEffect.Opacity="0.5"
+                                                FontSize="13"
+                                                Text="{Binding Name}"
+                                                TextColor="black"
+                                                VerticalTextAlignment="Center" />
+
+                                            <Image
+                                                Grid.Row="0"
+                                                Grid.RowSpan="2"
+                                                Grid.Column="1"
+                                                Aspect="AspectFit"
+                                                HeightRequest="20"
+                                                HorizontalOptions="Center"
+                                                Source="{Binding TypePok.PathAutoHome}" />
+                                            <Image
+                                                Grid.Row="0"
+                                                Grid.RowSpan="2"
+                                                Grid.Column="2"
+                                                Aspect="AspectFit"
+                                                HeightRequest="20"
+                                                HorizontalOptions="FillAndExpand"
+                                                Source="{Binding TypeAttaque.PathImg}" />
+                                            <Label
+                                                Grid.Row="0"
+                                                Grid.RowSpan="2"
+                                                Grid.Column="3"
+                                                xct:ShadowEffect.Color="#464C56"
+                                                xct:ShadowEffect.OffsetY="10"
+                                                xct:ShadowEffect.Opacity="0.5"
+                                                FontSize="11"
+                                                HorizontalOptions="Center"
+                                                Text="{Binding Power}"
+                                                TextColor="black"
+                                                VerticalTextAlignment="Center" />
+                                            <Label
+                                                Grid.Row="0"
+                                                Grid.RowSpan="2"
+                                                Grid.Column="4"
+                                                xct:ShadowEffect.Color="#464C56"
+                                                xct:ShadowEffect.OffsetY="10"
+                                                xct:ShadowEffect.Opacity="0.5"
+                                                FontSize="11"
+                                                HorizontalOptions="Center"
+                                                Text="{Binding Precision}"
+                                                TextColor="black"
+                                                VerticalTextAlignment="Center" />
+                                            <Label
+                                                Grid.Row="0"
+                                                Grid.RowSpan="2"
+                                                Grid.Column="5"
+                                                xct:ShadowEffect.Color="#464C56"
+                                                xct:ShadowEffect.OffsetY="10"
+                                                xct:ShadowEffect.Opacity="0.5"
+                                                FontSize="11"
+                                                HorizontalOptions="Center"
+                                                Text="{Binding PP}"
+                                                TextColor="black"
+                                                VerticalTextAlignment="Center" />
+
+                                            <Label
+                                                Grid.Row="1"
+                                                Grid.Column="0"
+                                                xct:ShadowEffect.Color="#464C56"
+                                                xct:ShadowEffect.OffsetY="10"
+                                                xct:ShadowEffect.Opacity="0.5"
+                                                FontSize="10"
+                                                Text="{Binding CTCS}"
+                                                TextColor="{Binding TypePok.TypeColor}"
+                                                VerticalTextAlignment="Center" />
+
+                                            <BoxView
+                                                Grid.Row="2"
+                                                Grid.ColumnSpan="6"
+                                                Margin="0,3"
+                                                BackgroundColor="#464C56"
+                                                HeightRequest="1"
+                                                HorizontalOptions="FillAndExpand"
+                                                Opacity="0.2"
+                                                VerticalOptions="CenterAndExpand" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                        </Grid>
+                    </StackLayout>
+                </RelativeLayout>
+                <RelativeLayout IsVisible="{Binding AttaqueReproductionIsVisible}">
+                    <StackLayout WidthRequest="230">
+                        <shadows:Shadows CornerRadius="20">
+                            <shadows:Shadows.Shades>
+                                <shadows:ImmutableShades>
+                                    <shadows:Shade
+                                        BlurRadius="10"
+                                        Opacity="0.5"
+                                        Offset="-1,-1"
+                                        Color="#464C56" />
+                                    <shadows:Shade
+                                        BlurRadius="10"
+                                        Opacity="0.5"
+                                        Offset="1,1"
+                                        Color="#464C56" />
+                                </shadows:ImmutableShades>
+                            </shadows:Shadows.Shades>
+                            <pv:PancakeView
+                                BackgroundColor="{Binding FirstType.InfoColor}"
+                                Border="{pv:BorderMarkup Color=Black,
+                                                         Thickness=0}"
+                                CornerRadius="0,100,0,100">
+                                <Label
+                                    Padding="20,4,4,4"
+                                    xct:ShadowEffect.Color="#464C56"
+                                    xct:ShadowEffect.OffsetY="10"
+                                    xct:ShadowEffect.Opacity="0.5"
+                                    Text="Capacités (Par reproduction)"
+                                    TextColor="White" />
+                            </pv:PancakeView>
+                        </shadows:Shadows>
+                    </StackLayout>
+                    <StackLayout Margin="50,40,50,10">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="{Binding HeightReproduction}" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <CollectionView
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                ItemsSource="{Binding AttaqueReproduction}">
+                                <CollectionView.Header>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="20" />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="3*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <Label
+                                            Grid.Row="0"
+                                            Grid.Column="3"
+                                            xct:ShadowEffect.Color="#464C56"
+                                            xct:ShadowEffect.OffsetY="10"
+                                            xct:ShadowEffect.Opacity="0.5"
+                                            FontSize="13"
+                                            HorizontalTextAlignment="Center"
+                                            Text="Puis."
+                                            TextColor="black"
+                                            VerticalTextAlignment="Center" />
+
+                                        <Label
+                                            Grid.Row="0"
+                                            Grid.Column="4"
+                                            xct:ShadowEffect.Color="#464C56"
+                                            xct:ShadowEffect.OffsetY="10"
+                                            xct:ShadowEffect.Opacity="0.5"
+                                            FontSize="13"
+                                            HorizontalTextAlignment="Center"
+                                            Text="Préc."
+                                            TextColor="black"
+                                            VerticalTextAlignment="Center" />
+
+                                        <Label
+                                            Grid.Row="0"
+                                            Grid.Column="5"
+                                            xct:ShadowEffect.Color="#464C56"
+                                            xct:ShadowEffect.OffsetY="10"
+                                            xct:ShadowEffect.Opacity="0.5"
+                                            FontSize="13"
+                                            HorizontalTextAlignment="Center"
+                                            Text="PP"
+                                            TextColor="black"
+                                            VerticalTextAlignment="Center" />
+                                    </Grid>
+                                </CollectionView.Header>
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="30" />
+                                                <RowDefinition Height="7" />
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="3*" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <Label
+                                                Grid.Row="0"
+                                                Grid.RowSpan="2"
+                                                Grid.Column="0"
+                                                xct:ShadowEffect.Color="#464C56"
+                                                xct:ShadowEffect.OffsetY="10"
+                                                xct:ShadowEffect.Opacity="0.5"
+                                                FontSize="13"
+                                                Text="{Binding Name}"
+                                                TextColor="black"
+                                                VerticalTextAlignment="Center" />
+
+                                            <Image
+                                                Grid.Row="0"
+                                                Grid.RowSpan="2"
+                                                Grid.Column="1"
+                                                Aspect="AspectFit"
+                                                HeightRequest="20"
+                                                HorizontalOptions="Center"
+                                                Source="{Binding TypePok.PathAutoHome}" />
+                                            <Image
+                                                Grid.Row="0"
+                                                Grid.RowSpan="2"
+                                                Grid.Column="2"
+                                                Aspect="AspectFit"
+                                                HeightRequest="20"
+                                                HorizontalOptions="FillAndExpand"
+                                                Source="{Binding TypeAttaque.PathImg}" />
+                                            <Label
+                                                Grid.Row="0"
+                                                Grid.RowSpan="2"
+                                                Grid.Column="3"
+                                                xct:ShadowEffect.Color="#464C56"
+                                                xct:ShadowEffect.OffsetY="10"
+                                                xct:ShadowEffect.Opacity="0.5"
+                                                FontSize="11"
+                                                HorizontalOptions="Center"
+                                                Text="{Binding Power}"
+                                                TextColor="black"
+                                                VerticalTextAlignment="Center" />
+                                            <Label
+                                                Grid.Row="0"
+                                                Grid.RowSpan="2"
+                                                Grid.Column="4"
+                                                xct:ShadowEffect.Color="#464C56"
+                                                xct:ShadowEffect.OffsetY="10"
+                                                xct:ShadowEffect.Opacity="0.5"
+                                                FontSize="11"
+                                                HorizontalOptions="Center"
+                                                Text="{Binding Precision}"
+                                                TextColor="black"
+                                                VerticalTextAlignment="Center" />
+                                            <Label
+                                                Grid.Row="0"
+                                                Grid.RowSpan="2"
+                                                Grid.Column="5"
+                                                xct:ShadowEffect.Color="#464C56"
+                                                xct:ShadowEffect.OffsetY="10"
+                                                xct:ShadowEffect.Opacity="0.5"
+                                                FontSize="11"
+                                                HorizontalOptions="Center"
+                                                Text="{Binding PP}"
+                                                TextColor="black"
+                                                VerticalTextAlignment="Center" />
+
+                                            <BoxView
+                                                Grid.Row="1"
+                                                Grid.ColumnSpan="6"
+                                                Margin="0,3"
+                                                BackgroundColor="#464C56"
+                                                HeightRequest="1"
+                                                HorizontalOptions="FillAndExpand"
+                                                Opacity="0.2"
+                                                VerticalOptions="CenterAndExpand" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                        </Grid>
+                    </StackLayout>
+                </RelativeLayout>
+                <RelativeLayout IsVisible="{Binding AttaqueEvolutionIsVisible}">
+                    <StackLayout WidthRequest="210">
+                        <shadows:Shadows CornerRadius="20">
+                            <shadows:Shadows.Shades>
+                                <shadows:ImmutableShades>
+                                    <shadows:Shade
+                                        BlurRadius="10"
+                                        Opacity="0.5"
+                                        Offset="-1,-1"
+                                        Color="#464C56" />
+                                    <shadows:Shade
+                                        BlurRadius="10"
+                                        Opacity="0.5"
+                                        Offset="1,1"
+                                        Color="#464C56" />
+                                </shadows:ImmutableShades>
+                            </shadows:Shadows.Shades>
+                            <pv:PancakeView
+                                BackgroundColor="{Binding FirstType.InfoColor}"
+                                Border="{pv:BorderMarkup Color=Black,
+                                                         Thickness=0}"
+                                CornerRadius="0,100,0,100">
+                                <Label
+                                    Padding="20,4,4,4"
+                                    xct:ShadowEffect.Color="#464C56"
+                                    xct:ShadowEffect.OffsetY="10"
+                                    xct:ShadowEffect.Opacity="0.5"
+                                    Text="Capacités (Par évolution)"
+                                    TextColor="White" />
+                            </pv:PancakeView>
+                        </shadows:Shadows>
+                    </StackLayout>
+                    <StackLayout Margin="50,40,50,10">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="{Binding HeightEvolution}" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <CollectionView
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                ItemsSource="{Binding AttaqueEvolution}">
+                                <CollectionView.Header>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="20" />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="3*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <Label
+                                            Grid.Row="0"
+                                            Grid.Column="3"
+                                            xct:ShadowEffect.Color="#464C56"
+                                            xct:ShadowEffect.OffsetY="10"
+                                            xct:ShadowEffect.Opacity="0.5"
+                                            FontSize="13"
+                                            HorizontalTextAlignment="Center"
+                                            Text="Puis."
+                                            TextColor="black"
+                                            VerticalTextAlignment="Center" />
+
+                                        <Label
+                                            Grid.Row="0"
+                                            Grid.Column="4"
+                                            xct:ShadowEffect.Color="#464C56"
+                                            xct:ShadowEffect.OffsetY="10"
+                                            xct:ShadowEffect.Opacity="0.5"
+                                            FontSize="13"
+                                            HorizontalTextAlignment="Center"
+                                            Text="Préc."
+                                            TextColor="black"
+                                            VerticalTextAlignment="Center" />
+
+                                        <Label
+                                            Grid.Row="0"
+                                            Grid.Column="5"
+                                            xct:ShadowEffect.Color="#464C56"
+                                            xct:ShadowEffect.OffsetY="10"
+                                            xct:ShadowEffect.Opacity="0.5"
+                                            FontSize="13"
+                                            HorizontalTextAlignment="Center"
+                                            Text="PP"
+                                            TextColor="black"
+                                            VerticalTextAlignment="Center" />
+                                    </Grid>
+                                </CollectionView.Header>
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="30" />
+                                                <RowDefinition Height="7" />
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="3*" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <Label
+                                                Grid.Row="0"
+                                                Grid.RowSpan="2"
+                                                Grid.Column="0"
+                                                Padding="0,5"
+                                                xct:ShadowEffect.Color="#464C56"
+                                                xct:ShadowEffect.OffsetY="10"
+                                                xct:ShadowEffect.Opacity="0.5"
+                                                FontSize="13"
+                                                Text="{Binding Name}"
+                                                TextColor="black"
+                                                VerticalTextAlignment="Center" />
+
+                                            <Image
+                                                Grid.Row="0"
+                                                Grid.RowSpan="2"
+                                                Grid.Column="1"
+                                                Aspect="AspectFit"
+                                                HeightRequest="20"
+                                                HorizontalOptions="Center"
+                                                Source="{Binding TypePok.PathAutoHome}" />
+                                            <Image
+                                                Grid.Row="0"
+                                                Grid.RowSpan="2"
+                                                Grid.Column="2"
+                                                Aspect="AspectFit"
+                                                HeightRequest="20"
+                                                HorizontalOptions="FillAndExpand"
+                                                Source="{Binding TypeAttaque.PathImg}" />
+                                            <Label
+                                                Grid.Row="0"
+                                                Grid.RowSpan="2"
+                                                Grid.Column="3"
+                                                xct:ShadowEffect.Color="#464C56"
+                                                xct:ShadowEffect.OffsetY="10"
+                                                xct:ShadowEffect.Opacity="0.5"
+                                                FontSize="11"
+                                                HorizontalOptions="Center"
+                                                Text="{Binding Power}"
+                                                TextColor="black"
+                                                VerticalTextAlignment="Center" />
+                                            <Label
+                                                Grid.Row="0"
+                                                Grid.RowSpan="2"
+                                                Grid.Column="4"
+                                                xct:ShadowEffect.Color="#464C56"
+                                                xct:ShadowEffect.OffsetY="10"
+                                                xct:ShadowEffect.Opacity="0.5"
+                                                FontSize="11"
+                                                HorizontalOptions="Center"
+                                                Text="{Binding Precision}"
+                                                TextColor="black"
+                                                VerticalTextAlignment="Center" />
+                                            <Label
+                                                Grid.Row="0"
+                                                Grid.RowSpan="2"
+                                                Grid.Column="5"
+                                                xct:ShadowEffect.Color="#464C56"
+                                                xct:ShadowEffect.OffsetY="10"
+                                                xct:ShadowEffect.Opacity="0.5"
+                                                FontSize="11"
+                                                HorizontalOptions="Center"
+                                                Text="{Binding PP}"
+                                                TextColor="black"
+                                                VerticalTextAlignment="Center" />
+
+                                            <BoxView
+                                                Grid.Row="1"
+                                                Grid.ColumnSpan="6"
+                                                Margin="0,3"
+                                                BackgroundColor="#464C56"
+                                                HeightRequest="1"
+                                                HorizontalOptions="FillAndExpand"
+                                                Opacity="0.2"
+                                                VerticalOptions="CenterAndExpand" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                        </Grid>
+                    </StackLayout>
+                </RelativeLayout>
+                <RelativeLayout IsVisible="{Binding AttaqueMaitreCapaciteIsVisible}">
+                    <StackLayout WidthRequest="280">
+                        <shadows:Shadows CornerRadius="20">
+                            <shadows:Shadows.Shades>
+                                <shadows:ImmutableShades>
+                                    <shadows:Shade
+                                        BlurRadius="10"
+                                        Opacity="0.5"
+                                        Offset="-1,-1"
+                                        Color="#464C56" />
+                                    <shadows:Shade
+                                        BlurRadius="10"
+                                        Opacity="0.5"
+                                        Offset="1,1"
+                                        Color="#464C56" />
+                                </shadows:ImmutableShades>
+                            </shadows:Shadows.Shades>
+                            <pv:PancakeView
+                                BackgroundColor="{Binding FirstType.InfoColor}"
+                                Border="{pv:BorderMarkup Color=Black,
+                                                         Thickness=0}"
+                                CornerRadius="0,100,0,100">
+                                <Label
+                                    Padding="20,4,4,4"
+                                    xct:ShadowEffect.Color="#464C56"
+                                    xct:ShadowEffect.OffsetY="10"
+                                    xct:ShadowEffect.Opacity="0.5"
+                                    Text="Capacités (Par maître des capacités)"
+                                    TextColor="White" />
+                            </pv:PancakeView>
+                        </shadows:Shadows>
+                    </StackLayout>
+                    <StackLayout Margin="50,40,50,10">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="{Binding HeightMaitreCapacite}" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <CollectionView
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                ItemsSource="{Binding AttaqueMaitreCapacite}">
+                                <CollectionView.Header>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="20" />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="3*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <Label
+                                            Grid.Row="0"
+                                            Grid.Column="3"
+                                            xct:ShadowEffect.Color="#464C56"
+                                            xct:ShadowEffect.OffsetY="10"
+                                            xct:ShadowEffect.Opacity="0.5"
+                                            FontSize="13"
+                                            HorizontalTextAlignment="Center"
+                                            Text="Puis."
+                                            TextColor="black"
+                                            VerticalTextAlignment="Center" />
+
+                                        <Label
+                                            Grid.Row="0"
+                                            Grid.Column="4"
+                                            xct:ShadowEffect.Color="#464C56"
+                                            xct:ShadowEffect.OffsetY="10"
+                                            xct:ShadowEffect.Opacity="0.5"
+                                            FontSize="13"
+                                            HorizontalTextAlignment="Center"
+                                            Text="Préc."
+                                            TextColor="black"
+                                            VerticalTextAlignment="Center" />
+
+                                        <Label
+                                            Grid.Row="0"
+                                            Grid.Column="5"
+                                            xct:ShadowEffect.Color="#464C56"
+                                            xct:ShadowEffect.OffsetY="10"
+                                            xct:ShadowEffect.Opacity="0.5"
+                                            FontSize="13"
+                                            HorizontalTextAlignment="Center"
+                                            Text="PP"
+                                            TextColor="black"
+                                            VerticalTextAlignment="Center" />
+                                    </Grid>
+                                </CollectionView.Header>
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="30" />
+                                                <RowDefinition Height="7" />
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="3*" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <Label
+                                                Grid.Row="0"
+                                                Grid.RowSpan="2"
+                                                Grid.Column="0"
+                                                xct:ShadowEffect.Color="#464C56"
+                                                xct:ShadowEffect.OffsetY="10"
+                                                xct:ShadowEffect.Opacity="0.5"
+                                                FontSize="13"
+                                                Text="{Binding Name}"
+                                                TextColor="black"
+                                                VerticalTextAlignment="Center" />
+
+                                            <Image
+                                                Grid.Row="0"
+                                                Grid.RowSpan="2"
+                                                Grid.Column="1"
+                                                Aspect="AspectFit"
+                                                HeightRequest="20"
+                                                HorizontalOptions="Center"
+                                                Source="{Binding TypePok.PathAutoHome}" />
+                                            <Image
+                                                Grid.Row="0"
+                                                Grid.RowSpan="2"
+                                                Grid.Column="2"
+                                                Aspect="AspectFit"
+                                                HeightRequest="20"
+                                                HorizontalOptions="FillAndExpand"
+                                                Source="{Binding TypeAttaque.PathImg}" />
+                                            <Label
+                                                Grid.Row="0"
+                                                Grid.RowSpan="2"
+                                                Grid.Column="3"
+                                                xct:ShadowEffect.Color="#464C56"
+                                                xct:ShadowEffect.OffsetY="10"
+                                                xct:ShadowEffect.Opacity="0.5"
+                                                FontSize="11"
+                                                HorizontalOptions="Center"
+                                                Text="{Binding Power}"
+                                                TextColor="black"
+                                                VerticalTextAlignment="Center" />
+                                            <Label
+                                                Grid.Row="0"
+                                                Grid.RowSpan="2"
+                                                Grid.Column="4"
+                                                xct:ShadowEffect.Color="#464C56"
+                                                xct:ShadowEffect.OffsetY="10"
+                                                xct:ShadowEffect.Opacity="0.5"
+                                                FontSize="11"
+                                                HorizontalOptions="Center"
+                                                Text="{Binding Precision}"
+                                                TextColor="black"
+                                                VerticalTextAlignment="Center" />
+                                            <Label
+                                                Grid.Row="0"
+                                                Grid.RowSpan="2"
+                                                Grid.Column="5"
+                                                xct:ShadowEffect.Color="#464C56"
+                                                xct:ShadowEffect.OffsetY="10"
+                                                xct:ShadowEffect.Opacity="0.5"
+                                                FontSize="11"
+                                                HorizontalOptions="Center"
+                                                Text="{Binding PP}"
+                                                TextColor="black"
+                                                VerticalTextAlignment="Center" />
+
+                                            <BoxView
+                                                Grid.Row="1"
+                                                Grid.ColumnSpan="6"
+                                                Margin="0,3"
+                                                BackgroundColor="#464C56"
+                                                HeightRequest="1"
+                                                HorizontalOptions="FillAndExpand"
+                                                Opacity="0.2"
+                                                VerticalOptions="CenterAndExpand" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                        </Grid>
                     </StackLayout>
                 </RelativeLayout>
             </StackLayout>

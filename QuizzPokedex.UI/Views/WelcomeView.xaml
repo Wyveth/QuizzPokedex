@@ -385,6 +385,9 @@
                     </pv:PancakeView>
                 </shadows:Shadows>
             </StackLayout>
+            <StackLayout AbsoluteLayout.LayoutBounds="0.99,0.99,0.99,0.02" AbsoluteLayout.LayoutFlags="All">
+                <Label Text="{Binding Version, StringFormat='Version {0}'}" TextColor="White" />
+            </StackLayout>
             <StackLayout
                 x:Name="BackgroundModalFilter"
                 AbsoluteLayout.LayoutBounds="1,1,1,1"

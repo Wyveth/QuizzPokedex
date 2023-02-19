@@ -1,4 +1,6 @@
-﻿using MvvmCross.Commands;
+﻿using Android.Content.PM;
+using Android.OS;
+using MvvmCross.Commands;
 using MvvmCross.Navigation;
 using MvvmCross.Plugin.Messenger;
 using MvvmCross.ViewModels;
@@ -42,6 +44,9 @@ namespace QuizzPokedex.ViewModels
         public override async Task Initialize()
         {
             ButtonIsEnabled = false;
+            PackageManager pm = Android.App.Application.Context.PackageManager;
+            PackageInfo pInfo = pm.GetPackageInfo(Android.App.Application.Context.ApplicationInfo.PackageName, PackageInfoFlags.MetaData);
+            Version = pInfo.VersionName;
             BackGroundTask = MvxNotifyTask.Create(BackGroundAsync);
             ProgressBarTask = MvxNotifyTask.Create(ProgressBarAsync);
             ProfileTask = MvxNotifyTask.Create(ProfileAsync);
@@ -611,6 +616,16 @@ namespace QuizzPokedex.ViewModels
         {
             get { return _imgPokedexDown; }
             set { SetProperty(ref _imgPokedexDown, value); }
+        }
+        #endregion
+
+        #region Version
+        private string _version;
+
+        public string Version
+        {
+            get { return _version; }
+            set { SetProperty(ref _version, value); }
         }
         #endregion
         #endregion
