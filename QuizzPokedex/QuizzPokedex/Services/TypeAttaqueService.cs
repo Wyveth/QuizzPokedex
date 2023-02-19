@@ -6,6 +6,7 @@ using QuizzPokedex.Models.ClassJson;
 using QuizzPokedex.Resources;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Net.Http;
@@ -82,12 +83,43 @@ namespace QuizzPokedex.Services
 
             return await Task.FromResult(JsonConvert.DeserializeObject<List<TypeAttaqueJson>>(json).Count);
         }
+
+        public async Task<int> GetNumberCheckAsync()
+        {
+            var result = await _database.Table<TypeAttaque>().Where(m => m.Check.Equals(true)).CountAsync();
+            return result;
+        }
         #endregion
 
         public async Task<int> CreateAsync(TypeAttaque typeAttaque)
         {
             var result = await _database.InsertAsync(typeAttaque);
             return result;
+        }
+
+        public async Task<int> UpdateAsync(TypeAttaque typeAttaque)
+        {
+            var result = await _database.InsertOrReplaceAsync(typeAttaque);
+            return result;
+        }
+
+        public async Task ResetNextLaunch()
+        {
+            List<TypeAttaque> typeAttaques = await GetAllAsync();
+
+            foreach (TypeAttaque typeAttaque in typeAttaques)
+            {
+                try
+                {
+                    typeAttaque.Check = false;
+                    TypeAttaque typeAttaqueUpdated = typeAttaque;
+                    await UpdateAsync(typeAttaqueUpdated);
+                }
+                catch
+                {
+                    Debug.Write("Download Error: " + typeAttaque.Name);
+                }
+            }
         }
         #endregion
         #endregion
@@ -122,6 +154,36 @@ namespace QuizzPokedex.Services
 
                         Console.WriteLine("Creation Type Attaque: " + typeAttaque.Name);
                     }
+                }
+            }
+        }
+
+        public async Task CheckIfPictureNotExistDownload(List<TypeAttaqueJson> typesAttaqueJson)
+        {
+            List<TypeAttaque> typesAttaque = await GetAllAsync();
+
+            foreach (TypeAttaque typeAttaque in typesAttaque)
+            {
+                TypeAttaqueJson typeAttaqueJson = typesAttaqueJson.Find(m => m.Name.Equals(typeAttaque.Name));
+
+                try
+                {
+                    Debug.Write("Info: " + typeAttaque.Name);
+                    if (!File.Exists(typeAttaque.PathImg))
+                    {
+                        await DownloadFile(typeAttaque.UrlImg, "Image/TypeAttaque", typeAttaqueJson.Name.Replace(" ", "_") + Constantes.ExtensionImage);
+                        Debug.Write("Download Image OK");
+                    }
+
+                    typeAttaque.Check = true;
+
+                    TypeAttaque typeAttaqueUpdated = typeAttaque;
+                    if (typeAttaqueUpdated != null)
+                        await UpdateAsync(typeAttaqueUpdated);
+                }
+                catch
+                {
+                    Debug.Write("Download Error: " + typeAttaque.Name);
                 }
             }
         }

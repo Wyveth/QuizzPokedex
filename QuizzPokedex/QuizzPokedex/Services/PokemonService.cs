@@ -214,7 +214,7 @@ namespace QuizzPokedex.Services
             return result;
         }
 
-        public async Task<int> GetNumberPokCheckSpriteAsync()
+        public async Task<int> GetNumberCheckAsync()
         {
             var result = await _database.Table<Pokemon>().Where(m => m.Check.Equals(true)).CountAsync();
             return result;

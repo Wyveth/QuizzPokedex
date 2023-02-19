@@ -6,6 +6,7 @@ using QuizzPokedex.Models.ClassJson;
 using QuizzPokedex.Resources;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Net.Http;
@@ -89,12 +90,43 @@ namespace QuizzPokedex.Services
             var result = await _database.Table<TypePok>().CountAsync();
             return result;
         }
+
+        public async Task<int> GetNumberCheckAsync()
+        {
+            var result = await _database.Table<TypePok>().Where(m => m.Check.Equals(true)).CountAsync();
+            return result;
+        }
         #endregion
 
         public async Task<int> CreateAsync(TypePok typePok)
         {
             var result = await _database.InsertAsync(typePok);
             return result;
+        }
+
+        public async Task<int> UpdateAsync(TypePok typePok)
+        {
+            var result = await _database.InsertOrReplaceAsync(typePok);
+            return result;
+        }
+
+        public async Task ResetNextLaunch()
+        {
+            List<TypePok> typePoks = await GetAllAsync();
+
+            foreach (TypePok typePok in typePoks)
+            {
+                try
+                {
+                    typePok.Check = false;
+                    TypePok typePokUpdated = typePok;
+                    await UpdateAsync(typePokUpdated);
+                }
+                catch
+                {
+                    Debug.Write("Download Error: " + typePok.Name);
+                }
+            }
         }
         #endregion
 
@@ -155,6 +187,60 @@ namespace QuizzPokedex.Services
 
                         Console.WriteLine("Creation Type: " + type.Name);
                     }
+                }
+            }
+        }
+
+        public async Task CheckIfPictureNotExistDownload(List<TypeJson> typePoksJson)
+        {
+            List<TypePok> typePoks = await GetAllAsync();
+            
+            foreach (TypePok typePok in typePoks)
+            {
+                TypeJson typeJson = typePoksJson.Find(m => m.Name.Equals(typePok.Name));
+
+                try
+                {
+                    Debug.Write("Info: " + typePok.Name);
+                    if (!File.Exists(typePok.PathMiniGo))
+                    {
+                        await DownloadFile(typePok.UrlMiniGo, "Image/TypePok/MiniGo", typeJson.Name.Replace(" ", "_") + Constantes.ExtensionImage);
+                        Debug.Write("Download Image OK");
+                    }
+
+                    if (!File.Exists(typePok.PathFondGo))
+                    {
+                        await DownloadFile(typePok.UrlFondGo, "Image/TypePok/FondGo", typeJson.Name.Replace(" ", "_") + Constantes.ExtensionImage);
+                        Debug.Write("Download Image OK");
+                    }
+
+                    if (!File.Exists(typePok.PathMiniHome))
+                    {
+                        await DownloadFile(typePok.UrlMiniHome, "Image/TypePok/MiniHome", typeJson.Name.Replace(" ", "_") + Constantes.ExtensionImage);
+                        Debug.Write("Download Image OK");
+                    }
+
+                    if (!File.Exists(typePok.PathIconHome))
+                    {
+                        await DownloadFile(typePok.UrlIconHome, "Image/TypePok/IconHome", typeJson.Name.Replace(" ", "_") + Constantes.ExtensionImage);
+                        Debug.Write("Download Image OK");
+                    }
+
+                    if (!File.Exists(typePok.PathAutoHome))
+                    {
+                        await DownloadFile(typePok.UrlAutoHome, "Image/TypePok/AutoHome", typeJson.Name.Replace(" ", "_") + Constantes.ExtensionImage);
+                        Debug.Write("Download Image OK");
+                    }
+
+                    typePok.Check = true;
+
+                    TypePok typePokUpdated = typePok;
+                    if (typePokUpdated != null)
+                        await UpdateAsync(typePokUpdated);
+                }
+                catch
+                {
+                    Debug.Write("Download Error: " + typePok.Name);
                 }
             }
         }

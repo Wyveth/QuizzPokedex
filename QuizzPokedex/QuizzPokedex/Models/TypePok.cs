@@ -45,5 +45,8 @@ namespace QuizzPokedex.Models
 
         //Couleur Background Type
         public string TypeColor { get; set; }
+
+        //Check Picture Bool
+        public bool Check { get; set; }
     }
 }

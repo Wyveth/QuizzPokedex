@@ -98,18 +98,22 @@ namespace QuizzPokedex.CustomStart
         #region Private Methods
         private async Task PopulateTypeAttaque()
         {
-            List<TypeAttaqueJson> typesJson = await _typeAttaqueService.GetListScrapJson();
+            List<TypeAttaqueJson> typeAttaquesJson = await _typeAttaqueService.GetListScrapJson();
             int nbTypeAttaqueInDb = await _typeAttaqueService.GetNumberInDbAsync();
 
-            await _typeAttaqueService.Populate(nbTypeAttaqueInDb, typesJson);
+            await _typeAttaqueService.Populate(nbTypeAttaqueInDb, typeAttaquesJson);
+            await _typeAttaqueService.CheckIfPictureNotExistDownload(typeAttaquesJson);
+            //await _typeAttaqueService.ResetNextLaunch();
         }
 
         private async Task PopulateTypePok()
         {
-            List<TypeJson> typesJson = await _typePokService.GetListScrapJson();
+            List<TypeJson> typePoksJson = await _typePokService.GetListScrapJson();
             int nbTypePokInDb = await _typePokService.GetNumberInDbAsync();
 
-            await _typePokService.Populate(nbTypePokInDb, typesJson);
+            await _typePokService.Populate(nbTypePokInDb, typePoksJson);
+            await _typePokService.CheckIfPictureNotExistDownload(typePoksJson);
+            //await _typePokService.ResetNextLaunch();
         }
 
         private async Task PopulateAttaque()

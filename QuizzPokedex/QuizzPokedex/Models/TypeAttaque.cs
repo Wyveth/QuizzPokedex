@@ -15,5 +15,8 @@ namespace QuizzPokedex.Models
         public string UrlImg { get; set; }
         
         public string PathImg { get; set; }
+
+        //Check Picture Bool
+        public bool Check { get; set; }
     }
 }

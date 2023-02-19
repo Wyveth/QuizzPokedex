@@ -84,20 +84,20 @@ namespace QuizzPokedex.ViewModels
                 ProgressBarIsVisible = false;
             }
 
-            int nbTypeMax = await _typePokService.GetNumberJsonAsync();
-            int nbTypeInDb = await _typePokService.GetNumberInDbAsync();
+            int nbTypePokMax = await _typePokService.GetNumberJsonAsync();
+            int nbTypePokInDb = await _typePokService.GetNumberInDbAsync();
 
-            if (!nbTypeInDb.Equals(nbTypeMax))
+            if (!nbTypePokInDb.Equals(nbTypePokMax))
             {
                 ProgressBarIsVisible = true;
-                ValueProgressBar = await getPercent(nbTypeInDb, nbTypeMax);
-                TextProgressBar = "Création Type Pokémon: " + nbTypeInDb.ToString() + "/" + nbTypeMax.ToString();
+                ValueProgressBar = await getPercent(nbTypePokInDb, nbTypePokMax);
+                TextProgressBar = "Création Type Pokémon: " + nbTypePokInDb.ToString() + "/" + nbTypePokMax.ToString();
 
                 while (ValueProgressBar != 1)
                 {
-                    nbTypeInDb = await _typePokService.GetNumberInDbAsync();
-                    ValueProgressBar = await getPercent(nbTypeInDb, nbTypeMax);
-                    TextProgressBar = "Création Type Pokémon: " + nbTypeInDb.ToString() + "/" + nbTypeMax.ToString();
+                    nbTypePokInDb = await _typePokService.GetNumberInDbAsync();
+                    ValueProgressBar = await getPercent(nbTypePokInDb, nbTypePokMax);
+                    TextProgressBar = "Création Type Pokémon: " + nbTypePokInDb.ToString() + "/" + nbTypePokMax.ToString();
                 }
 
                 ProgressBarIsVisible = false;
@@ -178,7 +178,41 @@ namespace QuizzPokedex.ViewModels
                 ProgressBarIsVisible = false;
             }
 
-            int nbPokChecked = await _pokemonService.GetNumberPokCheckSpriteAsync();
+            int nbTypeAttaqueChecked = await _typeAttaqueService.GetNumberCheckAsync();
+            ProgressBarIsVisible = true;
+            
+            if (!nbTypeAttaqueChecked.Equals(nbTypeAttaqueMax))
+            {
+
+                ValueProgressBar = await getPercent(nbTypeAttaqueChecked, nbTypeAttaqueMax);
+                TextProgressBar = "Check TypeAttaque: " + nbTypeAttaqueChecked.ToString() + "/" + nbTypeAttaqueMax.ToString();
+
+                while (ValueProgressBar != 1)
+                {
+                    nbTypeAttaqueChecked = await _typeAttaqueService.GetNumberCheckAsync();
+                    ValueProgressBar = await getPercent(nbTypeAttaqueChecked, nbTypeAttaqueMax);
+                    TextProgressBar = await GetTextCheckSpriteProgressBar(nbTypeAttaqueChecked, nbTypeAttaqueMax);
+                }
+            }
+
+            int nbTypePokChecked = await _typePokService.GetNumberCheckAsync();
+            ProgressBarIsVisible = true;
+
+            if (!nbTypePokChecked.Equals(nbTypePokMax))
+            {
+
+                ValueProgressBar = await getPercent(nbTypePokChecked, nbTypePokMax);
+                TextProgressBar = "Check TypePok: " + nbTypePokChecked.ToString() + "/" + nbTypePokMax.ToString();
+
+                while (ValueProgressBar != 1)
+                {
+                    nbTypePokChecked = await _typePokService.GetNumberCheckAsync();
+                    ValueProgressBar = await getPercent(nbTypePokChecked, nbTypePokMax);
+                    TextProgressBar = await GetTextCheckSpriteProgressBar(nbTypePokChecked, nbTypePokMax);
+                }
+            }
+
+            int nbPokChecked = await _pokemonService.GetNumberCheckAsync();
             ProgressBarIsVisible = true;
             
             if (!nbPokChecked.Equals(nbPokMax))
@@ -189,7 +223,7 @@ namespace QuizzPokedex.ViewModels
 
                 while (ValueProgressBar != 1)
                 {
-                    nbPokChecked = await _pokemonService.GetNumberPokCheckSpriteAsync();
+                    nbPokChecked = await _pokemonService.GetNumberCheckAsync();
                     ValueProgressBar = await getPercent(nbPokChecked, nbPokMax);
                     TextProgressBar = await GetTextCheckSpriteProgressBar(nbPokChecked, nbPokMax);
                 }
