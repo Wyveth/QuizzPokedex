@@ -9,7 +9,6 @@
         public Talent Talent { get; set; }
 
         public string CorrectAnswer { get; set; }
-        public byte[] ByteTypePok { get; set; }
         public byte[] ByteDetectiveP { get; set; }
         public byte[] ByteResult { get; set; }
         public string[] FormatLibelleQuestion { get; set; }

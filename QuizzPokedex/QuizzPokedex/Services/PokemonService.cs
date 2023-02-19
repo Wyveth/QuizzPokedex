@@ -401,8 +401,6 @@ namespace QuizzPokedex.Services
         public async Task<Pokemon> UpdateEvolutionWithJson(PokemonJson pokemonJson, Pokemon pokemonUpdate)
         {
             #region TypePok
-            int i = 0;
-            StringBuilder typesPokID = new StringBuilder();
             foreach (TypePokJson typePokJson in pokemonJson.Types)
             {
                 PokemonTypePok pokemonTypePok = new PokemonTypePok();
@@ -411,24 +409,11 @@ namespace QuizzPokedex.Services
                 {
                     pokemonTypePok = new PokemonTypePok() { PokemonId = pokemonUpdate.Id, TypePokId = typePok.Id };
                     await _pokemonTypePokService.CreateAsync(pokemonTypePok);
-
-                    if (i == 0)
-                    {
-                        typesPokID.Append(pokemonTypePok.Id.ToString());
-                        i++;
-                    }
-                    else
-                    {
-                        typesPokID.Append(',' + pokemonTypePok.Id.ToString());
-                    }
                 }
             }
-            pokemonUpdate.TypesID = typesPokID.ToString();
             #endregion
 
             #region Weakness
-            i = 0;
-            StringBuilder weaknessesID = new StringBuilder();
             foreach (TypePokJson typePokJson in pokemonJson.Weakness)
             {
                 PokemonWeakness pokemonWeakness = new PokemonWeakness();
@@ -437,23 +422,11 @@ namespace QuizzPokedex.Services
                 {
                     pokemonWeakness = new PokemonWeakness() { PokemonId = pokemonUpdate.Id, TypePokId = typePok.Id };
                     await _pokemonWeaknessService.CreateAsync(pokemonWeakness);
-
-                    if (i == 0)
-                    {
-                        weaknessesID.Append(pokemonWeakness.Id.ToString());
-                        i++;
-                    }
-                    else
-                    {
-                        weaknessesID.Append(',' + pokemonWeakness.Id.ToString());
-                    }
                 }
             }
-            pokemonUpdate.WeaknessID = weaknessesID.ToString();
             #endregion
 
             #region Talent
-            i = 0;
             StringBuilder talentsID = new StringBuilder();
             foreach (SkillJson talentJson in pokemonJson.Talents)
             {
@@ -463,24 +436,11 @@ namespace QuizzPokedex.Services
                 {
                     pokemonTalent = new PokemonTalent() { PokemonId = pokemonUpdate.Id, TalentId = talent.Id, isHidden = talentJson.isHidden };
                     await _pokemonTalentService.CreateAsync(pokemonTalent);
-
-                    if (i == 0)
-                    {
-                        talentsID.Append(pokemonTalent.Id.ToString());
-                        i++;
-                    }
-                    else
-                    {
-                        talentsID.Append(',' + pokemonTalent.Id.ToString());
-                    }
                 }
             }
-            pokemonUpdate.TalentsID = talentsID.ToString();
             #endregion
 
             #region Attaque
-            i = 0;
-            StringBuilder attaquesID = new StringBuilder();
             foreach (AttackJson attaqueJson in pokemonJson.Attaques)
             {
                 PokemonAttaque pokemonAttaque = new PokemonAttaque();
@@ -489,25 +449,15 @@ namespace QuizzPokedex.Services
                 {
                     pokemonAttaque = new PokemonAttaque() { PokemonId = pokemonUpdate.Id, AttaqueId = attaque.Id, TypeLearn = attaqueJson.TypeLearn, CTCS = attaqueJson.CTCS, Level = attaqueJson.Level };
                     await _pokemonAttaqueService.CreateAsync(pokemonAttaque);
-
-                    if (i == 0)
-                    {
-                        attaquesID.Append(pokemonAttaque.Id.ToString());
-                        i++;
-                    }
-                    else
-                    {
-                        attaquesID.Append(',' + pokemonAttaque.Id.ToString());
-                    }
                 }
                 else
                 {
                     Debug.Write("Attaque not found: " + attaqueJson.Name);
                 }
             }
-            pokemonUpdate.AttacksID = attaquesID.ToString();
             #endregion
 
+            int i = 0;
             if (!string.IsNullOrEmpty(pokemonJson.Evolutions))
             {
                 string[] evolutionsTab = pokemonJson.Evolutions.Split(',');

@@ -7,9 +7,7 @@ using MvvmCross.ViewModels;
 using QuizzPokedex.Interfaces;
 using QuizzPokedex.Models;
 using QuizzPokedex.Resources;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace QuizzPokedex.ViewModels
@@ -26,11 +24,12 @@ namespace QuizzPokedex.ViewModels
         private readonly IAnswerService _answerService;
         private readonly IPokemonService _pokemonService;
         private readonly ITypePokService _typePokService;
+        private readonly IPokemonTypePokService _pokemonTypePokService;
         private readonly IMvxMessenger _messenger;
         #endregion
 
         #region Constructor
-        public QTypPokDescReverseQuizzViewModel(IMvxNavigationService navigation, IMvxIoCProvider logger, IQuizzService quizzService, IPokemonService pokemonService, IQuestionService questionService, IDifficultyService difficultyService, IAnswerService answerService, IQuestionTypeService questionTypeService, ITypePokService typePokService, IMvxMessenger messenger)
+        public QTypPokDescReverseQuizzViewModel(IMvxNavigationService navigation, IMvxIoCProvider logger, IQuizzService quizzService, IPokemonService pokemonService, IQuestionService questionService, IDifficultyService difficultyService, IAnswerService answerService, IQuestionTypeService questionTypeService, ITypePokService typePokService, IPokemonTypePokService pokemonTypePokService, IMvxMessenger messenger)
         {
             _navigation = navigation;
             _logger = logger;
@@ -41,6 +40,7 @@ namespace QuizzPokedex.ViewModels
             _answerService = answerService;
             _pokemonService = pokemonService;
             _typePokService = typePokService;
+            _pokemonTypePokService = pokemonTypePokService;
             _messenger = messenger;
         }
         #endregion
@@ -89,8 +89,8 @@ namespace QuizzPokedex.ViewModels
 
             Description = await _answerService.ConvertDescription(Pokemon);
 
-            int typeID = int.Parse(Pokemon.TypesID.Split(',')[0]);
-            TypePok = await _typePokService.GetByIdAsync(typeID);
+            List<PokemonTypePok> pokemonTypePoks = await _pokemonTypePokService.GetTypesPokByPokemon(Pokemon.Id);
+            TypePok = await _typePokService.GetByIdAsync(pokemonTypePoks[0].TypePokId);
 
             Difficulty difficulty = await _difficultyService.GetByIdAsync(QuestionType.DifficultyID);
             DifficultyByte = await Utils.GetBytesDifficulty(difficulty);

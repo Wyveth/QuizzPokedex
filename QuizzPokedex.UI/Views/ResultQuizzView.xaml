@@ -109,7 +109,7 @@
                                         Aspect="AspectFit"
                                         HeightRequest="80"
                                         IsVisible="{Binding IsQTypTyp}"
-                                        Source="{Binding ByteTypePok, Converter={StaticResource ByteToImageSourceConverter}}"
+                                        Source="{Binding TypePok.PathAutoHome}"
                                         WidthRequest="80" />
                                     <!--#endregion-->
 
@@ -219,9 +219,9 @@
                                     <Image
                                         Aspect="AspectFit"
                                         HeightRequest="60"
-                                        VerticalOptions="CenterAndExpand"
                                         IsVisible="{Binding IsQTypPokTypVarious}"
-                                        Source="{Binding ByteTypePok, Converter={StaticResource ByteToImageSourceConverter}}"
+                                        Source="{Binding TypePok.PathAutoHome}"
+                                        VerticalOptions="CenterAndExpand"
                                         WidthRequest="60" />
                                     <!--#endregion-->
                                 </StackLayout>
@@ -352,7 +352,7 @@
                                         Text="{Binding QuestionType.Libelle}"
                                         TextColor="Black"
                                         VerticalOptions="Center" />
-                                    
+
                                     <Label
                                         Margin="10,0,10,0"
                                         xct:ShadowEffect.Color="black"
@@ -420,7 +420,7 @@
                                         Text="{Binding QuestionType.Libelle}"
                                         TextColor="Black"
                                         VerticalOptions="Center" />
-                                    
+
                                     <Label
                                         Margin="10,0,10,0"
                                         xct:ShadowEffect.Color="black"

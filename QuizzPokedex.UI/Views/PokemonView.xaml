@@ -103,7 +103,7 @@
                             xct:ShadowEffect.OffsetY="-10"
                             xct:ShadowEffect.Opacity="1"
                             xct:ShadowEffect.Radius="60">
-                            <Image HeightRequest="270" Source="{Binding FirstType.DataFondGo, Converter={StaticResource ByteToImageSourceConverter}}" />
+                            <Image HeightRequest="270" Source="{Binding FirstType.PathFondGo}" />
                         </StackLayout>
                     </StackLayout>
                     <StackLayout

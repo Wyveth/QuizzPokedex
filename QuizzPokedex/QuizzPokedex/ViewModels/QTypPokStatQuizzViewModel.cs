@@ -24,11 +24,12 @@ namespace QuizzPokedex.ViewModels
         private readonly IAnswerService _answerService;
         private readonly IPokemonService _pokemonService;
         private readonly ITypePokService _typePokService;
+        private readonly IPokemonTypePokService _pokemonTypePokService;
         private readonly IMvxMessenger _messenger;
         #endregion
 
         #region Constructor
-        public QTypPokStatQuizzViewModel(IMvxNavigationService navigation, IMvxIoCProvider logger, IQuizzService quizzService, IPokemonService pokemonService, IQuestionService questionService, IDifficultyService difficultyService, IAnswerService answerService, IQuestionTypeService questionTypeService, ITypePokService typePokService, IMvxMessenger messenger)
+        public QTypPokStatQuizzViewModel(IMvxNavigationService navigation, IMvxIoCProvider logger, IQuizzService quizzService, IPokemonService pokemonService, IQuestionService questionService, IDifficultyService difficultyService, IAnswerService answerService, IQuestionTypeService questionTypeService, ITypePokService typePokService, IPokemonTypePokService pokemonTypePokService, IMvxMessenger messenger)
         {
             _navigation = navigation;
             _logger = logger;
@@ -39,6 +40,7 @@ namespace QuizzPokedex.ViewModels
             _answerService = answerService;
             _pokemonService = pokemonService;
             _typePokService = typePokService;
+            _pokemonTypePokService = pokemonTypePokService;
             _messenger = messenger;
         }
         #endregion
@@ -88,8 +90,8 @@ namespace QuizzPokedex.ViewModels
 
             FormatLibelleQuestion = new string[] { answer.Type, Pokemon.Name};
 
-            int typeID = int.Parse(Pokemon.TypesID.Split(',')[0]);
-            TypePok = await _typePokService.GetByIdAsync(typeID);
+            List<PokemonTypePok> pokemonTypePoks = await _pokemonTypePokService.GetTypesPokByPokemon(Pokemon.Id);
+            TypePok = await _typePokService.GetByIdAsync(pokemonTypePoks[0].TypePokId);
 
             Difficulty difficulty = await _difficultyService.GetByIdAsync(QuestionType.DifficultyID);
             DifficultyByte = await Utils.GetBytesDifficulty(difficulty);

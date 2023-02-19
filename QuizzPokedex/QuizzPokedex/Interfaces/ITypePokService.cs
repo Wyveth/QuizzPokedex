@@ -23,6 +23,5 @@ namespace QuizzPokedex.Interfaces
         Task<int> UpdateAsync(TypePok typePok);
         Task<TypePok> GetTypeRandom();
         Task<TypePok> GetTypeRandom(List<TypePok> alreadySelected);
-        Task<byte[]> DownloadImageAsync(string UrlImg);
     }
 }

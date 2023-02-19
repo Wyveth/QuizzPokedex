@@ -47,18 +47,6 @@ namespace QuizzPokedex.Models
         //Poids du Pokémon
         public string Weight { get; set; }
 
-        //ID des Talents
-        public string TalentsID { get; set; }
-
-        //ID des Types
-        public string TypesID { get; set; }
-
-        //ID des Faiblesses
-        public string WeaknessID { get; set; }
-
-        //ID des Attaques
-        public string AttacksID { get; set; }
-
         //Evolution/Famille du Pokémon
         public string Evolutions { get; set; }
 

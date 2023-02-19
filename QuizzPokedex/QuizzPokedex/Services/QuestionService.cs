@@ -16,6 +16,9 @@ namespace QuizzPokedex.Services
         private readonly ISqliteConnectionService _connectionService;
         private readonly ITypePokService _typePokService;
         private readonly IPokemonService _pokemonService;
+        private readonly IPokemonTypePokService _pokemonTypePokService;
+        private readonly IPokemonWeaknessService _pokemonWeaknessService;
+        private readonly IPokemonTalentService _pokemonTalentService;
         private readonly IQuestionTypeService _questionTypeService;
         private readonly ITalentService _talentService;
         private readonly IAnswerService _answerService;
@@ -23,11 +26,14 @@ namespace QuizzPokedex.Services
         #endregion
 
         #region Constructor
-        public QuestionService(ISqliteConnectionService connectionService, ITypePokService typePokService, IPokemonService pokemonService, IQuestionTypeService questionTypeService, IAnswerService answerService, ITalentService talentService)
+        public QuestionService(ISqliteConnectionService connectionService, ITypePokService typePokService, IPokemonService pokemonService, IPokemonTypePokService pokemonTypePokService, IPokemonWeaknessService pokemonWeaknessService, IPokemonTalentService pokemonTalentService, IQuestionTypeService questionTypeService, IAnswerService answerService, ITalentService talentService)
         {
             _connectionService = connectionService;
             _typePokService = typePokService;
             _pokemonService = pokemonService;
+            _pokemonTypePokService = pokemonTypePokService;
+            _pokemonWeaknessService = pokemonWeaknessService;
+            _pokemonTalentService = pokemonTalentService;
             _talentService = talentService;
             _questionTypeService = questionTypeService;
             _answerService = answerService;
@@ -332,12 +338,13 @@ namespace QuizzPokedex.Services
             string AnswersID = string.Empty;
 
             List<TypePok> typesAnswer = new List<TypePok>();
+            List<PokemonTypePok> pokemonTypePoks = await _pokemonTypePokService.GetTypesPokByPokemon(pokemon.Id);
 
             if (!various)
-                typesAnswer.Add(await _typePokService.GetByIdAsync(int.Parse(pokemon.TypesID.Split(',')[0])));
+                typesAnswer.Add(await _typePokService.GetByIdAsync(pokemonTypePoks[0].TypePokId));
             else
-                foreach (string item in pokemon.TypesID.Split(','))
-                    typesAnswer.Add(await _typePokService.GetByIdAsync(int.Parse(item)));
+                foreach (PokemonTypePok item in pokemonTypePoks)
+                    typesAnswer.Add(await _typePokService.GetByIdAsync(item.TypePokId));
 
             AnswersID = await _answerService.GenerateCorrectAnswers(questionType, typesAnswer);
 
@@ -349,12 +356,13 @@ namespace QuizzPokedex.Services
             string AnswersID = string.Empty;
 
             List<TypePok> weaknessAnswer = new List<TypePok>();
-
+            List<PokemonWeakness> pokemonWeaknesses = await _pokemonWeaknessService.GetWeaknessesByPokemon(pokemon.Id);
+            
             if (!various)
-                weaknessAnswer.Add(await _typePokService.GetByIdAsync(int.Parse(pokemon.WeaknessID.Split(',')[0])));
+                weaknessAnswer.Add(await _typePokService.GetByIdAsync(pokemonWeaknesses[0].TypePokId));
             else
-                foreach (string item in pokemon.WeaknessID.Split(','))
-                    weaknessAnswer.Add(await _typePokService.GetByIdAsync(int.Parse(item)));
+                foreach (PokemonWeakness item in pokemonWeaknesses)
+                    weaknessAnswer.Add(await _typePokService.GetByIdAsync(item.TypePokId));
 
             AnswersID = await _answerService.GenerateCorrectAnswers(questionType, weaknessAnswer);
 
@@ -415,10 +423,11 @@ namespace QuizzPokedex.Services
             string AnswersID = string.Empty;
 
             List<Talent> talentsAnswer = new List<Talent>();
+            List<PokemonTalent> pokemonTalentServices = await _pokemonTalentService.GetTalentsByPokemon(pokemon.Id);
 
-            if(pokemon.TalentsID != null)
-                foreach (string item in pokemon.TalentsID.Split(','))
-                    talentsAnswer.Add(await _talentService.GetByIdAsync(int.Parse(item)));
+            if (pokemonTalentServices != null)
+                foreach (PokemonTalent item in pokemonTalentServices)
+                    talentsAnswer.Add(await _talentService.GetByIdAsync(item.TalentId));
 
             AnswersID = await _answerService.GenerateCorrectAnswers(questionType, talentsAnswer);
 

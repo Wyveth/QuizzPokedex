@@ -1,5 +1,4 @@
-﻿using Microcharts;
-using MvvmCross.Commands;
+﻿using MvvmCross.Commands;
 using MvvmCross.IoC;
 using MvvmCross.Navigation;
 using MvvmCross.Plugin.Messenger;
@@ -7,10 +6,7 @@ using MvvmCross.ViewModels;
 using QuizzPokedex.Interfaces;
 using QuizzPokedex.Models;
 using QuizzPokedex.Resources;
-using SkiaSharp;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace QuizzPokedex.ViewModels
@@ -27,12 +23,13 @@ namespace QuizzPokedex.ViewModels
         private readonly IAnswerService _answerService;
         private readonly IPokemonService _pokemonService;
         private readonly ITypePokService _typePokService;
+        private readonly IPokemonTypePokService _pokemonTypePokService;
         private readonly ITalentService _talentService;
         private readonly IMvxMessenger _messenger;
         #endregion
 
         #region Constructor
-        public ResultQuizzViewModel(IMvxNavigationService navigation, IMvxIoCProvider logger, IQuizzService quizzService, IPokemonService pokemonService, IQuestionService questionService, IDifficultyService difficultyService, IAnswerService answerService, IQuestionTypeService questionTypeService, ITypePokService typePokService, ITalentService talentService, IMvxMessenger messenger)
+        public ResultQuizzViewModel(IMvxNavigationService navigation, IMvxIoCProvider logger, IQuizzService quizzService, IPokemonService pokemonService, IQuestionService questionService, IDifficultyService difficultyService, IAnswerService answerService, IQuestionTypeService questionTypeService, ITypePokService typePokService, ITalentService talentService, IPokemonTypePokService pokemonTypePokService, IMvxMessenger messenger)
         {
             _navigation = navigation;
             _logger = logger;
@@ -43,6 +40,7 @@ namespace QuizzPokedex.ViewModels
             _answerService = answerService;
             _pokemonService = pokemonService;
             _typePokService = typePokService;
+            _pokemonTypePokService = pokemonTypePokService;
             _talentService = talentService;
             _messenger = messenger;
         }
@@ -115,7 +113,6 @@ namespace QuizzPokedex.ViewModels
             Pokemon pokemon = null;
             TypePok typePok = null;
             Talent talent = null;
-            byte[] typePokByte = null;
             byte[] byteResult = null;
             string libelleAnswerCorrect = "";
 
@@ -131,7 +128,8 @@ namespace QuizzPokedex.ViewModels
                     if (answerCorrect != null)
                     {
                         pokemon = await _pokemonService.GetByIdAsync(answerCorrect.IsCorrectID);
-                        typePok = await _typePokService.GetByIdAsync(int.Parse(pokemon.TypesID.Split(',')[0]));
+                        List<PokemonTypePok> pokemonTypePoks = await _pokemonTypePokService.GetTypesPokByPokemon(pokemon.Id);
+                        typePok = await _typePokService.GetByIdAsync(pokemonTypePoks[0].TypePokId);
                     }
                 }
                 else if (questionType.Code.Equals(Constantes.QTypPokStat))
@@ -142,7 +140,8 @@ namespace QuizzPokedex.ViewModels
                     if (answerCorrect != null)
                     {
                         pokemon = await _pokemonService.GetByIdAsync(answerCorrect.IsCorrectID);
-                        typePok = await _typePokService.GetByIdAsync(int.Parse(pokemon.TypesID.Split(',')[0]));
+                        List<PokemonTypePok> pokemonTypePoks = await _pokemonTypePokService.GetTypesPokByPokemon(pokemon.Id);
+                        typePok = await _typePokService.GetByIdAsync(pokemonTypePoks[0].TypePokId);
 
                         FormatLibelleQuestion = new string[] { answerCorrect.Type, pokemon.Name };
                     }
@@ -168,7 +167,6 @@ namespace QuizzPokedex.ViewModels
                     if (answerCorrect != null)
                     {
                         typePok = await _typePokService.GetByIdAsync(answerCorrect.IsCorrectID);
-                        typePokByte = await GetBytesTypesFilter(typePok.Name);
                     }
                 }
                 else if (questionType.Code.Equals(Constantes.QTypPokDesc)
@@ -180,7 +178,8 @@ namespace QuizzPokedex.ViewModels
                     if (answerCorrect != null)
                     {
                         pokemon = await _pokemonService.GetByIdAsync(answerCorrect.IsCorrectID);
-                        typePok = await _typePokService.GetByIdAsync(int.Parse(pokemon.TypesID.Split(',')[0]));
+                        List<PokemonTypePok> pokemonTypePoks = await _pokemonTypePokService.GetTypesPokByPokemon(pokemon.Id);
+                        typePok = await _typePokService.GetByIdAsync(pokemonTypePoks[0].TypePokId);
                     }
                 }
                 else if (questionType.Code.Equals(Constantes.QTypTalent)
@@ -206,7 +205,8 @@ namespace QuizzPokedex.ViewModels
                     IsVisiblePokFamilyVarious = true;
 
                     pokemon = await _pokemonService.GetByIdAsync(question.DataObjectID);
-                    typePok = await _typePokService.GetByIdAsync(int.Parse(pokemon.TypesID.Split(',')[0]));
+                    List<PokemonTypePok> pokemonTypePoks = await _pokemonTypePokService.GetTypesPokByPokemon(pokemon.Id);
+                    typePok = await _typePokService.GetByIdAsync(pokemonTypePoks[0].TypePokId);
 
                     FormatLibelleQuestion = new string[] { pokemon.Name };
                 }
@@ -216,7 +216,6 @@ namespace QuizzPokedex.ViewModels
                     IsVisiblePokTypVarious = true;
 
                     typePok = await _typePokService.GetByIdAsync(question.DataObjectID);
-                    typePokByte = typePok.DataAutoHome;
 
                     FormatLibelleQuestion = new string[] { typePok.Name };
                 }
@@ -226,7 +225,8 @@ namespace QuizzPokedex.ViewModels
                     IsVisibleTypPokVarious = true;
 
                     pokemon = await _pokemonService.GetByIdAsync(question.DataObjectID);
-                    typePok = await _typePokService.GetByIdAsync(int.Parse(pokemon.TypesID.Split(',')[0]));
+                    List<PokemonTypePok> pokemonTypePoks = await _pokemonTypePokService.GetTypesPokByPokemon(pokemon.Id);
+                    typePok = await _typePokService.GetByIdAsync(pokemonTypePoks[0].TypePokId);
 
                     FormatLibelleQuestion = new string[] { pokemon.Name };
                 }
@@ -236,7 +236,8 @@ namespace QuizzPokedex.ViewModels
                     IsVisibleWeakPokVarious = true;
 
                     pokemon = await _pokemonService.GetByIdAsync(question.DataObjectID);
-                    typePok = await _typePokService.GetByIdAsync(int.Parse(pokemon.TypesID.Split(',')[0]));
+                    List<PokemonTypePok> pokemonTypePoks = await _pokemonTypePokService.GetTypesPokByPokemon(pokemon.Id);
+                    typePok = await _typePokService.GetByIdAsync(pokemonTypePoks[0].TypePokId);
 
                     FormatLibelleQuestion = new string[] { pokemon.Name };
                 }
@@ -246,7 +247,8 @@ namespace QuizzPokedex.ViewModels
                     IsVisibleTalentPokVarious = true;
 
                     pokemon = await _pokemonService.GetByIdAsync(question.DataObjectID);
-                    typePok = await _typePokService.GetByIdAsync(int.Parse(pokemon.TypesID.Split(',')[0]));
+                    List<PokemonTypePok> pokemonTypePoks = await _pokemonTypePokService.GetTypesPokByPokemon(pokemon.Id);
+                    typePok = await _typePokService.GetByIdAsync(pokemonTypePoks[0].TypePokId);
 
                     FormatLibelleQuestion = new string[] { pokemon.Name };
                 }
@@ -265,7 +267,6 @@ namespace QuizzPokedex.ViewModels
                 CorrectAnswer = libelleAnswerCorrect,
                 QuestionType = questionType,
                 TypePok = typePok,
-                ByteTypePok = typePokByte,
                 Pokemon = pokemon,
                 Talent = talent,
                 ByteDetectiveP = DetectiveP,

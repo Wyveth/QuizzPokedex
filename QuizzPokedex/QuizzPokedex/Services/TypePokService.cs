@@ -204,31 +204,31 @@ namespace QuizzPokedex.Services
                     Debug.Write("Info: " + typePok.Name);
                     if (!File.Exists(typePok.PathMiniGo))
                     {
-                        await DownloadFile(typePok.UrlMiniGo, "Image/TypePok/MiniGo", typeJson.Name.Replace(" ", "_") + Constantes.ExtensionImage);
+                        await DownloadFileAsync(typePok.UrlMiniGo, "Image/TypePok/MiniGo", typeJson.Name.Replace(" ", "_") + Constantes.ExtensionImage);
                         Debug.Write("Download Image OK");
                     }
 
                     if (!File.Exists(typePok.PathFondGo))
                     {
-                        await DownloadFile(typePok.UrlFondGo, "Image/TypePok/FondGo", typeJson.Name.Replace(" ", "_") + Constantes.ExtensionImage);
+                        await DownloadFileAsync(typePok.UrlFondGo, "Image/TypePok/FondGo", typeJson.Name.Replace(" ", "_") + Constantes.ExtensionImage);
                         Debug.Write("Download Image OK");
                     }
 
                     if (!File.Exists(typePok.PathMiniHome))
                     {
-                        await DownloadFile(typePok.UrlMiniHome, "Image/TypePok/MiniHome", typeJson.Name.Replace(" ", "_") + Constantes.ExtensionImage);
+                        await DownloadFileAsync(typePok.UrlMiniHome, "Image/TypePok/MiniHome", typeJson.Name.Replace(" ", "_") + Constantes.ExtensionImage);
                         Debug.Write("Download Image OK");
                     }
 
                     if (!File.Exists(typePok.PathIconHome))
                     {
-                        await DownloadFile(typePok.UrlIconHome, "Image/TypePok/IconHome", typeJson.Name.Replace(" ", "_") + Constantes.ExtensionImage);
+                        await DownloadFileAsync(typePok.UrlIconHome, "Image/TypePok/IconHome", typeJson.Name.Replace(" ", "_") + Constantes.ExtensionImage);
                         Debug.Write("Download Image OK");
                     }
 
                     if (!File.Exists(typePok.PathAutoHome))
                     {
-                        await DownloadFile(typePok.UrlAutoHome, "Image/TypePok/AutoHome", typeJson.Name.Replace(" ", "_") + Constantes.ExtensionImage);
+                        await DownloadFileAsync(typePok.UrlAutoHome, "Image/TypePok/AutoHome", typeJson.Name.Replace(" ", "_") + Constantes.ExtensionImage);
                         Debug.Write("Download Image OK");
                     }
 
@@ -245,56 +245,27 @@ namespace QuizzPokedex.Services
             }
         }
 
-        public async Task<TypePok> ConvertTypePokJsonInTypePok(TypeJson typeJson)
+        private async Task<TypePok> ConvertTypePokJsonInTypePok(TypeJson typeJson)
         {
             TypePok type = new TypePok();
             type.Name = typeJson.Name;
             type.UrlMiniGo = typeJson.UrlMiniGo;
-            type.PathMiniGo = await DownloadFile(typeJson.UrlMiniGo, "Image/TypePok/MiniGo", typeJson.Name.Replace(" ", "_") + Constantes.ExtensionImage);
-            type.DataMiniGo = await DownloadImageAsync(typeJson.UrlMiniGo);
+            type.PathMiniGo = await DownloadFileAsync(typeJson.UrlMiniGo, "Image/TypePok/MiniGo", typeJson.Name.Replace(" ", "_") + Constantes.ExtensionImage);
             type.UrlFondGo = typeJson.UrlFondGo;
-            type.PathFondGo = await DownloadFile(typeJson.UrlFondGo, "Image/TypePok/FondGo", typeJson.Name.Replace(" ", "_") + Constantes.ExtensionImage);
-            type.DataFondGo = await DownloadImageAsync(typeJson.UrlFondGo);
+            type.PathFondGo = await DownloadFileAsync(typeJson.UrlFondGo, "Image/TypePok/FondGo", typeJson.Name.Replace(" ", "_") + Constantes.ExtensionImage);
             type.UrlMiniHome = typeJson.UrlMiniHome;
-            type.PathMiniHome = await DownloadFile(typeJson.UrlMiniHome, "Image/TypePok/MiniHome", typeJson.Name.Replace(" ", "_") + Constantes.ExtensionImage);
-            type.DataMiniHome = await DownloadImageAsync(typeJson.UrlMiniHome);
+            type.PathMiniHome = await DownloadFileAsync(typeJson.UrlMiniHome, "Image/TypePok/MiniHome", typeJson.Name.Replace(" ", "_") + Constantes.ExtensionImage);
             type.UrlIconHome = typeJson.UrlIconHome;
-            type.PathIconHome = await DownloadFile(typeJson.UrlIconHome, "Image/TypePok/IconHome", typeJson.Name.Replace(" ", "_") + Constantes.ExtensionImage);
-            type.DataIconHome = await DownloadImageAsync(typeJson.UrlIconHome);
+            type.PathIconHome = await DownloadFileAsync(typeJson.UrlIconHome, "Image/TypePok/IconHome", typeJson.Name.Replace(" ", "_") + Constantes.ExtensionImage);
             type.UrlAutoHome = typeJson.UrlAutoHome;
-            type.PathAutoHome = await DownloadFile(typeJson.UrlAutoHome, "Image/TypePok/AutoHome", typeJson.Name.Replace(" ", "_") + Constantes.ExtensionImage);
-            type.DataAutoHome = await DownloadImageAsync(typeJson.UrlAutoHome);
+            type.PathAutoHome = await DownloadFileAsync(typeJson.UrlAutoHome, "Image/TypePok/AutoHome", typeJson.Name.Replace(" ", "_") + Constantes.ExtensionImage);
             type.ImgColor = typeJson.imgColor;
             type.InfoColor = typeJson.infoColor;
             type.TypeColor = typeJson.typeColor;
             return type;
         }
 
-        public async Task<byte[]> DownloadImageAsync(string UrlImg)
-        {
-            try
-            {
-                using (var httpResponse = await _httpClient.GetAsync(UrlImg))
-                {
-                    if (httpResponse.StatusCode == HttpStatusCode.OK)
-                    {
-                        return await httpResponse.Content.ReadAsByteArrayAsync();
-                    }
-                    else
-                    {
-                        //Url is Invalid
-                        return null;
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                //Handle Exception
-                throw new Exception(e.Message);
-            }
-        }
-
-        public async Task<string> DownloadFile(string url, string folder, string filename)
+        private async Task<string> DownloadFileAsync(string url, string folder, string filename)
         {
             string pathToNewFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), folder);
             Directory.CreateDirectory(pathToNewFolder);
