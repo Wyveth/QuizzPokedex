@@ -103,82 +103,93 @@
                     </CollectionView.ItemTemplate>
                 </CollectionView>
             </StackLayout>
-            <StackLayout
-                x:Name="backButton"
-                AbsoluteLayout.LayoutBounds="-0.02,0.02,0.256,0.07"
-                AbsoluteLayout.LayoutFlags="All">
-                <shadows:Shadows Margin="30,0,30,50" CornerRadius="20">
-                    <shadows:Shadows.Shades>
-                        <shadows:ImmutableShades>
-                            <shadows:Shade
-                                BlurRadius="10"
-                                Opacity="0.5"
-                                Offset="-1,-1"
-                                Color="#464C56" />
-                            <shadows:Shade
-                                BlurRadius="10"
-                                Opacity="0.5"
-                                Offset="1,1"
-                                Color="#464C56" />
-                        </shadows:ImmutableShades>
-                    </shadows:Shadows.Shades>
-                    <pv:PancakeView
-                        BackgroundColor="White"
-                        Border="{pv:BorderMarkup Color=Gray,
-                                                 Thickness=0}"
-                        CornerRadius="100,100,100,100">
-                        <ImageButton
-                            Padding="10,5,12,5"
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="60" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="60" />
+                </Grid.ColumnDefinitions>
+
+                <RelativeLayout x:Name="backButton" Grid.Column="0">
+                    <shadows:Shadows Margin="10,10,0,0" CornerRadius="20">
+                        <shadows:Shadows.Shades>
+                            <shadows:ImmutableShades>
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.5"
+                                    Offset="-1,-1"
+                                    Color="#464C56" />
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.5"
+                                    Offset="1,1"
+                                    Color="#464C56" />
+                            </shadows:ImmutableShades>
+                        </shadows:Shadows.Shades>
+                        <pv:PancakeView
                             BackgroundColor="White"
-                            Command="{Binding NavigationBackCommandAsync}"
-                            HeightRequest="45"
-                            Source="@mipmap/left"
-                            WidthRequest="45" />
-                    </pv:PancakeView>
-                </shadows:Shadows>
-            </StackLayout>
-            <StackLayout
-                x:Name="searchFilter"
-                AbsoluteLayout.LayoutBounds="0.5,0.02,0.75,0.07"
-                AbsoluteLayout.LayoutFlags="All"
-                HorizontalOptions="CenterAndExpand">
-                <shadows:Shadows Margin="30,0,30,50" CornerRadius="20">
-                    <shadows:Shadows.Shades>
-                        <shadows:ImmutableShades>
-                            <shadows:Shade
-                                BlurRadius="10"
-                                Opacity="0.5"
-                                Offset="-1,-1"
-                                Color="#464C56" />
-                            <shadows:Shade
-                                BlurRadius="10"
-                                Opacity="0.5"
-                                Offset="1,1"
-                                Color="#464C56" />
-                        </shadows:ImmutableShades>
-                    </shadows:Shadows.Shades>
-                    <pv:PancakeView
-                        BackgroundColor="White"
-                        Border="{pv:BorderMarkup Color=Gray,
-                                                 Thickness=0}"
-                        CornerRadius="100,100,100,100">
-                        <SearchBar
-                            x:Name="SearchBar"
-                            FontSize="14"
-                            HeightRequest="45"
-                            Placeholder="Rechercher un pokémon..."
-                            SearchCommand="{Binding FilterByNameCommandAsync}"
-                            Text="{Binding SearchText}"
-                            TextChanged="SearchBar_TextChanged" />
-                    </pv:PancakeView>
-                </shadows:Shadows>
-            </StackLayout>
+                            Border="{pv:BorderMarkup Color=Gray,
+                                                     Thickness=0}"
+                            CornerRadius="100,100,100,100">
+                            <ImageButton
+                                Padding="4,11,6,11"
+                                BackgroundColor="White"
+                                Command="{Binding NavigationBackCommandAsync}"
+                                HeightRequest="45"
+                                Source="@mipmap/left"
+                                WidthRequest="45" />
+                        </pv:PancakeView>
+                    </shadows:Shadows>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    x:Name="searchFilter"
+                    Grid.Column="1"
+                    HorizontalOptions="CenterAndExpand">
+                    <shadows:Shadows Margin="0,10,0,0" CornerRadius="20">
+                        <shadows:Shadows.Shades>
+                            <shadows:ImmutableShades>
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.5"
+                                    Offset="-1,-1"
+                                    Color="#464C56" />
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.5"
+                                    Offset="1,1"
+                                    Color="#464C56" />
+                            </shadows:ImmutableShades>
+                        </shadows:Shadows.Shades>
+                        <pv:PancakeView
+                            BackgroundColor="White"
+                            Border="{pv:BorderMarkup Color=Gray,
+                                                     Thickness=0}"
+                            CornerRadius="100,100,100,100">
+                            <SearchBar
+                                x:Name="SearchBar"
+                                FontSize="14"
+                                HeightRequest="45"
+                                Placeholder="Rechercher un pokémon..."
+                                SearchCommand="{Binding FilterByNameCommandAsync}"
+                                Text="{Binding SearchText}"
+                                TextChanged="SearchBar_TextChanged" />
+                        </pv:PancakeView>
+                    </shadows:Shadows>
+                </RelativeLayout>
+            </Grid>
+
             <StackLayout
                 x:Name="menuFilter"
-                AbsoluteLayout.LayoutBounds="0.5,1,0.5,0.08"
-                AbsoluteLayout.LayoutFlags="All"
-                HorizontalOptions="CenterAndExpand">
-                <shadows:Shadows Margin="30,0,30,50" CornerRadius="20">
+                AbsoluteLayout.LayoutBounds="0.5,1,0.5,0.09"
+                AbsoluteLayout.LayoutFlags="All">
+                <shadows:Shadows
+                    Margin="0,10,0,0"
+                    CornerRadius="20"
+                    HorizontalOptions="CenterAndExpand">
                     <shadows:Shadows.Shades>
                         <shadows:ImmutableShades>
                             <shadows:Shade
@@ -197,7 +208,7 @@
                         BackgroundColor="White"
                         Border="{pv:BorderMarkup Color=Gray,
                                                  Thickness=0}"
-                        CornerRadius="100,100,100,100">
+                        CornerRadius="50">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="45" />
@@ -227,6 +238,7 @@
                     </pv:PancakeView>
                 </shadows:Shadows>
             </StackLayout>
+
             <StackLayout
                 x:Name="filterModal"
                 AbsoluteLayout.LayoutBounds="0.5,0.94,0.8,0.205"
