@@ -63,8 +63,15 @@
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Configuration\iOSSqliteConnectionService.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
+    <Compile Include="Setup.cs" />
+    <AndroidAsset Include="Assets\AttaqueScrap.json" />
+    <AndroidAsset Include="Assets\PokeScrap.json" />
+    <AndroidAsset Include="Assets\TalentScrap.json" />
+    <AndroidAsset Include="Assets\TypeAttaqueScrap.json" />
+    <AndroidAsset Include="Assets\TypeScrap.json" />
     <None Include="Entitlements.plist" />
     <None Include="Info.plist" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -123,14 +130,201 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="MvvmCross">
+      <Version>8.0.2</Version>
+    </PackageReference>
+    <PackageReference Include="MvvmCross.Forms">
+      <Version>8.0.2</Version>
+    </PackageReference>
+    <PackageReference Include="Sharpnado.Shadows">
+      <Version>1.2.1</Version>
+    </PackageReference>
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2545" />
     <PackageReference Include="Xamarin.Essentials" Version="1.7.4" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
+    <ProjectReference Include="..\..\QuizzPokedex.UI\QuizzPokedex.UI.csproj">
+      <Project>{66F6D09D-712D-4C13-917F-A92565C4BEE6}</Project>
+      <Name>QuizzPokedex.UI</Name>
+    </ProjectReference>
     <ProjectReference Include="..\QuizzPokedex\QuizzPokedex.csproj">
       <Project>{0B21D389-2BDE-4C66-B6BF-B74D6BA6B87C}</Project>
       <Name>QuizzPokedex</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\AboutAssets.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Detective_Pikachu.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Filter.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Icon_Bug.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Icon_Bug_BW.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Icon_Dark.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Icon_Dark_BW.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Icon_Dragon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Icon_Dragon_BW.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Icon_Electric.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Icon_Electric_BW.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Icon_Fairy.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Icon_Fairy_BW.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Icon_Fighting.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Icon_Fighting_BW.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Icon_Fire.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Icon_Fire_BW.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Icon_Flying.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Icon_Flying_BW.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Icon_Ghost.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Icon_Ghost_BW.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Icon_Grass.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Icon_Grass_BW.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Icon_Ground.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Icon_Ground_BW.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Icon_Ice.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Icon_Ice_BW.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Icon_Normal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Icon_Normal_BW.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Icon_Poison.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Icon_Poison_BW.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Icon_Psychic.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Icon_Psychic_BW.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Icon_Rock.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Icon_Rock_BW.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Icon_Steel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Icon_Steel_BW.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Icon_Water.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Icon_Water_BW.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Love.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Lovefull.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\OneStarFull_Medium.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\OneStarFull_Small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\OneStarWhite_Medium.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\OneStarWhite_Small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Pokedex_Down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Pokedex_Up.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Resume.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\StarSuccess.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\StarWrong.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\ThreeStarFull_Medium.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\ThreeStarFull_Small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\ThreeStarWhite_Medium.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\ThreeStarWhite_Small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\TwoStarFull_Medium.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\TwoStarFull_Small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\TwoStarWhite_Medium.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\TwoStarWhite_Small.png" />
   </ItemGroup>
 </Project>

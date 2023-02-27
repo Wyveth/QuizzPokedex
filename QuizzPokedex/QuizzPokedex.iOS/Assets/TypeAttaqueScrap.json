@@ -1,0 +1,20 @@
+[
+  {
+    "Name": "Capacités Physiques",
+    "Description": "Les capacités physiques utilisent les statistiques physiques (attaque et défense)",
+    "UrlImg": "https://www.pokepedia.fr/images/1/11/Miniature_Cat%C3%A9gorie_Physique_DEPS.png",
+    "PathImg": null
+  },
+  {
+    "Name": "Capacités Spéciales",
+    "Description": "Les capacités spéciales utilisent les statistiques spéciales (attaque spéciale et défense spéciale, ou uniquement le spécial dans la première génération)",
+    "UrlImg": "https://www.pokepedia.fr/images/d/da/Miniature_Cat%C3%A9gorie_Sp%C3%A9ciale_DEPS.png",
+    "PathImg": null
+  },
+  {
+    "Name": "Capacités de Statut",
+    "Description": "Les capacités de statut sont toutes les autres capacités, celles qui ne provoquent pas de dégâts selon la formule habituelle (dégâts fixes, augmentation de statistiques, changement de statut, etc.)",
+    "UrlImg": "https://www.pokepedia.fr/images/b/b5/Miniature_Cat%C3%A9gorie_Statut_DEPS.png",
+    "PathImg": null
+  }
+]

@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-using Foundation;
+﻿using Foundation;
+using MvvmCross.Forms.Platforms.Ios.Core;
+using PanCardView.iOS;
+using QuizzPokedex.UI;
 using UIKit;
 
 namespace QuizzPokedex.iOS
@@ -11,7 +10,7 @@ namespace QuizzPokedex.iOS
     // User Interface of the application, as well as listening (and optionally responding) to 
     // application events from iOS.
     [Register("AppDelegate")]
-    public partial class AppDelegate : global::Xamarin.Forms.Platform.iOS.FormsApplicationDelegate
+    public partial class AppDelegate : MvxFormsApplicationDelegate<Setup, App, FormsApp>
     {
         //
         // This method is invoked when the application has loaded and is ready to run. In this 
@@ -23,7 +22,8 @@ namespace QuizzPokedex.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             global::Xamarin.Forms.Forms.Init();
-            //LoadApplication(new App());
+            Sharpnado.Shades.iOS.iOSShadowsRenderer.Initialize();
+            CardsViewRenderer.Preserve();
 
             return base.FinishedLaunching(app, options);
         }

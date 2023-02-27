@@ -30,40 +30,48 @@
             <StackLayout AbsoluteLayout.LayoutBounds="0.5,1,1,0.2" AbsoluteLayout.LayoutFlags="All">
                 <Image Source="{Binding ImgPokedexDown, Converter={StaticResource ByteToImageSourceConverter}}" />
             </StackLayout>
-            <StackLayout
-                x:Name="backButton"
-                AbsoluteLayout.LayoutBounds="0,0.02,0.23,0.07"
-                AbsoluteLayout.LayoutFlags="All">
-                <shadows:Shadows Margin="30,0,30,50" CornerRadius="20">
-                    <shadows:Shadows.Shades>
-                        <shadows:ImmutableShades>
-                            <shadows:Shade
-                                BlurRadius="10"
-                                Opacity="0.5"
-                                Offset="-1,-1"
-                                Color="#464C56" />
-                            <shadows:Shade
-                                BlurRadius="10"
-                                Opacity="0.5"
-                                Offset="1,1"
-                                Color="#464C56" />
-                        </shadows:ImmutableShades>
-                    </shadows:Shadows.Shades>
-                    <pv:PancakeView
-                        BackgroundColor="White"
-                        Border="{pv:BorderMarkup Color=Gray,
-                                                 Thickness=0}"
-                        CornerRadius="100,100,100,100">
-                        <ImageButton
-                            Padding="4,9,5,9"
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="60" />
+                </Grid.ColumnDefinitions>
+
+                <RelativeLayout Grid.Column="0">
+                    <shadows:Shadows Margin="10,10,0,0" CornerRadius="20">
+                        <shadows:Shadows.Shades>
+                            <shadows:ImmutableShades>
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.5"
+                                    Offset="-1,-1"
+                                    Color="#464C56" />
+                                <shadows:Shade
+                                    BlurRadius="10"
+                                    Opacity="0.5"
+                                    Offset="1,1"
+                                    Color="#464C56" />
+                            </shadows:ImmutableShades>
+                        </shadows:Shadows.Shades>
+                        <pv:PancakeView
                             BackgroundColor="White"
-                            Command="{Binding NavigationBackCommandAsync}"
-                            HeightRequest="35"
-                            Source="@mipmap/left"
-                            WidthRequest="35" />
-                    </pv:PancakeView>
-                </shadows:Shadows>
-            </StackLayout>
+                            Border="{pv:BorderMarkup Color=Gray,
+                                                     Thickness=0}"
+                            CornerRadius="50">
+                            <ImageButton
+                                Padding="4,11,6,11"
+                                BackgroundColor="White"
+                                Command="{Binding NavigationBackCommandAsync}"
+                                HeightRequest="45"
+                                Source="@mipmap/left"
+                                WidthRequest="45" />
+                        </pv:PancakeView>
+                    </shadows:Shadows>
+                </RelativeLayout>
+            </Grid>
+
             <StackLayout AbsoluteLayout.LayoutBounds="0.5,0.15,0.34,0.2" AbsoluteLayout.LayoutFlags="All">
                 <pv:PancakeView
                     Margin="0,2,0,0"
