@@ -66,7 +66,7 @@ namespace QuizzPokedex.UI.Views
                     menuFilter.TranslateTo(0, 0, 200, Easing.CubicOut),
                     menuFilter.FadeTo(1, 200),
                     filterModal.TranslateTo(0, 0, 200, Easing.CubicOut),
-                    filterModal.FadeTo(1, 200))
+                    filterModal.FadeTo(1, 200));
             }
         }
 
