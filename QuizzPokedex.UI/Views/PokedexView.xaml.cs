@@ -56,9 +56,7 @@ namespace QuizzPokedex.UI.Views
                     menuFilter.TranslateTo(0, (trans + safeInsets.Bottom), 200, Easing.CubicIn),
                     menuFilter.FadeTo(0, 200),
                     filterModal.TranslateTo(0, (trans + safeInsets.Bottom), 200, Easing.CubicIn),
-                    filterModal.FadeTo(0, 200),
-                    ordererModal.TranslateTo(0, (trans + safeInsets.Bottom), 200, Easing.CubicIn),
-                    ordererModal.FadeTo(0, 200));
+                    filterModal.FadeTo(0, 200));
             }
             else if (transY != 0 &&
                      e.VerticalDelta > 0 &&
@@ -68,9 +66,7 @@ namespace QuizzPokedex.UI.Views
                     menuFilter.TranslateTo(0, 0, 200, Easing.CubicOut),
                     menuFilter.FadeTo(1, 200),
                     filterModal.TranslateTo(0, 0, 200, Easing.CubicOut),
-                    filterModal.FadeTo(1, 200),
-                    ordererModal.TranslateTo(0, 0, 200, Easing.CubicOut),
-                    ordererModal.FadeTo(1, 200));
+                    filterModal.FadeTo(1, 200))
             }
         }
 
